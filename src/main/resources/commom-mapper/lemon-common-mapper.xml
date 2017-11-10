@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CommonMapper">
+    <insert id="insertDynamic" parameterType="java.util.HashMap">
+        INSERT INTO ${tableName}
+        <foreach collection="columnName" item="cumName" open="("
+                 separator="," close=")">
+            ${cumName}
+        </foreach>
+        VALUES
+        <foreach collection="columnValue" item="cumValue" open="("
+                 separator="," close=")">
+            #{cumValue}
+        </foreach>
+    </insert>
+
+    <insert id="insertDynamicRInt" parameterType="java.util.HashMap"
+            useGeneratedKeys="true" keyProperty="PK">
+        INSERT INTO ${tableName}
+        <foreach collection="columnName" item="cumName" open="("
+                 separator="," close=")">
+            ${cumName}
+        </foreach>
+        VALUES
+        <foreach collection="columnValue" item="cumValue" open="("
+                 separator="," close=")">
+            #{cumValue}
+        </foreach>
+    </insert>
+
+
+    <update id="updateDynamic" parameterType="java.util.HashMap">
+        UPDATE ${tableName} SET
+        <foreach collection="columnList" item="cum" separator=",">
+            ${cum.columnName} = #{cum.columnValue}
+        </foreach>
+        WHERE
+        <foreach collection="conditionList" item="cnd" separator=" AND ">
+            ${cnd.conditionName} = #{cnd.conditionValue}
+        </foreach>
+    </update>
+
+    <delete id="deleteDynamic" parameterType="java.util.HashMap">
+        DELETE FROM ${tableName} WHERE
+        <foreach collection="columnName" item="cumName" separator=" AND ">
+            ${cumName} = #{${cumName}}
+        </foreach>
+    </delete>
+
+    <delete id="deleteBatchDynamic">
+        DELETE FROM ${tableName} WHERE ${pkName} IN
+        <foreach collection="pkList" item="pks" open="(" separator=","
+                 close=")">
+            #{pks}
+        </foreach>
+    </delete>
+
+    <select id="selectBySql" resultType="java.util.HashMap"
+            parameterType="java.util.HashMap">
+        <if test="SQL != null">${SQL}</if>
+    </select>
+</mapper>

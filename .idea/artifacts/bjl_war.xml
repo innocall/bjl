@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="bjl:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="bjl.war">
+      <element id="artifact" artifact-name="bjl:war exploded" />
+    </root>
+  </artifact>
+</component>
