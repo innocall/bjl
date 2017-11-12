@@ -17,40 +17,10 @@
             content="width=device-width; initial-scale=1.0; maximum-scale=1.0; minimum-scale=1.0; user-scalable=false;"
             name="viewport">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <style>
-        /*1.清除表格默认样式*/
-        .table1{
-            border-collapse: collapse;
-            margin-top: 8px;
-        }
-        th,td{
-            padding: 0;
-        }
-        /*2.设置表格大小，以及表框颜色*/
-        table{
-            width: 300px;
-        }
-        th,td{
-            font: 20px/40px "微软雅黑";
-            color: #3366cc;
-        }
-        .table1 th, .table1 td {
-            text-align: center;
-            border: 2px solid #3366cc;
-        }
-
-        .table2{
-            border-collapse: collapse;
-            margin-top: 8px;
-        }
-
-        .table2 th, .table2 td{
-            font: 18px/30px "微软雅黑";
-            color: #3366cc;
-            text-align: center;
-            border: 2px solid #3366cc;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/css/dataStatistics.css">
+    <script src="${pageContext.request.contextPath }/js/jquery.min.js"></script>
+    <script src="${pageContext.request.contextPath }/js/xmlhttp.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath }/js/main/dataStatistics.js"></script>
 </head>
 <body>
     <div style="color: #3366cc;">扑克：8副&nbsp;&nbsp;&nbsp;&nbsp;总共:416张&nbsp;&nbsp;&nbsp;&nbsp;首切牌：10张&nbsp;&nbsp;&nbsp;&nbsp;尾切牌：78张 </div>
@@ -75,20 +45,20 @@
         <table class="table1">
             <tr>
                 <th >可用余额</th>
-                <th>199140.00</th>
+                <th id="userMoney">${paramMap.USER_MONEY}</th>
                 <th>
-                    <button style="font-size: 20px;padding: 3px;">充值</button>
+                    <button style="font-size: 20px;padding: 3px;" onclick="chongzhi('${paramMap.USER_ID}',1000000);">充值</button>
                 </th>
             </tr>
             <tr>
                 <th>投注金额</th>
-                <th>0.00</th>
+                <th>0.0</th>
                 <th></th>
             </tr>
             <tr>
                 <th>庄家抽水</th>
-                <th>1010.00</th>
-                <th> <button style="font-size: 20px;padding: 3px;">清空抽水</button></th>
+                <th id="clearMoney">${paramMap.ZHUANG_MONEY}</th>
+                <th> <button style="font-size: 20px;padding: 3px;" onclick="clearMoney('${paramMap.USER_ID}');">清空抽水</button></th>
             </tr>
         </table>
     </div>
@@ -114,6 +84,171 @@
             </tr>
         </table>
     </div>
+
+    <div style="position: absolute;left: 845px;">
+        <div>
+            设置时间：  <input type="number" style="width: 150px;height: 32px;font-size: 20px;" value="${paramMap.TIME}">
+            <button style="font-size: 20px;padding: 3px;margin-left: 10px;">开始游戏</button>
+        </div>
+    </div>
+
+    <!--珠盘路
+    1、红、蓝、绿分别表示庄赢、闲赢、和局。
+    2、左上角的红点标示表示出现庄对，右下角的蓝点标示表示出现闲对。如果同时出现庄对和闲对，则同时在左上角和右，下角标示红点和蓝点。
+    3、通常情况下每列为6个，共11列。
+    -->
+    <div style="position: absolute;left: 845px;top: 70px;">
+        <table class="table3">
+            <tr>
+                <th>
+                    <div class="zhuang">
+                        庄
+                        <div class="zhuangdu"></div>
+                        <div class="xiandu"></div>
+                    </div>
+                </th>
+                <th>
+                    <div class="xian">
+                        闲
+                        <div class="zhuangdu"></div>
+                        <div class="xiandu"></div>
+                    </div>
+                </th>
+                <th>
+                    <div class="he">
+                        和
+                    </div>
+                </th>
+                <th>
+                    <img src="${pageContext.request.contextPath}/image/zhang.jpg" width="35px;">
+                </th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+            <tr>
+                <th>
+                    <div class="zhuang">
+                        庄
+                        <div class="zhuangdu"></div>
+                        <div class="xiandu"></div>
+                    </div>
+                </th>
+                <th>
+                    <div class="zhuang">
+                        庄
+                    </div>
+                </th>
+                <th>
+                    <div class="zhuang">
+                        庄
+                    </div>
+                </th>
+                <th>
+                    <div class="zhuang">
+                        庄
+                    </div>
+                </th>
+                <th>
+                    <div class="xian">
+                        闲
+                        <div class="xiandu"></div>
+                    </div>
+                </th>
+                <th>
+                    <div class="xian">
+                        闲
+                    </div>
+                </th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+            <tr>
+                <th>
+                    <div class="zhuang">
+                        庄
+                    </div>
+                </th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+            <tr>
+                <th>
+                    <div class="zhuang">
+                        庄
+                    </div>
+                </th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+            <tr>
+                <th>
+                    <div class="xian">
+                        闲
+                        <div class="xiandu"></div>
+                    </div>
+                </th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+            <tr>
+                <th>
+                    <div class="xian">
+                        闲
+                        <div class="xiandu"></div>
+                    </div>
+                </th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </table>
+    </div>
+
 
     <div style="position: absolute;left:10px;top:370px;">
         <table class="table2" width="460px;" style="width: 460px;">

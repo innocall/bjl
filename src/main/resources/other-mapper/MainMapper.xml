@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MainManageMapper">
+
+    <select id="findParamMsgByUserId" resultType="java.util.HashMap">
+        select * from param_tbl where USER_ID = #{USER_ID}
+    </select>
+
+    <update id="updateUserMoneyByUserId" parameterType="java.util.HashMap">
+        <![CDATA[
+        UPDATE param_tbl SET USER_MONEY=#{USER_MONEY} WHERE USER_ID=#{USER_ID}
+        ]]>
+    </update>
+
+    <update id="updateZhuangMoneyByUserId" parameterType="java.util.HashMap">
+        <![CDATA[
+        UPDATE param_tbl SET ZHUANG_MONEY=#{ZHUANG_MONEY} WHERE USER_ID=#{USER_ID}
+        ]]>
+    </update>
+
+</mapper>

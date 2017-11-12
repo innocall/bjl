@@ -1,0 +1,102 @@
+/*1.清除表格默认样式*/
+.table1 {
+    border-collapse: collapse;
+    margin-top: 8px;
+}
+
+th, td {
+    padding: 0;
+}
+
+/*2.设置表格大小，以及表框颜色*/
+.table1 {
+    width: 300px;
+}
+
+th, td {
+    font: 20px/40px "微软雅黑";
+    color: #3366cc;
+}
+
+.table1 th, .table1 td {
+    text-align: center;
+    border: 2px solid #3366cc;
+}
+
+.table2 {
+    border-collapse: collapse;
+    margin-top: 8px;
+}
+
+.table2 th, .table2 td {
+    font: 18px/30px "微软雅黑";
+    color: #3366cc;
+    text-align: center;
+    border: 2px solid #3366cc;
+}
+
+.table3 {
+    border-collapse: collapse;
+    margin-top: 8px;
+}
+
+.table3 th, .table2 td {
+    font: 18px/30px "微软雅黑";
+    color: #3366cc;
+    text-align: center;
+    width: 35px;
+    height: 35px;
+    border: 2px solid #3366cc;
+}
+
+.zhuang {
+    width: 30px;
+    height: 30px;
+    border-radius: 30px;
+    background: #ff4545;
+    margin: 0 auto;
+    color: #fff;
+    font-size: 20px;
+}
+
+.xian {
+    width: 30px;
+    height: 30px;
+    border-radius: 30px;
+    background: #3366cc;
+    margin: 0 auto;
+    color: #fff;
+    font-size: 20px;
+}
+
+.he {
+    width: 30px;
+    height: 30px;
+    border-radius: 30px;
+    background: #44cc09;
+    margin: 0 auto;
+    color: #fff;
+    font-size: 20px;
+}
+
+.zhuangdu {
+    width: 8px;
+    height: 8px;
+    border-radius: 8px;
+    background: #ff4545;
+    border: 2px solid #fff;
+    position: relative;
+    left: 0px;
+    top: -30px;
+}
+
+.xiandu {
+    width: 8px;
+    height: 8px;
+    border-radius: 8px;
+    background: #3366cc;
+    border: 2px solid #fff;
+    position: relative;
+    left: 18px;
+    top: -22px;
+}
