@@ -100,3 +100,11 @@ th, td {
     left: 18px;
     top: -22px;
 }
+
+#msg{
+    margin-left: 80px;
+    color: #e83d1d;
+    font-size: 22px;
+    font-weight: 600;
+    display: none;
+}

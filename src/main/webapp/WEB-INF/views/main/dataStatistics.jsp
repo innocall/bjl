@@ -20,25 +20,42 @@
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/css/dataStatistics.css">
     <script src="${pageContext.request.contextPath }/js/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath }/js/xmlhttp.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath }/js/main/data.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath }/js/main/dataStatistics.js"></script>
+    <script>
+        $(function () {
+           init();
+        });
+    </script>
 </head>
 <body>
-    <div style="color: #3366cc;">扑克：8副&nbsp;&nbsp;&nbsp;&nbsp;总共:416张&nbsp;&nbsp;&nbsp;&nbsp;首切牌：10张&nbsp;&nbsp;&nbsp;&nbsp;尾切牌：78张 </div>
+    <div style="color: #3366cc;">扑克：8副&nbsp;&nbsp;&nbsp;&nbsp;总共:416张&nbsp;&nbsp;&nbsp;&nbsp;首切牌：10张
+        <span style="margin-left: 20px;font-size: 22px;">
+            局数：<span id="juCount">0</span>
+            &nbsp;&nbsp;&nbsp;&nbsp;庄：<span id="zhuangCount">0</span>
+            &nbsp;&nbsp;&nbsp;&nbsp;闲： <span id="xianCount">0</span>
+            &nbsp;&nbsp;&nbsp;&nbsp;和：<span id="heCount">0</span>
+            &nbsp;&nbsp;&nbsp;&nbsp;庄对：<span id="zhuangDuiCount">0</span>
+            &nbsp;&nbsp;&nbsp;&nbsp;闲对：<span id="xianDuiCount">0</span>
+        </span>
+        <span id="msg">请下注</span>
+    </div>
     <div style="width: 500px;height: 300px;border: 2px solid #3366cc;margin-top: 7px;position: absolute;">
         <div style="width: 249px;height: 100%;float: left;">
             <span style="background: #0e49e8;font-size: 40px;padding: 5px;font-weight: 800;left: 0px;top: 0px;position: absolute;">闲</span>
-            <img src="${pageContext.request.contextPath}/image/veryhuo.com_pkp_1.jpg" width="70px;" style="position: relative;top: 70px;left: 55px;">
-            <img src="${pageContext.request.contextPath}/image/veryhuo.com_pkp_9.jpg" width="70px;" style="position: relative;top: 70px;left: 50px;">
-            <img src="${pageContext.request.contextPath}/image/veryhuo.com_pkp_8.jpg" width="70px;" style="position: relative;top: 155px;left: -60px;transform: rotate(90deg);">
-            <span style="background: #333;font-size: 40px;padding: 8px;font-weight: 800;left: 0px;top: 232px;position: absolute;color: #fff;">9</span>
+            <img id="xian1" src="${pageContext.request.contextPath}/image/veryhuo.com_pkp_1.jpg" width="70px;" style="position: relative;top: 70px;left: 55px;display:none;">
+            <img id="xian2" src="${pageContext.request.contextPath}/image/veryhuo.com_pkp_9.jpg" width="70px;" style="position: relative;top: 70px;left: 50px;display:none;">
+            <img id="xian3" src="${pageContext.request.contextPath}/image/veryhuo.com_pkp_8.jpg" width="70px;" style="position: relative;top: 155px;left: -60px;transform: rotate(90deg);display:none;">
+            <span style="background: #333;font-size: 40px;padding: 8px;font-weight: 800;left: 0px;top: 232px;position: absolute;color: #fff;display:none;">9</span>
         </div>
         <div style="width: 2px;height: 100%;background: #3366cc;float: left"></div>
         <div style="width: 249px;height: 100%;float: right;">
+            <span id="endTime" style="background: #333;font-size: 40px;padding: 5px;font-weight: 800;left: 220px;top: 0px;position: absolute;color: #FFFFFF;display: none;width: 50px;text-align: center">30</span>
             <span style="background: #e81131;font-size: 40px;padding: 5px;font-weight: 800;left: 450px;top: 0px;position: absolute;">庄</span>
-            <img src="${pageContext.request.contextPath}/image/veryhuo.com_pkp_1.jpg" width="70px;" style="position: relative;top: 70px;left: 55px;">
-            <img src="${pageContext.request.contextPath}/image/veryhuo.com_pkp_3.jpg" width="70px;" style="position: relative;top: 70px;left: 50px;">
-            <img src="${pageContext.request.contextPath}/image/veryhuo.com_pkp_6.jpg" width="70px;" style="position: relative;top: 155px;left: -60px;transform: rotate(90deg);">
-            <span style="background: #333;font-size: 40px;padding: 8px;font-weight: 800;left: 459px;top: 232px;position: absolute;color: #fff;">9</span>
+            <img id="zhuang1" src="${pageContext.request.contextPath}/image/veryhuo.com_pkp_1.jpg" width="70px;" style="position: relative;top: 70px;left: 55px;display:none;">
+            <img id="zhuang2" src="${pageContext.request.contextPath}/image/veryhuo.com_pkp_3.jpg" width="70px;" style="position: relative;top: 70px;left: 50px;display:none;">
+            <img id="zhuang3" src="${pageContext.request.contextPath}/image/veryhuo.com_pkp_6.jpg" width="70px;" style="position: relative;top: 155px;left: -60px;transform: rotate(90deg);display:none;">
+            <span style="background: #333;font-size: 40px;padding: 8px;font-weight: 800;left: 459px;top: 232px;position: absolute;color: #fff;display:none;">9</span>
         </div>
     </div>
     <div style="width: 500px;position: absolute;left: 527px;">
@@ -73,13 +90,14 @@
             <tr style="height: 40px;">
                 <th>投注选择：</th>
                 <th>
-                    <input type="radio" name="radio" value="1">庄
-                    <input type="radio" name="radio" value="0">闲
+                    <input type="radio" name="radio" value="0">庄
+                    <input type="radio" name="radio" value="1">闲
+                    <input type="radio" name="radio" value="2">和
                 </th>
             </tr>
             <tr style="margin: 0 auto;height: 50px;">
                 <th colspan="3">
-                    <button style="font-size: 20px;padding: 3px;">确认投注</button>
+                    <button id="touzhuId" style="font-size: 20px;padding: 3px;" >确认投注</button>
                 </th>
             </tr>
         </table>
@@ -87,8 +105,8 @@
 
     <div style="position: absolute;left: 845px;">
         <div>
-            设置时间：  <input type="number" style="width: 150px;height: 32px;font-size: 20px;" value="${paramMap.TIME}">
-            <button style="font-size: 20px;padding: 3px;margin-left: 10px;">开始游戏</button>
+            设置时间：  <input id="times" type="number" style="width: 150px;height: 32px;font-size: 20px;" value="${paramMap.TIME}">
+            <button id="startBut" style="font-size: 20px;padding: 3px;margin-left: 10px;" onclick="startGame();">开始游戏</button>
         </div>
     </div>
 
