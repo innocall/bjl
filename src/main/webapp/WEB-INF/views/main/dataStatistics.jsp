@@ -34,9 +34,9 @@
             局数：<span id="juCount">0</span>
             &nbsp;&nbsp;&nbsp;&nbsp;庄：<span id="zhuangCount">0</span>
             &nbsp;&nbsp;&nbsp;&nbsp;闲： <span id="xianCount">0</span>
-            &nbsp;&nbsp;&nbsp;&nbsp;和：<span id="heCount">0</span>
-            &nbsp;&nbsp;&nbsp;&nbsp;庄对：<span id="zhuangDuiCount">0</span>
-            &nbsp;&nbsp;&nbsp;&nbsp;闲对：<span id="xianDuiCount">0</span>
+            &nbsp;&nbsp;&nbsp;&nbsp;和：<span id="heCount" >0</span>
+            <span id="zhuangDuiCount" style="visibility:hidden;">&nbsp;&nbsp;&nbsp;&nbsp;庄对：0</span>
+            <span id="xianDuiCount"style="visibility:hidden;">&nbsp;&nbsp;&nbsp;&nbsp;闲对：0</span>
         </span>
         <span id="msg">请下注</span>
     </div>

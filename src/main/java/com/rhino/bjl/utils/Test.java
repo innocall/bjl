@@ -7,7 +7,7 @@ import java.io.*;
  */
 public class Test {
 
-    public static String path = "C:\\Users\\Administrator\\Desktop\\新建文件夹 (3)\\9"; //扑克牌路径
+    public static String path = "C:\\Users\\Administrator\\Desktop\\新建文件夹 (3)\\13"; //扑克牌路径
     public static int len = 208;
 
     public static void main(String[] args) {
