@@ -105,6 +105,14 @@ function doGo(){
     settime();
 }
 
+function getCount(allCount) {
+    var count = allCount;
+    if (allCount > 9) {
+        count = allCount%10;
+    }
+    return count;
+}
+
 /**
  * 开始发牌
  * 第一及第三张牌发给“闲家”，第二及第四张牌则发给“庄家”
@@ -142,7 +150,7 @@ function faPai3(xian1,zhuang1) {
     $("#xian2").attr("src","/bjl/image/" + imageName);
     $("#xian2").css("visibility","visible ");
     var xian2 = initData(imageName); //第一张牌点数
-    $("#xian").html(xian1 + xian2);
+    $("#xian").html(getCount(xian1 + xian2));
     $("#xian").css("visibility","visible ");
     setTimeout(function() {faPai4(xian1,zhuang1,xian2) },1000);
 }
@@ -155,7 +163,7 @@ function faPai4(xian1,zhuang1,xian2) {
     $("#zhuang2").attr("src","/bjl/image/" + imageName);
     $("#zhuang2").css("visibility","visible ");
     var zhuang2 = initData(imageName); //第一张牌点数
-    $("#zhuang").html(zhuang1 + zhuang2);
+    $("#zhuang").html(getCount(zhuang1 + zhuang2));
     $("#zhuang").css("visibility","visible ");
 }
 
