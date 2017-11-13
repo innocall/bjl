@@ -48,8 +48,6 @@ Array.prototype.remove=function(dx)
 
 function startGame() {
     if (isStart == 0) {
-        juCount = juCount + 1;
-        $("#juCount").html(juCount);
         time = $("#times").val();
         if (time <= 0) {
             alert("时间不能为负数或0");
@@ -163,8 +161,100 @@ function faPai4(xian1,zhuang1,xian2) {
     $("#zhuang2").attr("src","/bjl/image/" + imageName);
     $("#zhuang2").css("visibility","visible ");
     var zhuang2 = initData(imageName); //第一张牌点数
-    $("#zhuang").html(getCount(zhuang1 + zhuang2));
+    var zhuang = getCount(zhuang1 + zhuang2);
+    $("#zhuang").html(zhuang);
     $("#zhuang").css("visibility","visible ");
+    //判断是否需要博牌
+    if (getCount(xian1 + xian2) < 6 && zhuang < 8) {
+        //闲需要博牌
+        setTimeout(function() {faPaiXian(xian1,zhuang1,xian2,zhuang2) },1000);
+    } else {
+        if (getCount(zhuang1 + zhuang2) < 3 && xian < 8) {
+            setTimeout(function() {faPaiZhuang(xian1,zhuang1,xian2,zhuang2,0) },1000);
+        } else {
+            goGame(xian1,zhuang1,xian2,zhuang2,0,0);
+        }
+    }
+}
+
+function faPaiXian(xian1,zhuang1,xian2,zhuang2) {
+    var index = Math.floor((Math.random() * myArray.length));
+    var imageName = "veryhuo.com_pkp_" + myArray[index] + ".jpg";
+    myArray.remove(index);
+    $("#xian3").attr("src","/bjl/image/" + imageName);
+    $("#xian3").css("visibility","visible ");
+    var xian3 = initData(imageName); //第一张牌点数
+    $("#xian").html(getCount(xian1 + xian2 + xian3));
+    $("#xian").css("visibility","visible ");
+    var zhuang = getCount(zhuang1 + zhuang2);
+    if (zhuang ==  0 || zhuang ==  1 || zhuang ==  2) {
+        setTimeout(function() {faPaiZhuang(xian1,zhuang1,xian2,zhuang2,xian3) },1000);
+    } else if (zhuang == 3) {
+        if (xian3 != 8) {
+            setTimeout(function() {faPaiZhuang(xian1,zhuang1,xian2,zhuang2,xian3) },1000);
+        } else {
+            goGame(xian1,zhuang1,xian2,zhuang2,xian3,0);
+        }
+    } else if (zhuang == 4) {
+        if (xian3 != 0) {
+            setTimeout(function() {faPaiZhuang(xian1,zhuang1,xian2,zhuang2,xian3) },1000);
+        } else if (xian3 != 1) {
+            setTimeout(function() {faPaiZhuang(xian1,zhuang1,xian2,zhuang2,xian3) },1000);
+        } else if (xian3 != 8) {
+            setTimeout(function() {faPaiZhuang(xian1,zhuang1,xian2,zhuang2,xian3) },1000);
+        } else if (xian3 != 9) {
+            setTimeout(function() {faPaiZhuang(xian1,zhuang1,xian2,zhuang2,xian3) },1000);
+        } else {
+            goGame(xian1,zhuang1,xian2,zhuang2,xian3,0);
+        }
+    } else if (zhuang == 5) {
+        if (xian3 != 0) {
+            setTimeout(function() {faPaiZhuang(xian1,zhuang1,xian2,zhuang2,xian3) },1000);
+        } else if (xian3 != 1) {
+            setTimeout(function() {faPaiZhuang(xian1,zhuang1,xian2,zhuang2,xian3) },1000);
+        } else if (xian3 != 2) {
+            setTimeout(function() {faPaiZhuang(xian1,zhuang1,xian2,zhuang2,xian3) },1000);
+        } else if (xian3 != 3) {
+            setTimeout(function() {faPaiZhuang(xian1,zhuang1,xian2,zhuang2,xian3) },1000);
+        } else if (xian3 != 8) {
+            setTimeout(function() {faPaiZhuang(xian1,zhuang1,xian2,zhuang2,xian3) },1000);
+        } else if (xian3 != 9) {
+            setTimeout(function() {faPaiZhuang(xian1,zhuang1,xian2,zhuang2,xian3) },1000);
+        } else {
+            goGame(xian1,zhuang1,xian2,zhuang2,xian3,0);
+        }
+    } else if (zhuang == 6) {
+        if (xian3 == 6) {
+            setTimeout(function() {faPaiZhuang(xian1,zhuang1,xian2,zhuang2,xian3) },1000);
+        } else if (xian3 == 7) {
+            setTimeout(function() {faPaiZhuang(xian1,zhuang1,xian2,zhuang2,xian3) },1000);
+        } else {
+            goGame(xian1,zhuang1,xian2,zhuang2,xian3,0);
+        }
+    } else {
+        goGame(xian1,zhuang1,xian2,zhuang2,xian3,0);
+    }
+}
+
+function faPaiZhuang(xian1,zhuang1,xian2,zhuang2,xian3) {
+    var index = Math.floor((Math.random() * myArray.length));
+    var imageName = "veryhuo.com_pkp_" + myArray[index] + ".jpg";
+    myArray.remove(index);
+    $("#zhuang3").attr("src","/bjl/image/" + imageName);
+    $("#zhuang3").css("visibility","visible ");
+    var zhuang3 = initData(imageName);
+    $("#zhuang").html(getCount(zhuang1 + zhuang2 + zhuang3));
+    $("#zhuang").css("visibility","visible ");
+    goGame(xian1,zhuang1,xian2,zhuang2,xian3,zhuang3);
+}
+
+function goGame(xian1,zhuang1,xian2,zhuang2,xian3,zhuang3) {
+    juCount = juCount + 1;
+    $("#juCount").html(juCount);
+    $("#msg").html("结算中");
+    //提交数据到数据库
+   // alert(xian1 + "," +  xian2+ "," +  xian3 + "," +  zhuang1 + "," +  zhuang2 + "," +  zhuang3);
+
 }
 
 function chongzhi(userId,money) {
