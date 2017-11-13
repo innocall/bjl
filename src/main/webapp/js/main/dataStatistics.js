@@ -18,9 +18,14 @@ function init() {
     }
     //去掉首切牌10张
     for (var j =0; j<10;j++) {
-        var index = Math.floor((Math.random() * myArray.length));
-        myArray.remove(index);
+        random();
     }
+}
+
+function random() {
+    var index = Math.floor((Math.random() * myArray.length));
+    myArray.remove(index);
+    return index;
 }
 
 /*
@@ -79,7 +84,7 @@ function settime() {
         $("#touzhuId").attr("disabled", "disabled");
         $("#endTime").css("display","none");
         isFaPai = true;
-        faPia();
+        faPai1();
     } else {
         time--;
         $("#endTime").html(time);
@@ -104,12 +109,54 @@ function doGo(){
  * 开始发牌
  * 第一及第三张牌发给“闲家”，第二及第四张牌则发给“庄家”
  */
-function faPia() {
+function faPai1() {
     var index = Math.floor((Math.random() * myArray.length));
     var imageName = "veryhuo.com_pkp_" + myArray[index] + ".jpg";
+    myArray.remove(index);
     $("#xian1").attr("src","/bjl/image/" + imageName);
-    $("#xian1").css("display","block");
+    $("#xian1").css("visibility","visible ");
+    var xian1 = initData(imageName); //第一张牌点数
+    $("#xian").html(xian1);
+    $("#xian").css("visibility","visible ");
+    setTimeout(function() {faPai2(xian1) },1000);
+}
 
+function faPai2(xian1) {
+    //庄第一张
+    var index = Math.floor((Math.random() * myArray.length));
+    var imageName = "veryhuo.com_pkp_" + myArray[index] + ".jpg";
+    myArray.remove(index);
+    $("#zhuang1").attr("src","/bjl/image/" + imageName);
+    $("#zhuang1").css("visibility","visible ");
+    var zhuang1 = initData(imageName); //第一张牌点数
+    $("#zhuang").html(zhuang1);
+    $("#zhuang").css("visibility","visible ");
+    setTimeout(function() {faPai3(xian1,zhuang1) },1000);
+}
+
+function faPai3(xian1,zhuang1) {
+    //闲第二张
+    var index = Math.floor((Math.random() * myArray.length));
+    var imageName = "veryhuo.com_pkp_" + myArray[index] + ".jpg";
+    myArray.remove(index);
+    $("#xian2").attr("src","/bjl/image/" + imageName);
+    $("#xian2").css("visibility","visible ");
+    var xian2 = initData(imageName); //第一张牌点数
+    $("#xian").html(xian1 + xian2);
+    $("#xian").css("visibility","visible ");
+    setTimeout(function() {faPai4(xian1,zhuang1,xian2) },1000);
+}
+
+function faPai4(xian1,zhuang1,xian2) {
+    //庄第二张
+    var index = Math.floor((Math.random() * myArray.length));
+    var imageName = "veryhuo.com_pkp_" + myArray[index] + ".jpg";
+    myArray.remove(index);
+    $("#zhuang2").attr("src","/bjl/image/" + imageName);
+    $("#zhuang2").css("visibility","visible ");
+    var zhuang2 = initData(imageName); //第一张牌点数
+    $("#zhuang").html(zhuang1 + zhuang2);
+    $("#zhuang").css("visibility","visible ");
 }
 
 function chongzhi(userId,money) {

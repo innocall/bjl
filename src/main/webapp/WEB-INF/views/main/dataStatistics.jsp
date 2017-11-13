@@ -43,19 +43,19 @@
     <div style="width: 500px;height: 300px;border: 2px solid #3366cc;margin-top: 7px;position: absolute;">
         <div style="width: 249px;height: 100%;float: left;">
             <span style="background: #0e49e8;font-size: 40px;padding: 5px;font-weight: 800;left: 0px;top: 0px;position: absolute;">闲</span>
-            <img id="xian1" src="${pageContext.request.contextPath}/image/veryhuo.com_pkp_1.jpg" width="70px;" style="position: relative;top: 70px;left: 55px;display:none;">
-            <img id="xian2" src="${pageContext.request.contextPath}/image/veryhuo.com_pkp_9.jpg" width="70px;" style="position: relative;top: 70px;left: 50px;display:none;">
-            <img id="xian3" src="${pageContext.request.contextPath}/image/veryhuo.com_pkp_8.jpg" width="70px;" style="position: relative;top: 155px;left: -60px;transform: rotate(90deg);display:none;">
-            <span style="background: #333;font-size: 40px;padding: 8px;font-weight: 800;left: 0px;top: 232px;position: absolute;color: #fff;display:none;">9</span>
+            <img id="xian1" src="${pageContext.request.contextPath}/image/veryhuo.com_pkp_1.jpg" width="70px;" style="position: relative;top: 70px;left: 55px;visibility:hidden;">
+            <img id="xian2" src="${pageContext.request.contextPath}/image/veryhuo.com_pkp_9.jpg" width="70px;" style="position: relative;top: 70px;left: 50px;visibility:hidden;">
+            <img id="xian3" src="${pageContext.request.contextPath}/image/veryhuo.com_pkp_8.jpg" width="70px;" style="position: relative;top: 155px;left: -60px;transform: rotate(90deg);visibility:hidden;">
+            <span id="xian" style="background: #333;font-size: 40px;padding: 8px;font-weight: 800;left: 0px;top: 232px;position: absolute;color: #fff;visibility:hidden;">9</span>
         </div>
         <div style="width: 2px;height: 100%;background: #3366cc;float: left"></div>
         <div style="width: 249px;height: 100%;float: right;">
             <span id="endTime" style="background: #333;font-size: 40px;padding: 5px;font-weight: 800;left: 220px;top: 0px;position: absolute;color: #FFFFFF;display: none;width: 50px;text-align: center">30</span>
             <span style="background: #e81131;font-size: 40px;padding: 5px;font-weight: 800;left: 450px;top: 0px;position: absolute;">庄</span>
-            <img id="zhuang1" src="${pageContext.request.contextPath}/image/veryhuo.com_pkp_1.jpg" width="70px;" style="position: relative;top: 70px;left: 55px;display:none;">
-            <img id="zhuang2" src="${pageContext.request.contextPath}/image/veryhuo.com_pkp_3.jpg" width="70px;" style="position: relative;top: 70px;left: 50px;display:none;">
-            <img id="zhuang3" src="${pageContext.request.contextPath}/image/veryhuo.com_pkp_6.jpg" width="70px;" style="position: relative;top: 155px;left: -60px;transform: rotate(90deg);display:none;">
-            <span style="background: #333;font-size: 40px;padding: 8px;font-weight: 800;left: 459px;top: 232px;position: absolute;color: #fff;display:none;">9</span>
+            <img id="zhuang1" src="${pageContext.request.contextPath}/image/veryhuo.com_pkp_1.jpg" width="70px;" style="position: relative;top: 70px;left: 55px;visibility:hidden;">
+            <img id="zhuang2" src="${pageContext.request.contextPath}/image/veryhuo.com_pkp_3.jpg" width="70px;" style="position: relative;top: 70px;left: 50px;visibility:hidden;">
+            <img id="zhuang3" src="${pageContext.request.contextPath}/image/veryhuo.com_pkp_6.jpg" width="70px;" style="position: relative;top: 155px;left: -60px;transform: rotate(90deg);visibility:hidden;">
+            <span id="zhuang" style="background: #333;font-size: 40px;padding: 8px;font-weight: 800;left: 459px;top: 232px;position: absolute;color: #fff;visibility:hidden;">9</span>
         </div>
     </div>
     <div style="width: 500px;position: absolute;left: 527px;">

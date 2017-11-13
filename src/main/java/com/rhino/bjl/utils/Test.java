@@ -7,30 +7,37 @@ import java.io.*;
  */
 public class Test {
 
-    public static String path = "C:\\Users\\Administrator\\Desktop\\新建文件夹 (2)"; //扑克牌路径
+    public static String path = "C:\\Users\\Administrator\\Desktop\\新建文件夹 (3)\\9"; //扑克牌路径
     public static int len = 208;
 
     public static void main(String[] args) {
         File file = new File(path);
         if (file.exists()) {
             File[] files = file.listFiles();
+            String str = "";
             for (File file2 : files) {
                 if (file2.isDirectory()) {
                     // System.out.println("文件夹:" + file2.getAbsolutePath());
                 } else {
                     String fileName = file2.getName();
-                    int startLen = 16;
-                    int endLen = fileName.length() - 4;
-                    String str = fileName.substring(startLen,endLen);
-                    fileName = fileName.substring(0,startLen) + (Integer.parseInt(str) + len) + fileName.substring(endLen,fileName.length());
-                     copyFile(file2.getAbsolutePath(),path + "\\" +fileName);
+                    String s = "imageName == \"" + file2.getName() + "\"";
+                    str = str + s  + "||";
+//                    "veryhuo.com_pkp_8.jpg"
+//                    int startLen = 16;
+//                    int endLen = fileName.length() - 4;
+//                    String str = fileName.substring(startLen,endLen);
+//                    fileName = fileName.substring(0,startLen) + (Integer.parseInt(str) + len) + fileName.substring(endLen,fileName.length());
+//                     copyFile(file2.getAbsolutePath(),path + "\\" +fileName);
                     //System.out.println("文件:" + file2.getName() + " --" + str + "--" + fileName);
                 }
             }
+            System.out.println(str);
         } else {
             System.out.println("文件不存在!");
         }
     }
+
+
 
 
     public static void copyFile(String oldPath, String newPath) {
