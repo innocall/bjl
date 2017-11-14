@@ -108,15 +108,15 @@ public class MainControl extends BaseControl {
         String zhuang2 = ParamUtils.getParameter(request, "zhuang2", "");
         String zhuang3 = ParamUtils.getParameter(request, "zhuang3", "");
         String userMoney = ParamUtils.getParameter(request, "userMoney", "");
-        String touzhuMoney = ParamUtils.getParameter(request, "touzhuMoney", "");
-        String juCount = ParamUtils.getParameter(request, "juCount", "");
+        String touzhuMoney = ParamUtils.getParameter(request, "touzhuMoney", "0");
+        String juCount = ParamUtils.getParameter(request, "juCount", "0");
         String roomId = ParamUtils.getParameter(request, "roomId", "");
-        String zhuangCount = ParamUtils.getParameter(request, "zhuangCount", "");
-        String xianCount = ParamUtils.getParameter(request, "xianCount", "");
-        String heCount = ParamUtils.getParameter(request, "heCount", "");
-        String zhuangDuiCount1 = ParamUtils.getParameter(request, "zhuangDuiCount1", "");
-        String radio = ParamUtils.getParameter(request, "radio", "");
-        String xianDuiCount = ParamUtils.getParameter(request, "xianDuiCount", "");
+        String zhuangCount = ParamUtils.getParameter(request, "zhuangCount", "0");
+        String xianCount = ParamUtils.getParameter(request, "xianCount", "0");
+        String heCount = ParamUtils.getParameter(request, "heCount", "0");
+        String zhuangDuiCount1 = ParamUtils.getParameter(request, "zhuangDuiCount1", "0");
+        String radio = ParamUtils.getParameter(request, "radio", "-1");
+        String xianDuiCount = ParamUtils.getParameter(request, "xianDuiCount", "0");
         ManageUser user = (ManageUser) request.getSession().getAttribute(AppConstans.MANAGE_USER_SESSION);
         boolean isParam = true;
         //判断大局是否存在

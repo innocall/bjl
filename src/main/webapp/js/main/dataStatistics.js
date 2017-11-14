@@ -8,8 +8,10 @@ var zhuangCount = 0;
 var xianCount = 0;
 var heCount = 0;
 var zhuangDuiCount1 = 0;
-var xianDuiCount = 0;
+var xianDuiCount1 = 0;
 var myArray=new Array()
+var xiandui = 1; //闲没有对子1 ，0有对子
+var zhuangdui = 1; //庄没有对子1 ，0有对子
 
 function init() {
     //初始化扑克数组
@@ -154,8 +156,6 @@ function faPai3(xian1,zhuang1) {
     setTimeout(function() {faPai4(xian1,zhuang1,xian2) },1000);
 }
 
-var xiandui = 1; //闲没有对子1 ，0有对子
-var zhuangdui = 1; //庄没有对子1 ，0有对子
 function faPai4(xian1,zhuang1,xian2) {
     //庄第二张
     var index = Math.floor((Math.random() * myArray.length));
@@ -172,7 +172,7 @@ function faPai4(xian1,zhuang1,xian2) {
         xiandui = 0;
     }
     if(zhuang1 == zhuang2) {
-        xiandui = 0;
+        zhuangdui = 0;
     }
     //判断是否需要博牌
     if (getCount(showData(xian1) +showData(xian2)) < 6 && zhuang < 8) {
@@ -263,58 +263,84 @@ function faPaiZhuang(xian1,zhuang1,xian2,zhuang2,xian3) {
 }
 
 function goGame(xian1,zhuang1,xian2,zhuang2,xian3,zhuang3) {
-    juCount = juCount + 1;
-    $("#juCount").html(juCount);
-    var zhuangdian = getCount(showData(zhuang1) + showData(zhuang2) + showData(zhuang3)); //庄点数
-    var xiandian = getCount(showData(xian1) + showData(xian2) + showData(xian3));  //闲点数
-    var userMoney =parseFloat($("#userMoney").text());
-    var touzhuMoney =parseFloat($("#touzhuMoney").text());
-    var clearMoney = parseFloat($("#clearMoney").text());
-    var choushui = (touzhuMoney * 0.1);
-    $("#clearMoney").html((clearMoney + choushui))
-    $("#money").val(0);
-    $("#touzhuMoney").text("0.0")
-    if (zhuangdian > xiandian) {
-        //庄赢
-        zhuangCount = zhuangCount + 1;
-        $("#zhuangCount").html(zhuangCount);
-        $("#msg").html("庄赢，结算中");
-        if (radio == 0) {
-            $("#userMoney").text(userMoney + (touzhuMoney - choushui))
-        } else {
-            $("#userMoney").text(userMoney - touzhuMoney );
-        }
-    } else if (zhuangdian < xiandian) {
-        //闲赢
-        xianCount = xianCount + 1;
-        $("#xianCount").html(xianCount);
-        $("#msg").html("闲赢，结算中");
-        if (radio == 1) {
-            $("#userMoney").text(userMoney + (touzhuMoney - choushui))
-        } else {
-            $("#userMoney").text(userMoney - touzhuMoney );
-        }
-    } else {
-        //和
-        heCount = heCount + 1;
-        $("#heCount").html(heCount);
-        $("#msg").html("和，结算中");
-        if (radio == 2) {
-            $("#userMoney").text(userMoney + (touzhuMoney - choushui))
-        } else {
-            $("#userMoney").text(userMoney - touzhuMoney );
-        }
-    }
-    if (zhuangdian == 0) {
-        zhuangDuiCount1 = zhuangDuiCount1 + 1;
-        $("#zhuangDuiCount").html(zhuangDuiCount1);
-    }
-    if (xiandui == 0) {
-        xianDuiCount = xianDuiCount + 1;
-        $("#xiandui").html(xianDuiCount);
-    }
     //提交数据到后台
-    submitDate(xian1,zhuang1,xian2,zhuang2,xian3,zhuang3,userMoney,touzhuMoney);
+    if (juCount < 66) {
+        juCount = juCount + 1;
+        $("#juCount").html(juCount);
+        var zhuangdian = getCount(showData(zhuang1) + showData(zhuang2) + showData(zhuang3)); //庄点数
+        var xiandian = getCount(showData(xian1) + showData(xian2) + showData(xian3));  //闲点数
+        var userMoney =parseFloat($("#userMoney").text());
+        var touzhuMoney =parseFloat($("#touzhuMoney").text());
+        var clearMoney = parseFloat($("#clearMoney").text());
+        var choushui = (touzhuMoney * 0.1);
+        $("#clearMoney").html((clearMoney + choushui))
+        $("#money").val(0);
+        $("#touzhuMoney").text("0.0")
+        if (zhuangdian > xiandian) {
+            //庄赢
+            zhuangCount = zhuangCount + 1;
+            $("#zhuangCount").html(zhuangCount);
+            $("#msg").html("庄赢，结算中");
+            if (radio == 0) {
+                $("#userMoney").text(userMoney + (touzhuMoney - choushui))
+            } else {
+                $("#userMoney").text(userMoney - touzhuMoney );
+            }
+        } else if (zhuangdian < xiandian) {
+            //闲赢
+            xianCount = xianCount + 1;
+            $("#xianCount").html(xianCount);
+            $("#msg").html("闲赢，结算中");
+            if (radio == 1) {
+                $("#userMoney").text(userMoney + (touzhuMoney - choushui))
+            } else {
+                $("#userMoney").text(userMoney - touzhuMoney );
+            }
+        } else {
+            //和
+            heCount = heCount + 1;
+            $("#heCount").html(heCount);
+            $("#msg").html("和，结算中");
+            if (radio == 2) {
+                $("#userMoney").text(userMoney + (touzhuMoney - choushui))
+            } else {
+                $("#userMoney").text(userMoney - touzhuMoney );
+            }
+        }
+        if (zhuangdui == 0) {
+            zhuangDuiCount1 = zhuangDuiCount1 + 1;
+            $("#zhuangDuiCount").html(zhuangDuiCount1);
+            zhuangdui = 1;
+        }
+        if (xiandui == 0) {
+            xianDuiCount1 = xianDuiCount1 + 1;
+            $("#xianDuiCount").html(xianDuiCount1);
+            xiandui = 1;
+        }
+        submitDate(xian1,zhuang1,xian2,zhuang2,xian3,zhuang3,userMoney,touzhuMoney);
+    } else {
+        //新的一大局
+        isStart = 0;
+        mytime=null;
+        isFaPai = false;
+        juCount = 0;
+        zhuangCount = 0;
+        xianCount = 0;
+        heCount = 0;
+        zhuangDuiCount1 = 0;
+        xianDuiCount1 = 0;
+        xiandui = 1;
+        zhuangdui = 1;
+        roomId = "";
+        myArray.clear();
+        init();
+        $("#startBut").html("开始游戏");
+        $("#endTime").html(time);
+        $("#endTime").css("display","block");
+        $("#msg").html("上一局结束，请开始下一局游戏");
+        $("#msg").css("display","initial");
+        $("#touzhuId").removeAttr("disabled");
+    }
 }
 
 /**
@@ -344,7 +370,7 @@ function submitDate(xian1,zhuang1,xian2,zhuang2,xian3,zhuang3,userMoney,touzhuMo
             xianCount:xianCount,
             heCount:heCount,
             zhuangDuiCount1:zhuangDuiCount1,
-            xianDuiCount:xianDuiCount,
+            xianDuiCount:xianDuiCount1,
             radio:radio,
             roomId:roomId
         },
