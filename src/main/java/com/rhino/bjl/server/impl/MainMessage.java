@@ -60,7 +60,7 @@ public class MainMessage implements IMainMessage {
     }
 
     @Override
-    public boolean saveReetData(String xian1, String xian2, String xian3, String zhuang1, String zhuang2, String zhuang3, String touzhuMoney, String userId, String roomId, String radio) {
+    public boolean saveReetData(String xian1, String xian2, String xian3, String zhuang1, String zhuang2, String zhuang3, String touzhuMoney, String userId, String roomId, String radio,String zhuangdian,String xiandian) {
         HashMap<String,Object> params = new HashMap<String,Object>();
         String id = UUID.randomUUID().toString();
         params.put("ID", id);
@@ -74,6 +74,8 @@ public class MainMessage implements IMainMessage {
         params.put("XIAN3", xian3);
         params.put("TOUZHUMONEY", touzhuMoney);
         params.put("TOUZHU", radio);
+        params.put("ZHUANGVALUE", zhuangdian);
+        params.put("XIANVALUE", xiandian);
         params.put("TIME", DateUtils.getDate5());
         return mainManageMapper.saveReetData(params);
     }

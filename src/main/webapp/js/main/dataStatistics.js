@@ -317,7 +317,7 @@ function goGame(xian1,zhuang1,xian2,zhuang2,xian3,zhuang3) {
             $("#xianDuiCount").html(xianDuiCount1);
             xiandui = 1;
         }
-        submitDate(xian1,zhuang1,xian2,zhuang2,xian3,zhuang3,userMoney,touzhuMoney);
+        submitDate(xian1,zhuang1,xian2,zhuang2,xian3,zhuang3,userMoney,touzhuMoney,zhuangdian,xiandian);
     } else {
         //新的一大局
         isStart = 0;
@@ -355,7 +355,7 @@ function goGame(xian1,zhuang1,xian2,zhuang2,xian3,zhuang3) {
  * @param touzhuMoney
  */
 var roomId;
-function submitDate(xian1,zhuang1,xian2,zhuang2,xian3,zhuang3,userMoney,touzhuMoney) {
+function submitDate(xian1,zhuang1,xian2,zhuang2,xian3,zhuang3,userMoney,touzhuMoney,zhuangdian,xiandian) {
     $.post("submitDate",{
             xian1:xian1,
             zhuang1:zhuang1,
@@ -371,6 +371,8 @@ function submitDate(xian1,zhuang1,xian2,zhuang2,xian3,zhuang3,userMoney,touzhuMo
             heCount:heCount,
             zhuangDuiCount1:zhuangDuiCount1,
             xianDuiCount:xianDuiCount1,
+            zhuangdian:zhuangdian,
+            xiandian:xiandian,
             radio:radio,
             roomId:roomId
         },

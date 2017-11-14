@@ -3,9 +3,14 @@ package com.rhino.bjl.control;
 import com.rhino.bjl.bean.ManageUser;
 import com.rhino.bjl.constans.AppConstans;
 import com.rhino.bjl.server.IMainMessage;
+import com.rhino.bjl.utils.JsonUtil;
 import com.rhino.bjl.utils.ParamUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,7 +20,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.charset.Charset;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping(value="/private/main")
@@ -117,6 +125,8 @@ public class MainControl extends BaseControl {
         String zhuangDuiCount1 = ParamUtils.getParameter(request, "zhuangDuiCount1", "0");
         String radio = ParamUtils.getParameter(request, "radio", "-1");
         String xianDuiCount = ParamUtils.getParameter(request, "xianDuiCount", "0");
+        String zhuangdian = ParamUtils.getParameter(request, "zhuangdian", "0");
+        String xiandian = ParamUtils.getParameter(request, "xiandian", "0");
         ManageUser user = (ManageUser) request.getSession().getAttribute(AppConstans.MANAGE_USER_SESSION);
         boolean isParam = true;
         //判断大局是否存在
@@ -137,7 +147,7 @@ public class MainControl extends BaseControl {
             //保存每一局数据
             msg = roomId;
             //更新数据
-            boolean isSucces = mainMessage.saveReetData(xian1,xian2,xian3,zhuang1,zhuang2,zhuang3,touzhuMoney,user.getID(),roomId,radio);
+            boolean isSucces = mainMessage.saveReetData(xian1,xian2,xian3,zhuang1,zhuang2,zhuang3,touzhuMoney,user.getID(),roomId,radio,zhuangdian,xiandian);
             if(!isSucces) {
                 status = "400";
                 msg = "保存失败";
@@ -147,6 +157,45 @@ public class MainControl extends BaseControl {
         printMsgToPage(response, status, msg, out);
     }
 
+
+    @RequestMapping(value = "reetAllData", method = RequestMethod.POST)
+    public ResponseEntity<String> reetAllData(HttpServletRequest request) {
+        HttpHeaders headers = new HttpHeaders();
+        MediaType mediaType = new MediaType("text", "html", Charset.forName("UTF-8"));
+        headers.setContentType(mediaType);
+        Map<String, Object> param = new HashMap<String, Object>();
+        int start = ParamUtils.getIntParameter(request, "start", 0);
+        int limit = ParamUtils.getIntParameter(request, "limit", 80);
+        String category = ParamUtils.getParameter(request, "category", "");
+        String category2 = ParamUtils.getParameter(request, "category2", "");
+        String startDate = ParamUtils.getParameter(request, "startDate", "");
+        String endDate = ParamUtils.getParameter(request, "endDate", "");
+        String query = ParamUtils.getParameter(request, "query", "");
+        List<HashMap<String, Object>> yhgl;
+        int count = 0;
+      /*  if (category.compareTo("专家问诊") == 0) {
+            yhgl = mainMessage.findTeacherByTypeAndName(AppConstans.VIDEO_TYPE,citycode, start, limit);
+            count = mainMessage.findTeacherByTypeAndNameCount(AppConstans.VIDEO_TYPE,citycode).size();
+        } else if (category.compareTo("老年大学") == 0) {
+            yhgl = mainMessage.findTeacherByTypeAndName(AppConstans.VIDEO_TYPE0,companyname, start, limit);
+            count = mainMessage.findTeacherByTypeAndNameCount(AppConstans.VIDEO_TYPE0,companyname).size();
+        } else {
+            yhgl = mainMessage.findAllTeacher(start, limit);
+            count = mainMessage.findAllTeacherCount();
+        }*/
+      /*  for (int i = 0; i < yhgl.size(); i++) {
+            yhgl.get(i).remove("IsDel");
+            //yhgl.get(i).remove("Profile");
+            yhgl.get(i).remove("AddTime");
+            //yhgl.get(i).put("AddTime",yhgl.get(i).get("AddTime").toString());
+        }*/
+        //param.put("yhgl", yhgl);
+        param.put("count", count);
+        String json = JsonUtil.toJsonString(param);
+        ResponseEntity<String> responseEntity = new ResponseEntity<String>(
+                json, headers, HttpStatus.OK);
+        return responseEntity;
+    }
 
     private void printMsgToPage(HttpServletResponse response, String status, String msg, PrintWriter out) {
         try {

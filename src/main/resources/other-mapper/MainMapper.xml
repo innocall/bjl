@@ -26,9 +26,8 @@
 
     <insert id="saveReetData" parameterType="java.util.HashMap">
         <![CDATA[
-         insert into reet_tbl(ID,USERID,ROOMID,ZHUANG1,ZHUANG2,ZHUANG3,XIAN1,XIAN2,XIAN3,TOUZHUMONEY,TOUZHU,TIME) values ( #{ID}, #{USERID}, #{ROOMID},#{ZHUANG1}, #{ZHUANG2}, #{ZHUANG3},#{XIAN1},#{XIAN2},#{XIAN3},#{TOUZHUMONEY},#{TOUZHU},#{TIME})
+         insert into reet_tbl(ID,USERID,ROOMID,ZHUANG1,ZHUANG2,ZHUANG3,XIAN1,XIAN2,XIAN3,TOUZHUMONEY,TOUZHU,TIME,ZHUANGVALUE,XIANVALUE) values ( #{ID}, #{USERID}, #{ROOMID},#{ZHUANG1}, #{ZHUANG2}, #{ZHUANG3},#{XIAN1},#{XIAN2},#{XIAN3},#{TOUZHUMONEY},#{TOUZHU},#{TIME},#{ZHUANGVALUE},#{XIANVALUE})
        ]]>
     </insert>
-
 
 </mapper>
