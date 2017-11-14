@@ -43,7 +43,7 @@ Ext.onReady(function(){
 						}
 					}
 				]
-			},
+			}/*,
 			'->',
 			{
 				text:'刷新当前页面',
@@ -51,7 +51,7 @@ Ext.onReady(function(){
 					var p = main.getActiveTab();
 					p.body.dom.innerHTML=p.body.dom.innerHTML;
 				}
-			}
+			}*/
 		]
 	});
 	

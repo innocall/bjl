@@ -7,7 +7,7 @@ var juCount = 0;
 var zhuangCount = 0;
 var xianCount = 0;
 var heCount = 0;
-var zhuangDuiCount = 0;
+var zhuangDuiCount1 = 0;
 var xianDuiCount = 0;
 var myArray=new Array()
 
@@ -58,6 +58,7 @@ function startGame() {
         $("#endTime").css("display","block");
         $("#msg").html("请下注");
         $("#msg").css("display","initial");
+        $("#touzhuId").removeAttr("disabled");
         isStart = 1;
         settime();
     } else if (isStart == 1){
@@ -283,16 +284,28 @@ function goGame(xian1,zhuang1,xian2,zhuang2,xian3,zhuang3) {
         $("#msg").html("和，结算中");
     }
     if (zhuangdian == 0) {
-        zhuangdian = zhuangdian + 1;
-        $("#zhuangDuiCount").html(zhuangdian);
+        zhuangDuiCount1 = zhuangDuiCount1 + 1;
+        $("#zhuangDuiCount").html(zhuangDuiCount1);
     }
     if (xiandui == 0) {
-        xiandui = xiandui + 1;
-        $("#xiandui").html(xiandui);
+        xianCount = xianCount + 1;
+        $("#xiandui").html(xianCount);
     }
-    //提交数据到数据库
-   // alert(xian1 + "," +  xian2+ "," +  xian3 + "," +  zhuang1 + "," +  zhuang2 + "," +  zhuang3);
+    setTimeout(function() {goOnGame() },5000);
+}
 
+function goOnGame() {
+    isFaPai = false;
+    isStart = 0;
+    $("#xian1").css("visibility","hidden");
+    $("#xian2").css("visibility","hidden");
+    $("#xian3").css("visibility","hidden");
+    $("#xian").css("visibility","hidden");
+    $("#zhuang1").css("visibility","hidden");
+    $("#zhuang2").css("visibility","hidden");
+    $("#zhuang3").css("visibility","hidden");
+    $("#zhuang").css("visibility","hidden");
+    startGame();
 }
 
 function chongzhi(userId,money) {
@@ -324,4 +337,34 @@ function clearMoney(userId) {
             alert(obj.msg);
         }
     );
+}
+
+/**
+ * 投注
+ */
+function touzhu() {
+    var money = parseFloat($("#money").val());
+    var userMoney =parseFloat($("#userMoney").text());
+    var touzhuMoney =parseFloat($("#touzhuMoney").text());
+    if (money <= 0) {
+        alert("请输入投注金额");
+        return;
+    }
+    if (money > userMoney) {
+        alert("可用余额为：" + userMoney);
+        return;
+    }
+    if (radio == -1) {
+        alert("请选择投注方" );
+        return;
+    }
+    $("#touzhuMoney").html(money + touzhuMoney);
+    $("#userMoney").html(userMoney - money);
+
+
+}
+
+var radio = -1;
+function getValue(value){
+    radio = value;
 }

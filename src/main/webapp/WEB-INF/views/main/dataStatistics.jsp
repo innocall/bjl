@@ -31,12 +31,12 @@
 <body>
     <div style="color: #3366cc;">扑克：8副&nbsp;&nbsp;&nbsp;&nbsp;总共:416张&nbsp;&nbsp;&nbsp;&nbsp;首切牌：10张
         <span style="margin-left: 20px;font-size: 22px;">
-            局数：<span id="juCount">0</span>
-            &nbsp;&nbsp;&nbsp;&nbsp;庄：<span id="zhuangCount">0</span>
-            &nbsp;&nbsp;&nbsp;&nbsp;闲： <span id="xianCount">0</span>
-            &nbsp;&nbsp;&nbsp;&nbsp;和：<span id="heCount" >0</span>
-            &nbsp;&nbsp;&nbsp;&nbsp;庄对：<span id="zhuangDuiCount">0</span>
-            &nbsp;&nbsp;&nbsp;&nbsp;闲对：<span id="xianDuiCount">0</span>
+            局数：<span id="juCount" style="color: #ff4545">0</span>
+            &nbsp;&nbsp;&nbsp;&nbsp;庄：<span id="zhuangCount" style="color: #ff4545">0</span>
+            &nbsp;&nbsp;&nbsp;&nbsp;闲： <span id="xianCount" style="color: #ff4545">0</span>
+            &nbsp;&nbsp;&nbsp;&nbsp;和：<span id="heCount"  style="color: #ff4545">0</span>
+            &nbsp;&nbsp;&nbsp;&nbsp;庄对：<span id="zhuangDuiCount" style="color: #ff4545">0</span>
+            &nbsp;&nbsp;&nbsp;&nbsp;闲对：<span id="xianDuiCount" style="color: #ff4545">0</span>
         </span>
         <span id="msg">请下注</span>
     </div>
@@ -69,7 +69,7 @@
             </tr>
             <tr>
                 <th>投注金额</th>
-                <th>0.0</th>
+                <th id="touzhuMoney">0.0</th>
                 <th></th>
             </tr>
             <tr>
@@ -84,20 +84,20 @@
             <tr style="height: 40px;">
                 <th >投注金额：</th>
                 <th>
-                    <input type="number" style="width: 150px;height: 32px;font-size: 20px;" value="0">
+                    <input id="money" type="number" style="width: 150px;height: 32px;font-size: 20px;" value="0">
                 </th>
             </tr>
             <tr style="height: 40px;">
                 <th>投注选择：</th>
                 <th>
-                    <input type="radio" name="radio" value="0">庄
-                    <input type="radio" name="radio" value="1">闲
-                    <input type="radio" name="radio" value="2">和
+                    <input type="radio" name="radio" value="0" onclick="getValue(this.value)">庄
+                    <input type="radio" name="radio" value="1" onclick="getValue(this.value)">闲
+                    <input type="radio" name="radio" value="2" onclick="getValue(this.value)">和
                 </th>
             </tr>
             <tr style="margin: 0 auto;height: 50px;">
                 <th colspan="3">
-                    <button id="touzhuId" style="font-size: 20px;padding: 3px;" >确认投注</button>
+                    <button id="touzhuId" style="font-size: 20px;padding: 3px;" onclick="touzhu();">确认投注</button>
                 </th>
             </tr>
         </table>
