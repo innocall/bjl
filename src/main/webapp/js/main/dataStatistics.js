@@ -267,31 +267,101 @@ function goGame(xian1,zhuang1,xian2,zhuang2,xian3,zhuang3) {
     $("#juCount").html(juCount);
     var zhuangdian = getCount(showData(zhuang1) + showData(zhuang2) + showData(zhuang3)); //庄点数
     var xiandian = getCount(showData(xian1) + showData(xian2) + showData(xian3));  //闲点数
+    var userMoney =parseFloat($("#userMoney").text());
+    var touzhuMoney =parseFloat($("#touzhuMoney").text());
+    var clearMoney = parseFloat($("#clearMoney").text());
+    var choushui = (touzhuMoney * 0.1);
+    $("#clearMoney").html((clearMoney + choushui))
+    $("#money").val(0);
+    $("#touzhuMoney").text("0.0")
     if (zhuangdian > xiandian) {
         //庄赢
         zhuangCount = zhuangCount + 1;
         $("#zhuangCount").html(zhuangCount);
         $("#msg").html("庄赢，结算中");
+        if (radio == 0) {
+            $("#userMoney").text(userMoney + (touzhuMoney - choushui))
+        } else {
+            $("#userMoney").text(userMoney - touzhuMoney );
+        }
     } else if (zhuangdian < xiandian) {
         //闲赢
         xianCount = xianCount + 1;
         $("#xianCount").html(xianCount);
         $("#msg").html("闲赢，结算中");
+        if (radio == 1) {
+            $("#userMoney").text(userMoney + (touzhuMoney - choushui))
+        } else {
+            $("#userMoney").text(userMoney - touzhuMoney );
+        }
     } else {
         //和
         heCount = heCount + 1;
         $("#heCount").html(heCount);
         $("#msg").html("和，结算中");
+        if (radio == 2) {
+            $("#userMoney").text(userMoney + (touzhuMoney - choushui))
+        } else {
+            $("#userMoney").text(userMoney - touzhuMoney );
+        }
     }
     if (zhuangdian == 0) {
         zhuangDuiCount1 = zhuangDuiCount1 + 1;
         $("#zhuangDuiCount").html(zhuangDuiCount1);
     }
     if (xiandui == 0) {
-        xianCount = xianCount + 1;
-        $("#xiandui").html(xianCount);
+        xianDuiCount = xianDuiCount + 1;
+        $("#xiandui").html(xianDuiCount);
     }
-    setTimeout(function() {goOnGame() },5000);
+    //提交数据到后台
+    submitDate(xian1,zhuang1,xian2,zhuang2,xian3,zhuang3,userMoney,touzhuMoney);
+}
+
+/**
+ * 提交
+ * @param xian1
+ * @param zhuang1
+ * @param xian2
+ * @param zhuang2
+ * @param xian3
+ * @param zhuang3
+ * @param userMoney
+ * @param touzhuMoney
+ */
+var roomId;
+function submitDate(xian1,zhuang1,xian2,zhuang2,xian3,zhuang3,userMoney,touzhuMoney) {
+    $.post("submitDate",{
+            xian1:xian1,
+            zhuang1:zhuang1,
+            xian2:xian2,
+            zhuang2:zhuang2,
+            xian3:xian3,
+            zhuang3:zhuang3,
+            userMoney:userMoney,
+            touzhuMoney:touzhuMoney,
+            juCount:juCount,
+            zhuangCount:zhuangCount,
+            xianCount:xianCount,
+            heCount:heCount,
+            zhuangDuiCount1:zhuangDuiCount1,
+            xianDuiCount:xianDuiCount,
+            radio:radio,
+            roomId:roomId
+        },
+        function(data,textStatus){
+            var obj = eval('(' + data + ')');
+            var status = obj.status;
+            if(status == 200) {
+                roomId = obj.msg;
+               // alert(obj.msg);
+                setTimeout(function() {goOnGame() },5000);
+            } else {
+                alert("游戏保存失败，请刷新页面重试");
+            }
+            //alert(obj.msg);
+        }
+    );
+
 }
 
 function goOnGame() {
@@ -360,8 +430,6 @@ function touzhu() {
     }
     $("#touzhuMoney").html(money + touzhuMoney);
     $("#userMoney").html(userMoney - money);
-
-
 }
 
 var radio = -1;

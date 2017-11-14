@@ -18,4 +18,17 @@
         ]]>
     </update>
 
+    <insert id="saveRoomData" parameterType="java.util.HashMap">
+        <![CDATA[
+         insert into room_tbl(ID,USERID,TOTALCOUNT,MONEY,ZHUANGCOUNT,XIANCOUNT,HECOUNT,ZHUANGDUICOUNT,XIANDUICOUNT,STRARTTIME) values ( #{ID}, #{USERID}, #{TOTALCOUNT},#{MONEY}, #{ZHUANGCOUNT}, #{XIANCOUNT},#{HECOUNT},#{ZHUANGDUICOUNT},#{XIANDUICOUNT},#{STRARTTIME})
+       ]]>
+    </insert>
+
+    <insert id="saveReetData" parameterType="java.util.HashMap">
+        <![CDATA[
+         insert into reet_tbl(ID,USERID,ROOMID,ZHUANG1,ZHUANG2,ZHUANG3,XIAN1,XIAN2,XIAN3,TOUZHUMONEY,TOUZHU,TIME) values ( #{ID}, #{USERID}, #{ROOMID},#{ZHUANG1}, #{ZHUANG2}, #{ZHUANG3},#{XIAN1},#{XIAN2},#{XIAN3},#{TOUZHUMONEY},#{TOUZHU},#{TIME})
+       ]]>
+    </insert>
+
+
 </mapper>

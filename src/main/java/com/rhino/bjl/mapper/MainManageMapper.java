@@ -27,4 +27,16 @@ public class MainManageMapper {
     public boolean updateZhuangMoneyByUserId(HashMap<String, Object> params) {
         return lemonDB.update("updateZhuangMoneyByUserId",params);
     }
+
+    public boolean saveRoomData(HashMap<String, Object> params) {
+        return lemonDB.insert("saveRoomData", params);
+    }
+
+    public boolean saveReetData(HashMap<String, Object> params) {
+        return lemonDB.insert("saveReetData", params);
+    }
+
+    public boolean updateRoomData(HashMap<String, Object> params) {
+        return  lemonDB.updateDynamic("room_tbl", "ID", params);
+    }
 }
