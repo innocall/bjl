@@ -7,6 +7,8 @@ var juCount = 0;
 var zhuangCount = 0;
 var xianCount = 0;
 var heCount = 0;
+var zhuangDuiCount = 0;
+var xianDuiCount = 0;
 var myArray=new Array()
 
 function init() {
@@ -151,6 +153,8 @@ function faPai3(xian1,zhuang1) {
     setTimeout(function() {faPai4(xian1,zhuang1,xian2) },1000);
 }
 
+var xiandui = 1; //闲没有对子1 ，0有对子
+var zhuangdui = 1; //庄没有对子1 ，0有对子
 function faPai4(xian1,zhuang1,xian2) {
     //庄第二张
     var index = Math.floor((Math.random() * myArray.length));
@@ -162,12 +166,19 @@ function faPai4(xian1,zhuang1,xian2) {
     var zhuang = getCount(showData(zhuang1) + showData(zhuang2));
     $("#zhuang").html(zhuang);
     $("#zhuang").css("visibility","visible ");
+    //判断是否有对子
+    if(xian1 == xian2) {
+        xiandui = 0;
+    }
+    if(zhuang1 == zhuang2) {
+        xiandui = 0;
+    }
     //判断是否需要博牌
-    if (getCount(xian1 + xian2) < 6 && zhuang < 8) {
+    if (getCount(showData(xian1) +showData(xian2)) < 6 && zhuang < 8) {
         //闲需要博牌
         setTimeout(function() {faPaiXian(xian1,zhuang1,xian2,zhuang2) },1000);
     } else {
-        if (getCount(zhuang1 + zhuang2) < 3 && xian < 8) {
+        if (zhuang < 3 && getCount(showData(xian1) +showData(xian2)) < 8) {
             setTimeout(function() {faPaiZhuang(xian1,zhuang1,xian2,zhuang2,0) },1000);
         } else {
             goGame(xian1,zhuang1,xian2,zhuang2,0,0);
@@ -184,7 +195,7 @@ function faPaiXian(xian1,zhuang1,xian2,zhuang2) {
     var xian3 = initData(imageName); //第一张牌点数
     $("#xian").html(getCount(showData(xian1) + showData(xian2) + showData(xian3)));
     $("#xian").css("visibility","visible ");
-    var zhuang = getCount(zhuang1 + zhuang2);
+    var zhuang =  getCount(showData(zhuang1) + showData(zhuang2));
     if (zhuang ==  0 || zhuang ==  1 || zhuang ==  2) {
         setTimeout(function() {faPaiZhuang(xian1,zhuang1,xian2,zhuang2,xian3) },1000);
     } else if (zhuang == 3) {
@@ -241,15 +252,44 @@ function faPaiZhuang(xian1,zhuang1,xian2,zhuang2,xian3) {
     $("#zhuang3").attr("src","/bjl/image/" + imageName);
     $("#zhuang3").css("visibility","visible ");
     var zhuang3 = initData(imageName);
-    $("#zhuang").html(getCount(zhuang1 + zhuang2 + zhuang3));
+    $("#zhuang").html(getCount(showData(zhuang1) + showData(zhuang2) + showData(zhuang3)));
     $("#zhuang").css("visibility","visible ");
+    //判断是否有对子
+    if(zhuang1 == zhuang2 || zhuang1 == zhuang3 || zhuang2 == zhuang3) {
+        zhuangdui = 0;
+    }
     goGame(xian1,zhuang1,xian2,zhuang2,xian3,zhuang3);
 }
 
 function goGame(xian1,zhuang1,xian2,zhuang2,xian3,zhuang3) {
     juCount = juCount + 1;
     $("#juCount").html(juCount);
-    $("#msg").html("结算中");
+    var zhuangdian = getCount(showData(zhuang1) + showData(zhuang2) + showData(zhuang3)); //庄点数
+    var xiandian = getCount(showData(xian1) + showData(xian2) + showData(xian3));  //闲点数
+    if (zhuangdian > xiandian) {
+        //庄赢
+        zhuangCount = zhuangCount + 1;
+        $("#zhuangCount").html(zhuangCount);
+        $("#msg").html("庄赢，结算中");
+    } else if (zhuangdian < xiandian) {
+        //闲赢
+        xianCount = xianCount + 1;
+        $("#xianCount").html(xianCount);
+        $("#msg").html("闲赢，结算中");
+    } else {
+        //和
+        heCount = heCount + 1;
+        $("#heCount").html(heCount);
+        $("#msg").html("和，结算中");
+    }
+    if (zhuangdian == 0) {
+        zhuangdian = zhuangdian + 1;
+        $("#zhuangDuiCount").html(zhuangdian);
+    }
+    if (xiandui == 0) {
+        xiandui = xiandui + 1;
+        $("#xiandui").html(xiandui);
+    }
     //提交数据到数据库
    // alert(xian1 + "," +  xian2+ "," +  xian3 + "," +  zhuang1 + "," +  zhuang2 + "," +  zhuang3);
 
