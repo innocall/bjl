@@ -83,8 +83,9 @@ Ext.onReady(function(){
 			expanded:true,
 			id:'0',
             children : [
-                {id:'1', text : '<font style="font-size: 15px">数据统计</font>' , leaf : true },
-                {id:'2', text : '<font style="font-size: 15px">数据分析</font>' , leaf : true }
+                {id:'1', text : '<font style="font-size: 15px">单机游戏</font>' , leaf : true },
+                {id:'3', text : '<font style="font-size: 15px">大局分析</font>' , leaf : true },
+                {id:'2', text : '<font style="font-size: 15px">小局分析</font>' , leaf : true }
             ]
         },
 	    listeners:{

@@ -23,6 +23,8 @@
     <script type="text/javascript" src="${pageContext.request.contextPath }/extjs/ext-all.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath }/extjs/ext-lang-zh_CN.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath }/extjs/ux/ProgressBarPager.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath }/js/main/data.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath }/js/clipboard.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath }/js/main/dataAnalysis.js"></script>
     <script type="text/javascript">
         Ext.BLANK_IMAGE_URL = '${pageContext.request.contextPath }/extjs/resources/images/default/s.gif';

@@ -3,10 +3,12 @@ package com.rhino.bjl.server.impl;
 import com.rhino.bjl.mapper.MainManageMapper;
 import com.rhino.bjl.server.IMainMessage;
 import com.rhino.bjl.utils.DateUtils;
+import com.rhino.bjl.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -94,5 +96,100 @@ public class MainMessage implements IMainMessage {
         params.put("XIANDUICOUNT", xianDuiCount); //闲对数量
         params.put("ENDTIME", DateUtils.getDate5()); //结束时间
         return mainManageMapper.updateRoomData(params);
+    }
+
+    @Override
+    public List<HashMap<String, Object>> findReetList(String category, String category2, String startDate, String endDate, String query, int start, int limit) {
+        String sql = "SELECT * FROM reet_tbl";
+        //判断单 双
+        sql = formatSqls(category, category2, startDate, endDate, query, sql);
+        sql = sql + " ORDER BY TIME ASC limit "+ start +"," + limit;
+        System.out.println("SQL=" + sql);
+        return mainManageMapper.findReetList(sql);
+    }
+
+    private String formatSqls(String category, String category2, String startDate, String endDate, String query, String sql) {
+        if (category2.equals("全部")){
+            sql = sql + " WHERE TIME BETWEEN '" + startDate +"' AND '" + endDate + "'";
+            if (category.equals("全部")) {
+                if (org.apache.commons.lang.StringUtils.isNotBlank(query)) {
+                    String qu = StringUtils.formatSql(query);
+                    sql = sql + " AND (ZHUANG1 in " + qu +" OR ZHUANG2 in " + qu +" OR ZHUANG3 in " + qu +" OR XIAN1 in " + qu +" OR XIAN2 in " + qu +" OR XIAN3 in " + qu +" OR ZHUANGVALUE in " + qu +" OR XIANVALUE in " + qu +")";
+                }
+            } else if(category.equals("庄")){
+                if (org.apache.commons.lang.StringUtils.isNotBlank(query)) {
+                    String qu = StringUtils.formatSql(query);
+                    sql = sql + " AND (ZHUANG1 in " + qu +" OR ZHUANG2 in " + qu +" OR ZHUANG3 in " + qu + " OR ZHUANGVALUE in " + qu +")";
+                }
+            } else if (category.equals("闲")) {
+                if (org.apache.commons.lang.StringUtils.isNotBlank(query)) {
+                    String qu = StringUtils.formatSql(query);
+                    sql = sql + " AND (XIAN1 in " + qu +" OR XIAN2 in " + qu +" OR XIAN3 in " + qu +" OR XIANVALUE in " + qu +")";
+                }
+            }
+        } else if(category2.equals("单数")){
+            sql = sql + " WHERE TIME BETWEEN '" + startDate +"' AND '" + endDate + "'";
+            if (category.equals("全部")) {
+                if (org.apache.commons.lang.StringUtils.isNotBlank(query)) {
+                    String qu = StringUtils.formatSql(query);
+                    sql = sql + " AND (ZHUANG1 in " + qu +" OR ZHUANG2 in " + qu +" OR ZHUANG3 in " + qu +" OR XIAN1 in " + qu +" OR XIAN2 in " + qu +" OR XIAN3 in " + qu +" OR ZHUANGVALUE in " + qu +" OR XIANVALUE in " + qu +")" +
+                            " AND (XIAN1%2!=0 OR XIAN2%2!=0 OR XIAN3%2!=0 OR XIANVALUE%2!=0 OR ZHUANG1%2!=0 OR ZHUANG2%2!=0 OR ZHUANG3%2!=0 OR ZHUANGVALUE%2!=0)";
+                } else {
+                    sql = sql + " AND (XIAN1%2!=0 OR XIAN2%2!=0 OR XIAN3%2!=0 OR XIANVALUE%2!=0 OR ZHUANG1%2!=0 OR ZHUANG2%2!=0 OR ZHUANG3%2!=0 OR ZHUANGVALUE%2!=0)";
+                }
+            } else if(category.equals("庄")){
+                if (org.apache.commons.lang.StringUtils.isNotBlank(query)) {
+                    String qu = StringUtils.formatSql(query);
+                    sql = sql + " AND (ZHUANG1 in " + qu +" OR ZHUANG2 in " + qu +" OR ZHUANG3 in " + qu + " OR ZHUANGVALUE in " + qu +")" +
+                            " AND (ZHUANG1%2!=0 OR ZHUANG2%2!=0 OR ZHUANG3%2!=0 OR ZHUANGVALUE%2!=0)";
+                } else {
+                    sql = sql +  " AND (ZHUANG1%2!=0 OR ZHUANG2%2!=0 OR ZHUANG3%2!=0 OR ZHUANGVALUE%2!=0)";
+                }
+            } else if (category.equals("闲")) {
+                if (org.apache.commons.lang.StringUtils.isNotBlank(query)) {
+                    String qu = StringUtils.formatSql(query);
+                    sql = sql + " AND (XIAN1 in " + qu +" OR XIAN2 in " + qu +" OR XIAN3 in " + qu +" OR XIANVALUE in " + qu +")" +
+                            " AND (XIAN1%2!=0 OR XIAN2%2!=0 OR XIAN3%2!=0 OR XIANVALUE%2!=0)";
+                } else {
+                    sql = sql +  " AND (XIAN1%2!=0 OR XIAN2%2!=0 OR XIAN3%2!=0 OR XIANVALUE%2!=0)";
+                }
+            }
+        } else if (category2.equals("双数")) {
+            sql = sql + " WHERE TIME BETWEEN '" + startDate +"' AND '" + endDate + "'";
+            if (category.equals("全部")) {
+                if (org.apache.commons.lang.StringUtils.isNotBlank(query)) {
+                    String qu = StringUtils.formatSql(query);
+                    sql = sql + " AND (ZHUANG1 in " + qu +" OR ZHUANG2 in " + qu +" OR ZHUANG3 in " + qu +" OR XIAN1 in " + qu +" OR XIAN2 in " + qu +" OR XIAN3 in " + qu +" OR ZHUANGVALUE in " + qu +" OR XIANVALUE in " + qu +")" +
+                            " AND (XIAN1%2=0 OR XIAN2%2=0 OR XIAN3%2=0 OR XIANVALUE%2=0 OR ZHUANG1%2=0 OR ZHUANG2%2=0 OR ZHUANG3%2=0 OR ZHUANGVALUE%2=0)";
+                } else {
+                    sql = sql + " AND (XIAN1%2=0 OR XIAN2%2=0 OR XIAN3%2=0 OR XIANVALUE%2=0 OR ZHUANG1%2=0 OR ZHUANG2%2=0 OR ZHUANG3%2=0 OR ZHUANGVALUE%2=0)";
+                }
+            } else if(category.equals("庄")){
+                if (org.apache.commons.lang.StringUtils.isNotBlank(query)) {
+                    String qu = StringUtils.formatSql(query);
+                    sql = sql + " AND (ZHUANG1 in " + qu +" OR ZHUANG2 in " + qu +" OR ZHUANG3 in " + qu + " OR ZHUANGVALUE in " + qu +")" +
+                            " AND (ZHUANG1%2=0 OR ZHUANG2%2=0 OR ZHUANG3%2=0 OR ZHUANGVALUE%2=0)";
+                } else {
+                    sql = sql +  " AND (ZHUANG1%2=0 OR ZHUANG2%2=0 OR ZHUANG3%2=0 OR ZHUANGVALUE%2=0)";
+                }
+            } else if (category.equals("闲")) {
+                if (org.apache.commons.lang.StringUtils.isNotBlank(query)) {
+                    String qu = StringUtils.formatSql(query);
+                    sql = sql + " AND (XIAN1 in " + qu +" OR XIAN2 in " + qu +" OR XIAN3 in " + qu +" OR XIANVALUE in " + qu +")" +
+                            " AND (XIAN1%2=0 OR XIAN2%2=0 OR XIAN3%2=0 OR XIANVALUE%2=0)";
+                } else {
+                    sql = sql + " AND (XIAN1%2=0 OR XIAN2%2=0 OR XIAN3%2=0 OR XIANVALUE%2=0)";
+                }
+            }
+        }
+        return sql;
+    }
+
+    @Override
+    public int findReetListCount(String category, String category2, String startDate, String endDate, String query, int start, int limit) {
+        String sql = "SELECT Count(*) AS NUMBER FROM reet_tbl";
+        //判断单 双
+        sql = formatSqls(category, category2, startDate, endDate, query, sql);
+        return mainManageMapper.findReetListCount(sql);
     }
 }

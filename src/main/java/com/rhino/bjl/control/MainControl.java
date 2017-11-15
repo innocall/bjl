@@ -171,25 +171,9 @@ public class MainControl extends BaseControl {
         String startDate = ParamUtils.getParameter(request, "startDate", "");
         String endDate = ParamUtils.getParameter(request, "endDate", "");
         String query = ParamUtils.getParameter(request, "query", "");
-        List<HashMap<String, Object>> yhgl;
-        int count = 0;
-      /*  if (category.compareTo("专家问诊") == 0) {
-            yhgl = mainMessage.findTeacherByTypeAndName(AppConstans.VIDEO_TYPE,citycode, start, limit);
-            count = mainMessage.findTeacherByTypeAndNameCount(AppConstans.VIDEO_TYPE,citycode).size();
-        } else if (category.compareTo("老年大学") == 0) {
-            yhgl = mainMessage.findTeacherByTypeAndName(AppConstans.VIDEO_TYPE0,companyname, start, limit);
-            count = mainMessage.findTeacherByTypeAndNameCount(AppConstans.VIDEO_TYPE0,companyname).size();
-        } else {
-            yhgl = mainMessage.findAllTeacher(start, limit);
-            count = mainMessage.findAllTeacherCount();
-        }*/
-      /*  for (int i = 0; i < yhgl.size(); i++) {
-            yhgl.get(i).remove("IsDel");
-            //yhgl.get(i).remove("Profile");
-            yhgl.get(i).remove("AddTime");
-            //yhgl.get(i).put("AddTime",yhgl.get(i).get("AddTime").toString());
-        }*/
-        //param.put("yhgl", yhgl);
+        List<HashMap<String, Object>> yhgl = mainMessage.findReetList(category,category2,startDate,endDate,query ,start, limit);
+        int count = mainMessage.findReetListCount(category,category2,startDate,endDate,query ,start, limit);
+        param.put("yhgl", yhgl);
         param.put("count", count);
         String json = JsonUtil.toJsonString(param);
         ResponseEntity<String> responseEntity = new ResponseEntity<String>(

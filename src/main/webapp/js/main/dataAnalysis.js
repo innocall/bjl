@@ -53,7 +53,7 @@ Ext.onReady(function() {
                     editable: false,
                     style: 'font-size:15px;',
                     labelSeparator: '：',
-                    store: ['全部', '庄', '闲', '和'],
+                    store: ['全部', '庄', '闲'],
                     displayField: 'category',
                     emptyText: "请选择查询类型",
                     triggerAction: 'all',
@@ -77,10 +77,10 @@ Ext.onReady(function() {
                     name: 'startDate',
                     style: 'font-size:15px;',
                     labelSeparator: '：',//分隔符
-                    format: 'Y-m-d h:i:s',//显示日期的格式
+                    format: 'Y-m-d H:i:s',//显示日期的格式
                     maxValue: new Date(),//允许选择的最大日期
                     width: 300,
-                    value: '2015年01月01日'
+                    value: '2015-11-01 12:00:00'
                 }, {
                     xtype: 'datefield',
                     fieldLabel: '<font style="font-size: 15px">结束时间</font>',
@@ -88,7 +88,7 @@ Ext.onReady(function() {
                     name: 'endDate',
                     style: 'font-size:15px;',
                     labelSeparator: '：',//分隔符
-                    format: 'Y-m-d h:i:s',//显示日期的格式
+                    format: 'Y-m-d H:i:s',//显示日期的格式
                     maxValue: new Date(),//允许选择的最大日期
                     width: 300,
                     value: new Date()
@@ -144,7 +144,7 @@ Ext.onReady(function() {
         sm : new Ext.grid.RowSelectionModel({
             singleSelect : true
         }),
-        autoExpandColumn : 'TIME',
+        autoExpandColumn : 'TOUZHU',
         columns : [ {
             id : 'ID',
             header : '编号',
@@ -157,75 +157,123 @@ Ext.onReady(function() {
             dataIndex : 'ROOMID',
             sortable : true,
             align : 'center',
-            width : 150,
+            width : 300,
+            css:'font-size:13px;',
             menuDisabled : true
         }, {
             id : 'ZHUANG1',
-            header : '庄1',
+            header : '庄牌1',
             dataIndex : 'ZHUANG1',
             sortable : true,
             align : 'center',
-            width : 150,
-            menuDisabled : true
+            css:'font-size:18px;',
+            width : 100,
+            menuDisabled : true,
+            renderer : function(v) {
+               return showData2(v);
+            }
         }, {
             id : 'ZHUANG2',
-            header : '庄2',
+            header : '庄牌2',
             dataIndex : 'ZHUANG2',
             sortable : true,
+            css:'font-size:18px;',
             align : 'center',
-            width : 150,
-            menuDisabled : true
+            width : 100,
+            menuDisabled : true,
+            renderer : function(v) {
+                return showData2(v);
+            }
         }, {
             id : 'ZHUANG3',
-            header : '庄3',
+            header : '庄牌3',
             dataIndex : 'ZHUANG3',
             sortable : true,
             align : 'center',
-            width : 150,
+            css:'font-size:18px;',
+            width : 100,
             menuDisabled : true,
             renderer : function(v) {
                 if (v == '0') {
                     return "";
                 } else {
-                    return v;
+                    return showData2(v);
                 }
             }
         }, {
             id : 'XIAN1',
-            header : '闲1',
+            header : '闲牌1',
             dataIndex : 'XIAN1',
             sortable : true,
             align : 'center',
-            width : 150,
-            menuDisabled : true
+            css:'font-size:18px;',
+            width : 100,
+            menuDisabled : true,
+            renderer : function(v) {
+                return showData2(v);
+            }
         }, {
             id : 'XIAN2',
-            header : '闲2',
+            header : '闲牌2',
             dataIndex : 'XIAN2',
             sortable : true,
+            css:'font-size:18px;',
             align : 'center',
-            width : 150,
-            menuDisabled : true
+            width : 100,
+            menuDisabled : true,
+            renderer : function(v) {
+                return showData2(v);
+            }
         }, {
             id : 'XIAN3',
-            header : '闲3',
+            header : '闲牌3',
             dataIndex : 'XIAN3',
             sortable : true,
             align : 'center',
-            width : 150,
+            css:'font-size:18px;',
+            width : 100,
             menuDisabled : true,
             renderer : function(v) {
                 if (v == '0') {
                     return "";
                 } else {
-                    return v;
+                    return showData2(v);
                 }
             }
         }, {
+            id : 'ZHUANGVALUE',
+            header : '庄点数',
+            dataIndex : 'ZHUANGVALUE',
+            sortable : true,
+            align : 'center',
+            css:'font-size:18px;color:red;',
+            menuDisabled : true
+        }, {
+            id : 'XIANVALUE',
+            header : '闲点数',
+            dataIndex : 'XIANVALUE',
+            sortable : true,
+            css:'font-size:18px;color:#0e49e8;',
+            align : 'center',
+            menuDisabled : true
+        },{
+            id : 'TIME',
+            header : '投注时间',
+            dataIndex : 'TIME',
+            sortable : true,
+            css:'font-size:15px;',
+            width : 180,
+            align : 'center',
+            menuDisabled : true,
+            renderer:function(value){
+                return formatDate(value,'Y-m-d H:m:s');
+            }
+            }, {
             id : 'TOUZHUMONEY',
             header : '投注金额',
             dataIndex : 'TOUZHUMONEY',
-            sortable : false,
+            css:'font-size:15px;',
+            sortable : true,
             align : 'center',
             menuDisabled : true
         }, {
@@ -234,125 +282,36 @@ Ext.onReady(function() {
             dataIndex : 'TOUZHU',
             sortable : true,
             align : 'center',
-            width : 150,
+            css:'font-size:15px;',
             menuDisabled : true,
             renderer : function(v) {
                 if (v == '0') {
-                    return "庄";
+                    return "下注庄";
                 } else if(v == '1'){
-                    return "闲";
+                    return "下注闲";
                 } else if(v == '2'){
-                    return "和";
+                    return "下注和";
                 } else {
                     return "未下注";
                 }
             }
-        }, {
-            id : 'ZHUANGVALUE',
-            header : '庄点数',
-            dataIndex : 'ZHUANGVALUE',
-            sortable : false,
-            align : 'center',
-            menuDisabled : true
-        }, {
-            id : 'XIANVALUE',
-            header : '闲点数',
-            dataIndex : 'XIANVALUE',
-            sortable : false,
-            align : 'center',
-            menuDisabled : true
-        },{
-            id : 'TIME',
-            header : '投注时间',
-            dataIndex : 'TIME',
-            sortable : false,
-            align : 'center',
-            menuDisabled : true
         } ],
         enableColumnMove : true, // 允许拖动列
         bbar : new Ext.PagingToolbar({
-            pageSize : 20,
+            pageSize : 80,
             store : jsonUser,
             displayInfo : true,
             displayMsg : '显示{0}/{1}of{2}',
             emptyMsg : '没有数据',
             plugins : new Ext.ux.ProgressBarPager()
-        }),
-        buttons : [ {
-            text:'增加',
-            handler:function(){
-                addForm.getForm().findField("Id").setValue("");
-                addForm.getForm().findField("Name").setValue("");
-                addForm.getForm().findField("ModuleId").setValue("");
-                addForm.getForm().findField("Gender").setValue("");
-                addForm.getForm().findField("Profile").setValue("");
-                addWin.show();
-            }
-        },
-            {
-                text:'修改',
-                handler:function(){
-                    var roleRecord = yhglGrid.getSelectionModel().getSelected();
-                    if(!roleRecord){
-                        Ext.Msg.alert('提示','请选中要修改的记录!');
-                        return;
-                    }else{
-                        addForm.getForm().findField("Id").setValue(roleRecord.get("Id"));
-                        addForm.getForm().findField("Name").setValue(roleRecord.get("Name"));
-                        var module = roleRecord.get("ModuleId");
-                        if (module == 2) {
-                            module = '专家问诊';
-                        } else {
-                            module = '老年大学';
-                        }
-                        addForm.getForm().findField("ModuleId").setValue(module);
-                        var gender = roleRecord.get("Gender");
-                        if (gender == true) {
-                            gender = '男';
-                        } else {
-                            gender = '女';
-                        }
-                        addForm.getForm().findField("Gender").setValue(gender);
-                        addForm.getForm().findField("Profile").setValue(roleRecord.get("Profile"));
-                        addWin.show();
-                    }
-                }
-            },
-            {
-                text:'删除',
-                handler:function(){
-                    var roleRecord = yhglGrid.getSelectionModel().getSelected();
-                    if(!roleRecord){
-                        Ext.Msg.alert("提示","请选中要删除的行．");
-                        return;
-                    }
-                    if(roleRecord.get("ROLE_CANDEL")=="0"){
-                        Ext.Msg.alert("提示","系统用户不能删除!");
-                        return;
-                    }
-                    Ext.MessageBox.confirm("提示","确定要删除这行记录吗？",function(btn){
-                        if(btn=="yes"){
-                            var ROLE_ID = roleRecord.get("Id");
-                            Ext.Ajax.request({
-                                url:path+'private/teacher/teacherDel',
-                                method:'post',
-                                params:{Id:ROLE_ID},
-                                success:function(res,ops){
-                                    var jsonObj = Ext.util.JSON.decode(res.responseText);
-                                    if(jsonObj.success){
-                                        jsonUser.remove(roleRecord);
-                                    }
-                                },
-                                failure:function(res,ops){
-                                    alert(res.responseText);
-                                }
-                            });
-                        }
-                    },Ext.MessageBox.YESNO);
-                }
-            }]
+        })
     });
+
     yhglGrid.setAutoScroll(true);
+
+    //右击行触发事件
+    yhglGrid.addListener('rowcontextmenu', rightClickFn);
+    yhglGrid.addListener('cellcontextmenu',cellclick);
     new Ext.Viewport({
         layout : 'border',
         items : [ dateSearchForm, yhglGrid ],
@@ -361,83 +320,69 @@ Ext.onReady(function() {
         } ]
     });
 
-    var addWin = new Ext.Window({
-        id:'addWin',
-        title:'增加',
-        width:550,
-        height:830,
-        autoHeight:true,
-        modal:true,
-        items:[addForm],
-        closable:true,
-        closeAction:'hide',
-        resizable:false,
-        buttons:[
-            {
-                text:'保存',
-                handler:function(){
-                    if(!addForm.getForm().isValid()){				//没有写入数据则不提交
-                        return;
-                    };
-                    var ROLE_NAME = addForm.getForm().findField("Name").getValue();
-                    var id = addForm.getForm().findField("Id").getValue();
-                    var idx = jsonUser.find("Name",ROLE_NAME.trim());
-                    if(idx>=0 && id == ''){
-                        Ext.Msg.alert("提示","此讲师已经录入过，请换一个．");
-                        return;
-                    }
-                    addForm.getForm().submit({
-                        url:path+'private/teacher/teacherSave',
-                        method:'post',
-                        success:function(f,op){
-                            if(op.result.success==true){
-                                if(op.result.save==true){				//如果是保存的话
-                                    var Role = Ext.data.Record.create([
-                                        {id:'Id',type:'string'},
-                                        {id:'Name',type:'string'},
-                                        {id:'Gender',type:'string'},
-                                        {id:'ModuleId',type:'string'},
-                                        {id:'Profile',type:'string'}
-                                    ]);
-                                    var role = new Role({Id:op.result.Id,
-                                        Name:op.result.Name,
-                                        Gender:op.result.Gender,
-                                        ModuleId:op.result.ModuleId,
-                                        Profile:op.result.Profile
-                                    });
-                                    jsonUser.add(role);
-                                    yhglGrid.getSelectionModel().selectLastRow();
-                                }else{
-                                    var rec = yhglGrid.getSelectionModel().getSelected();
-                                    rec.set("Name",op.result.Name);
-                                    rec.set("Gender",op.result.Gender);
-                                    rec.set("ModuleId",op.result.ModuleId);
-                                    rec.set("Profile",op.result.Profile);
-                                }
-                                addWin.hide();
-                            }else{
-                                Ext.Msg.alert("MSG","服务器访问不成功.");
-                            }
-                        },
-                        failure:function(f,op){
-                            alert("Error....");
-                        }
-                    });
-                }
-            },
-            {
-                text:'关闭',
-                handler:function(){
-                    addWin.hide();
-                }
-            }
-        ],
-        listeners:{
-            beforeshow:function(){
-                //ROLE_NAME.setValue('');
-                //ROLE_DESC.setValue('');
-            }
+    function rightClickFn(yhglGrid, rowIndex, e) {
+        e.preventDefault();
+        rightMenu.showAt(e.getXY());
+        //gridpanel默认右击是不会选择当前行的，所以必须添加这句代码
+        yhglGrid.getSelectionModel().selectRow(rowIndex);
+    }
+
+    //获取选中行选中列的值
+    function cellclick(grid, rowIndex, columnIndex, e) {
+        var record = grid.getStore().getAt(rowIndex);
+        var fieldName = grid.getColumnModel().getDataIndex(columnIndex);
+        //info为一个全局变量
+        info = record.get(fieldName);
+    }
+
+    function copy() {
+        var record = yhglGrid.getSelectionModel().getSelected();
+        if(record == undefined) {
+            Ext.Msg.alert('提示信息','未选择任何数据！');
+        } else {
+            copyToClipboard(info);
         }
+    }
+
+    var rightMenu = new Ext.menu.Menu( {
+        id : 'rightClickCont',
+        items : [{
+            id:'rMenu1',
+            text:'复 制',
+            icon:'../../image/clipboardcopy.png',
+            handler:copy
+        }]
     });
 
+    function copyToClipboard(txt) {
+        if(window.clipboardData) {
+            window.clipboardData.clearData();
+            window.clipboardData.setData("Text", txt);
+        } else if(navigator.userAgent.indexOf("Opera") != -1) {
+            window.location = txt;
+        } else if (window.netscape) {
+            try {
+                netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
+            } catch (e) {
+                alert("被浏览器拒绝！\n请在浏览器地址栏输入'about:config'并回车\n然后将'signed.applets.codebase_principal_support'设置为'true'");
+            }
+            var clip = Components.classes['@mozilla.org/widget/clipboard;1'].createInstance(Components.interfaces.nsIClipboard);
+            if (!clip)
+                return;
+            var trans = Components.classes['@mozilla.org/widget/transferable;1'].createInstance(Components.interfaces.nsITransferable);
+            if (!trans)
+                return;
+            trans.addDataFlavor('text/unicode');
+            var str = new Object();
+            var len = new Object();
+            var str = Components.classes["@mozilla.org/supports-string;1"].createInstance(Components.interfaces.nsISupportsString);
+            var copytext = txt;
+            str.data = copytext;
+            trans.setTransferData("text/unicode",str,copytext.length*2);
+            var clipid = Components.interfaces.nsIClipboard;
+            if (!clip)
+                return false;
+            clip.setData(trans,null,clipid.kGlobalClipboard);
+        }
+    }
 });

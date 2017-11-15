@@ -175,14 +175,19 @@ function faPai4(xian1,zhuang1,xian2) {
         zhuangdui = 0;
     }
     //判断是否需要博牌
-    if (getCount(showData(xian1) +showData(xian2)) < 6 && zhuang < 8) {
-        //闲需要博牌
-        setTimeout(function() {faPaiXian(xian1,zhuang1,xian2,zhuang2) },1000);
+    var xian = getCount(showData(xian1) +showData(xian2));
+    if (xian ==9 || zhuang == 9 ) {
+        goGame(xian1,zhuang1,xian2,zhuang2,0,0);
     } else {
-        if (zhuang < 3 && getCount(showData(xian1) +showData(xian2)) < 8) {
-            setTimeout(function() {faPaiZhuang(xian1,zhuang1,xian2,zhuang2,0) },1000);
-        } else {
-            goGame(xian1,zhuang1,xian2,zhuang2,0,0);
+        if ( xian < 6 ) {
+            //闲需要博牌
+            setTimeout(function() {faPaiXian(xian1,zhuang1,xian2,zhuang2) },1000);
+        } else if (xian == 6 || xian == 7) {
+            if (zhuang < 6) {
+                setTimeout(function() {faPaiZhuang(xian1,zhuang1,xian2,zhuang2,0) },1000);
+            } else {
+                goGame(xian1,zhuang1,xian2,zhuang2,0,0);
+            }
         }
     }
 }

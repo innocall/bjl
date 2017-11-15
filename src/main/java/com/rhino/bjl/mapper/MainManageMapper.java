@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by wuxiaotie on 2017/6/19.
@@ -38,5 +39,19 @@ public class MainManageMapper {
 
     public boolean updateRoomData(HashMap<String, Object> params) {
         return  lemonDB.updateDynamic("room_tbl", "ID", params);
+    }
+
+    public List<HashMap<String, Object>> findReetList(String sql) {
+        return lemonDB.getListBySql(sql);
+    }
+
+    public int findReetListCount(String sql) {
+        int i = 0;
+        List<HashMap<String, Object>> list = lemonDB.getListBySql(sql);
+        if (list != null && list.size() > 0) {
+            Long j = (Long) list.get(0).get("NUMBER");
+            i = j.intValue();
+        }
+        return i;
     }
 }
