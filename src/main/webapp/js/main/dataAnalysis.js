@@ -19,7 +19,7 @@ Ext.onReady(function() {
         url : path + 'private/main/findReetById',
         root : 'reetList',
         totalProperty : 'count',
-        fields : [ 'ID', 'ROOMID', 'ZHUANG1', 'ZHUANG2', 'ZHUANG3','XIAN1', 'XIAN2', 'XIAN3','TOUZHUMONEY','TOUZHU','ZHUANGVALUE','XIANVALUE','POINT' ]
+        fields : [ 'ID', 'ROOMID', 'ZHUANG1', 'ZHUANG2', 'ZHUANG3','XIAN1', 'XIAN2', 'XIAN3','TIME','TOUZHU','ZHUANGVALUE','XIANVALUE','POINT' ]
     });
 
     var dateSearchForm = new Ext.form.FormPanel({
@@ -391,7 +391,7 @@ Ext.onReady(function() {
             singleSelect : true
         }),
         height : 600,
-        autoExpandColumn : 'TOUZHU',
+        autoExpandColumn : 'TIME',
         columns : [{
             id : 'ID',
             header : '编号',
@@ -560,23 +560,16 @@ Ext.onReady(function() {
                 return substr;
             }
         },{
-            id : 'TOUZHU',
-            header : '投注对象',
-            dataIndex : 'TOUZHU',
+            id : 'TIME',
+            header : '投注时间',
+            dataIndex : 'TIME',
             sortable : true,
-            align : 'center',
             css:'font-size:15px;',
+            width : 180,
+            align : 'center',
             menuDisabled : true,
-            renderer : function(v) {
-                if (v == '0') {
-                    return "下注庄";
-                } else if(v == '1'){
-                    return "下注闲";
-                } else if(v == '2'){
-                    return "下注和";
-                } else {
-                    return "未下注";
-                }
+            renderer:function(value){
+                return formatDate(value,'Y-m-d H:m:s');
             }
         }],
         enableColumnMove : true,
