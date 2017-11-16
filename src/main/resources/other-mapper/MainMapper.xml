@@ -26,8 +26,12 @@
 
     <insert id="saveReetData" parameterType="java.util.HashMap">
         <![CDATA[
-         insert into reet_tbl(ID,USERID,ROOMID,ZHUANG1,ZHUANG2,ZHUANG3,XIAN1,XIAN2,XIAN3,TOUZHUMONEY,TOUZHU,TIME,ZHUANGVALUE,XIANVALUE) values ( #{ID}, #{USERID}, #{ROOMID},#{ZHUANG1}, #{ZHUANG2}, #{ZHUANG3},#{XIAN1},#{XIAN2},#{XIAN3},#{TOUZHUMONEY},#{TOUZHU},#{TIME},#{ZHUANGVALUE},#{XIANVALUE})
+         insert into reet_tbl(ID,USERID,ROOMID,ZHUANG1,ZHUANG2,ZHUANG3,XIAN1,XIAN2,XIAN3,TOUZHUMONEY,TOUZHU,TIME,ZHUANGVALUE,XIANVALUE,POINT) values ( #{ID}, #{USERID}, #{ROOMID},#{ZHUANG1}, #{ZHUANG2}, #{ZHUANG3},#{XIAN1},#{XIAN2},#{XIAN3},#{TOUZHUMONEY},#{TOUZHU},#{TIME},#{ZHUANGVALUE},#{XIANVALUE},#{POINT})
        ]]>
     </insert>
+
+    <select id="findReetByRoomId" resultType="java.util.HashMap">
+        select * from reet_tbl where ROOMID = #{ROOMID} ORDER BY POINT ASC
+    </select>
 
 </mapper>

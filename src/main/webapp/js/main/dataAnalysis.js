@@ -5,7 +5,7 @@ Ext.onReady(function() {
         url : path + 'private/main/reetAllData',
         root : 'yhgl',
         totalProperty : 'count',
-        fields : [ 'ID', 'ROOMID', 'ZHUANG1', 'ZHUANG2', 'ZHUANG3','XIAN1', 'XIAN2', 'XIAN3','TOUZHUMONEY','TOUZHU','ZHUANGVALUE','XIANVALUE','TIME' ]
+        fields : [ 'ID', 'ROOMID', 'ZHUANG1', 'ZHUANG2', 'ZHUANG3','XIAN1', 'XIAN2', 'XIAN3','TOUZHUMONEY','TOUZHU','ZHUANGVALUE','XIANVALUE','TIME','POINT' ]
     });
     jsonUser.load({
         params : {
@@ -14,20 +14,13 @@ Ext.onReady(function() {
         }
     });
 
-   /* jsonUser.on('beforeload', function(store, options) {
-        category_user = Ext.get("category_user").dom.value;
-        category_user2 = Ext.get("category_user2").dom.value;
-        query = Ext.get("query").dom.value;
-        endDate = Ext.get("endDate").dom.value;
-        startDate = Ext.get("startDate").dom.value;
-        Ext.apply(this.baseParams, {
-            category : category_user,
-            category2 : category_user2,
-            startDate : startDate,
-            endDate : endDate,
-            query : query
-        });
-    });*/
+    var jsonEpisData = new Ext.data.JsonStore({
+        id : 'reetList',
+        url : path + 'private/main/findReetById',
+        root : 'reetList',
+        totalProperty : 'count',
+        fields : [ 'ID', 'ROOMID', 'ZHUANG1', 'ZHUANG2', 'ZHUANG3','XIAN1', 'XIAN2', 'XIAN3','TOUZHUMONEY','TOUZHU','ZHUANGVALUE','XIANVALUE','POINT' ]
+    });
 
     var dateSearchForm = new Ext.form.FormPanel({
         region : 'north',
@@ -105,7 +98,7 @@ Ext.onReady(function() {
                             var font=document.createElement("font");
                             font.setAttribute("color","red");
                             font.setAttribute("style","font-size:15px;")
-                            var redStar=document.createTextNode('   多个数子用-号分割，如：3-6-9');
+                            var redStar=document.createTextNode('   多个数子用-号分割，如：A-6-K');
                             font.appendChild(redStar);
                             obj.el.dom.parentNode.appendChild(font);
                         }
@@ -146,6 +139,12 @@ Ext.onReady(function() {
         }),
         autoExpandColumn : 'TOUZHU',
         columns : [ {
+            id : 'POINT',
+            header : '记号',
+            dataIndex : 'POINT',
+            align : 'center',
+            hidden : true
+        },{
             id : 'ID',
             header : '编号',
             dataIndex : 'ID',
@@ -170,7 +169,12 @@ Ext.onReady(function() {
             width : 100,
             menuDisabled : true,
             renderer : function(v) {
-               return showData2(v);
+                var value = dateSearchForm.getForm().findField("query").getValue();
+                var substr = showData2(v);
+                if (value.indexOf(substr) >= 0){
+                    return "<font style='color: #ff4545'>" + substr +"</font>"
+                }
+               return substr;
             }
         }, {
             id : 'ZHUANG2',
@@ -182,7 +186,12 @@ Ext.onReady(function() {
             width : 100,
             menuDisabled : true,
             renderer : function(v) {
-                return showData2(v);
+                var value = dateSearchForm.getForm().findField("query").getValue();
+                var substr = showData2(v);
+                if (value.indexOf(substr) >= 0){
+                    return "<font style='color: #ff4545'>" + substr +"</font>"
+                }
+                return substr;
             }
         }, {
             id : 'ZHUANG3',
@@ -197,7 +206,12 @@ Ext.onReady(function() {
                 if (v == '0') {
                     return "";
                 } else {
-                    return showData2(v);
+                    var value = dateSearchForm.getForm().findField("query").getValue();
+                    var substr = showData2(v);
+                    if (value.indexOf(substr) >= 0){
+                        return "<font style='color: #ff4545'>" + substr +"</font>"
+                    }
+                    return substr;
                 }
             }
         }, {
@@ -210,7 +224,12 @@ Ext.onReady(function() {
             width : 100,
             menuDisabled : true,
             renderer : function(v) {
-                return showData2(v);
+                var value = dateSearchForm.getForm().findField("query").getValue();
+                var substr = showData2(v);
+                if (value.indexOf(substr) >= 0){
+                    return "<font style='color: #ff4545'>" + substr +"</font>"
+                }
+                return substr;
             }
         }, {
             id : 'XIAN2',
@@ -222,7 +241,12 @@ Ext.onReady(function() {
             width : 100,
             menuDisabled : true,
             renderer : function(v) {
-                return showData2(v);
+                var value = dateSearchForm.getForm().findField("query").getValue();
+                var substr = showData2(v);
+                if (value.indexOf(substr) >= 0){
+                    return "<font style='color: #ff4545'>" + substr +"</font>"
+                }
+                return substr;
             }
         }, {
             id : 'XIAN3',
@@ -237,7 +261,12 @@ Ext.onReady(function() {
                 if (v == '0') {
                     return "";
                 } else {
-                    return showData2(v);
+                    var value = dateSearchForm.getForm().findField("query").getValue();
+                    var substr = showData2(v);
+                    if (value.indexOf(substr) >= 0){
+                        return "<font style='color: #ff4545'>" + substr +"</font>"
+                    }
+                    return substr;
                 }
             }
         }, {
@@ -246,16 +275,32 @@ Ext.onReady(function() {
             dataIndex : 'ZHUANGVALUE',
             sortable : true,
             align : 'center',
-            css:'font-size:18px;color:red;',
-            menuDisabled : true
+            css:'font-size:18px;',
+            menuDisabled : true,
+            renderer : function(v) {
+                var value = dateSearchForm.getForm().findField("query").getValue();
+                var substr = showData2(v);
+                if (value.indexOf(substr) >= 0){
+                    return "<font style='color: #ff4545'>" + substr +"</font>"
+                }
+                return substr;
+            }
         }, {
             id : 'XIANVALUE',
             header : '闲点数',
             dataIndex : 'XIANVALUE',
             sortable : true,
-            css:'font-size:18px;color:#0e49e8;',
+            css:'font-size:18px;',
             align : 'center',
-            menuDisabled : true
+            menuDisabled : true,
+            renderer : function(v) {
+                var value = dateSearchForm.getForm().findField("query").getValue();
+                var substr = showData2(v);
+                if (value.indexOf(substr) >= 0){
+                    return "<font style='color: #ff4545'>" + substr +"</font>"
+                }
+                return substr;
+            }
         },{
             id : 'TIME',
             header : '投注时间',
@@ -304,14 +349,32 @@ Ext.onReady(function() {
             displayMsg : '显示{0}/{1}of{2}',
             emptyMsg : '没有数据',
             plugins : new Ext.ux.ProgressBarPager()
-        })
+        }),
+        buttons : [
+            {
+                text:'<font style="font-size: 18px;">剧集管理</font>',
+                handler:function(){
+                    var roleRecord = yhglGrid.getSelectionModel().getSelected();
+                    if(!roleRecord){
+                        Ext.Msg.alert('提示','请选中要查看记录!');
+                        return;
+                    }else{
+                       // Ext.getCmp("detailForm_Name").setText(roleRecord.get("Title"));
+                        var roomId = roleRecord.get("ROOMID");
+                        jsonEpisData.load({
+                            params : {
+                                roomId : roomId
+                            }
+                        });
+                        sepisodesWin.show();
+                    }
+                }
+            }
+         ]
     });
 
     yhglGrid.setAutoScroll(true);
 
-    //右击行触发事件
-    // yhglGrid.addListener('rowcontextmenu', rightClickFn);
-    // yhglGrid.addListener('cellcontextmenu',cellclick);
     new Ext.Viewport({
         layout : 'border',
         items : [ dateSearchForm, yhglGrid ],
@@ -320,44 +383,235 @@ Ext.onReady(function() {
         } ]
     });
 
-    // function rightClickFn(yhglGrid, rowIndex, e) {
-    //     e.preventDefault();
-    //     rightMenu.showAt(e.getXY());
-    //     //gridpanel默认右击是不会选择当前行的，所以必须添加这句代码
-    //     yhglGrid.getSelectionModel().selectRow(rowIndex);
-    // }
-    //
-    // //获取选中行选中列的值
-    // function cellclick(grid, rowIndex, columnIndex, e) {
-    //     var record = grid.getStore().getAt(rowIndex);
-    //     var fieldName = grid.getColumnModel().getDataIndex(columnIndex);
-    //     //info为一个全局变量
-    //     info = record.get(fieldName);
-    // }
-    //
-    // function copy() {
-    //     var record = yhglGrid.getSelectionModel().getSelected();
-    //     if(record == undefined) {
-    //         Ext.Msg.alert('提示信息','未选择任何数据！');
-    //     } else {
-    //         copyToClipboard(info);
-    //     }
-    // }
-    //
-    // var rightMenu = new Ext.menu.Menu( {
-    //     id : 'rightClickCont',
-    //     items : [{
-    //         id:'rMenu1',
-    //         text:'复 制',
-    //         icon:'../../image/clipboardcopy.png',
-    //         handler:copy
-    //     }]
-    // });
-    //
-    // function copyToClipboard(txt) {
-    //     // var Url2=document.getElementById("biao1");
-    //     // Url2.select(); // 选择对象
-    //     // document.execCommand("Copy"); // 执行浏览器复制命令
-    //     // alert("已复制好，可贴粘。");
-    // }
+    var episGrid = new Ext.grid.GridPanel({
+        id : 'episGrid',
+        store : jsonEpisData,
+        region : 'center',
+        sm : new Ext.grid.RowSelectionModel({
+            singleSelect : true
+        }),
+        height : 600,
+        autoExpandColumn : 'TOUZHU',
+        columns : [{
+            id : 'ID',
+            header : '编号',
+            dataIndex : 'ID',
+            align : 'center',
+            hidden : true
+        }, {
+            id : 'POINT',
+            header : '第几局',
+            dataIndex : 'POINT',
+            sortable : true,
+            align : 'center',
+            width : 80,
+            css:'font-size:18px;',
+            menuDisabled : true,
+            renderer : function(v) {
+                var roleRecord = yhglGrid.getSelectionModel().getSelected();
+                var value =  roleRecord.get("POINT");
+                if (value == v){
+                    return "<font style='color: #d1961d'>" + v +"</font>"
+                }
+                return v;
+            }
+        }, {
+            id : 'ZHUANG1',
+            header : '庄牌1',
+            dataIndex : 'ZHUANG1',
+            sortable : true,
+            align : 'center',
+            css:'font-size:18px;',
+            width : 80,
+            menuDisabled : true,
+            renderer : function(v) {
+                var value = dateSearchForm.getForm().findField("query").getValue();
+                var substr = showData2(v);
+                if (value.indexOf(substr) >= 0){
+                    return "<font style='color: #ff4545'>" + substr +"</font>"
+                }
+                return substr;
+            }
+        }, {
+            id : 'ZHUANG2',
+            header : '庄牌2',
+            dataIndex : 'ZHUANG2',
+            sortable : true,
+            css:'font-size:18px;',
+            align : 'center',
+            width : 80,
+            menuDisabled : true,
+            renderer : function(v) {
+                var value = dateSearchForm.getForm().findField("query").getValue();
+                var substr = showData2(v);
+                if (value.indexOf(substr) >= 0){
+                    return "<font style='color: #ff4545'>" + substr +"</font>"
+                }
+                return substr;
+            }
+        }, {
+            id : 'ZHUANG3',
+            header : '庄牌3',
+            dataIndex : 'ZHUANG3',
+            sortable : true,
+            align : 'center',
+            css:'font-size:18px;',
+            width : 80,
+            menuDisabled : true,
+            renderer : function(v) {
+                if (v == '0') {
+                    return "";
+                } else {
+                    var value = dateSearchForm.getForm().findField("query").getValue();
+                    var substr = showData2(v);
+                    if (value.indexOf(substr) >= 0){
+                        return "<font style='color: #ff4545'>" + substr +"</font>"
+                    }
+                    return substr;
+                }
+            }
+        }, {
+            id : 'XIAN1',
+            header : '闲牌1',
+            dataIndex : 'XIAN1',
+            sortable : true,
+            align : 'center',
+            css:'font-size:18px;',
+            width : 80,
+            menuDisabled : true,
+            renderer : function(v) {
+                var value = dateSearchForm.getForm().findField("query").getValue();
+                var substr = showData2(v);
+                if (value.indexOf(substr) >= 0){
+                    return "<font style='color: #ff4545'>" + substr +"</font>"
+                }
+                return substr;
+            }
+        }, {
+            id : 'XIAN2',
+            header : '闲牌2',
+            dataIndex : 'XIAN2',
+            sortable : true,
+            css:'font-size:18px;',
+            align : 'center',
+            width : 80,
+            menuDisabled : true,
+            renderer : function(v) {
+                var value = dateSearchForm.getForm().findField("query").getValue();
+                var substr = showData2(v);
+                if (value.indexOf(substr) >= 0){
+                    return "<font style='color: #ff4545'>" + substr +"</font>"
+                }
+                return substr;
+            }
+        }, {
+            id : 'XIAN3',
+            header : '闲牌3',
+            dataIndex : 'XIAN3',
+            sortable : true,
+            align : 'center',
+            css:'font-size:18px;',
+            width : 80,
+            menuDisabled : true,
+            renderer : function(v) {
+                if (v == '0') {
+                    return "";
+                } else {
+                    var value = dateSearchForm.getForm().findField("query").getValue();
+                    var substr = showData2(v);
+                    if (value.indexOf(substr) >= 0){
+                        return "<font style='color: #ff4545'>" + substr +"</font>"
+                    }
+                    return substr;
+                }
+            }
+        }, {
+            id : 'ZHUANGVALUE',
+            header : '庄点数',
+            dataIndex : 'ZHUANGVALUE',
+            sortable : true,
+            width : 80,
+            align : 'center',
+            css:'font-size:18px;',
+            menuDisabled : true,
+            renderer : function(v) {
+                var value = dateSearchForm.getForm().findField("query").getValue();
+                var substr = showData2(v);
+                if (value.indexOf(substr) >= 0){
+                    return "<font style='color: #ff4545'>" + substr +"</font>"
+                }
+                return substr;
+            }
+        }, {
+            id : 'XIANVALUE',
+            header : '闲点数',
+            dataIndex : 'XIANVALUE',
+            sortable : true,
+            width : 80,
+            css:'font-size:18px;',
+            align : 'center',
+            menuDisabled : true,
+            renderer : function(v) {
+                var value = dateSearchForm.getForm().findField("query").getValue();
+                var substr = showData2(v);
+                if (value.indexOf(substr) >= 0){
+                    return "<font style='color: #ff4545'>" + substr +"</font>"
+                }
+                return substr;
+            }
+        },{
+            id : 'TOUZHU',
+            header : '投注对象',
+            dataIndex : 'TOUZHU',
+            sortable : true,
+            align : 'center',
+            css:'font-size:15px;',
+            menuDisabled : true,
+            renderer : function(v) {
+                if (v == '0') {
+                    return "下注庄";
+                } else if(v == '1'){
+                    return "下注闲";
+                } else if(v == '2'){
+                    return "下注和";
+                } else {
+                    return "未下注";
+                }
+            }
+        }],
+        enableColumnMove : true,
+        bbar : new Ext.PagingToolbar({
+            pageSize : 80,
+            store : jsonEpisData,
+            displayInfo : true,
+            displayMsg : '显示{0}/{1}of{2}',
+            emptyMsg : '没有数据',
+            plugins : new Ext.ux.ProgressBarPager()
+        })
+    });
+
+    /**
+     *查看小局列表
+     */
+    var sepisodesWin = new Ext.Window({
+        id : 'sepisodesWin',
+        title : '小局列表',
+        width : 850,
+        height : 650,
+        autoHeight : true,
+        collapsible : true,
+        maximizable: true,
+        minimizable: true,
+        modal : true,
+        items : [episGrid ],
+        closable : true,
+        closeAction : 'hide',
+        resizable : false,
+        y : 0,
+        listeners : {
+            beforeshow : function() {
+            }
+        }
+    });
+
 });

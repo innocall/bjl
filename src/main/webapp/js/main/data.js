@@ -39,7 +39,7 @@ function showData(data) {
 }
 
 function showData2(data) {
-    if (data < 10) {
+    if (data < 10 && data > 1) {
         return data;
     } else if (data == 10) {
         return '10';
@@ -49,6 +49,8 @@ function showData2(data) {
         return 'Q';
     } else if (data == 13) {
         return 'K';
+    } else if (data == 1) {
+        return "A";
     }
 }
 

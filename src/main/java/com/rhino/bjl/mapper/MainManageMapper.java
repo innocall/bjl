@@ -54,4 +54,8 @@ public class MainManageMapper {
         }
         return i;
     }
+
+    public List<HashMap<String, Object>> findReetByRoomId(HashMap<String, Object> params) {
+        return lemonDB.getList("findReetByRoomId",params);
+    }
 }

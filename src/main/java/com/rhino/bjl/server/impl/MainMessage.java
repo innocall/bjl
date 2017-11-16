@@ -7,6 +7,7 @@ import com.rhino.bjl.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -62,7 +63,7 @@ public class MainMessage implements IMainMessage {
     }
 
     @Override
-    public boolean saveReetData(String xian1, String xian2, String xian3, String zhuang1, String zhuang2, String zhuang3, String touzhuMoney, String userId, String roomId, String radio,String zhuangdian,String xiandian) {
+    public boolean saveReetData(String xian1, String xian2, String xian3, String zhuang1, String zhuang2, String zhuang3, String touzhuMoney, String userId, String roomId, String radio,String zhuangdian,String xiandian,String juCount) {
         HashMap<String,Object> params = new HashMap<String,Object>();
         String id = UUID.randomUUID().toString();
         params.put("ID", id);
@@ -78,6 +79,7 @@ public class MainMessage implements IMainMessage {
         params.put("TOUZHU", radio);
         params.put("ZHUANGVALUE", zhuangdian);
         params.put("XIANVALUE", xiandian);
+        params.put("POINT", juCount);
         params.put("TIME", DateUtils.getDate5());
         return mainManageMapper.saveReetData(params);
     }
@@ -105,7 +107,44 @@ public class MainMessage implements IMainMessage {
         sql = formatSqls(category, category2, startDate, endDate, query, sql);
         sql = sql + " ORDER BY TIME ASC limit "+ start +"," + limit;
         System.out.println("SQL=" + sql);
-        return mainManageMapper.findReetList(sql);
+        List<HashMap<String, Object>> list =  mainManageMapper.findReetList(sql);
+        List<HashMap<String, Object>> list2 = new ArrayList<HashMap<String, Object>>();
+        if (org.apache.commons.lang.StringUtils.isNotBlank(query)) {
+            ArrayList<String> als = new ArrayList<String>();
+            ArrayList<String> alss = new ArrayList<String>();
+            String []arr = query.split("-");
+            for (int i=0;i<arr.length;i++) {
+                String j = arr[i];
+                if ("A".equals(j)) {
+                    j = "1";
+                } else  if ("J".equals(j)) {
+                    j = "11";
+                } else  if ("Q".equals(j)) {
+                    j = "12";
+                } else  if ("K".equals(j)) {
+                    j = "13";
+                }
+                als.add(j);
+            }
+            for (int i =0 ;i<list.size();i++) {
+                HashMap<String, Object> map = list.get(i);
+                alss.add((String) map.get("XIAN1"));
+                alss.add((String) map.get("XIAN2"));
+                alss.add((String) map.get("XIAN3"));
+                alss.add((String) map.get("ZHUANG1"));
+                alss.add((String) map.get("ZHUANG2"));
+                alss.add((String) map.get("ZHUANG3"));
+                alss.add((String) map.get("XIANVALUE"));
+                alss.add((String) map.get("ZHUANGVALUE"));
+                if (alss.containsAll(als)) {
+                    list2.add(map);
+                }
+                alss.clear();
+            }
+        } else {
+            return list;
+        }
+        return list2;
     }
 
     private String formatSqls(String category, String category2, String startDate, String endDate, String query, String sql) {
@@ -191,5 +230,12 @@ public class MainMessage implements IMainMessage {
         //判断单 双
         sql = formatSqls(category, category2, startDate, endDate, query, sql);
         return mainManageMapper.findReetListCount(sql);
+    }
+
+    @Override
+    public List<HashMap<String, Object>> findReetByRoomId(String roomId) {
+        HashMap<String,Object> params = new HashMap<String,Object>();
+        params.put("ROOMID", roomId);
+        return mainManageMapper.findReetByRoomId(params);
     }
 }

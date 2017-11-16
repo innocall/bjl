@@ -147,7 +147,7 @@ public class MainControl extends BaseControl {
             //保存每一局数据
             msg = roomId;
             //更新数据
-            boolean isSucces = mainMessage.saveReetData(xian1,xian2,xian3,zhuang1,zhuang2,zhuang3,touzhuMoney,user.getID(),roomId,radio,zhuangdian,xiandian);
+            boolean isSucces = mainMessage.saveReetData(xian1,xian2,xian3,zhuang1,zhuang2,zhuang3,touzhuMoney,user.getID(),roomId,radio,zhuangdian,xiandian,juCount);
             if(!isSucces) {
                 status = "400";
                 msg = "保存失败";
@@ -175,6 +175,23 @@ public class MainControl extends BaseControl {
         int count = mainMessage.findReetListCount(category,category2,startDate,endDate,query ,start, limit);
         param.put("yhgl", yhgl);
         param.put("count", count);
+        String json = JsonUtil.toJsonString(param);
+        ResponseEntity<String> responseEntity = new ResponseEntity<String>(
+                json, headers, HttpStatus.OK);
+        return responseEntity;
+    }
+
+
+    @RequestMapping(value = "findReetById", method = RequestMethod.POST)
+    public ResponseEntity<String> findReetById(HttpServletRequest request) {
+        HttpHeaders headers = new HttpHeaders();
+        MediaType mediaType = new MediaType("text", "html", Charset.forName("UTF-8"));
+        headers.setContentType(mediaType);
+        Map<String, Object> param = new HashMap<String, Object>();
+        String roomId = ParamUtils.getParameter(request, "roomId", "");
+        List<HashMap<String, Object>> reetList = mainMessage.findReetByRoomId(roomId);
+        param.put("reetList", reetList);
+        param.put("count", reetList.size());
         String json = JsonUtil.toJsonString(param);
         ResponseEntity<String> responseEntity = new ResponseEntity<String>(
                 json, headers, HttpStatus.OK);
