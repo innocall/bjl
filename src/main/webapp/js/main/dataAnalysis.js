@@ -98,7 +98,7 @@ Ext.onReady(function() {
                     name: 'query',
                     style: 'font-size:15px;',
                     width: 150,
-                    fieldLabel: '<font style="font-size: 15px">查询点数</font>',
+                    fieldLabel: '<font style="font-size: 15px">查询组合</font>',
                     labelSeparator: '：',
                     listeners: {
                         render: function(obj) {
@@ -310,8 +310,8 @@ Ext.onReady(function() {
     yhglGrid.setAutoScroll(true);
 
     //右击行触发事件
-    yhglGrid.addListener('rowcontextmenu', rightClickFn);
-    yhglGrid.addListener('cellcontextmenu',cellclick);
+    // yhglGrid.addListener('rowcontextmenu', rightClickFn);
+    // yhglGrid.addListener('cellcontextmenu',cellclick);
     new Ext.Viewport({
         layout : 'border',
         items : [ dateSearchForm, yhglGrid ],
@@ -320,69 +320,44 @@ Ext.onReady(function() {
         } ]
     });
 
-    function rightClickFn(yhglGrid, rowIndex, e) {
-        e.preventDefault();
-        rightMenu.showAt(e.getXY());
-        //gridpanel默认右击是不会选择当前行的，所以必须添加这句代码
-        yhglGrid.getSelectionModel().selectRow(rowIndex);
-    }
-
-    //获取选中行选中列的值
-    function cellclick(grid, rowIndex, columnIndex, e) {
-        var record = grid.getStore().getAt(rowIndex);
-        var fieldName = grid.getColumnModel().getDataIndex(columnIndex);
-        //info为一个全局变量
-        info = record.get(fieldName);
-    }
-
-    function copy() {
-        var record = yhglGrid.getSelectionModel().getSelected();
-        if(record == undefined) {
-            Ext.Msg.alert('提示信息','未选择任何数据！');
-        } else {
-            copyToClipboard(info);
-        }
-    }
-
-    var rightMenu = new Ext.menu.Menu( {
-        id : 'rightClickCont',
-        items : [{
-            id:'rMenu1',
-            text:'复 制',
-            icon:'../../image/clipboardcopy.png',
-            handler:copy
-        }]
-    });
-
-    function copyToClipboard(txt) {
-        if(window.clipboardData) {
-            window.clipboardData.clearData();
-            window.clipboardData.setData("Text", txt);
-        } else if(navigator.userAgent.indexOf("Opera") != -1) {
-            window.location = txt;
-        } else if (window.netscape) {
-            try {
-                netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
-            } catch (e) {
-                alert("被浏览器拒绝！\n请在浏览器地址栏输入'about:config'并回车\n然后将'signed.applets.codebase_principal_support'设置为'true'");
-            }
-            var clip = Components.classes['@mozilla.org/widget/clipboard;1'].createInstance(Components.interfaces.nsIClipboard);
-            if (!clip)
-                return;
-            var trans = Components.classes['@mozilla.org/widget/transferable;1'].createInstance(Components.interfaces.nsITransferable);
-            if (!trans)
-                return;
-            trans.addDataFlavor('text/unicode');
-            var str = new Object();
-            var len = new Object();
-            var str = Components.classes["@mozilla.org/supports-string;1"].createInstance(Components.interfaces.nsISupportsString);
-            var copytext = txt;
-            str.data = copytext;
-            trans.setTransferData("text/unicode",str,copytext.length*2);
-            var clipid = Components.interfaces.nsIClipboard;
-            if (!clip)
-                return false;
-            clip.setData(trans,null,clipid.kGlobalClipboard);
-        }
-    }
+    // function rightClickFn(yhglGrid, rowIndex, e) {
+    //     e.preventDefault();
+    //     rightMenu.showAt(e.getXY());
+    //     //gridpanel默认右击是不会选择当前行的，所以必须添加这句代码
+    //     yhglGrid.getSelectionModel().selectRow(rowIndex);
+    // }
+    //
+    // //获取选中行选中列的值
+    // function cellclick(grid, rowIndex, columnIndex, e) {
+    //     var record = grid.getStore().getAt(rowIndex);
+    //     var fieldName = grid.getColumnModel().getDataIndex(columnIndex);
+    //     //info为一个全局变量
+    //     info = record.get(fieldName);
+    // }
+    //
+    // function copy() {
+    //     var record = yhglGrid.getSelectionModel().getSelected();
+    //     if(record == undefined) {
+    //         Ext.Msg.alert('提示信息','未选择任何数据！');
+    //     } else {
+    //         copyToClipboard(info);
+    //     }
+    // }
+    //
+    // var rightMenu = new Ext.menu.Menu( {
+    //     id : 'rightClickCont',
+    //     items : [{
+    //         id:'rMenu1',
+    //         text:'复 制',
+    //         icon:'../../image/clipboardcopy.png',
+    //         handler:copy
+    //     }]
+    // });
+    //
+    // function copyToClipboard(txt) {
+    //     // var Url2=document.getElementById("biao1");
+    //     // Url2.select(); // 选择对象
+    //     // document.execCommand("Copy"); // 执行浏览器复制命令
+    //     // alert("已复制好，可贴粘。");
+    // }
 });

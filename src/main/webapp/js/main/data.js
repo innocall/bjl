@@ -42,13 +42,13 @@ function showData2(data) {
     if (data < 10) {
         return data;
     } else if (data == 10) {
-        return '0(10)';
+        return '10';
     } else if (data == 11) {
-        return '0(J)';
+        return 'J';
     } else if (data == 12) {
-        return '0(Q)';
+        return 'Q';
     } else if (data == 13) {
-        return '0(K)';
+        return 'K';
     }
 }
 

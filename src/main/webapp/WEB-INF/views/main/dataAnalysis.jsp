@@ -24,21 +24,22 @@
     <script type="text/javascript" src="${pageContext.request.contextPath }/extjs/ext-lang-zh_CN.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath }/extjs/ux/ProgressBarPager.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath }/js/main/data.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath }/js/clipboard.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath }/js/main/dataAnalysis.js"></script>
     <script type="text/javascript">
         Ext.BLANK_IMAGE_URL = '${pageContext.request.contextPath }/extjs/resources/images/default/s.gif';
         var path = "<c:url value='/'/>";
     </script>
-
     <title>百家乐数据分析平台</title>
     <style>
         .row-wylevel1 {
             color: red !important;
         }
+        .x-selectable, .x-selectable * {
+            -moz-user-select: text! important ;
+            -khtml-user-select: text! important ;
+        }
     </style>
 </head>
 <body>
-
 </body>
 </html>

@@ -133,25 +133,25 @@ public class MainMessage implements IMainMessage {
                 if (org.apache.commons.lang.StringUtils.isNotBlank(query)) {
                     String qu = StringUtils.formatSql(query);
                     sql = sql + " AND (ZHUANG1 in " + qu +" OR ZHUANG2 in " + qu +" OR ZHUANG3 in " + qu +" OR XIAN1 in " + qu +" OR XIAN2 in " + qu +" OR XIAN3 in " + qu +" OR ZHUANGVALUE in " + qu +" OR XIANVALUE in " + qu +")" +
-                            " AND (XIAN1%2!=0 OR XIAN2%2!=0 OR XIAN3%2!=0 OR XIANVALUE%2!=0 OR ZHUANG1%2!=0 OR ZHUANG2%2!=0 OR ZHUANG3%2!=0 OR ZHUANGVALUE%2!=0)";
+                            " AND ((XIAN1 < 10 AND XIAN1%2!=0) OR (XIAN2 < 10 AND XIAN2%2!=0) OR (XIAN3 < 10 AND XIAN3%2!=0) OR XIANVALUE%2!=0 OR (ZHUANG1 < 10 AND ZHUANG1%2!=0) OR (ZHUANG2 < 10 AND ZHUANG2%2!=0) OR (ZHUANG3 < 10 AND ZHUANG3%2!=0) OR ZHUANGVALUE%2!=0)";
                 } else {
-                    sql = sql + " AND (XIAN1%2!=0 OR XIAN2%2!=0 OR XIAN3%2!=0 OR XIANVALUE%2!=0 OR ZHUANG1%2!=0 OR ZHUANG2%2!=0 OR ZHUANG3%2!=0 OR ZHUANGVALUE%2!=0)";
+                    sql = sql + " AND ((XIAN1 < 10 AND XIAN1%2!=0) OR (XIAN2 < 10 AND XIAN2%2!=0) OR (XIAN3 < 10 AND XIAN3%2!=0) OR XIANVALUE%2!=0 OR (ZHUANG1 < 10 AND ZHUANG1%2!=0) OR (ZHUANG2 < 10 AND ZHUANG2%2!=0) OR (ZHUANG3 < 10 AND ZHUANG3%2!=0) OR ZHUANGVALUE%2!=0)";
                 }
             } else if(category.equals("庄")){
                 if (org.apache.commons.lang.StringUtils.isNotBlank(query)) {
                     String qu = StringUtils.formatSql(query);
                     sql = sql + " AND (ZHUANG1 in " + qu +" OR ZHUANG2 in " + qu +" OR ZHUANG3 in " + qu + " OR ZHUANGVALUE in " + qu +")" +
-                            " AND (ZHUANG1%2!=0 OR ZHUANG2%2!=0 OR ZHUANG3%2!=0 OR ZHUANGVALUE%2!=0)";
+                            " AND ((ZHUANG1 < 10 AND ZHUANG1%2!=0) OR (ZHUANG2 < 10 AND ZHUANG2%2!=0) OR (ZHUANG3 < 10 AND ZHUANG3%2!=0) OR ZHUANGVALUE%2!=0)";
                 } else {
-                    sql = sql +  " AND (ZHUANG1%2!=0 OR ZHUANG2%2!=0 OR ZHUANG3%2!=0 OR ZHUANGVALUE%2!=0)";
+                    sql = sql +  " AND ((ZHUANG1 < 10 AND ZHUANG1%2!=0) OR (ZHUANG2 < 10 AND ZHUANG2%2!=0) OR (ZHUANG3 < 10 AND ZHUANG3%2!=0)  OR ZHUANGVALUE%2!=0)";
                 }
             } else if (category.equals("闲")) {
                 if (org.apache.commons.lang.StringUtils.isNotBlank(query)) {
                     String qu = StringUtils.formatSql(query);
                     sql = sql + " AND (XIAN1 in " + qu +" OR XIAN2 in " + qu +" OR XIAN3 in " + qu +" OR XIANVALUE in " + qu +")" +
-                            " AND (XIAN1%2!=0 OR XIAN2%2!=0 OR XIAN3%2!=0 OR XIANVALUE%2!=0)";
+                            " AND ((XIAN1 < 10 AND XIAN1%2!=0) OR (XIAN2 < 10 AND XIAN2%2!=0) OR (XIAN3 < 10 AND XIAN3%2!=0) OR XIANVALUE%2!=0)";
                 } else {
-                    sql = sql +  " AND (XIAN1%2!=0 OR XIAN2%2!=0 OR XIAN3%2!=0 OR XIANVALUE%2!=0)";
+                    sql = sql +  " AND ((XIAN1 < 10 AND XIAN1%2!=0) OR (XIAN2 < 10 AND XIAN2%2!=0) OR (XIAN3 < 10 AND XIAN3%2!=0) OR XIANVALUE%2!=0)";
                 }
             }
         } else if (category2.equals("双数")) {
@@ -160,25 +160,25 @@ public class MainMessage implements IMainMessage {
                 if (org.apache.commons.lang.StringUtils.isNotBlank(query)) {
                     String qu = StringUtils.formatSql(query);
                     sql = sql + " AND (ZHUANG1 in " + qu +" OR ZHUANG2 in " + qu +" OR ZHUANG3 in " + qu +" OR XIAN1 in " + qu +" OR XIAN2 in " + qu +" OR XIAN3 in " + qu +" OR ZHUANGVALUE in " + qu +" OR XIANVALUE in " + qu +")" +
-                            " AND (XIAN1%2=0 OR XIAN2%2=0 OR XIAN3%2=0 OR XIANVALUE%2=0 OR ZHUANG1%2=0 OR ZHUANG2%2=0 OR ZHUANG3%2=0 OR ZHUANGVALUE%2=0)";
+                            " AND ((XIAN1 < 10 AND XIAN1%2=0) OR (XIAN2 < 10 AND XIAN2%2=0) OR (XIAN3 < 10 AND XIAN3%2=0) OR XIANVALUE%2=0 OR (ZHUANG1 < 10 AND ZHUANG1%2=0) OR (ZHUANG2 < 10 AND ZHUANG2%2=0) OR (ZHUANG3 < 10 AND ZHUANG3%2=0) OR ZHUANGVALUE%2=0)";
                 } else {
-                    sql = sql + " AND (XIAN1%2=0 OR XIAN2%2=0 OR XIAN3%2=0 OR XIANVALUE%2=0 OR ZHUANG1%2=0 OR ZHUANG2%2=0 OR ZHUANG3%2=0 OR ZHUANGVALUE%2=0)";
+                    sql = sql + " AND ((XIAN1 < 10 AND XIAN1%2=0) OR (XIAN2 < 10 AND XIAN2%2=0) OR (XIAN3 < 10 AND XIAN3%2=0) OR XIANVALUE%2=0 OR (ZHUANG1 < 10 AND ZHUANG1%2=0) OR (ZHUANG2 < 10 AND ZHUANG2%2=0) OR (ZHUANG3 < 10 AND ZHUANG3%2=0) OR ZHUANGVALUE%2=0)";
                 }
             } else if(category.equals("庄")){
                 if (org.apache.commons.lang.StringUtils.isNotBlank(query)) {
                     String qu = StringUtils.formatSql(query);
                     sql = sql + " AND (ZHUANG1 in " + qu +" OR ZHUANG2 in " + qu +" OR ZHUANG3 in " + qu + " OR ZHUANGVALUE in " + qu +")" +
-                            " AND (ZHUANG1%2=0 OR ZHUANG2%2=0 OR ZHUANG3%2=0 OR ZHUANGVALUE%2=0)";
+                            " AND ((ZHUANG1 < 10 AND ZHUANG1%2=0) OR (ZHUANG2 < 10 AND ZHUANG2%2=0) OR (ZHUANG3 < 10 AND ZHUANG3%2=0) OR ZHUANGVALUE%2=0)";
                 } else {
-                    sql = sql +  " AND (ZHUANG1%2=0 OR ZHUANG2%2=0 OR ZHUANG3%2=0 OR ZHUANGVALUE%2=0)";
+                    sql = sql +  " AND ((ZHUANG1 < 10 AND ZHUANG1%2=0) OR (ZHUANG2 < 10 AND ZHUANG2%2=0) OR (ZHUANG3 < 10 AND ZHUANG3%2=0) OR ZHUANGVALUE%2=0)";
                 }
             } else if (category.equals("闲")) {
                 if (org.apache.commons.lang.StringUtils.isNotBlank(query)) {
                     String qu = StringUtils.formatSql(query);
                     sql = sql + " AND (XIAN1 in " + qu +" OR XIAN2 in " + qu +" OR XIAN3 in " + qu +" OR XIANVALUE in " + qu +")" +
-                            " AND (XIAN1%2=0 OR XIAN2%2=0 OR XIAN3%2=0 OR XIANVALUE%2=0)";
+                            " AND ((XIAN1 < 10 AND XIAN1%2=0) OR (XIAN2 < 10 AND XIAN2%2=0) OR (XIAN3 < 10 AND XIAN3%2=0) OR XIANVALUE%2=0)";
                 } else {
-                    sql = sql + " AND (XIAN1%2=0 OR XIAN2%2=0 OR XIAN3%2=0 OR XIANVALUE%2=0)";
+                    sql = sql + " AND ((XIAN1 < 10 AND XIAN1%2=0) OR (XIAN2 < 10 AND XIAN2%2=0) OR (XIAN3 < 10 AND XIAN3%2=0) OR XIANVALUE%2=0)";
                 }
             }
         }
