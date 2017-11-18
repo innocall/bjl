@@ -352,7 +352,7 @@ Ext.onReady(function() {
         }),
         buttons : [
             {
-                text:'<font style="font-size: 18px;">剧集管理</font>',
+                text:'<font style="font-size: 18px;">查看所在大局</font>',
                 handler:function(){
                     var roleRecord = yhglGrid.getSelectionModel().getSelected();
                     if(!roleRecord){

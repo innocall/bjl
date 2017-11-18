@@ -212,8 +212,8 @@
         </table>
     </div>
 
-
-    <div style="position: absolute;left:10px;top:370px;width: 500px;overflow: auto;height: 240px;">
+    <!--大路-->
+    <div style="position: absolute;left:10px;top:370px;width: 650px;overflow: auto;height: 240px;">
         <div style="width: 2625px;">
             <table class="table3">
                 <%
@@ -224,6 +224,75 @@
                         for (int j=1; j<75;j++) {
                     %>
                     <th id="dalu_<%=j + "" + i%>"></th>
+                    <%
+                        }
+                    %>
+                </tr>
+                <%
+                    }
+                %>
+            </table>
+        </div>
+    </div>
+
+    <!--大眼仔-->
+    <div style="position: absolute;left:700px;top:370px;width: 650px;overflow: auto;height: 240px;">
+        <div style="width: 2625px;">
+            <table class="table3">
+                <%
+                    for (int i=1; i<75;i++) {
+                %>
+                <tr>
+                    <%
+                        for (int j=1; j<75;j++) {
+                    %>
+                    <th id="dayanzai_<%=j + "" + i%>"></th>
+                    <%
+                        }
+                    %>
+                </tr>
+                <%
+                    }
+                %>
+            </table>
+        </div>
+    </div>
+
+    <!--小路-->
+    <div style="position: absolute;left:10px;top:620px;width: 650px;overflow: auto;height: 240px;">
+        <div style="width: 2625px;">
+            <table class="table3">
+                <%
+                    for (int i=1; i<75;i++) {
+                %>
+                <tr>
+                    <%
+                        for (int j=1; j<75;j++) {
+                    %>
+                    <th id="xiaolu_<%=j + "" + i%>"></th>
+                    <%
+                        }
+                    %>
+                </tr>
+                <%
+                    }
+                %>
+            </table>
+        </div>
+    </div>
+
+    <!--蟑螂路-->
+    <div style="position: absolute;left:700px;top:620px;width: 650px;overflow: auto;height: 240px;">
+        <div style="width: 2625px;">
+            <table class="table3">
+                <%
+                    for (int i=1; i<75;i++) {
+                %>
+                <tr>
+                    <%
+                        for (int j=1; j<75;j++) {
+                    %>
+                    <th id="zhanglanglu_<%=j + "" + i%>"></th>
                     <%
                         }
                     %>
