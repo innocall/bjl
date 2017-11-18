@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Administrator
@@ -29,7 +30,8 @@
     </script>
 </head>
 <body>
-    <div style="color: #3366cc;">扑克：8副&nbsp;&nbsp;&nbsp;&nbsp;总共:416张&nbsp;&nbsp;&nbsp;&nbsp;首切牌：10张
+    <div style="color: #3366cc;">扑克：8副&nbsp;&nbsp;&nbsp;&nbsp;总共:416张&nbsp;&nbsp;&nbsp;&nbsp;
+        首切牌：<span id="startDown">10</span>张
         <span style="margin-left: 20px;font-size: 22px;">
             局数：<span id="juCount" style="color: #ff4545">0</span>
             &nbsp;&nbsp;&nbsp;&nbsp;庄：<span id="zhuangCount" style="color: #ff4545">0</span>
@@ -118,285 +120,119 @@
     <div style="position: absolute;left: 845px;top: 70px;">
         <table class="table3">
             <tr>
-                <th>
-                    <div class="zhuang">
-                        庄
-                        <div class="zhuangdu"></div>
-                        <div class="xiandu"></div>
-                    </div>
-                </th>
-                <th>
-                    <div class="xian">
-                        闲
-                        <div class="zhuangdu"></div>
-                        <div class="xiandu"></div>
-                    </div>
-                </th>
-                <th>
-                    <div class="he">
-                        和
-                    </div>
-                </th>
-                <th>
-                    <img src="${pageContext.request.contextPath}/image/zhang.jpg" width="35px;">
-                </th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
+                <th id="img1"></th>
+                <th id="img7"></th>
+                <th id="img13"></th>
+                <th id="img19"></th>
+                <th id="img25"></th>
+                <th id="img31"></th>
+                <th id="img37"></th>
+                <th id="img43"></th>
+                <th id="img49"></th>
+                <th id="img55"></th>
+                <th id="img61"></th>
+                <th id="img67"></th>
+                <th id="img73"></th>
             </tr>
             <tr>
-                <th>
-                    <div class="zhuang">
-                        庄
-                        <div class="zhuangdu"></div>
-                        <div class="xiandu"></div>
-                    </div>
-                </th>
-                <th>
-                    <div class="zhuang">
-                        庄
-                    </div>
-                </th>
-                <th>
-                    <div class="zhuang">
-                        庄
-                    </div>
-                </th>
-                <th>
-                    <div class="zhuang">
-                        庄
-                    </div>
-                </th>
-                <th>
-                    <div class="xian">
-                        闲
-                        <div class="xiandu"></div>
-                    </div>
-                </th>
-                <th>
-                    <div class="xian">
-                        闲
-                    </div>
-                </th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
+                <th id="img2"> </th>
+                <th id="img8"></th>
+                <th id="img14"></th>
+                <th id="img20"></th>
+                <th id="img26"></th>
+                <th id="img32"></th>
+                <th id="img38"></th>
+                <th id="img44"></th>
+                <th id="img50"></th>
+                <th id="img56"></th>
+                <th id="img62"></th>
+                <th id="img68"></th>
+                <th id="img74"></th>
             </tr>
             <tr>
-                <th>
-                    <div class="zhuang">
-                        庄
-                    </div>
-                </th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
+                <th id="img3"> </th>
+                <th id="img9"></th>
+                <th id="img15"></th>
+                <th id="img21"></th>
+                <th id="img27"></th>
+                <th id="img33"></th>
+                <th id="img39"></th>
+                <th id="img45"></th>
+                <th id="img51"></th>
+                <th id="img57"></th>
+                <th id="img63"></th>
+                <th id="img69"></th>
+                <th id="img75"></th>
             </tr>
             <tr>
-                <th>
-                    <div class="zhuang">
-                        庄
-                    </div>
-                </th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
+                <th id="img4"> </th>
+                <th id="img10"></th>
+                <th id="img16"></th>
+                <th id="img22"></th>
+                <th id="img28"></th>
+                <th id="img34"></th>
+                <th id="img40"></th>
+                <th id="img46"></th>
+                <th id="img52"></th>
+                <th id="img58"></th>
+                <th id="img64"></th>
+                <th id="img70"></th>
+                <th id="img76"></th>
             </tr>
             <tr>
-                <th>
-                    <div class="xian">
-                        闲
-                        <div class="xiandu"></div>
-                    </div>
-                </th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
+                <th id="img5"> </th>
+                <th id="img11"></th>
+                <th id="img17"></th>
+                <th id="img23"></th>
+                <th id="img29"></th>
+                <th id="img35"></th>
+                <th id="img41"></th>
+                <th id="img47"></th>
+                <th id="img53"></th>
+                <th id="img59"></th>
+                <th id="img65"></th>
+                <th id="img71"></th>
+                <th id="img77"></th>
             </tr>
             <tr>
-                <th>
-                    <div class="xian">
-                        闲
-                        <div class="xiandu"></div>
-                    </div>
-                </th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
+                <th id="img6"> </th>
+                <th id="img12"></th>
+                <th id="img18"></th>
+                <th id="img24"></th>
+                <th id="img30"></th>
+                <th id="img36"></th>
+                <th id="img42"></th>
+                <th id="img48"></th>
+                <th id="img54"></th>
+                <th id="img60"></th>
+                <th id="img66"></th>
+                <th id="img72"></th>
+                <th id="img78"></th>
             </tr>
         </table>
     </div>
 
 
-    <div style="position: absolute;left:10px;top:370px;">
-        <table class="table2" width="460px;" style="width: 460px;">
-            <tr>
-                <th >扑克</th>
-                <th >上限</th>
-                <th>盲牌</th>
-                <th >明牌</th>
-                <th >计算概率</th>
-                <th >概率排序</th>
-                <th >出现概率</th>
-            </tr>
-            <tr>
-                <th>A</th>
-                <th>32</th>
-                <th>32</th>
-                <th>0</th>
-                <th>50%</th>
-                <th>A</th>
-                <th>52%</th>
-            </tr>
-            <tr>
-                <th>2</th>
-                <th>32</th>
-                <th>32</th>
-                <th>0</th>
-                <th>50%</th>
-                <th>A</th>
-                <th>52%</th>
-            </tr>
-            <tr>
-                <th>3</th>
-                <th>32</th>
-                <th>32</th>
-                <th>0</th>
-                <th>50%</th>
-                <th>A</th>
-                <th>52%</th>
-            </tr>
-            <tr>
-                <th>4</th>
-                <th>32</th>
-                <th>32</th>
-                <th>0</th>
-                <th>50%</th>
-                <th>A</th>
-                <th>52%</th>
-            </tr>
-            <tr>
-                <th>5</th>
-                <th>32</th>
-                <th>32</th>
-                <th>0</th>
-                <th>50%</th>
-                <th>A</th>
-                <th>52%</th>
-            </tr>
-            <tr>
-                <th>6</th>
-                <th>32</th>
-                <th>32</th>
-                <th>0</th>
-                <th>50%</th>
-                <th>A</th>
-                <th>52%</th>
-            </tr>
-            <tr>
-                <th>7</th>
-                <th>32</th>
-                <th>32</th>
-                <th>0</th>
-                <th>50%</th>
-                <th>A</th>
-                <th>52%</th>
-            </tr>
-            <tr>
-                <th>8</th>
-                <th>32</th>
-                <th>32</th>
-                <th>0</th>
-                <th>50%</th>
-                <th>A</th>
-                <th>52%</th>
-            </tr>
-            <tr>
-                <th>9</th>
-                <th>32</th>
-                <th>32</th>
-                <th>0</th>
-                <th>50%</th>
-                <th>A</th>
-                <th>52%</th>
-            </tr>
-            <tr>
-                <th>10</th>
-                <th>32</th>
-                <th>32</th>
-                <th>0</th>
-                <th>50%</th>
-                <th>A</th>
-                <th>52%</th>
-            </tr>
-            <tr>
-                <th>J</th>
-                <th>32</th>
-                <th>32</th>
-                <th>0</th>
-                <th>50%</th>
-                <th>A</th>
-                <th>52%</th>
-            </tr>
-            <tr>
-                <th>Q</th>
-                <th>32</th>
-                <th>32</th>
-                <th>0</th>
-                <th>50%</th>
-                <th>A</th>
-                <th>52%</th>
-            </tr>
-            <tr>
-                <th>K</th>
-                <th>32</th>
-                <th>32</th>
-                <th>0</th>
-                <th>50%</th>
-                <th>A</th>
-                <th>52%</th>
-            </tr>
-        </table>
+    <div style="position: absolute;left:10px;top:370px;width: 500px;overflow: auto;height: 240px;">
+        <div style="width: 2625px;">
+            <table class="table3">
+                <%
+                     for (int i=1; i<75;i++) {
+                %>
+                <tr>
+                    <%
+                        for (int j=1; j<75;j++) {
+                    %>
+                    <th id="dalu_<%=j + "" + i%>"></th>
+                    <%
+                        }
+                    %>
+                </tr>
+                <%
+                    }
+                %>
+            </table>
+        </div>
     </div>
 
 
