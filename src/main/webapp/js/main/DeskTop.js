@@ -98,6 +98,8 @@ Ext.onReady(function(){
                             url = path + "private/main/dataStatistics";
 						} else if (node.id == 2) {
                             url = path + "private/main/dataAnalysis";
+						} else if (node.id == 3) {
+                            url = path + "private/main/rootAnalysis";
 						}
 	    				tab = new Ext.Panel({
 	    					id:'Tab_' + node.id,

@@ -63,6 +63,16 @@ public class MainControl extends BaseControl {
     }
 
     /**
+     * 大局分析
+     * @return
+     */
+    @RequestMapping(value = "/rootAnalysis",method = RequestMethod.GET)
+    public ModelAndView rootAnalysis() {
+        ModelAndView mav = new ModelAndView("main/rootAnalysis");
+        return mav;
+    }
+
+    /**
      * 充值
      * @return
      */
@@ -197,6 +207,24 @@ public class MainControl extends BaseControl {
                 json, headers, HttpStatus.OK);
         return responseEntity;
     }
+
+    /*@RequestMapping(value = "roomAllData", method = RequestMethod.POST)
+    public ResponseEntity<String> roomAllData(HttpServletRequest request) {
+        HttpHeaders headers = new HttpHeaders();
+        MediaType mediaType = new MediaType("text", "html", Charset.forName("UTF-8"));
+        headers.setContentType(mediaType);
+        Map<String, Object> param = new HashMap<String, Object>();
+        int start = ParamUtils.getIntParameter(request, "start", 0);
+        int limit = ParamUtils.getIntParameter(request, "limit", 80);
+        List<HashMap<String, Object>> yhgl = mainMessage.findReetList(start, limit);
+        int count = mainMessage.findReetListCount(start, limit);
+        param.put("yhgl", yhgl);
+        param.put("count", count);
+        String json = JsonUtil.toJsonString(param);
+        ResponseEntity<String> responseEntity = new ResponseEntity<String>(
+                json, headers, HttpStatus.OK);
+        return responseEntity;
+    }*/
 
     private void printMsgToPage(HttpServletResponse response, String status, String msg, PrintWriter out) {
         try {

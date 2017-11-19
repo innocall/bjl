@@ -31,6 +31,12 @@ function init() {
     xiandui = 1;
     zhuangdui = 1;
     roomId = "";
+    $("#juCount").html(juCount);
+    $("#zhuangCount").html(zhuangCount);
+    $("#xianCount").html(xianCount);
+    $("#heCount").html(heCount);
+    $("#zhuangDuiCount").html(zhuangDuiCount1);
+    $("#xianDuiCount").html(xianDuiCount1);
     $(".zhupanlu").remove();
     $("#xian").css("visibility","hidden");
     $("#xian1").css("visibility","hidden");
@@ -364,7 +370,9 @@ function goGame(xian1,zhuang1,xian2,zhuang2,xian3,zhuang3) {
         submitDate(xian1,zhuang1,xian2,zhuang2,xian3,zhuang3,userMoney,touzhuMoney,zhuangdian,xiandian);
     } else {
         //新的一大局
-        cloun = 1;//记录大路到第几列
+        $("#msg").html("游戏结束");
+        $("#msg").css("display","initial");
+        /*cloun = 1;//记录大路到第几列
         row = 1; //记录大路到第几行
         up = 0;  //记录上一局是 1 庄 2 闲 3 和
         he = 0; //记录和的条数
@@ -374,55 +382,55 @@ function goGame(xian1,zhuang1,xian2,zhuang2,xian3,zhuang3) {
         $("#startBut").html("开始游戏");
         $("#endTime").html(time);
         $("#endTime").css("display","block");
-        $("#msg").html("上一局结束，请开始下一局游戏");
+        $("#msg").html("游戏结束");
         $("#msg").css("display","initial");
-        $("#touzhuId").removeAttr("disabled");
+        $("#touzhuId").removeAttr("disabled");*/
     }
 }
 
 function setZhuPanLu(zhuangdian,xiandian) {
-    //<img class="zhupanlu" src="../../image/zhang.jpg" width="35px;">
+    //<img class="zhupanlu" src="../../image/zhang.jpg" width="30px;">
     if (zhuangdian > xiandian) {
         //庄赢
         if(zhuangdui == 0){
             //庄队
-            $("#img" + juCount +"").html("庄");
+            $("#img" + juCount +"").html("<img class=\"zhupanlu\" src=\"../../image/zhuangdui.png\" width=\"25px;\">");
         } else if(xiandui == 0){
             //闲队
-            $("#img" + juCount +"").html("庄");
+            $("#img" + juCount +"").html("<img class=\"zhupanlu\" src=\"../../image/zhuangxiandui.png\" width=\"25px;\">");
         } else if (zhuangdui == 0 && xiandui == 0) {
             //庄队，闲队
-            $("#img" + juCount +"").html("庄");
+            $("#img" + juCount +"").html("<img class=\"zhupanlu\" src=\"../../image/zhuangd.png\" width=\"25px;\">");
         } else {
-            $("#img" + juCount +"").html("庄");
+            $("#img" + juCount +"").html("<img class=\"zhupanlu\" src=\"../../image/zhuang.png\" width=\"25px;\">");
         }
     } else if (zhuangdian < xiandian) {
         //闲赢
         if(zhuangdui == 0){
             //庄队
-            $("#img" + juCount +"").html("闲");
+            $("#img" + juCount +"").html("<img class=\"zhupanlu\" src=\"../../image/xianzhuangdui.png\" width=\"25px;\">");
         } else if(xiandui == 0){
             //闲队
-            $("#img" + juCount +"").html("闲");
+            $("#img" + juCount +"").html("<img class=\"zhupanlu\" src=\"../../image/xiandui.png\" width=\"25px;\">");
         } else if (zhuangdui == 0 && xiandui == 0) {
             //庄队，闲队
-            $("#img" + juCount +"").html("闲");
+            $("#img" + juCount +"").html("<img class=\"zhupanlu\" src=\"../../image/zhuangd.png\" width=\"25px;\">");
         } else {
-            $("#img" + juCount +"").html("闲");
+            $("#img" + juCount +"").html("<img class=\"zhupanlu\" src=\"../../image/xian.png\" width=\"25px;\">");
         }
     } else {
         //和
         if(zhuangdui == 0){
             //庄队
-            $("#img" + juCount +"").html("和");
+            $("#img" + juCount +"").html("<img class=\"zhupanlu\" src=\"../../image/hedui.png\" width=\"25px;\">");
         } else if(xiandui == 0){
             //闲队
-            $("#img" + juCount +"").html("和");
+            $("#img" + juCount +"").html("<img class=\"zhupanlu\" src=\"../../image/hezhuangdui.png\" width=\"25px;\">");
         } else if (zhuangdui == 0 && xiandui == 0) {
             //庄队，闲队
-            $("#img" + juCount +"").html("和");
+            $("#img" + juCount +"").html("<img class=\"zhupanlu\" src=\"../../image/hed.png\" width=\"25px;\">");
         } else {
-            $("#img" + juCount +"").html("和");
+            $("#img" + juCount +"").html("<img class=\"zhupanlu\" src=\"../../image/he.png\" width=\"25px;\">");
         }
     }
 }
@@ -436,36 +444,36 @@ function  setDaLu(zhuangdian,xiandian) {
         he = 0;
         //庄赢
         if (up == 0) {
-            $("#dalu_" + cloun + "" + row +"").html("<div class=\"dulu\" style=\"width: 25px;height: 25px;border: 2px solid #ff4545;border-radius: 25px;margin: 0 auto;\"></div>");
+            $("#dalu_" + cloun + "" + row +"").html("<div class=\"dulu\" style=\"width: 20px;height: 20px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 22px;\"></div>");
         } else if (up == 1) {
             row = row + 1
-            $("#dalu_" + cloun  + "" +row +"").html("<div class=\"dulu\" style=\"width: 25px;height: 25px;border: 2px solid #ff4545;border-radius: 25px;margin: 0 auto;\"></div>");
+            $("#dalu_" + cloun  + "" +row +"").html("<div class=\"dulu\" style=\"width: 20px;height: 20px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 22px;\"></div>");
         } else if (up == 2) {
             row = 1;
             cloun = cloun + 1
-            $("#dalu_" + cloun  + "" + row +"").html("<div class=\"dulu\" style=\"width: 25px;height: 25px;border: 2px solid #ff4545;border-radius: 25px;margin: 0 auto;\"></div>");
+            $("#dalu_" + cloun  + "" + row +"").html("<div class=\"dulu\" style=\"width: 20px;height: 20px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 22px;\"></div>");
         } else if (up == 3) {
             row = 1;
             cloun = cloun + 1
-            $("#dalu_" + cloun  + "" + row +"").html("<div class=\"dulu\" style=\"width: 25px;height: 25px;border: 2px solid #ff4545;border-radius: 25px;margin: 0 auto;\"></div>");
+            $("#dalu_" + cloun  + "" + row +"").html("<div class=\"dulu\" style=\"width: 20px;height: 20px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 22px;\"></div>");
         }
         up = 1;
     } else if (zhuangdian < xiandian) {
         he = 0;
         //闲赢
         if (up == 0) {
-            $("#dalu_" + cloun  + "" + row +"").html("<div class=\"dulu\" style=\"width: 25px;height: 25px;border: 2px solid #0c41ff;border-radius: 25px;margin: 0 auto;\"></div>");
+            $("#dalu_" + cloun  + "" + row +"").html("<div class=\"dulu\" style=\"width: 20px;height: 20px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 22px;\"></div>");
         } else if (up == 1) {
             row = 1;
             cloun = cloun + 1
-            $("#dalu_" + cloun  + "" + row +"").html("<div class=\"dulu\" style=\"width: 25px;height: 25px;border: 2px solid #0c41ff;border-radius: 25px;margin: 0 auto;\"></div>");
+            $("#dalu_" + cloun  + "" + row +"").html("<div class=\"dulu\" style=\"width: 20px;height: 20px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 22px;\"></div>");
         } else if (up == 2) {
             row = row + 1
-            $("#dalu_" + cloun  + "" + row +"").html("<div class=\"dulu\" style=\"width: 25px;height: 25px;border: 2px solid #0c41ff;border-radius: 25px;margin: 0 auto;\"></div>");
+            $("#dalu_" + cloun  + "" + row +"").html("<div class=\"dulu\" style=\"width: 20px;height: 20px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 22px;\"></div>");
         } else if (up == 3) {
             row = 1;
             cloun = cloun + 1
-            $("#dalu_" + cloun  + "" + row +"").html("<div class=\"dulu\" style=\"width: 25px;height: 25px;border: 2px solid #0c41ff;border-radius: 25px;margin: 0 auto;\"></div>");
+            $("#dalu_" + cloun  + "" + row +"").html("<div class=\"dulu\" style=\"width: 20px;height: 20px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 22px;\"></div>");
         }
         up = 2;
     } else {

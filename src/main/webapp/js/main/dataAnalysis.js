@@ -22,7 +22,117 @@ Ext.onReady(function() {
         fields : [ 'ID', 'ROOMID', 'ZHUANG1', 'ZHUANG2', 'ZHUANG3','XIAN1', 'XIAN2', 'XIAN3','TIME','TOUZHU','ZHUANGVALUE','XIANVALUE','POINT' ]
     });
 
-    var dateSearchForm = new Ext.form.FormPanel({
+    var dateSearchForm = new Ext.FormPanel({
+        region : 'north',
+        frame : true,
+        height : 140,
+        labelWidth:80,
+        items: [{
+            layout:'column',   //定义该元素为布局为列布局方式
+            border:false,
+            labelSeparator:'：',
+            items:[{
+                columnWidth:.5,  //该列占用的宽度，标识为50％
+                layout: 'form',
+                border:false,
+                items: [{
+                    xtype: "combo",
+                    id: "category_user",
+                    name: "category_user",
+                    fieldLabel: '<font style="font-size: 15px">查询对象</font>',
+                    width: 300,
+                    editable: false,
+                    style: 'font-size:15px;',
+                    labelSeparator: '：',
+                    store: ['全部', '庄', '闲'],
+                    displayField: 'category',
+                    emptyText: "请选择查询类型",
+                    triggerAction: 'all',
+                }, {
+                    xtype: "combo",
+                    id: "category_user2",
+                    name: "category_user2",
+                    fieldLabel: '<font style="font-size: 15px">查询类型</font>',
+                    width: 300,
+                    editable: false,
+                    style: 'font-size:15px;',
+                    labelSeparator: '：',
+                    store: ['全部', '单数', '双数'],
+                    displayField: 'category',
+                    emptyText: "请选择查询类型",
+                    triggerAction: 'all',
+                },{
+                    xtype: 'textfield',
+                    id: 'query',
+                    name: 'query',
+                    style: 'font-size:15px;',
+                    width: 150,
+                    fieldLabel: '<font style="font-size: 15px">查询组合</font>',
+                    labelSeparator: '：',
+                    listeners: {
+                        render: function(obj) {
+                            var font=document.createElement("font");
+                            font.setAttribute("color","red");
+                            font.setAttribute("style","font-size:15px;")
+                            var redStar=document.createTextNode('   多个数子用-号分割，如：A-6-K');
+                            font.appendChild(redStar);
+                            obj.el.dom.parentNode.appendChild(font);
+                        }
+                    }
+                }]
+            },{
+                columnWidth:.5,
+                layout: 'form',
+                border:false,
+                items: [{
+                    xtype: 'datefield',
+                    fieldLabel: '<font style="font-size: 15px">开始时间</font>',
+                    id: 'startDate',
+                    name: 'startDate',
+                    style: 'font-size:15px;',
+                    labelSeparator: '：',//分隔符
+                    format: 'Y-m-d H:i:s',//显示日期的格式
+                    maxValue: new Date(),//允许选择的最大日期
+                    width: 300,
+                    value: '2015-11-01 12:00:00'
+                }, {
+                    xtype: 'datefield',
+                    fieldLabel: '<font style="font-size: 15px">结束时间</font>',
+                    id: 'endDate',
+                    name: 'endDate',
+                    style: 'font-size:15px;',
+                    labelSeparator: '：',//分隔符
+                    format: 'Y-m-d H:i:s',//显示日期的格式
+                    maxValue: new Date(),//允许选择的最大日期
+                    width: 300,
+                    value: new Date()
+                }]
+            }]
+        }],
+        buttons : [ {
+            text : '<font style="font-size: 18px">查询</font>',
+            handler : function() {
+                jsonUser.load({
+                    params : {
+                        start : 0,
+                        limit : 80,
+                        category : dateSearchForm.getForm().findField(
+                            "category_user").getValue(),
+                        query : dateSearchForm.getForm().findField("query")
+                            .getValue(),
+                        category2 : dateSearchForm.getForm().findField(
+                            "category_user2").getValue(),
+                        startDate : dateSearchForm.getForm().findField(
+                            "startDate").getValue(),
+                        endDate : dateSearchForm.getForm().findField(
+                            "endDate").getValue(),
+                    }
+                });
+            }
+        } ]
+    })
+
+   /* var dateSearchForm2 = new Ext.form.FormPanel({
         region : 'north',
         frame : true,
         height : 200,
@@ -127,7 +237,7 @@ Ext.onReady(function() {
                 });
             }
         } ]
-    });
+    });*/
 
     /* 数据列表 */
     var yhglGrid = new Ext.grid.GridPanel({
@@ -158,7 +268,8 @@ Ext.onReady(function() {
             align : 'center',
             width : 300,
             css:'font-size:13px;',
-            menuDisabled : true
+            menuDisabled : true,
+            hidden : true
         }, {
             id : 'ZHUANG1',
             header : '庄牌1',
@@ -390,7 +501,7 @@ Ext.onReady(function() {
         sm : new Ext.grid.RowSelectionModel({
             singleSelect : true
         }),
-        height : 600,
+        height : 480,
         autoExpandColumn : 'TIME',
         columns : [{
             id : 'ID',
@@ -589,12 +700,10 @@ Ext.onReady(function() {
     var sepisodesWin = new Ext.Window({
         id : 'sepisodesWin',
         title : '小局列表',
-        width : 850,
-        height : 650,
+        width : 900,
+        height : 480,
         autoHeight : true,
         collapsible : true,
-        maximizable: true,
-        minimizable: true,
         modal : true,
         items : [episGrid ],
         closable : true,
