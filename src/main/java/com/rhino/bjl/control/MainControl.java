@@ -3,6 +3,7 @@ package com.rhino.bjl.control;
 import com.rhino.bjl.bean.ManageUser;
 import com.rhino.bjl.constans.AppConstans;
 import com.rhino.bjl.server.IMainMessage;
+import com.rhino.bjl.utils.DateUtils;
 import com.rhino.bjl.utils.JsonUtil;
 import com.rhino.bjl.utils.ParamUtils;
 import org.apache.commons.lang.StringUtils;
@@ -14,6 +15,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,6 +28,7 @@ import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Controller
 @RequestMapping(value="/private/main")
@@ -157,8 +162,8 @@ public class MainControl extends BaseControl {
             //保存每一局数据
             msg = roomId;
             //更新数据
-            boolean isSucces = mainMessage.saveReetData(xian1,xian2,xian3,zhuang1,zhuang2,zhuang3,touzhuMoney,user.getID(),roomId,radio,zhuangdian,xiandian,juCount);
-            if(!isSucces) {
+            String id = mainMessage.saveReetData(xian1,xian2,xian3,zhuang1,zhuang2,zhuang3,touzhuMoney,user.getID(),roomId,radio,zhuangdian,xiandian,juCount);
+            if(StringUtils.isBlank(id)) {
                 status = "400";
                 msg = "保存失败";
             }
@@ -208,7 +213,7 @@ public class MainControl extends BaseControl {
         return responseEntity;
     }
 
-    /*@RequestMapping(value = "roomAllData", method = RequestMethod.POST)
+    @RequestMapping(value = "roomAllData", method = RequestMethod.POST)
     public ResponseEntity<String> roomAllData(HttpServletRequest request) {
         HttpHeaders headers = new HttpHeaders();
         MediaType mediaType = new MediaType("text", "html", Charset.forName("UTF-8"));
@@ -216,15 +221,151 @@ public class MainControl extends BaseControl {
         Map<String, Object> param = new HashMap<String, Object>();
         int start = ParamUtils.getIntParameter(request, "start", 0);
         int limit = ParamUtils.getIntParameter(request, "limit", 80);
-        List<HashMap<String, Object>> yhgl = mainMessage.findReetList(start, limit);
-        int count = mainMessage.findReetListCount(start, limit);
+        ManageUser user = (ManageUser) request.getSession().getAttribute(AppConstans.MANAGE_USER_SESSION);
+        List<HashMap<String, Object>> yhgl = mainMessage.findRoomList(start, limit,user.getID());
+        int count = mainMessage.findRoomListCount(start, limit,user.getID());
         param.put("yhgl", yhgl);
         param.put("count", count);
         String json = JsonUtil.toJsonString(param);
         ResponseEntity<String> responseEntity = new ResponseEntity<String>(
                 json, headers, HttpStatus.OK);
         return responseEntity;
-    }*/
+    }
+
+    @RequestMapping(value = "deleteRoomById", method = RequestMethod.POST)
+    public
+    @ResponseBody
+    String deleteRoomById(HttpServletRequest request) {
+        Map<String, Object> param = new HashMap<String, Object>();
+        String roomId = ParamUtils.getParameter(request, "roomId", "");
+        if(StringUtils.isNotBlank(roomId)) {
+            boolean isParam = mainMessage.deleteRootById(roomId);
+            if(isParam) {
+                param.put("success", true);
+            } else {
+                param.put("success", false);
+            }
+        } else {
+            param.put("success", false);
+        }
+        String json = JsonUtil.toJsonString(param);
+        return json;
+    }
+
+    @RequestMapping(value = "saveRoom",method = {RequestMethod.POST})
+    public ResponseEntity<String> saveRoom(HttpServletRequest request) {
+        HttpHeaders headers = new HttpHeaders();
+        MediaType mediaType = new MediaType("text", "html",
+                Charset.forName("UTF-8"));
+        headers.setContentType(mediaType);
+        HashMap param = new HashMap();
+        String juCount = ParamUtils.getParameter(request, "TOTALCOUNT", "");
+        String zhuangCount = ParamUtils.getParameter(request, "ZHUANGCOUNT", "");
+        String xianCount = ParamUtils.getParameter(request, "XIANCOUNT", "");
+        String heCount = ParamUtils.getParameter(request, "HECOUNT", "");
+        String zhuangDuiCount1 = ParamUtils.getParameter(request, "ZHUANGDUICOUNT", "");
+        String xianDuiCount = ParamUtils.getParameter(request, "XIANDUICOUNT", "");
+        ManageUser user = (ManageUser) request.getSession().getAttribute(AppConstans.MANAGE_USER_SESSION);
+        String roomId = mainMessage.saveRoomData("10000000",juCount,user.getID(),zhuangCount,xianCount,heCount,zhuangDuiCount1,xianDuiCount);
+        if (StringUtils.isBlank(roomId)) {
+            param.put("msg", "添加失败！");
+        } else {
+            param.put("msg", "添加成功！");
+            param.put("success", true);
+            param.put("juCount",juCount);
+            param.put("zhuangCount",zhuangCount);
+            param.put("xianCount",xianCount);
+            param.put("heCount",heCount);
+            param.put("zhuangDuiCount1",zhuangDuiCount1);
+            param.put("xianDuiCount",xianDuiCount);
+            param.put("STRARTTIME", DateUtils.getDate5());
+            param.put("id",roomId);
+        }
+
+        String json = JsonUtil.toMapJsonString(param);
+        ResponseEntity<String> responseEntity = new ResponseEntity<String>(
+                json, headers, HttpStatus.OK);
+        return responseEntity;
+    }
+
+    @RequestMapping(value = "saveReet",method = {RequestMethod.POST})
+    public ResponseEntity<String> saveReet(HttpServletRequest request) {
+        HttpHeaders headers = new HttpHeaders();
+        MediaType mediaType = new MediaType("text", "html",
+                Charset.forName("UTF-8"));
+        headers.setContentType(mediaType);
+        HashMap param = new HashMap();
+        String ZHUANG1 = com.rhino.bjl.utils.StringUtils.getCountFormat(ParamUtils.getParameter(request, "ZHUANG1", ""));
+        String ZHUANG2 = com.rhino.bjl.utils.StringUtils.getCountFormat(ParamUtils.getParameter(request, "ZHUANG2", ""));
+        String ZHUANG3 = com.rhino.bjl.utils.StringUtils.getCountFormat(ParamUtils.getParameter(request, "ZHUANG3", ""));
+        String XIAN1 = com.rhino.bjl.utils.StringUtils.getCountFormat(ParamUtils.getParameter(request, "XIAN1", ""));
+        String XIAN2 = com.rhino.bjl.utils.StringUtils.getCountFormat(ParamUtils.getParameter(request, "XIAN2", ""));
+        String XIAN3 = com.rhino.bjl.utils.StringUtils.getCountFormat(ParamUtils.getParameter(request, "XIAN3", ""));
+        String roomId = ParamUtils.getParameter(request, "roomId", "");
+        ManageUser user = (ManageUser) request.getSession().getAttribute(AppConstans.MANAGE_USER_SESSION);
+        int zhuangdian = getDianShu(ZHUANG1, ZHUANG2, ZHUANG3);
+        int xiandian = getDianShu(XIAN1, XIAN2, XIAN3);
+        int juCount = mainMessage.findCountReetByRoomId(roomId);
+        juCount = juCount + 1;
+        String  id = mainMessage.saveReetData(XIAN1, XIAN2, XIAN3, ZHUANG1,ZHUANG2,ZHUANG3,"0",user.getID(),roomId,"-1",zhuangdian + "",xiandian + "",juCount + "");
+        if (StringUtils.isBlank(id)) {
+            param.put("msg", "添加失败！");
+        } else {
+            param.put("msg", "添加成功！");
+            param.put("success", true);
+            param.put("id",id);
+            param.put("ZHUANG1",ZHUANG1);
+            param.put("ZHUANG2",ZHUANG2);
+            param.put("ZHUANG3",ZHUANG3);
+            param.put("XIAN1",XIAN1);
+            param.put("XIAN2",XIAN2);
+            param.put("XIAN3",XIAN3);
+            param.put("ROOMID",roomId);
+            param.put("POINT",juCount);
+            param.put("TOUZHU","-1");
+            param.put("ZHUANGVALUE",zhuangdian);
+            param.put("XIANVALUE",xiandian);
+            param.put("TIME",DateUtils.getDate5());
+        }
+        String json = JsonUtil.toMapJsonString(param);
+        ResponseEntity<String> responseEntity = new ResponseEntity<String>(
+                json, headers, HttpStatus.OK);
+        return responseEntity;
+    }
+
+
+    @RequestMapping(value = "deleteReetById", method = RequestMethod.POST)
+    public
+    @ResponseBody
+    String deleteReetById(HttpServletRequest request) {
+        Map<String, Object> param = new HashMap<String, Object>();
+        String id = ParamUtils.getParameter(request, "id", "");
+        if(StringUtils.isNotBlank(id)) {
+            boolean isParam = mainMessage.deleteReetById(id);
+            if(isParam) {
+                param.put("success", true);
+            } else {
+                param.put("success", false);
+            }
+        } else {
+            param.put("success", false);
+        }
+        String json = JsonUtil.toJsonString(param);
+        return json;
+    }
+
+    private int getDianShu(String ZHUANG1, String ZHUANG2, String ZHUANG3) {
+        int zhuangdian;
+        if (StringUtils.isNotBlank(ZHUANG3)) {
+            int i = com.rhino.bjl.utils.StringUtils.showData(Integer.parseInt(ZHUANG1)) +com.rhino.bjl.utils.StringUtils.showData(Integer.parseInt(ZHUANG2)) + com.rhino.bjl.utils.StringUtils.showData(Integer.parseInt(ZHUANG3));
+            zhuangdian = com.rhino.bjl.utils.StringUtils.getCount(i);
+        } else {
+            int i = com.rhino.bjl.utils.StringUtils.showData(Integer.parseInt(ZHUANG1)) +com.rhino.bjl.utils.StringUtils.showData(Integer.parseInt(ZHUANG2));
+            zhuangdian = com.rhino.bjl.utils.StringUtils.getCount(i);
+        }
+        return zhuangdian;
+    }
+
 
     private void printMsgToPage(HttpServletResponse response, String status, String msg, PrintWriter out) {
         try {

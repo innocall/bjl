@@ -44,7 +44,7 @@ Ext.onReady(function() {
             sortable : true,
             align : 'center',
             width : 100,
-            css:'font-size:13px;',
+            css:'font-size:18px;',
             menuDisabled : true
         }, {
             id : 'ZHUANGCOUNT',
@@ -99,7 +99,10 @@ Ext.onReady(function() {
             align : 'center',
             css:'font-size:18px;',
             width : 100,
-            menuDisabled : true
+            menuDisabled : true,
+            renderer:function(value){
+                return formatDate(value,'Y-m-d H:m:s');
+            }
         }],
         enableColumnMove : true, // 允许拖动列
         bbar : new Ext.PagingToolbar({
@@ -114,20 +117,13 @@ Ext.onReady(function() {
             {
                 text:'<font style="font-size: 18px;">添加</font>',
                 handler:function(){
-                    var roleRecord = yhglGrid.getSelectionModel().getSelected();
-                    if(!roleRecord){
-                        Ext.Msg.alert('提示','请选中要查看记录!');
-                        return;
-                    }else{
-                        // Ext.getCmp("detailForm_Name").setText(roleRecord.get("Title"));
-                        var roomId = roleRecord.get("ROOMID");
-                        jsonEpisData.load({
-                            params : {
-                                roomId : roomId
-                            }
-                        });
-                        sepisodesWin.show();
-                    }
+                    addForm.getForm().findField("TOTALCOUNT").setValue("");
+                    addForm.getForm().findField("ZHUANGCOUNT").setValue("");
+                    addForm.getForm().findField("XIANCOUNT").setValue("");
+                    addForm.getForm().findField("HECOUNT").setValue("");
+                    addForm.getForm().findField("ZHUANGDUICOUNT").setValue("");
+                    addForm.getForm().findField("XIANDUICOUNT").setValue("");
+                    editWin.show();
                 }
             },
             {
@@ -135,18 +131,28 @@ Ext.onReady(function() {
                 handler:function(){
                     var roleRecord = yhglGrid.getSelectionModel().getSelected();
                     if(!roleRecord){
-                        Ext.Msg.alert('提示','请选中要查看记录!');
+                        Ext.Msg.alert('提示','请选中要删除的记录!');
                         return;
-                    }else{
-                        // Ext.getCmp("detailForm_Name").setText(roleRecord.get("Title"));
-                        var roomId = roleRecord.get("ROOMID");
-                        jsonEpisData.load({
-                            params : {
-                                roomId : roomId
-                            }
-                        });
-                        sepisodesWin.show();
                     }
+                    Ext.MessageBox.confirm("提示","删除该大局后，该大局的所属小局也同步删除，确定要吗？",function(btn){
+                        if(btn=="yes"){
+                            var roomId = roleRecord.get("ID");
+                            Ext.Ajax.request({
+                                url:path+'private/main/deleteRoomById',
+                                method:'post',
+                                params:{roomId:roomId},
+                                success:function(res,ops){
+                                    var jsonObj = Ext.util.JSON.decode(res.responseText);
+                                    if(jsonObj.success){
+                                        jsonUser.remove(roleRecord);
+                                    }
+                                },
+                                failure:function(res,ops){
+                                    Ext.Msg.alert('提示',"删除失败");
+                                }
+                            });
+                        }
+                    },Ext.MessageBox.YESNO);
                 }
             },
             {
@@ -156,16 +162,20 @@ Ext.onReady(function() {
                     if(!roleRecord){
                         Ext.Msg.alert('提示','请选中要查看记录!');
                         return;
-                    }else{
-                        // Ext.getCmp("detailForm_Name").setText(roleRecord.get("Title"));
-                        var roomId = roleRecord.get("ROOMID");
-                        jsonEpisData.load({
-                            params : {
-                                roomId : roomId
-                            }
-                        });
-                        sepisodesWin.show();
                     }
+                    var roomId = roleRecord.get("ID");
+                    Ext.getCmp("detailForm_Name").setText(roleRecord.get("TOTALCOUNT"));
+                    Ext.getCmp("zhuang").setText(roleRecord.get("ZHUANGCOUNT"));
+                    Ext.getCmp("xian").setText(roleRecord.get("XIANCOUNT"));
+                    Ext.getCmp("he").setText(roleRecord.get("HECOUNT"));
+                    Ext.getCmp("zhuangdui").setText(roleRecord.get("ZHUANGDUICOUNT"));
+                    Ext.getCmp("xiandui").setText(roleRecord.get("XIANDUICOUNT"));
+                    jsonEpisData.load({
+                        params : {
+                            roomId : roomId
+                        }
+                    });
+                    sepisodesWin.show();
                 }
             }
         ]
@@ -181,5 +191,595 @@ Ext.onReady(function() {
         } ]
     });
 
+
+    var addForm = new Ext.form.FormPanel({
+        frame:true,
+        labelAlign:'right',
+        labelWidth:120,
+        fileUpload:true,
+        items:[{
+                xtype:'numberfield',
+                name:'TOTALCOUNT',
+                width:200,
+                fieldLabel:'<font style="font-size: 16px;">总小局数</font>',
+                labelSeparator:'：',
+                hideTrigger:false,//隐藏微调按钮
+                allowDecimals:false,//不允许输入小数
+                allowBlank:false
+            },{
+                xtype:'numberfield',
+                name:'ZHUANGCOUNT',
+                width:200,
+                fieldLabel:'<font style="font-size: 16px;">开庄数</font>',
+                labelSeparator:'：',
+                hideTrigger:false,//隐藏微调按钮
+                allowDecimals:false,//不允许输入小数
+                allowBlank:false
+            },{
+                xtype:'numberfield',
+                name:'XIANCOUNT',
+                width:200,
+                fieldLabel:'<font style="font-size: 16px;">开闲数</font>',
+                labelSeparator:'：',
+                hideTrigger:false,//隐藏微调按钮
+                allowDecimals:false,//不允许输入小数
+                allowBlank:false
+             },{
+                xtype:'numberfield',
+                name:'HECOUNT',
+                width:200,
+                fieldLabel:'<font style="font-size: 16px;">开和数</font>',
+                labelSeparator:'：',
+                hideTrigger:false,//隐藏微调按钮
+                allowDecimals:false,//不允许输入小数
+                allowBlank:false
+            },{
+                xtype:'numberfield',
+                name:'ZHUANGDUICOUNT',
+                width:200,
+                fieldLabel:'<font style="font-size: 16px;">庄对数</font>',
+                labelSeparator:'：',
+                hideTrigger:false,//隐藏微调按钮
+                allowDecimals:false,//不允许输入小数
+                allowBlank:false
+            },{
+                xtype:'numberfield',
+                name:'XIANDUICOUNT',
+                width:200,
+                fieldLabel:'<font style="font-size: 16px;">闲对数</font>',
+                labelSeparator:'：',
+                hideTrigger:false,//隐藏微调按钮
+                allowDecimals:false,//不允许输入小数
+                allowBlank:false
+            }
+        ]
+    });
+
+    var addReetForm = new Ext.form.FormPanel({
+        frame:true,
+        labelAlign:'right',
+        labelWidth:120,
+        fileUpload:true,
+        items:[{
+                xtype:'textfield',
+                name:'ZHUANG1',
+                width:200,
+                fieldLabel:'<font style="font-size: 16px;">庄牌1</font>',
+                labelSeparator:'：',
+                allowBlank:false,
+                listeners: {
+                render: function (obj) {
+                    var font = document.createElement("font");
+                    font.setAttribute("color", "red");
+                    var redStar = document.createTextNode('   输入规则A-K');
+                    font.appendChild(redStar);
+                    obj.el.dom.parentNode.appendChild(font);
+                }
+            }
+            },{
+                xtype:'textfield',
+                name:'ZHUANG2',
+                width:200,
+                fieldLabel:'<font style="font-size: 16px;">庄牌2</font>',
+                labelSeparator:'：',
+                allowBlank:false
+            },{
+                xtype:'textfield',
+                name:'ZHUANG3',
+                width:200,
+                fieldLabel:'<font style="font-size: 16px;">庄牌3</font>',
+                labelSeparator:'：',
+                listeners: {
+                    render: function (obj) {
+                        var font = document.createElement("font");
+                        font.setAttribute("color", "red");
+                        var redStar = document.createTextNode('   庄没有补牌请不填写');
+                        font.appendChild(redStar);
+                        obj.el.dom.parentNode.appendChild(font);
+                    }
+                }
+             },{
+                xtype:'textfield',
+                name:'XIAN1',
+                width:200,
+                fieldLabel:'<font style="font-size: 16px;">闲牌1</font>',
+                labelSeparator:'：',
+                allowBlank:false
+            },{
+                xtype:'textfield',
+                name:'XIAN2',
+                width:200,
+                fieldLabel:'<font style="font-size: 16px;">闲牌2</font>',
+                labelSeparator:'：',
+                allowBlank:false
+            },{
+                xtype:'textfield',
+                name:'XIAN3',
+                width:200,
+                fieldLabel:'<font style="font-size: 16px;">闲牌3</font>',
+                labelSeparator:'：',
+                listeners: {
+                    render: function (obj) {
+                        var font = document.createElement("font");
+                        font.setAttribute("color", "red");
+                        var redStar = document.createTextNode('   闲没有补牌请不填写');
+                        font.appendChild(redStar);
+                        obj.el.dom.parentNode.appendChild(font);
+                    }
+                }
+            }
+        ]
+    });
+
+    /**
+     * 添加大局表单
+     */
+    var editWin = new Ext.Window({
+        id:'editWin',
+        title:'<font style="font-size: 16px;">添加大局</font>',
+        width:450,
+        height:830,
+        y:20,
+        autoHeight:true,
+        modal:true,
+        items:[addForm],
+        closable:true,
+        closeAction:'hide',
+        resizable:false,
+        buttons:[
+            {
+                text:'保存',
+                handler:function(){
+                    addForm.getForm().submit({
+                        url:path + 'private/main/saveRoom',
+                        method:'post',
+                        waitMsg:'正在提交,请稍后...',
+                        waitTitle:'提交中...',
+                        success:function(bf,op) {
+                            if(op.result.success==true) {
+                                var Video = Ext.data.Record.create([
+                                    {id:'ID',type:'string'},
+                                    {id:'TOTALCOUNT',type:'string'},
+                                    {id:'ZHUANGCOUNT',type:'string'},
+                                    {id:'XIANCOUNT',type:'string'},
+                                    {id:'HECOUNT',type:'string'},
+                                    {id:'ZHUANGDUICOUNT',type:'string'},
+                                    {id:'XIANDUICOUNT',type:'string'},
+                                    {id:'STRARTTIME',type:'string'}
+                                ]);
+                                var role = new Video({
+                                    ID:op.result.id,
+                                    TOTALCOUNT:op.result.juCount,
+                                    ZHUANGCOUNT:op.result.zhuangCount,
+                                    XIANCOUNT:op.result.xianCount,
+                                    HECOUNT:op.result.heCount,
+                                    ZHUANGDUICOUNT:op.result.zhuangDuiCount1,
+                                    XIANDUICOUNT:op.result.xianDuiCount,
+                                    STRARTTIME:op.result.STRARTTIME
+                                });
+                                jsonUser.add(role);
+                                yhglGrid.getSelectionModel().selectLastRow();
+                                editWin.hide();
+                            } else {
+                                Ext.Msg.alert('提示',opts.result.msg);
+                            }
+                        },
+                        failure:function(bf,opts) {
+                            Ext.Msg.alert('提示',opts.result.msg);
+                        }
+                    });
+                }
+            },
+            {
+                text:'关闭',
+                handler:function(){
+                    editWin.hide();
+                }
+            }
+        ],
+        listeners:{
+            beforeshow:function(){
+                //ROLE_NAME.setValue('');
+                //ROLE_DESC.setValue('');
+            }
+        }
+    });
+
+    /**
+     * 添加小局表单
+     */
+    var editReetWin = new Ext.Window({
+        id:'editReetWin',
+        title:'<font style="font-size: 16px;">添加小局</font>',
+        width:520,
+        height:830,
+        y:20,
+        autoHeight:true,
+        modal:true,
+        items:[addReetForm],
+        closable:true,
+        closeAction:'hide',
+        resizable:false,
+        buttons:[
+            {
+                text:'保存',
+                handler:function(){
+                    var roleRecord = yhglGrid.getSelectionModel().getSelected();
+                    var roomId = roleRecord.get("ID");
+                    addReetForm.getForm().submit({
+                        url:path + 'private/main/saveReet',
+                        method:'post',
+                        params: {
+                            roomId: roomId
+                        },
+                        waitMsg:'正在提交,请稍后...',
+                        waitTitle:'提交中...',
+                        success:function(bf,op) {
+                            if(op.result.success==true) {
+                                var Video = Ext.data.Record.create([
+                                    {id:'ID',type:'string'},
+                                    {id:'ROOMID',type:'string'},
+                                    {id:'ZHUANG1',type:'string'},
+                                    {id:'ZHUANG2',type:'string'},
+                                    {id:'ZHUANG3',type:'string'},
+                                    {id:'XIAN1',type:'string'},
+                                    {id:'XIAN2',type:'string'},
+                                    {id:'TIME',type:'string'},
+                                    {id:'TOUZHU',type:'string'},
+                                    {id:'ZHUANGVALUE',type:'string'},
+                                    {id:'XIANVALUE',type:'string'},
+                                    {id:'POINT',type:'string'},
+                                    {id:'XIAN3',type:'string'}
+                                ]);
+                                var role = new Video({
+                                    ID:op.result.id,
+                                    ROOMID:op.result.ROOMID,
+                                    ZHUANG1:op.result.ZHUANG1,
+                                    ZHUANG2:op.result.ZHUANG2,
+                                    ZHUANG3:op.result.ZHUANG3,
+                                    XIAN1:op.result.XIAN1,
+                                    XIAN2:op.result.XIAN2,
+                                    TOUZHU:op.result.TOUZHU,
+                                    ZHUANGVALUE:op.result.ZHUANGVALUE,
+                                    XIANVALUE:op.result.XIANVALUE,
+                                    POINT:op.result.POINT,
+                                    XIAN3:op.result.XIAN3,
+                                    TIME:op.result.TIME
+                                });
+                                jsonEpisData.add(role);
+                                episGrid.getSelectionModel().selectLastRow();
+                                editReetWin.hide();
+                            } else {
+                                Ext.Msg.alert('提示',opts.result.msg);
+                            }
+                        },
+                        failure:function(bf,opts) {
+                            Ext.Msg.alert('提示',opts.result.msg);
+                        }
+                    });
+                }
+            },
+            {
+                text:'关闭',
+                handler:function(){
+                    editReetWin.hide();
+                }
+            }
+        ],
+        listeners:{
+            beforeshow:function(){
+                //ROLE_NAME.setValue('');
+                //ROLE_DESC.setValue('');
+            }
+        }
+    });
+
+    var detailForm = new Ext.form.FormPanel({
+        region : 'north',
+        frame : true,
+        items : [ {
+            xtype : 'panel',
+            layout : 'hbox',
+            items : [ {
+                xtype : 'label',
+                style:'font-size:18px;',
+                text : '总局数:',
+            }, {
+                xtype : 'label',
+                id : 'detailForm_Name',
+                style:'font-size:18px;',
+                width : 70
+            }, {
+                xtype : 'label',
+                style:'font-size:18px;',
+                text : '开庄:',
+            }, {
+                xtype : 'label',
+                id : 'zhuang',
+                style:'font-size:18px;',
+                width : 70
+            }, {
+                xtype : 'label',
+                text : '开闲:',
+                style:'font-size:18px;',
+            }, {
+                xtype : 'label',
+                id : 'xian',
+                style:'font-size:18px;',
+                width : 70
+            }, {
+                xtype : 'label',
+                text : '开和:',
+                style:'font-size:18px;',
+            }, {
+                xtype : 'label',
+                id : 'he',
+                style:'font-size:18px;',
+                width : 70
+            }, {
+                xtype : 'label',
+                text : '庄对:',
+                style:'font-size:18px;',
+            }, {
+                xtype : 'label',
+                id : 'zhuangdui',
+                style:'font-size:18px;',
+                width : 70
+            }, {
+                xtype : 'label',
+                text : '闲对:',
+                style:'font-size:18px;',
+            }, {
+                xtype : 'label',
+                id : 'xiandui',
+                style:'font-size:18px;',
+                width : 70
+            }]
+        } ]
+    });
+
+    var episGrid = new Ext.grid.GridPanel({
+        id : 'episGrid',
+        store : jsonEpisData,
+        region : 'center',
+        sm : new Ext.grid.RowSelectionModel({
+            singleSelect : true
+        }),
+        height : 480,
+        autoExpandColumn : 'TIME',
+        columns : [{
+            id : 'ID',
+            header : '编号',
+            dataIndex : 'ID',
+            align : 'center',
+            hidden : true
+        }, {
+            id : 'POINT',
+            header : '第几局',
+            dataIndex : 'POINT',
+            sortable : true,
+            align : 'center',
+            width : 70,
+            css:'font-size:18px;',
+            menuDisabled : true,
+            renderer : function(v) {
+                var roleRecord = yhglGrid.getSelectionModel().getSelected();
+                var value =  roleRecord.get("POINT");
+                if (value == v){
+                    return "<font style='color: #d1961d'>" + v +"</font>"
+                }
+                return v;
+            }
+        }, {
+            id : 'ZHUANG1',
+            header : '庄牌1',
+            dataIndex : 'ZHUANG1',
+            sortable : true,
+            align : 'center',
+            css:'font-size:18px;',
+            width : 70,
+            menuDisabled : true,
+            renderer : function(v) {
+                var substr = showData2(v);
+                return substr;
+            }
+        }, {
+            id : 'ZHUANG2',
+            header : '庄牌2',
+            dataIndex : 'ZHUANG2',
+            sortable : true,
+            css:'font-size:18px;',
+            align : 'center',
+            width : 70,
+            menuDisabled : true,
+            renderer : function(v) {
+                var substr = showData2(v);
+                return substr;
+            }
+        }, {
+            id : 'ZHUANG3',
+            header : '庄牌3',
+            dataIndex : 'ZHUANG3',
+            sortable : true,
+            align : 'center',
+            css:'font-size:18px;',
+            width : 70,
+            menuDisabled : true,
+            renderer : function(v) {
+                if (v == '0') {
+                    return "";
+                } else {
+                    var substr = showData2(v);
+                    return substr;
+                }
+            }
+        }, {
+            id : 'XIAN1',
+            header : '闲牌1',
+            dataIndex : 'XIAN1',
+            sortable : true,
+            align : 'center',
+            css:'font-size:18px;',
+            width : 70,
+            menuDisabled : true,
+            renderer : function(v) {
+                var substr = showData2(v);
+                return substr;
+            }
+        }, {
+            id : 'XIAN2',
+            header : '闲牌2',
+            dataIndex : 'XIAN2',
+            sortable : true,
+            css:'font-size:18px;',
+            align : 'center',
+            width : 70,
+            menuDisabled : true,
+            renderer : function(v) {
+                var substr = showData2(v);
+                return substr;
+            }
+        }, {
+            id : 'XIAN3',
+            header : '闲牌3',
+            dataIndex : 'XIAN3',
+            sortable : true,
+            align : 'center',
+            css:'font-size:18px;',
+            width : 70,
+            menuDisabled : true,
+            renderer : function(v) {
+                if (v == '0') {
+                    return "";
+                } else {
+                    var substr = showData2(v);
+                    return substr;
+                }
+            }
+        }, {
+            id : 'ZHUANGVALUE',
+            header : '庄点数',
+            dataIndex : 'ZHUANGVALUE',
+            sortable : true,
+            width : 70,
+            align : 'center',
+            css:'font-size:18px;',
+            menuDisabled : true
+        }, {
+            id : 'XIANVALUE',
+            header : '闲点数',
+            dataIndex : 'XIANVALUE',
+            sortable : true,
+            width : 70,
+            css:'font-size:18px;',
+            align : 'center',
+            menuDisabled : true
+        },{
+            id : 'TIME',
+            header : '投注时间',
+            dataIndex : 'TIME',
+            sortable : true,
+            css:'font-size:15px;',
+            width : 200,
+            align : 'center',
+            menuDisabled : true,
+            renderer:function(value){
+                return formatDate(value,'Y-m-d H:m:s');
+            }
+        }],
+        enableColumnMove : true,
+        bbar : new Ext.PagingToolbar({
+            pageSize : 80,
+            store : jsonEpisData,
+            displayInfo : true,
+            displayMsg : '显示{0}/{1}of{2}',
+            emptyMsg : '没有数据',
+            plugins : new Ext.ux.ProgressBarPager()
+        }),
+        buttons : [
+        {
+            text:'<font style="font-size: 18px;">添加</font>',
+            handler:function(){
+                addReetForm.getForm().findField("ZHUANG1").setValue("");
+                addReetForm.getForm().findField("ZHUANG2").setValue("");
+                addReetForm.getForm().findField("ZHUANG3").setValue("");
+                addReetForm.getForm().findField("XIAN1").setValue("");
+                addReetForm.getForm().findField("XIAN2").setValue("");
+                addReetForm.getForm().findField("XIAN3").setValue("");
+                editReetWin.show();
+            }
+        },
+        {
+            text:'<font style="font-size: 18px;">删除</font>',
+            handler:function(){
+                var roleRecord = episGrid.getSelectionModel().getSelected();
+                if(!roleRecord){
+                    Ext.Msg.alert('提示','请选中要删除的记录!');
+                    return;
+                }
+                Ext.MessageBox.confirm("提示","确定删除吗？",function(btn){
+                    if(btn=="yes"){
+                        var id = roleRecord.get("ID");
+                        Ext.Ajax.request({
+                            url:path+'private/main/deleteReetById',
+                            method:'post',
+                            params:{id:id},
+                            success:function(res,ops){
+                                var jsonObj = Ext.util.JSON.decode(res.responseText);
+                                if(jsonObj.success){
+                                    jsonEpisData.remove(roleRecord);
+                                }
+                            },
+                            failure:function(res,ops){
+                                Ext.Msg.alert('提示',"删除失败");
+                            }
+                        });
+                    }
+                },Ext.MessageBox.YESNO);
+            }
+        } ]
+    });
+
+    /**
+     *查看小局列表
+     */
+    var sepisodesWin = new Ext.Window({
+        id : 'sepisodesWin',
+        title : '小局列表',
+        width : 900,
+        height : 480,
+        autoHeight : true,
+        collapsible : true,
+        modal : true,
+        items : [detailForm,episGrid],
+        closable : true,
+        closeAction : 'hide',
+        resizable : false,
+        y : 0,
+        listeners : {
+            beforeshow : function() {
+            }
+        }
+    });
 
 });

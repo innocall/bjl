@@ -34,4 +34,10 @@
         select * from reet_tbl where ROOMID = #{ROOMID} ORDER BY POINT ASC
     </select>
 
+    <delete id="deleteReetByRoomId" parameterType="java.util.HashMap">
+        <![CDATA[
+			delete from reet_tbl where ROOMID = #{ROOMID}
+		]]>
+    </delete>
+
 </mapper>

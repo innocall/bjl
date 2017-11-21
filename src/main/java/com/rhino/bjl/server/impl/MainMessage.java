@@ -63,7 +63,7 @@ public class MainMessage implements IMainMessage {
     }
 
     @Override
-    public boolean saveReetData(String xian1, String xian2, String xian3, String zhuang1, String zhuang2, String zhuang3, String touzhuMoney, String userId, String roomId, String radio,String zhuangdian,String xiandian,String juCount) {
+    public String saveReetData(String xian1, String xian2, String xian3, String zhuang1, String zhuang2, String zhuang3, String touzhuMoney, String userId, String roomId, String radio,String zhuangdian,String xiandian,String juCount) {
         HashMap<String,Object> params = new HashMap<String,Object>();
         String id = UUID.randomUUID().toString();
         params.put("ID", id);
@@ -81,7 +81,10 @@ public class MainMessage implements IMainMessage {
         params.put("XIANVALUE", xiandian);
         params.put("POINT", juCount);
         params.put("TIME", DateUtils.getDate5());
-        return mainManageMapper.saveReetData(params);
+        if (mainManageMapper.saveReetData(params)) {
+            return id;
+        }
+        return "";
     }
 
     @Override
@@ -237,5 +240,45 @@ public class MainMessage implements IMainMessage {
         HashMap<String,Object> params = new HashMap<String,Object>();
         params.put("ROOMID", roomId);
         return mainManageMapper.findReetByRoomId(params);
+    }
+
+    @Override
+    public List<HashMap<String, Object>> findRoomList(int start, int limit,String userId) {
+        String sql = "select * from room_tbl where USERID='" + userId;
+        sql = sql + "' ORDER BY STRARTTIME DESC limit "+ start +"," + limit;
+        return mainManageMapper.findRoomList(sql);
+    }
+
+    @Override
+    public int findRoomListCount(int start, int limit,String userId) {
+        String sql = "select Count(*) AS NUMBER from room_tbl where USERID='" + userId + "'";
+        return mainManageMapper.findRoomListCount(sql);
+    }
+
+    @Override
+    public boolean deleteRootById(String roomId) {
+        HashMap<String,Object> map = new HashMap<String, Object>();
+        map.put("ID",roomId);
+        deleteReetByRoomId(roomId);
+        return mainManageMapper.deleteRootById(map);
+    }
+
+    @Override
+    public int findCountReetByRoomId(String roomId) {
+        String sql = "SELECT Count(*) AS NUMBER FROM reet_tbl WHERE ROOMID='" + roomId + "'";
+        return mainManageMapper.findReetListCount(sql);
+    }
+
+    @Override
+    public boolean deleteReetById(String id) {
+        HashMap<String,Object> map = new HashMap<String, Object>();
+        map.put("ID",id);
+        return mainManageMapper.deleteReetById(map);
+    }
+
+    public boolean deleteReetByRoomId(String roomId) {
+        HashMap<String,Object> map = new HashMap<String, Object>();
+        map.put("ROOMID",roomId);
+        return mainManageMapper.deleteReetByRoomId(map);
     }
 }

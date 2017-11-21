@@ -58,4 +58,30 @@ public class MainManageMapper {
     public List<HashMap<String, Object>> findReetByRoomId(HashMap<String, Object> params) {
         return lemonDB.getList("findReetByRoomId",params);
     }
+
+    public List<HashMap<String, Object>> findRoomList(String sql) {
+        return lemonDB.getListBySql(sql);
+    }
+
+    public int findRoomListCount(String sql) {
+        int i = 0;
+        List<HashMap<String, Object>> list = lemonDB.getListBySql(sql);
+        if (list != null && list.size() > 0) {
+            Long j = (Long) list.get(0).get("NUMBER");
+            i = j.intValue();
+        }
+        return i;
+    }
+
+    public boolean deleteRootById(HashMap<String, Object> map) {
+        return lemonDB.deleteDynamic("room_tbl",map);
+    }
+
+    public boolean deleteReetByRoomId(HashMap<String, Object> map) {
+        return lemonDB.delete("deleteReetByRoomId",map);
+    }
+
+    public boolean deleteReetById(HashMap<String, Object> map) {
+        return lemonDB.deleteDynamic("reet_tbl",map);
+    }
 }

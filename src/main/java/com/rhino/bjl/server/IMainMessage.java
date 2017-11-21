@@ -12,7 +12,7 @@ public interface IMainMessage {
 
     String saveRoomData(String userMoney, String juCount,String userId,String zhuangCount,String xianCount,String heCount,String zhuangDuiCount1,String xianDuiCount);
 
-    boolean saveReetData(String xian1, String xian2, String xian3, String zhuang1, String zhuang2, String zhuang3, String touzhuMoney, String id, String roomId, String radio,String zhuangdian,String xiandian,String juCount);
+    String saveReetData(String xian1, String xian2, String xian3, String zhuang1, String zhuang2, String zhuang3, String touzhuMoney, String id, String roomId, String radio,String zhuangdian,String xiandian,String juCount);
 
     boolean updateRoomData(String userMoney, String juCount, String id, String zhuangCount, String xianCount, String heCount, String zhuangDuiCount1, String xianDuiCount, String roomId);
 
@@ -21,4 +21,14 @@ public interface IMainMessage {
     int findReetListCount(String category, String category2, String startDate, String endDate, String query, int start, int limit);
 
     List<HashMap<String,Object>> findReetByRoomId(String roomId);
+
+    List<HashMap<String,Object>> findRoomList(int start, int limit,String userId);
+
+    int findRoomListCount(int start, int limit,String userId);
+
+    boolean deleteRootById(String roomId);
+
+    int findCountReetByRoomId(String roomId);
+
+    boolean deleteReetById(String id);
 }
