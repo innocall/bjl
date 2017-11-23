@@ -16,9 +16,9 @@ public interface IMainMessage {
 
     boolean updateRoomData(String userMoney, String juCount, String id, String zhuangCount, String xianCount, String heCount, String zhuangDuiCount1, String xianDuiCount, String roomId);
 
-    List<HashMap<String,Object>> findReetList(String category, String category2, String startDate, String endDate, String query, int start, int limit);
+    List<HashMap<String,Object>> findReetList(String category, String zhuang_1,String zhuang_2,String zhuang_3,String xian_1,String xian_2,String xian_3,String zhuangdianshu,String xiandianshu, String startDate, String endDate, String query, int start, int limit);
 
-    int findReetListCount(String category, String category2, String startDate, String endDate, String query, int start, int limit);
+    int findReetListCount(String category,String zhuang_1,String zhuang_2,String zhuang_3,String xian_1,String xian_2,String xian_3,String zhuangdianshu,String xiandianshu, String startDate, String endDate, String query, int start, int limit);
 
     List<HashMap<String,Object>> findReetByRoomId(String roomId);
 

@@ -27,6 +27,7 @@ Ext.onReady(function() {
         frame : true,
         height : 140,
         labelWidth:80,
+        labelAlign:'right',
         items: [{
             layout:'column',   //定义该元素为布局为列布局方式
             border:false,
@@ -49,19 +50,6 @@ Ext.onReady(function() {
                     emptyText: "请选择查询类型",
                     triggerAction: 'all',
                 }, {
-                    xtype: "combo",
-                    id: "category_user2",
-                    name: "category_user2",
-                    fieldLabel: '<font style="font-size: 15px">查询类型</font>',
-                    width: 300,
-                    editable: false,
-                    style: 'font-size:15px;',
-                    labelSeparator: '：',
-                    store: ['全部', '单数', '双数'],
-                    displayField: 'category',
-                    emptyText: "请选择查询类型",
-                    triggerAction: 'all',
-                },{
                     xtype: 'textfield',
                     id: 'query',
                     name: 'query',
@@ -107,6 +95,147 @@ Ext.onReady(function() {
                     width: 300,
                     value: new Date()
                 }]
+            },{
+                layout:'column',   //定义该元素为布局为列布局方式
+                border:false,
+                labelWidth:60,
+                items:[{
+                    columnWidth:.5,  //该列占用的宽度，标识为50％
+                    layout: 'form',
+                    border:false,
+                    items: [{
+                        xtype: "combo",
+                        id: "zhuang_1",
+                        name: "zhuang_1",
+                        fieldLabel: '<font style="font-size: 15px">庄牌1</font>',
+                        width: 70,
+                        editable: false,
+                        style: 'font-size:15px;',
+                        labelSeparator: '：',
+                        store: ['全部', '单数', '双数'],
+                        displayField: 'category',
+                        triggerAction: 'all'
+                    }]
+                },{
+                    columnWidth:.5,  //该列占用的宽度，标识为50％
+                    layout: 'form',
+                    border:false,
+                    items: [{
+                        xtype: "combo",
+                        id: "zhuang_2",
+                        name: "zhuang_2",
+                        fieldLabel: '<font style="font-size: 15px">庄牌2</font>',
+                        width: 70,
+                        editable: false,
+                        style: 'font-size:15px;',
+                        labelSeparator: '：',
+                        store: ['全部', '单数', '双数'],
+                        displayField: 'category',
+                        triggerAction: 'all'
+                    }]
+                },{
+                    columnWidth:.5,  //该列占用的宽度，标识为50％
+                    layout: 'form',
+                    border:false,
+                    items: [{
+                        xtype: "combo",
+                        id: "zhuang_3",
+                        name: "zhuang_3",
+                        fieldLabel: '<font style="font-size: 15px">庄牌3</font>',
+                        width: 70,
+                        editable: false,
+                        style: 'font-size:15px;',
+                        labelSeparator: '：',
+                        store: ['全部', '单数', '双数'],
+                        displayField: 'category',
+                        triggerAction: 'all'
+                    }]
+                },{
+                columnWidth:.5,  //该列占用的宽度，标识为50％
+                layout: 'form',
+                border:false,
+                items: [{
+                    xtype: "combo",
+                    id: "xian_1",
+                    name: "xian_1",
+                    fieldLabel: '<font style="font-size: 15px">闲牌1</font>',
+                    width: 70,
+                    editable: false,
+                    style: 'font-size:15px;',
+                    labelSeparator: '：',
+                    store: ['全部', '单数', '双数'],
+                    displayField: 'category',
+                    triggerAction: 'all'
+                 }]
+                 },{
+                    columnWidth:.5,  //该列占用的宽度，标识为50％
+                    layout: 'form',
+                    border:false,
+                    items: [{
+                        xtype: "combo",
+                        id: "xian_2",
+                        name: "xian_2",
+                        fieldLabel: '<font style="font-size: 15px">闲牌2</font>',
+                        width: 70,
+                        editable: false,
+                        style: 'font-size:15px;',
+                        labelSeparator: '：',
+                        store: ['全部', '单数', '双数'],
+                        displayField: 'category',
+                        triggerAction: 'all'
+                    }]
+                },{
+                    columnWidth:.5,  //该列占用的宽度，标识为50％
+                    layout: 'form',
+                    border:false,
+                    items: [{
+                        xtype: "combo",
+                        id: "xian_3",
+                        name: "xian_3",
+                        fieldLabel: '<font style="font-size: 15px">闲牌3</font>',
+                        width: 70,
+                        editable: false,
+                        style: 'font-size:15px;',
+                        labelSeparator: '：',
+                        store: ['全部', '单数', '双数'],
+                        displayField: 'category',
+                        triggerAction: 'all'
+                    }]
+                },{
+                    columnWidth:.5,  //该列占用的宽度，标识为50％
+                    layout: 'form',
+                    border:false,
+                    items: [{
+                        xtype: "combo",
+                        id: "zhuangdianshu",
+                        name: "zhuangdianshu",
+                        fieldLabel: '<font style="font-size: 15px">庄点数</font>',
+                        width: 70,
+                        editable: false,
+                        style: 'font-size:15px;',
+                        labelSeparator: '：',
+                        store: ['全部', '单数', '双数'],
+                        displayField: 'category',
+                        triggerAction: 'all'
+                    }]
+                },{
+                    columnWidth:.5,  //该列占用的宽度，标识为50％
+                    layout: 'form',
+                    border:false,
+                    items: [{
+                        xtype: "combo",
+                        id: "xiandianshu",
+                        name: "xiandianshu",
+                        fieldLabel: '<font style="font-size: 15px">闲点数</font>',
+                        width: 70,
+                        editable: false,
+                        style: 'font-size:15px;',
+                        labelSeparator: '：',
+                        store: ['全部', '单数', '双数'],
+                        displayField: 'category',
+                        triggerAction: 'all'
+                    }]
+                }]
             }]
         }],
         buttons : [ {
@@ -120,12 +249,26 @@ Ext.onReady(function() {
                             "category_user").getValue(),
                         query : dateSearchForm.getForm().findField("query")
                             .getValue(),
-                        category2 : dateSearchForm.getForm().findField(
-                            "category_user2").getValue(),
                         startDate : dateSearchForm.getForm().findField(
                             "startDate").getValue(),
                         endDate : dateSearchForm.getForm().findField(
                             "endDate").getValue(),
+                        zhuang_1 : dateSearchForm.getForm().findField(
+                            "zhuang_1").getValue(),
+                        zhuang_2 : dateSearchForm.getForm().findField(
+                            "zhuang_2").getValue(),
+                        zhuang_3 : dateSearchForm.getForm().findField(
+                            "zhuang_3").getValue(),
+                        xian_1 : dateSearchForm.getForm().findField(
+                            "xian_1").getValue(),
+                        xian_2 : dateSearchForm.getForm().findField(
+                            "xian_2").getValue(),
+                        xian_3 : dateSearchForm.getForm().findField(
+                            "xian_3").getValue(),
+                        zhuangdianshu : dateSearchForm.getForm().findField(
+                            "zhuangdianshu").getValue(),
+                        xiandianshu : dateSearchForm.getForm().findField(
+                            "xiandianshu").getValue(),
                     }
                 });
             }
