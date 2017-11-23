@@ -458,6 +458,9 @@ var daLuLen=new Array(); //记录大路每一列长度
 function  setDaLu(zhuangdian,xiandian) {
     if (zhuangdian > xiandian) {
         //庄赢
+        if (he > 0) {
+            $("#dalu_" + cloun + "1").children("div").html(he);
+        }
         if (up == 0) {
             $("#dalu_" + cloun + "" + row +"").html("<div class=\"dulu\" style=\"width: 20px;height: 20px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 22px;\"></div>");
         } else if (up == 1) {
@@ -479,6 +482,9 @@ function  setDaLu(zhuangdian,xiandian) {
         up = 1;
     } else if (zhuangdian < xiandian) {
         //闲赢
+        if (he > 0) {
+            $("#dalu_" + cloun + "1").children("div").html(he);
+        }
         if (up == 0) {
             $("#dalu_" + cloun  + "" + row +"").html("<div class=\"dulu\" style=\"width: 20px;height: 20px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 22px;\"></div>");
         } else if (up == 1) {
@@ -502,7 +508,7 @@ function  setDaLu(zhuangdian,xiandian) {
         //和
         he = he + 1;
         if (up != 0) {
-            $("#dalu_" + cloun + "1").children("div").html(he);1
+            $("#dalu_" + cloun + "1").children("div").html(he);
         }
        // up = 3;
     }

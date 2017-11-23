@@ -424,9 +424,12 @@ Ext.onReady(function() {
             menuDisabled : true,
             renderer : function(v) {
                 var value = dateSearchForm.getForm().findField("query").getValue();
+                var value1 =  dateSearchForm.getForm().findField("category_user").getValue();
                 var substr = showData2(v);
-                if (value.indexOf(substr) >= 0){
-                    return "<font style='color: #ff4545'>" + substr +"</font>"
+                if (value1 != '闲') {
+                    if (value.indexOf(substr) >= 0){
+                        return "<font style='color: #ff4545'>" + substr +"</font>"
+                    }
                 }
                return substr;
             }
@@ -441,9 +444,12 @@ Ext.onReady(function() {
             menuDisabled : true,
             renderer : function(v) {
                 var value = dateSearchForm.getForm().findField("query").getValue();
+                var value1 =  dateSearchForm.getForm().findField("category_user").getValue();
                 var substr = showData2(v);
-                if (value.indexOf(substr) >= 0){
-                    return "<font style='color: #ff4545'>" + substr +"</font>"
+                if (value1 != '闲') {
+                    if (value.indexOf(substr) >= 0){
+                        return "<font style='color: #ff4545'>" + substr +"</font>"
+                    }
                 }
                 return substr;
             }
@@ -461,9 +467,12 @@ Ext.onReady(function() {
                     return "";
                 } else {
                     var value = dateSearchForm.getForm().findField("query").getValue();
+                    var value1 =  dateSearchForm.getForm().findField("category_user").getValue();
                     var substr = showData2(v);
-                    if (value.indexOf(substr) >= 0){
-                        return "<font style='color: #ff4545'>" + substr +"</font>"
+                    if (value1 != '闲') {
+                        if (value.indexOf(substr) >= 0){
+                            return "<font style='color: #ff4545'>" + substr +"</font>"
+                        }
                     }
                     return substr;
                 }
@@ -479,9 +488,12 @@ Ext.onReady(function() {
             menuDisabled : true,
             renderer : function(v) {
                 var value = dateSearchForm.getForm().findField("query").getValue();
+                var value1 =  dateSearchForm.getForm().findField("category_user").getValue();
                 var substr = showData2(v);
-                if (value.indexOf(substr) >= 0){
-                    return "<font style='color: #ff4545'>" + substr +"</font>"
+                if (value1 != '庄') {
+                    if (value.indexOf(substr) >= 0){
+                        return "<font style='color: #ff4545'>" + substr +"</font>"
+                    }
                 }
                 return substr;
             }
@@ -496,9 +508,12 @@ Ext.onReady(function() {
             menuDisabled : true,
             renderer : function(v) {
                 var value = dateSearchForm.getForm().findField("query").getValue();
+                var value1 =  dateSearchForm.getForm().findField("category_user").getValue();
                 var substr = showData2(v);
-                if (value.indexOf(substr) >= 0){
-                    return "<font style='color: #ff4545'>" + substr +"</font>"
+                if (value1 != '庄') {
+                    if (value.indexOf(substr) >= 0){
+                        return "<font style='color: #ff4545'>" + substr +"</font>"
+                    }
                 }
                 return substr;
             }
@@ -516,9 +531,12 @@ Ext.onReady(function() {
                     return "";
                 } else {
                     var value = dateSearchForm.getForm().findField("query").getValue();
+                    var value1 =  dateSearchForm.getForm().findField("category_user").getValue();
                     var substr = showData2(v);
-                    if (value.indexOf(substr) >= 0){
-                        return "<font style='color: #ff4545'>" + substr +"</font>"
+                    if (value1 != '庄') {
+                        if (value.indexOf(substr) >= 0){
+                            return "<font style='color: #ff4545'>" + substr +"</font>"
+                        }
                     }
                     return substr;
                 }
@@ -533,9 +551,12 @@ Ext.onReady(function() {
             menuDisabled : true,
             renderer : function(v) {
                 var value = dateSearchForm.getForm().findField("query").getValue();
+                var value1 =  dateSearchForm.getForm().findField("category_user").getValue();
                 var substr = showData2(v);
-                if (value.indexOf(substr) >= 0){
-                    return "<font style='color: #ff4545'>" + substr +"</font>"
+                if (value1 != '闲') {
+                    if (value.indexOf(substr) >= 0){
+                        return "<font style='color: #ff4545'>" + substr +"</font>"
+                    }
                 }
                 return substr;
             }
@@ -549,9 +570,12 @@ Ext.onReady(function() {
             menuDisabled : true,
             renderer : function(v) {
                 var value = dateSearchForm.getForm().findField("query").getValue();
+                var value1 =  dateSearchForm.getForm().findField("category_user").getValue();
                 var substr = showData2(v);
-                if (value.indexOf(substr) >= 0){
-                    return "<font style='color: #ff4545'>" + substr +"</font>"
+                if (value1 != '庄') {
+                    if (value.indexOf(substr) >= 0){
+                        return "<font style='color: #ff4545'>" + substr +"</font>"
+                    }
                 }
                 return substr;
             }

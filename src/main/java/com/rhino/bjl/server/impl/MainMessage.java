@@ -131,14 +131,26 @@ public class MainMessage implements IMainMessage {
             }
             for (int i =0 ;i<list.size();i++) {
                 HashMap<String, Object> map = list.get(i);
-                alss.add((String) map.get("XIAN1"));
-                alss.add((String) map.get("XIAN2"));
-                alss.add((String) map.get("XIAN3"));
-                alss.add((String) map.get("ZHUANG1"));
-                alss.add((String) map.get("ZHUANG2"));
-                alss.add((String) map.get("ZHUANG3"));
-                alss.add((String) map.get("XIANVALUE"));
-                alss.add((String) map.get("ZHUANGVALUE"));
+                if (category.equals("全部")) {
+                    alss.add((String) map.get("XIAN1"));
+                    alss.add((String) map.get("XIAN2"));
+                    alss.add((String) map.get("XIAN3"));
+                    alss.add((String) map.get("ZHUANG1"));
+                    alss.add((String) map.get("ZHUANG2"));
+                    alss.add((String) map.get("ZHUANG3"));
+                    alss.add((String) map.get("XIANVALUE"));
+                    alss.add((String) map.get("ZHUANGVALUE"));
+                } else if(category.equals("庄")){
+                    alss.add((String) map.get("ZHUANG1"));
+                    alss.add((String) map.get("ZHUANG2"));
+                    alss.add((String) map.get("ZHUANG3"));
+                    alss.add((String) map.get("ZHUANGVALUE"));
+                } else if (category.equals("闲")) {
+                    alss.add((String) map.get("XIAN1"));
+                    alss.add((String) map.get("XIAN2"));
+                    alss.add((String) map.get("XIAN3"));
+                    alss.add((String) map.get("XIANVALUE"));
+                }
                 if (alss.containsAll(als)) {
                     list2.add(map);
                 }

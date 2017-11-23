@@ -181,7 +181,7 @@ public class MainControl extends BaseControl {
         Map<String, Object> param = new HashMap<String, Object>();
         int start = ParamUtils.getIntParameter(request, "start", 0);
         int limit = ParamUtils.getIntParameter(request, "limit", 80);
-        String category = ParamUtils.getParameter(request, "category", "");
+        String category = ParamUtils.getParameter(request, "category", "全部");
         String startDate = ParamUtils.getParameter(request, "startDate", "2015-09-09");
         String endDate = ParamUtils.getParameter(request, "endDate",  DateUtils.getDate5());
         String query = ParamUtils.getParameter(request, "query", "");
