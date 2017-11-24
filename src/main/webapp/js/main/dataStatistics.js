@@ -164,10 +164,10 @@ function faPai1() {
     var imageName = "veryhuo.com_pkp_" + myArray[index] + ".jpg";
     myArray.remove(index);
     $("#xian1").attr("src","/bjl/image/" + imageName);
-    $("#xian1").css("visibility","visible ");
+    $("#xian1").css("visibility","visible");
     var xian1 = initData(imageName); //第一张牌点数
     $("#xian").html(showData(xian1));
-    $("#xian").css("visibility","visible ");
+    $("#xian").css("visibility","visible");
     setTimeout(function() {faPai2(xian1) },1000);
 }
 
@@ -177,10 +177,10 @@ function faPai2(xian1) {
     var imageName = "veryhuo.com_pkp_" + myArray[index] + ".jpg";
     myArray.remove(index);
     $("#zhuang1").attr("src","/bjl/image/" + imageName);
-    $("#zhuang1").css("visibility","visible ");
+    $("#zhuang1").css("visibility","visible");
     var zhuang1 = initData(imageName); //第一张牌点数
     $("#zhuang").html(showData(zhuang1));
-    $("#zhuang").css("visibility","visible ");
+    $("#zhuang").css("visibility","visible");
     setTimeout(function() {faPai3(xian1,zhuang1) },1000);
 }
 
@@ -190,10 +190,10 @@ function faPai3(xian1,zhuang1) {
     var imageName = "veryhuo.com_pkp_" + myArray[index] + ".jpg";
     myArray.remove(index);
     $("#xian2").attr("src","/bjl/image/" + imageName);
-    $("#xian2").css("visibility","visible ");
+    $("#xian2").css("visibility","visible");
     var xian2 = initData(imageName); //第一张牌点数
     $("#xian").html(getCount(showData(xian1) +showData( xian2)));
-    $("#xian").css("visibility","visible ");
+    $("#xian").css("visibility","visible");
     setTimeout(function() {faPai4(xian1,zhuang1,xian2) },1000);
 }
 
@@ -203,11 +203,11 @@ function faPai4(xian1,zhuang1,xian2) {
     var imageName = "veryhuo.com_pkp_" + myArray[index] + ".jpg";
     myArray.remove(index);
     $("#zhuang2").attr("src","/bjl/image/" + imageName);
-    $("#zhuang2").css("visibility","visible ");
+    $("#zhuang2").css("visibility","visible");
     var zhuang2 = initData(imageName); //第一张牌点数
     var zhuang = getCount(showData(zhuang1) + showData(zhuang2));
     $("#zhuang").html(zhuang);
-    $("#zhuang").css("visibility","visible ");
+    $("#zhuang").css("visibility","visible");
     //判断是否有对子
     if(xian1 == xian2) {
         xiandui = 0;
@@ -238,10 +238,10 @@ function faPaiXian(xian1,zhuang1,xian2,zhuang2) {
     var imageName = "veryhuo.com_pkp_" + myArray[index] + ".jpg";
     myArray.remove(index);
     $("#xian3").attr("src","/bjl/image/" + imageName);
-    $("#xian3").css("visibility","visible ");
+    $("#xian3").css("visibility","visible");
     var xian3 = initData(imageName); //第一张牌点数
     $("#xian").html(getCount(showData(xian1) + showData(xian2) + showData(xian3)));
-    $("#xian").css("visibility","visible ");
+    $("#xian").css("visibility","visible");
     var zhuang =  getCount(showData(zhuang1) + showData(zhuang2));
     if(xian1 == xian2 || xian1 == xian3 || xian2 == xian3) {
         xiandui = 0;
@@ -300,10 +300,10 @@ function faPaiZhuang(xian1,zhuang1,xian2,zhuang2,xian3) {
     var imageName = "veryhuo.com_pkp_" + myArray[index] + ".jpg";
     myArray.remove(index);
     $("#zhuang3").attr("src","/bjl/image/" + imageName);
-    $("#zhuang3").css("visibility","visible ");
+    $("#zhuang3").css("visibility","visible");
     var zhuang3 = initData(imageName);
     $("#zhuang").html(getCount(showData(zhuang1) + showData(zhuang2) + showData(zhuang3)));
-    $("#zhuang").css("visibility","visible ");
+    $("#zhuang").css("visibility","visible");
     //判断是否有对子
     if(zhuang1 == zhuang2 || zhuang1 == zhuang3 || zhuang2 == zhuang3) {
         zhuangdui = 0;
