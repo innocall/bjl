@@ -17,7 +17,8 @@ var zhuangdui = 1; //庄没有对子1 ，0有对子
 var startDown=new Array(8,9,10);
 var allJuCountArray=new Array(70,71,72,73,74,75);
 var allJuCount=66;
-
+var firstQiePai = "";
+var startDown1 = 0; //首切牌张数
 function init() {
     isStart = 0;
     mytime=null;
@@ -55,10 +56,16 @@ function init() {
     //首切牌随机 8-9-10 张
     //总局数，随机 70-75
     var index = Math.floor((Math.random() * startDown.length));
-    var str = startDown[index];
-    $("#startDown").html(str);
-    for (var j =0; j<str;j++) {
-        random();
+    startDown1 = startDown[index];
+    $("#startDown").html(startDown1);
+    for (var j =0; j<startDown1;j++) {
+        if (j == 0) {
+            var index = Math.floor((Math.random() * myArray.length));
+            firstQiePai = "veryhuo.com_pkp_" + myArray[index] + ".jpg"; //记录切的第一张牌
+            myArray.remove(index);
+        } else {
+            random();
+        }
     }
     var index2 = Math.floor((Math.random() * allJuCountArray.length));
     allJuCount = allJuCountArray[index2];
@@ -104,6 +111,7 @@ function startGame() {
         $("#touzhuId").removeAttr("disabled");
         isStart = 1;
         settime();
+        showTotal();
     } else if (isStart == 1){
         if (!isFaPai) {
             $("#startBut").html("继续游戏");
@@ -920,4 +928,77 @@ function touzhu() {
 var radio = -1;
 function getValue(value){
     radio = value;
+}
+
+function showTotal() {
+    $("#totle").css("visibility","visible");
+    $("#qie1").attr("src","/bjl/image/" + firstQiePai);
+    var time = 0;
+    for (var i=1;i<startDown1 + 1;i++) {
+        time = time + 600;
+        if (i == 1) {
+            setTimeout(function() {
+                $("#qie1").css("visibility","visible")
+            },time)
+        } else if (i == 2) {
+            setTimeout(function() {
+                $("#qie2").css("visibility","visible")
+            },time)
+        } else if (i == 3) {
+            setTimeout(function() {
+                $("#qie3").css("visibility","visible")
+            },time)
+        } else if (i == 4) {
+            setTimeout(function() {
+                $("#qie4").css("visibility","visible")
+            },time)
+        } else if (i == 5) {
+            setTimeout(function() {
+                $("#qie5").css("visibility","visible")
+            },time)
+        } else if (i == 6) {
+            setTimeout(function() {
+                $("#qie6").css("visibility","visible")
+            },time)
+        } else if (i == 7) {
+            setTimeout(function() {
+                $("#qie7").css("visibility","visible")
+            },time)
+        } else if (i == 8) {
+            setTimeout(function() {
+                $("#qie8").css("visibility","visible")
+                if (8 == startDown1) {
+                    hiddenTotal();
+                }
+            },time)
+        } else if (i == 9) {
+            setTimeout(function() {
+                $("#qie9").css("visibility","visible")
+                if (9 == startDown1) {
+                    hiddenTotal();
+                }
+            },time)
+        } else if (i == 10) {
+            setTimeout(function() {
+                $("#qie10").css("visibility","visible")
+                if (10 == startDown1) {
+                    hiddenTotal();
+                }
+            },time)
+        }
+    }
+}
+
+function hiddenTotal() {
+    $("#totle").css("visibility","hidden");
+    $("#qie1").css("visibility","hidden");
+    $("#qie2").css("visibility","hidden");
+    $("#qie3").css("visibility","hidden");
+    $("#qie4").css("visibility","hidden");
+    $("#qie5").css("visibility","hidden");
+    $("#qie6").css("visibility","hidden");
+    $("#qie7").css("visibility","hidden");
+    $("#qie8").css("visibility","hidden");
+    $("#qie9").css("visibility","hidden");
+    $("#qie10").css("visibility","hidden");
 }

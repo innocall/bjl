@@ -326,18 +326,17 @@
     </div>
 
 
-    <div style="position: absolute;top: 120px;left: 300px; background:#00000000;width: 360px;text-align: center;z-index: 999;display: none;">
+    <div id="totle" style="position: absolute;top: 160px;left: 200px; background:#00000000;text-align: center;z-index: 999;visibility:hidden;">
         <img id="qie1" src="${pageContext.request.contextPath}/image/veryhuo.com_pkp_1.jpg" width="80;" style="margin: 0 auto;">
-        <br/>
-        <img src="${pageContext.request.contextPath}/image/pukepaifanm.jpg" width="80;">
-        <img src="${pageContext.request.contextPath}/image/pukepaifanm.jpg" width="80;">
-        <img src="${pageContext.request.contextPath}/image/pukepaifanm.jpg" width="80;">
-        <img src="${pageContext.request.contextPath}/image/pukepaifanm.jpg" width="80;">
-        <br>
-        <img src="${pageContext.request.contextPath}/image/pukepaifanm.jpg" width="80;">
-        <img src="${pageContext.request.contextPath}/image/pukepaifanm.jpg" width="80;">
-        <img src="${pageContext.request.contextPath}/image/pukepaifanm.jpg" width="80;">
-        <img src="${pageContext.request.contextPath}/image/pukepaifanm.jpg" width="80;">
+        <img id="qie2" src="${pageContext.request.contextPath}/image/pukepaifanm.jpg" width="80;" style="visibility:hidden;">
+        <img id="qie3" src="${pageContext.request.contextPath}/image/pukepaifanm.jpg" width="80;" style="visibility:hidden;">
+        <img id="qie4" src="${pageContext.request.contextPath}/image/pukepaifanm.jpg" width="80;" style="visibility:hidden;">
+        <img id="qie5" src="${pageContext.request.contextPath}/image/pukepaifanm.jpg" width="80;" style="visibility:hidden;">
+        <img id="qie6" src="${pageContext.request.contextPath}/image/pukepaifanm.jpg" width="80;" style="visibility:hidden;">
+        <img id="qie7" src="${pageContext.request.contextPath}/image/pukepaifanm.jpg" width="80;" style="visibility:hidden;">
+        <img id="qie8" src="${pageContext.request.contextPath}/image/pukepaifanm.jpg" width="80;" style="visibility:hidden;">
+        <img id="qie9" src="${pageContext.request.contextPath}/image/pukepaifanm.jpg" width="80;" style="visibility:hidden;">
+        <img id="qie10" src="${pageContext.request.contextPath}/image/pukepaifanm.jpg" width="80;" style="visibility:hidden;">
     </div>
 
 </body>
