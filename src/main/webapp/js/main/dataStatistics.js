@@ -403,43 +403,43 @@ function setZhuPanLu(zhuangdian,xiandian) {
         //庄赢
         if(zhuangdui == 0){
             //庄队
-            $("#img" + juCount +"").html("<img class=\"zhupanlu\" src=\"../../image/zhuangdui.png\" width=\"25px;\">");
+            $("#img" + juCount +"").html("<img class=\"zhupanlu\" src=\"../../image/zhuangdui.png\" width=\"20px;\">");
         } else if(xiandui == 0){
             //闲队
-            $("#img" + juCount +"").html("<img class=\"zhupanlu\" src=\"../../image/zhuangxiandui.png\" width=\"25px;\">");
+            $("#img" + juCount +"").html("<img class=\"zhupanlu\" src=\"../../image/zhuangxiandui.png\" width=\"20px;\">");
         } else if (zhuangdui == 0 && xiandui == 0) {
             //庄队，闲队
-            $("#img" + juCount +"").html("<img class=\"zhupanlu\" src=\"../../image/zhuangd.png\" width=\"25px;\">");
+            $("#img" + juCount +"").html("<img class=\"zhupanlu\" src=\"../../image/zhuangd.png\" width=\"20px;\">");
         } else {
-            $("#img" + juCount +"").html("<img class=\"zhupanlu\" src=\"../../image/zhuang.png\" width=\"25px;\">");
+            $("#img" + juCount +"").html("<img class=\"zhupanlu\" src=\"../../image/zhuang.png\" width=\"20px;\">");
         }
     } else if (zhuangdian < xiandian) {
         //闲赢
         if(zhuangdui == 0){
             //庄队
-            $("#img" + juCount +"").html("<img class=\"zhupanlu\" src=\"../../image/xianzhuangdui.png\" width=\"25px;\">");
+            $("#img" + juCount +"").html("<img class=\"zhupanlu\" src=\"../../image/xianzhuangdui.png\" width=\"20px;\">");
         } else if(xiandui == 0){
             //闲队
-            $("#img" + juCount +"").html("<img class=\"zhupanlu\" src=\"../../image/xiandui.png\" width=\"25px;\">");
+            $("#img" + juCount +"").html("<img class=\"zhupanlu\" src=\"../../image/xiandui.png\" width=\"20px;\">");
         } else if (zhuangdui == 0 && xiandui == 0) {
             //庄队，闲队
-            $("#img" + juCount +"").html("<img class=\"zhupanlu\" src=\"../../image/zhuangd.png\" width=\"25px;\">");
+            $("#img" + juCount +"").html("<img class=\"zhupanlu\" src=\"../../image/zhuangd.png\" width=\"20px;\">");
         } else {
-            $("#img" + juCount +"").html("<img class=\"zhupanlu\" src=\"../../image/xian.png\" width=\"25px;\">");
+            $("#img" + juCount +"").html("<img class=\"zhupanlu\" src=\"../../image/xian.png\" width=\"20px;\">");
         }
     } else {
         //和
         if(zhuangdui == 0){
             //庄队
-            $("#img" + juCount +"").html("<img class=\"zhupanlu\" src=\"../../image/hedui.png\" width=\"25px;\">");
+            $("#img" + juCount +"").html("<img class=\"zhupanlu\" src=\"../../image/hedui.png\" width=\"20px;\">");
         } else if(xiandui == 0){
             //闲队
-            $("#img" + juCount +"").html("<img class=\"zhupanlu\" src=\"../../image/hezhuangdui.png\" width=\"25px;\">");
+            $("#img" + juCount +"").html("<img class=\"zhupanlu\" src=\"../../image/hezhuangdui.png\" width=\"20px;\">");
         } else if (zhuangdui == 0 && xiandui == 0) {
             //庄队，闲队
-            $("#img" + juCount +"").html("<img class=\"zhupanlu\" src=\"../../image/hed.png\" width=\"25px;\">");
+            $("#img" + juCount +"").html("<img class=\"zhupanlu\" src=\"../../image/hed.png\" width=\"20px;\">");
         } else {
-            $("#img" + juCount +"").html("<img class=\"zhupanlu\" src=\"../../image/he.png\" width=\"25px;\">");
+            $("#img" + juCount +"").html("<img class=\"zhupanlu\" src=\"../../image/he.png\" width=\"20px;\">");
         }
     }
 }
@@ -458,57 +458,57 @@ var daLuLen=new Array(); //记录大路每一列长度
 function  setDaLu(zhuangdian,xiandian) {
     if (zhuangdian > xiandian) {
         //庄赢
-        if (he > 0) {
-            $("#dalu_" + cloun + "1").children("div").html(he);
+        if (he > 0 && row == 1) {
+            $("#dalu_" + cloun + "" + row +"").children("div").html(he);
         }
         if (up == 0) {
-            $("#dalu_" + cloun + "" + row +"").html("<div class=\"dulu\" style=\"width: 20px;height: 20px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 22px;\"></div>");
+            $("#dalu_" + cloun + "" + row +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
         } else if (up == 1) {
             row = row + 1
-            $("#dalu_" + cloun  + "" +row +"").html("<div class=\"dulu\" style=\"width: 20px;height: 20px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 22px;\"></div>");
+            $("#dalu_" + cloun  + "" +row +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
         } else if (up == 2) {
             daLuLen[daLuLen.length] = row;
             he = 0;
             row = 1;
             cloun = cloun + 1
-            $("#dalu_" + cloun  + "" + row +"").html("<div class=\"dulu\" style=\"width: 20px;height: 20px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 22px;\"></div>");
+            $("#dalu_" + cloun  + "" + row +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
         }
        /* else if (up == 3) {
             daLuLen[daLuLen.length] = row;
             row = 1;
             cloun = cloun + 1
-            $("#dalu_" + cloun  + "" + row +"").html("<div class=\"dulu\" style=\"width: 20px;height: 20px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 22px;\"></div>");
+            $("#dalu_" + cloun  + "" + row +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
         }*/
         up = 1;
     } else if (zhuangdian < xiandian) {
         //闲赢
-        if (he > 0) {
-            $("#dalu_" + cloun + "1").children("div").html(he);
+        if (he > 0 && row == 1) {
+            $("#dalu_" + cloun + "" + row +"").children("div").html(he);
         }
         if (up == 0) {
-            $("#dalu_" + cloun  + "" + row +"").html("<div class=\"dulu\" style=\"width: 20px;height: 20px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 22px;\"></div>");
+            $("#dalu_" + cloun  + "" + row +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
         } else if (up == 1) {
             daLuLen[daLuLen.length] = row;
             he = 0;
             row = 1;
             cloun = cloun + 1
-            $("#dalu_" + cloun  + "" + row +"").html("<div class=\"dulu\" style=\"width: 20px;height: 20px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 22px;\"></div>");
+            $("#dalu_" + cloun  + "" + row +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
         } else if (up == 2) {
             row = row + 1
-            $("#dalu_" + cloun  + "" + row +"").html("<div class=\"dulu\" style=\"width: 20px;height: 20px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 22px;\"></div>");
+            $("#dalu_" + cloun  + "" + row +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
         }
       /*  else if (up == 3) {
             daLuLen[daLuLen.length] = row;
             row = 1;
             cloun = cloun + 1
-            $("#dalu_" + cloun  + "" + row +"").html("<div class=\"dulu\" style=\"width: 20px;height: 20px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 22px;\"></div>");
+            $("#dalu_" + cloun  + "" + row +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
         }*/
         up = 2;
     } else {
         //和
         he = he + 1;
         if (up != 0) {
-            $("#dalu_" + cloun + "1").children("div").html(he);
+            $("#dalu_" + cloun + "" + row +"").children("div").html(he);
         }
        // up = 3;
     }
@@ -527,26 +527,26 @@ function  setDaYanLu(zhuangdian,xiandian) {
                 var row2 = daLuLen[cloum2-1];
                 if (row1 == row2) {
                     if(daUp == 0) {
-                        $("#dayanzai_" + daCloun + "" + daRow +"").html("<div class=\"dulu\" style=\"width: 20px;height: 20px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 22px;\"></div>");
+                        $("#dayanzai_" + daCloun + "" + daRow +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
                     } else if (daUp == 1) {
                         daRow = daRow + 1;
-                        $("#dayanzai_" + daCloun + "" + daRow +"").html("<div class=\"dulu\" style=\"width: 20px;height: 20px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 22px;\"></div>");
+                        $("#dayanzai_" + daCloun + "" + daRow +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
                     } else if (daUp == 2) {
                         daRow = 1;
                         daCloun = daCloun + 1;
-                        $("#dayanzai_" + daCloun + "" + daRow +"").html("<div class=\"dulu\" style=\"width: 20px;height: 20px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 22px;\"></div>");
+                        $("#dayanzai_" + daCloun + "" + daRow +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
                     }
                     daUp = 1;
                 } else {
                     if(daUp == 0) {
-                        $("#dayanzai_" + daCloun + "" + daRow +"").html("<div class=\"dulu\" style=\"width: 20px;height: 20px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 22px;\"></div>");
+                        $("#dayanzai_" + daCloun + "" + daRow +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
                     } else if (daUp == 1) {
                         daRow = 1;
                         daCloun = daCloun + 1;
-                        $("#dayanzai_" + daCloun + "" + daRow +"").html("<div class=\"dulu\" style=\"width: 20px;height: 20px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 22px;\"></div>");
+                        $("#dayanzai_" + daCloun + "" + daRow +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
                     } else if (daUp == 2) {
                         daRow = daRow + 1;
-                        $("#dayanzai_" + daCloun + "" + daRow +"").html("<div class=\"dulu\" style=\"width: 20px;height: 20px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 22px;\"></div>");
+                        $("#dayanzai_" + daCloun + "" + daRow +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
                     }
                     daUp = 2;
                 }
@@ -559,27 +559,27 @@ function  setDaYanLu(zhuangdian,xiandian) {
                 //alert(row1 + ":" + row + ":" + Math.abs(row1 - row));
                 if (row - row1 == 1) {
                     if(daUp == 0) {
-                        $("#dayanzai_" + daCloun + "" + daRow +"").html("<div class=\"dulu\" style=\"width: 20px;height: 20px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 22px;\"></div>");
+                        $("#dayanzai_" + daCloun + "" + daRow +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
                     } else if (daUp == 1) {
                         daRow = 1;
                         daCloun = daCloun + 1;
-                        $("#dayanzai_" + daCloun + "" + daRow +"").html("<div class=\"dulu\" style=\"width: 20px;height: 20px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 22px;\"></div>");
+                        $("#dayanzai_" + daCloun + "" + daRow +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
                     } else if (daUp == 2) {
                         daRow = daRow + 1;
-                        $("#dayanzai_" + daCloun + "" + daRow +"").html("<div class=\"dulu\" style=\"width: 20px;height: 20px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 22px;\"></div>");
+                        $("#dayanzai_" + daCloun + "" + daRow +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
                     }
                     daUp = 2;
                 } else {
                     //成对，红
                     if(daUp == 0) {
-                        $("#dayanzai_" + daCloun + "" + daRow +"").html("<div class=\"dulu\" style=\"width: 20px;height: 20px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 22px;\"></div>");
+                        $("#dayanzai_" + daCloun + "" + daRow +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
                     } else if (daUp == 1) {
                         daRow = daRow + 1;
-                        $("#dayanzai_" + daCloun + "" + daRow +"").html("<div class=\"dulu\" style=\"width: 20px;height: 20px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 22px;\"></div>");
+                        $("#dayanzai_" + daCloun + "" + daRow +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
                     } else if (daUp == 2) {
                         daRow = 1;
                         daCloun = daCloun + 1;
-                        $("#dayanzai_" + daCloun + "" + daRow +"").html("<div class=\"dulu\" style=\"width: 20px;height: 20px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 22px;\"></div>");
+                        $("#dayanzai_" + daCloun + "" + daRow +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
                     }
                     daUp = 1;
                 }
@@ -601,26 +601,26 @@ function  setXiaoLu(zhuangdian,xiandian) {
                 var row2 = daLuLen[cloum2-1];
                 if (row1 == row2) {
                     if(xiaoUp == 0) {
-                        $("#xiaolu_" + xiaoCloun + "" + xiaoRow +"").html("<div class=\"dulu\" style=\"width: 20px;height: 20px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 22px;\"></div>");
+                        $("#xiaolu_" + xiaoCloun + "" + xiaoRow +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;background-color:#ff4545;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
                     } else if (xiaoUp == 1) {
                         xiaoRow = xiaoRow + 1;
-                        $("#xiaolu_" + xiaoCloun + "" + xiaoRow +"").html("<div class=\"dulu\" style=\"width: 20px;height: 20px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 22px;\"></div>");
+                        $("#xiaolu_" + xiaoCloun + "" + xiaoRow +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;background-color:#ff4545;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
                     } else if (xiaoUp == 2) {
                         xiaoRow = 1;
                         xiaoCloun = xiaoCloun + 1;
-                        $("#xiaolu_" + xiaoCloun + "" + xiaoRow +"").html("<div class=\"dulu\" style=\"width: 20px;height: 20px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 22px;\"></div>");
+                        $("#xiaolu_" + xiaoCloun + "" + xiaoRow +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;background-color:#ff4545;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
                     }
                     xiaoUp = 1;
                 } else {
                     if(xiaoUp == 0) {
-                        $("#xiaolu_" + xiaoCloun + "" + xiaoRow +"").html("<div class=\"dulu\" style=\"width: 20px;height: 20px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 22px;\"></div>");
+                        $("#xiaolu_" + xiaoCloun + "" + xiaoRow +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;pxbackground-color:#0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
                     } else if (xiaoUp == 1) {
                         xiaoRow = 1;
                         xiaoCloun = xiaoCloun + 1;
-                        $("#xiaolu_" + xiaoCloun + "" + xiaoRow +"").html("<div class=\"dulu\" style=\"width: 20px;height: 20px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 22px;\"></div>");
+                        $("#xiaolu_" + xiaoCloun + "" + xiaoRow +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;background-color:#0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
                     } else if (xiaoUp == 2) {
                         xiaoRow = xiaoRow + 1;
-                        $("#xiaolu_" + xiaoCloun + "" + xiaoRow +"").html("<div class=\"dulu\" style=\"width: 20px;height: 20px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 22px;\"></div>");
+                        $("#xiaolu_" + xiaoCloun + "" + xiaoRow +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;background-color:#0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
                     }
                     xiaoUp = 2;
                 }
@@ -633,27 +633,27 @@ function  setXiaoLu(zhuangdian,xiandian) {
                 //alert(row1 + ":" + row + ":" + Math.abs(row1 - row));
                 if (row - row1 == 1) {
                     if(xiaoUp == 0) {
-                        $("#xiaolu_" + xiaoCloun + "" + xiaoRow +"").html("<div class=\"dulu\" style=\"width: 20px;height: 20px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 22px;\"></div>");
+                        $("#xiaolu_" + xiaoCloun + "" + xiaoRow +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;background-color:#0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
                     } else if (xiaoUp == 1) {
                         xiaoRow = 1;
                         xiaoCloun = xiaoCloun + 1;
-                        $("#xiaolu_" + xiaoCloun + "" + xiaoRow +"").html("<div class=\"dulu\" style=\"width: 20px;height: 20px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 22px;\"></div>");
+                        $("#xiaolu_" + xiaoCloun + "" + xiaoRow +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;background-color:#0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
                     } else if (xiaoUp == 2) {
                         xiaoRow = xiaoRow + 1;
-                        $("#xiaolu_" + xiaoCloun + "" + xiaoRow +"").html("<div class=\"dulu\" style=\"width: 20px;height: 20px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 22px;\"></div>");
+                        $("#xiaolu_" + xiaoCloun + "" + xiaoRow +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;background-color:#0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
                     }
                     xiaoUp = 2;
                 } else {
                     //成对，红
                     if(xiaoUp == 0) {
-                        $("#xiaolu_" + xiaoCloun + "" + xiaoRow +"").html("<div class=\"dulu\" style=\"width: 20px;height: 20px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 22px;\"></div>");
+                        $("#xiaolu_" + xiaoCloun + "" + xiaoRow +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;background-color:#ff4545;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
                     } else if (xiaoUp == 1) {
                         xiaoRow = xiaoRow + 1;
-                        $("#xiaolu_" + xiaoCloun + "" + xiaoRow +"").html("<div class=\"dulu\" style=\"width: 20px;height: 20px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 22px;\"></div>");
+                        $("#xiaolu_" + xiaoCloun + "" + xiaoRow +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;background-color:#ff4545;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
                     } else if (xiaoUp == 2) {
                         xiaoRow = 1;
                         xiaoCloun = xiaoCloun + 1;
-                        $("#xiaolu_" + xiaoCloun + "" + xiaoRow +"").html("<div class=\"dulu\" style=\"width: 20px;height: 20px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 22px;\"></div>");
+                        $("#xiaolu_" + xiaoCloun + "" + xiaoRow +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;background-color:#ff4545;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
                     }
                     xiaoUp = 1;
                 }
@@ -675,26 +675,26 @@ function  setZhangLangLu(zhuangdian,xiandian) {
                 var row2 = daLuLen[cloum2-1];
                 if (row1 == row2) {
                     if(zhangUp == 0) {
-                        $("#zhanglanglu_" + zhangCloun + "" + zhangRow +"").html("<div class=\"dulu\" style=\"width: 20px;height: 20px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 22px;\"></div>");
+                        $("#zhanglanglu_" + zhangCloun + "" + zhangRow +"").html("<img class=\"dulu\" src=\"../../image/zhuanghong.png\" width=\"18px;\">");
                     } else if (zhangUp == 1) {
                         zhangRow = zhangRow + 1;
-                        $("#zhanglanglu_" + zhangCloun + "" + zhangRow +"").html("<div class=\"dulu\" style=\"width: 20px;height: 20px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 22px;\"></div>");
+                        $("#zhanglanglu_" + zhangCloun + "" + zhangRow +"").html("<img class=\"dulu\" src=\"../../image/zhuanghong.png\" width=\"18px;\">");
                     } else if (zhangUp == 2) {
                         zhangRow = 1;
                         zhangCloun = zhangCloun + 1;
-                        $("#zhanglanglu_" + zhangCloun + "" + zhangRow +"").html("<div class=\"dulu\" style=\"width: 20px;height: 20px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 22px;\"></div>");
+                        $("#zhanglanglu_" + zhangCloun + "" + zhangRow +"").html("<img class=\"dulu\" src=\"../../image/zhuanghong.png\" width=\"18px;\">");
                     }
                     zhangUp = 1;
                 } else {
                     if(zhangUp == 0) {
-                        $("#zhanglanglu_" + zhangCloun + "" + zhangRow +"").html("<div class=\"dulu\" style=\"width: 20px;height: 20px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 22px;\"></div>");
+                        $("#zhanglanglu_" + zhangCloun + "" + zhangRow +"").html("<img class=\"dulu\" src=\"../../image/xianlan.png\" width=\"18px;\">");
                     } else if (zhangUp == 1) {
                         zhangRow = 1;
                         zhangCloun = zhangCloun + 1;
-                        $("#zhanglanglu_" + zhangCloun + "" + zhangRow +"").html("<div class=\"dulu\" style=\"width: 20px;height: 20px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 22px;\"></div>");
+                        $("#zhanglanglu_" + zhangCloun + "" + zhangRow +"").html("<img class=\"dulu\" src=\"../../image/xianlan.png\" width=\"18px;\">");
                     } else if (zhangUp == 2) {
                         zhangRow = zhangRow + 1;
-                        $("#zhanglanglu_" + zhangCloun + "" + zhangRow +"").html("<div class=\"dulu\" style=\"width: 20px;height: 20px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 22px;\"></div>");
+                        $("#zhanglanglu_" + zhangCloun + "" + zhangRow +"").html("<img class=\"dulu\" src=\"../../image/xianlan.png\" width=\"18px;\">");
                     }
                     zhangUp = 2;
                 }
@@ -707,27 +707,27 @@ function  setZhangLangLu(zhuangdian,xiandian) {
                 //alert(row1 + ":" + row + ":" + Math.abs(row1 - row));
                 if (row - row1 == 1) {
                     if(zhangUp == 0) {
-                        $("#zhanglanglu_" + zhangCloun + "" + zhangRow +"").html("<div class=\"dulu\" style=\"width: 20px;height: 20px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 22px;\"></div>");
+                        $("#zhanglanglu_" + zhangCloun + "" + zhangRow +"").html("<img class=\"dulu\" src=\"../../image/xianlan.png\" width=\"18px;\">");
                     } else if (zhangUp == 1) {
                         zhangRow = 1;
                         zhangCloun = zhangCloun + 1;
-                        $("#zhanglanglu_" + zhangCloun + "" + zhangRow +"").html("<div class=\"dulu\" style=\"width: 20px;height: 20px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 22px;\"></div>");
+                        $("#zhanglanglu_" + zhangCloun + "" + zhangRow +"").html("<img class=\"dulu\" src=\"../../image/xianlan.png\" width=\"18px;\">");
                     } else if (zhangUp == 2) {
                         zhangRow = zhangRow + 1;
-                        $("#zhanglanglu_" + zhangCloun + "" + zhangRow +"").html("<div class=\"dulu\" style=\"width: 20px;height: 20px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 22px;\"></div>");
+                        $("#zhanglanglu_" + zhangCloun + "" + zhangRow +"").html("<img class=\"dulu\" src=\"../../image/xianlan.png\" width=\"18px;\">");
                     }
                     zhangUp = 2;
                 } else {
                     //成对，红
                     if(zhangUp == 0) {
-                        $("#zhanglanglu_" + zhangCloun + "" + zhangRow +"").html("<div class=\"dulu\" style=\"width: 20px;height: 20px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 22px;\"></div>");
+                        $("#zhanglanglu_" + zhangCloun + "" + zhangRow +"").html("<img class=\"dulu\" src=\"../../image/zhuanghong.png\" width=\"18px;\">");
                     } else if (zhangUp == 1) {
                         zhangRow = zhangRow + 1;
-                        $("#zhanglanglu_" + zhangCloun + "" + zhangRow +"").html("<div class=\"dulu\" style=\"width: 20px;height: 20px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 22px;\"></div>");
+                        $("#zhanglanglu_" + zhangCloun + "" + zhangRow +"").html("<img class=\"dulu\" src=\"../../image/zhuanghong.png\" width=\"18px;\">");
                     } else if (zhangUp == 2) {
                         zhangRow = 1;
                         zhangCloun = zhangCloun + 1;
-                        $("#zhanglanglu_" + zhangCloun + "" + zhangRow +"").html("<div class=\"dulu\" style=\"width: 20px;height: 20px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 22px;\"></div>");
+                        $("#zhanglanglu_" + zhangCloun + "" + zhangRow +"").html("<img class=\"dulu\" src=\"../../image/zhuanghong.png\" width=\"18px;\">");
                     }
                     zhangUp = 1;
                 }
@@ -749,6 +749,62 @@ function  setZhangLangLu(zhuangdian,xiandian) {
  */
 var roomId;
 function submitDate(xian1,zhuang1,xian2,zhuang2,xian3,zhuang3,userMoney,touzhuMoney,zhuangdian,xiandian) {
+    //显示数据
+    var zhuangdui1 = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+    var xiandui1 = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+    var jieguo1 = "&nbsp;&nbsp;&nbsp;";
+    if(zhuang1 == zhuang2 || zhuang1 == zhuang3 || zhuang2 == zhuang3) {
+        zhuangdui1 = "庄对";
+    }
+    if(xian1 == xian2 || xian1 == xian3 || xian2 == xian3) {
+        xiandui1 = "闲对";
+    }
+    if (zhuangdian == xiandian) {
+        jieguo1 = "和";
+    } else if (zhuangdian > xiandian) {
+        jieguo1 = "庄";
+    } else if (zhuangdian < xiandian) {
+        jieguo1 = "闲";
+    }
+    if (juCount == 1) {
+        $("#uls").html("<li>\n" +
+            "                <span>"+ juCount +"</span>\n" +
+            "                <span style=\"margin-left: 7px;\">"+ jieguo1 +"</span>\n" +
+            "                <span style=\"margin-left: 7px\";>"+ zhuangdui1 +"</span>\n" +
+            "                <span style=\"margin-left: 7px;\">"+ xiandui1 +"</span>\n" +
+            "                <span style=\"margin-left: 7px;\">|</span>\n" +
+            "                <span>闲:</span>\n" +
+            "                <span>"+ xiandian +"</span>\n" +
+            "                <span style=\"margin-left: 7px;\">" + showData2(xian3) +"</span>\n" +
+            "                <span style=\"margin-left: 7px;\">"+ showData2(xian1) +"</span>\n" +
+            "                <span style=\"margin-left: 7px;\">"+ showData2(xian2) +"</span>\n" +
+            "                <span style=\"margin-left: 7px;\">|</span>\n" +
+            "                <span>庄:</span>\n" +
+            "                <span>"+ zhuangdian +"</span>\n" +
+            "                <span style=\"margin-left: 7px;\">"+ showData2(zhuang3) +"</span>\n" +
+            "                <span style=\"margin-left: 7px;\">"+ showData2(zhuang1) +"</span>\n" +
+            "                <span style=\"margin-left: 7px;\">"+ showData2(zhuang2) +"</span>\n" +
+            "            </li>");
+    } else {
+        $("ul:last").after("<ul><li>\n" +
+            "                <span>"+ juCount +"</span>\n" +
+            "                <span style=\"margin-left: 7px;\">"+ jieguo1 +"</span>\n" +
+            "                <span style=\"margin-left: 7px\";>"+ zhuangdui1 +"</span>\n" +
+            "                <span style=\"margin-left: 7px;\">"+ xiandui1 +"</span>\n" +
+            "                <span style=\"margin-left: 7px;\">|</span>\n" +
+            "                <span>闲:</span>\n" +
+            "                <span>"+ xiandian +"</span>\n" +
+            "                <span style=\"margin-left: 7px;\">" + showData2(xian3) +"</span>\n" +
+            "                <span style=\"margin-left: 7px;\">"+ showData2(xian1) +"</span>\n" +
+            "                <span style=\"margin-left: 7px;\">"+ showData2(xian2) +"</span>\n" +
+            "                <span style=\"margin-left: 7px;\">|</span>\n" +
+            "                <span>庄:</span>\n" +
+            "                <span>"+ zhuangdian +"</span>\n" +
+            "                <span style=\"margin-left: 7px;\">"+ showData2(zhuang3) +"</span>\n" +
+            "                <span style=\"margin-left: 7px;\">"+ showData2(zhuang1) +"</span>\n" +
+            "                <span style=\"margin-left: 7px;\">"+ showData2(zhuang2) +"</span>\n" +
+            "            </li></ul>");
+    }
     $.post("submitDate",{
             xian1:xian1,
             zhuang1:zhuang1,
@@ -800,6 +856,14 @@ function goOnGame() {
 }
 
 function chongzhi(userId,money) {
+    var value = prompt('输入充值金额：', '10000');
+    if(value == ''){
+        alert('输入为空');
+        return;
+    } else{
+        var userMoney =parseFloat($("#userMoney").text());
+        money = userMoney + parseFloat(value);
+    }
     $.post("chongzhi",{
             id:userId,
             money:money

@@ -67,7 +67,7 @@
                     <th >可用余额</th>
                     <th id="userMoney">${paramMap.USER_MONEY}</th>
                     <th>
-                        <button style="font-size: 16px;padding: 3px;" onclick="chongzhi('${paramMap.USER_ID}',1000000);">充值</button>
+                        <button style="font-size: 16px;padding: 3px;" onclick="chongzhi('${paramMap.USER_ID}',10000);">充值</button>
                     </th>
                 </tr>
                 <tr>
@@ -110,13 +110,58 @@
         </div>
     </div>
 
+    <div style="position: absolute;left:650px;top:45px;width: 430px;height: 200px;overflow-y: auto; border: 2px solid #3366cc;font-size: 16px;color: #3366cc;">
+        <ul id="uls">
+          <%--  <li>
+                <span>01</span>
+                <span style="margin-left: 7px;">庄</span>
+                <span style="margin-left: 7px";>庄对</span>
+                <span style="margin-left: 7px;">闲对</span>
+                <span style="margin-left: 7px;">|</span>
+                <span>闲:</span>
+                <span>3</span>
+                <span style="margin-left: 7px;">K</span>
+                <span style="margin-left: 7px;">3</span>
+                <span style="margin-left: 7px;">10</span>
+                <span style="margin-left: 7px;">|</span>
+                <span>庄:</span>
+                <span>3</span>
+                <span style="margin-left: 7px;">K</span>
+                <span style="margin-left: 7px;">3</span>
+                <span style="margin-left: 7px;">10</span>
+            </li>--%>
+        </ul>
+    </div>
+
+    <!--大路-->
+    <div style="position: absolute;left:10px;top:260px;width: 780px;overflow: auto;height: 150px;">
+        <div style="width: 1480px;">
+            <table class="table3">
+                <%
+                     for (int i=1; i<75;i++) {
+                %>
+                <tr>
+                    <%
+                        for (int j=1; j<75;j++) {
+                    %>
+                    <th id="dalu_<%=j + "" + i%>"></th>
+                    <%
+                        }
+                    %>
+                </tr>
+                <%
+                    }
+                %>
+            </table>
+        </div>
+    </div>
 
     <!--珠盘路
-    1、红、蓝、绿分别表示庄赢、闲赢、和局。
-    2、左上角的红点标示表示出现庄对，右下角的蓝点标示表示出现闲对。如果同时出现庄对和闲对，则同时在左上角和右，下角标示红点和蓝点。
-    3、通常情况下每列为6个，共11列。
-    -->
-    <div style="position: absolute;left: 645px;top: 35px;">
+   1、红、蓝、绿分别表示庄赢、闲赢、和局。
+   2、左上角的红点标示表示出现庄对，右下角的蓝点标示表示出现闲对。如果同时出现庄对和闲对，则同时在左上角和右，下角标示红点和蓝点。
+   3、通常情况下每列为6个，共11列。
+   -->
+    <div style="position: absolute;left: 800px;top: 260px;">
         <table class="table3">
             <tr>
                 <th id="img1"></th>
@@ -211,32 +256,9 @@
         </table>
     </div>
 
-    <!--大路-->
-    <div style="position: absolute;left:10px;top:260px;width: 500px;overflow: auto;height: 200px;">
-        <div style="width: 2400px;">
-            <table class="table3">
-                <%
-                     for (int i=1; i<75;i++) {
-                %>
-                <tr>
-                    <%
-                        for (int j=1; j<75;j++) {
-                    %>
-                    <th id="dalu_<%=j + "" + i%>"></th>
-                    <%
-                        }
-                    %>
-                </tr>
-                <%
-                    }
-                %>
-            </table>
-        </div>
-    </div>
-
     <!--大眼仔-->
-    <div style="position: absolute;left:530px;top:260px;width: 510px;overflow: auto;height: 200px;">
-        <div style="width: 2400px;">
+    <div style="position: absolute;left:10px;top:420px;width: 370px;overflow: auto;height: 150px;">
+        <div style="width: 1480px;">
             <table class="table3">
                 <%
                     for (int i=1; i<75;i++) {
@@ -258,8 +280,8 @@
     </div>
 
     <!--小路-->
-    <div style="position: absolute;left:10px;top:470px;width: 510px;overflow: auto;height: 200px;">
-        <div style="width: 2400px;">
+    <div style="position: absolute;left:380px;top:420px;width: 370px;overflow: auto;height: 150px;">
+        <div style="width: 1480px;">
             <table class="table3">
                 <%
                     for (int i=1; i<75;i++) {
@@ -281,8 +303,8 @@
     </div>
 
     <!--蟑螂路-->
-    <div style="position: absolute;left:530px;top:470px;width: 510px;overflow: auto;height: 200px;">
-        <div style="width: 2400px;">
+    <div style="position: absolute;left:750px;top:420px;width: 370px;overflow: auto;height: 150px;">
+        <div style="width: 1480px;">
             <table class="table3">
                 <%
                     for (int i=1; i<75;i++) {
@@ -303,6 +325,20 @@
         </div>
     </div>
 
+
+    <div style="position: absolute;top: 120px;left: 300px; background:#00000000;width: 360px;text-align: center;z-index: 999;display: none;">
+        <img id="qie1" src="${pageContext.request.contextPath}/image/veryhuo.com_pkp_1.jpg" width="80;" style="margin: 0 auto;">
+        <br/>
+        <img src="${pageContext.request.contextPath}/image/pukepaifanm.jpg" width="80;">
+        <img src="${pageContext.request.contextPath}/image/pukepaifanm.jpg" width="80;">
+        <img src="${pageContext.request.contextPath}/image/pukepaifanm.jpg" width="80;">
+        <img src="${pageContext.request.contextPath}/image/pukepaifanm.jpg" width="80;">
+        <br>
+        <img src="${pageContext.request.contextPath}/image/pukepaifanm.jpg" width="80;">
+        <img src="${pageContext.request.contextPath}/image/pukepaifanm.jpg" width="80;">
+        <img src="${pageContext.request.contextPath}/image/pukepaifanm.jpg" width="80;">
+        <img src="${pageContext.request.contextPath}/image/pukepaifanm.jpg" width="80;">
+    </div>
 
 </body>
 </html>

@@ -80,6 +80,9 @@ public class MainMessage implements IMainMessage {
         params.put("ZHUANGVALUE", zhuangdian);
         params.put("XIANVALUE", xiandian);
         params.put("POINT", juCount);
+        params.put("JISHUCOUNT", "0");
+        params.put("OUSHUCOUNT", "0");
+        params.put("LINGCOUNT", "0");
         params.put("TIME", DateUtils.getDate5());
         if (mainManageMapper.saveReetData(params)) {
             return id;
