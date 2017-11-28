@@ -552,7 +552,7 @@ Ext.onReady(function() {
             renderer : function(v) {
                 var value = dateSearchForm.getForm().findField("query").getValue();
                 var value1 =  dateSearchForm.getForm().findField("category_user").getValue();
-                var substr = showData2(v);
+                var substr = v;
                 if (value1 != '闲') {
                     if (value.indexOf(substr) >= 0){
                         return "<font style='color: #ff4545'>" + substr +"</font>"
@@ -571,7 +571,7 @@ Ext.onReady(function() {
             renderer : function(v) {
                 var value = dateSearchForm.getForm().findField("query").getValue();
                 var value1 =  dateSearchForm.getForm().findField("category_user").getValue();
-                var substr = showData2(v);
+                var substr = v;
                 if (value1 != '庄') {
                     if (value.indexOf(substr) >= 0){
                         return "<font style='color: #ff4545'>" + substr +"</font>"

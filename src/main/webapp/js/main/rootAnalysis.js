@@ -565,7 +565,7 @@ Ext.onReady(function() {
         sm : new Ext.grid.RowSelectionModel({
             singleSelect : true
         }),
-        height : 480,
+        height : 460,
         autoExpandColumn : 'TIME',
         columns : [{
             id : 'ID',
@@ -767,7 +767,7 @@ Ext.onReady(function() {
         id : 'sepisodesWin',
         title : '小局列表',
         width : 900,
-        height : 480,
+        height : 460,
         autoHeight : true,
         collapsible : true,
         modal : true,

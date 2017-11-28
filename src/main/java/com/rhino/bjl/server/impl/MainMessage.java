@@ -64,6 +64,9 @@ public class MainMessage implements IMainMessage {
 
     @Override
     public String saveReetData(String xian1, String xian2, String xian3, String zhuang1, String zhuang2, String zhuang3, String touzhuMoney, String userId, String roomId, String radio,String zhuangdian,String xiandian,String juCount) {
+        int jishu = 0;
+        int oushu = 0;
+        int ling = 0;
         HashMap<String,Object> params = new HashMap<String,Object>();
         String id = UUID.randomUUID().toString();
         params.put("ID", id);
@@ -84,6 +87,15 @@ public class MainMessage implements IMainMessage {
         params.put("OUSHUCOUNT", "0");
         params.put("LINGCOUNT", "0");
         params.put("TIME", DateUtils.getDate5());
+        //统计 一组牌 基数 偶数个数
+        if (StringUtils.getCountType(zhuang1) == 0) {
+
+        } else if (StringUtils.getCountType(zhuang1) == 1) {
+
+        } else if (StringUtils.getCountType(zhuang1) == 2) {
+
+        }
+
         if (mainManageMapper.saveReetData(params)) {
             return id;
         }

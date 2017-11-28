@@ -41,6 +41,28 @@ public class StringUtils {
         return j;
     }
 
+    /**
+     * 0 传人是 0
+     * 1 传入基数
+     * 2 传入偶数
+     * 3 空
+     * @param str
+     * @return
+     */
+    public static int getCountType(String str) {
+        if (org.apache.commons.lang.StringUtils.isNotBlank(str)) {
+            if (str.equals("10") || str.equals("11") || str.equals("12") || str.equals("13")) {
+                return 0;
+            } else if (Integer.parseInt(str)%2 == 0) {
+                return 2;
+            } else {
+                return 1;
+            }
+        } else {
+            return 3;
+        }
+    }
+
     public static int getCount(int allCount) {
         int count = allCount;
         if (allCount > 9) {
