@@ -173,10 +173,10 @@ public class MainMessage implements IMainMessage {
     }
 
     @Override
-    public List<HashMap<String, Object>> findReetList(String category, String zhuang_1,String zhuang_2,String zhuang_3,String xian_1,String xian_2,String xian_3,String zhuangdianshu,String xiandianshu, String startDate, String endDate, String query, int start, int limit) {
+    public List<HashMap<String, Object>> findReetList(String category, String jishu,String oushu,String ling, String startDate, String endDate, String query, int start, int limit) {
         String sql = "SELECT * FROM reet_tbl";
         //判断单 双
-        sql = formatSqls(category, zhuang_1,zhuang_2,zhuang_3,xian_1,xian_2,xian_3,zhuangdianshu,xiandianshu, startDate, endDate, query, sql);
+        sql = formatSqls(category, jishu,oushu,ling, startDate, endDate, query, sql);
         sql = sql + " ORDER BY TIME ASC limit "+ start +"," + limit;
         System.out.println("SQL=" + sql);
         List<HashMap<String, Object>> list =  mainManageMapper.findReetList(sql);
@@ -231,7 +231,7 @@ public class MainMessage implements IMainMessage {
         return list2;
     }
 
-    private String formatSqls(String category,String zhuang_1,String zhuang_2,String zhuang_3,String xian_1,String xian_2,String xian_3,String zhuangdianshu,String xiandianshu, String startDate, String endDate, String query, String sql) {
+    private String formatSqls(String category,String jishu,String oushu,String ling,String startDate, String endDate, String query, String sql) {
         sql = sql + " WHERE TIME BETWEEN '" + startDate +"' AND '" + endDate + "'";
         if (category.equals("全部")) {
             if (org.apache.commons.lang.StringUtils.isNotBlank(query)) {
@@ -249,111 +249,23 @@ public class MainMessage implements IMainMessage {
                 sql = sql + " AND (XIAN1 in " + qu +" OR XIAN2 in " + qu +" OR XIAN3 in " + qu +" OR XIANVALUE in " + qu +")";
             }
         }
-        if ("单数".equals(zhuang_1)) {
-            sql = sql + " AND (ZHUANG1 < 10 AND ZHUANG1%2!=0)";
-        }else if ("双数".equals(zhuang_1)) {
-            sql = sql + " AND (ZHUANG1 < 10 AND ZHUANG1%2=0)";
+        if (org.apache.commons.lang.StringUtils.isNotBlank(jishu)) {
+            sql = sql + " AND JISHUCOUNT =" + jishu;
         }
-        if ("单数".equals(zhuang_2)) {
-            sql = sql + " AND (ZHUANG2 < 10 AND ZHUANG2%2!=0)";
-        }else if ("双数".equals(zhuang_2)) {
-            sql = sql + " AND (ZHUANG2 < 10 AND ZHUANG2%2=0)";
+        if (org.apache.commons.lang.StringUtils.isNotBlank(oushu)) {
+            sql = sql + " AND OUSHUCOUNT =" + oushu;
         }
-        if ("单数".equals(zhuang_3)) {
-            sql = sql + " AND (ZHUANG3 < 10 AND ZHUANG3%2!=0)";
-        }else if ("双数".equals(zhuang_3)) {
-            sql = sql + " AND (ZHUANG3 < 10 AND ZHUANG3%2=0)";
+        if (org.apache.commons.lang.StringUtils.isNotBlank(ling)) {
+            sql = sql + " AND LINGCOUNT =" + ling;
         }
-        if ("单数".equals(xian_1)) {
-            sql = sql + " AND (XIAN1 < 10 AND XIAN1%2!=0)";
-        }else if ("双数".equals(xian_1)) {
-            sql = sql + " AND (XIAN1 < 10 AND XIAN1%2=0)";
-        }
-        if ("单数".equals(xian_2)) {
-            sql = sql + " AND (XIAN2 < 10 AND XIAN2%2!=0)";
-        }else if ("双数".equals(xian_2)) {
-            sql = sql + " AND (XIAN2 < 10 AND XIAN2%2=0)";
-        }
-        if ("单数".equals(xian_3)) {
-            sql = sql + " AND (XIAN3 < 10 AND XIAN3%2!=0)";
-        }else if ("双数".equals(xian_3)) {
-            sql = sql + " AND (XIAN3 < 10 AND XIAN3%2=0)";
-        }
-        if ("单数".equals(zhuangdianshu)) {
-            sql = sql + " AND (ZHUANGVALUE < 10 AND ZHUANGVALUE%2!=0)";
-        }else if ("双数".equals(zhuangdianshu)) {
-            sql = sql + " AND (ZHUANGVALUE < 10 AND ZHUANGVALUE%2=0)";
-        }
-        if ("单数".equals(xiandianshu)) {
-            sql = sql + " AND (XIANVALUE < 10 AND XIANVALUE%2!=0)";
-        }else if ("双数".equals(xiandianshu)) {
-            sql = sql + " AND (XIANVALUE < 10 AND XIANVALUE%2=0)";
-        }
-      /*  if (category2.equals("全部")){
-
-        } else if(category2.equals("单数")){
-            sql = sql + " WHERE TIME BETWEEN '" + startDate +"' AND '" + endDate + "'";
-            if (category.equals("全部")) {
-                if (org.apache.commons.lang.StringUtils.isNotBlank(query)) {
-                    String qu = StringUtils.formatSql(query);
-                    sql = sql + " AND (ZHUANG1 in " + qu +" OR ZHUANG2 in " + qu +" OR ZHUANG3 in " + qu +" OR XIAN1 in " + qu +" OR XIAN2 in " + qu +" OR XIAN3 in " + qu +" OR ZHUANGVALUE in " + qu +" OR XIANVALUE in " + qu +")" +
-                            " AND ((XIAN1 < 10 AND XIAN1%2!=0) OR (XIAN2 < 10 AND XIAN2%2!=0) OR (XIAN3 < 10 AND XIAN3%2!=0) OR XIANVALUE%2!=0 OR (ZHUANG1 < 10 AND ZHUANG1%2!=0) OR (ZHUANG2 < 10 AND ZHUANG2%2!=0) OR (ZHUANG3 < 10 AND ZHUANG3%2!=0) OR ZHUANGVALUE%2!=0)";
-                } else {
-                    sql = sql + " AND ((XIAN1 < 10 AND XIAN1%2!=0) OR (XIAN2 < 10 AND XIAN2%2!=0) OR (XIAN3 < 10 AND XIAN3%2!=0) OR XIANVALUE%2!=0 OR (ZHUANG1 < 10 AND ZHUANG1%2!=0) OR (ZHUANG2 < 10 AND ZHUANG2%2!=0) OR (ZHUANG3 < 10 AND ZHUANG3%2!=0) OR ZHUANGVALUE%2!=0)";
-                }
-            } else if(category.equals("庄")){
-                if (org.apache.commons.lang.StringUtils.isNotBlank(query)) {
-                    String qu = StringUtils.formatSql(query);
-                    sql = sql + " AND (ZHUANG1 in " + qu +" OR ZHUANG2 in " + qu +" OR ZHUANG3 in " + qu + " OR ZHUANGVALUE in " + qu +")" +
-                            " AND ((ZHUANG1 < 10 AND ZHUANG1%2!=0) OR (ZHUANG2 < 10 AND ZHUANG2%2!=0) OR (ZHUANG3 < 10 AND ZHUANG3%2!=0) OR ZHUANGVALUE%2!=0)";
-                } else {
-                    sql = sql +  " AND ((ZHUANG1 < 10 AND ZHUANG1%2!=0) OR (ZHUANG2 < 10 AND ZHUANG2%2!=0) OR (ZHUANG3 < 10 AND ZHUANG3%2!=0)  OR ZHUANGVALUE%2!=0)";
-                }
-            } else if (category.equals("闲")) {
-                if (org.apache.commons.lang.StringUtils.isNotBlank(query)) {
-                    String qu = StringUtils.formatSql(query);
-                    sql = sql + " AND (XIAN1 in " + qu +" OR XIAN2 in " + qu +" OR XIAN3 in " + qu +" OR XIANVALUE in " + qu +")" +
-                            " AND ((XIAN1 < 10 AND XIAN1%2!=0) OR (XIAN2 < 10 AND XIAN2%2!=0) OR (XIAN3 < 10 AND XIAN3%2!=0) OR XIANVALUE%2!=0)";
-                } else {
-                    sql = sql +  " AND ((XIAN1 < 10 AND XIAN1%2!=0) OR (XIAN2 < 10 AND XIAN2%2!=0) OR (XIAN3 < 10 AND XIAN3%2!=0) OR XIANVALUE%2!=0)";
-                }
-            }
-        } else if (category2.equals("双数")) {
-            sql = sql + " WHERE TIME BETWEEN '" + startDate +"' AND '" + endDate + "'";
-            if (category.equals("全部")) {
-                if (org.apache.commons.lang.StringUtils.isNotBlank(query)) {
-                    String qu = StringUtils.formatSql(query);
-                    sql = sql + " AND (ZHUANG1 in " + qu +" OR ZHUANG2 in " + qu +" OR ZHUANG3 in " + qu +" OR XIAN1 in " + qu +" OR XIAN2 in " + qu +" OR XIAN3 in " + qu +" OR ZHUANGVALUE in " + qu +" OR XIANVALUE in " + qu +")" +
-                            " AND ((XIAN1 < 10 AND XIAN1%2=0) OR (XIAN2 < 10 AND XIAN2%2=0) OR (XIAN3 < 10 AND XIAN3%2=0) OR XIANVALUE%2=0 OR (ZHUANG1 < 10 AND ZHUANG1%2=0) OR (ZHUANG2 < 10 AND ZHUANG2%2=0) OR (ZHUANG3 < 10 AND ZHUANG3%2=0) OR ZHUANGVALUE%2=0)";
-                } else {
-                    sql = sql + " AND ((XIAN1 < 10 AND XIAN1%2=0) OR (XIAN2 < 10 AND XIAN2%2=0) OR (XIAN3 < 10 AND XIAN3%2=0) OR XIANVALUE%2=0 OR (ZHUANG1 < 10 AND ZHUANG1%2=0) OR (ZHUANG2 < 10 AND ZHUANG2%2=0) OR (ZHUANG3 < 10 AND ZHUANG3%2=0) OR ZHUANGVALUE%2=0)";
-                }
-            } else if(category.equals("庄")){
-                if (org.apache.commons.lang.StringUtils.isNotBlank(query)) {
-                    String qu = StringUtils.formatSql(query);
-                    sql = sql + " AND (ZHUANG1 in " + qu +" OR ZHUANG2 in " + qu +" OR ZHUANG3 in " + qu + " OR ZHUANGVALUE in " + qu +")" +
-                            " AND ((ZHUANG1 < 10 AND ZHUANG1%2=0) OR (ZHUANG2 < 10 AND ZHUANG2%2=0) OR (ZHUANG3 < 10 AND ZHUANG3%2=0) OR ZHUANGVALUE%2=0)";
-                } else {
-                    sql = sql +  " AND ((ZHUANG1 < 10 AND ZHUANG1%2=0) OR (ZHUANG2 < 10 AND ZHUANG2%2=0) OR (ZHUANG3 < 10 AND ZHUANG3%2=0) OR ZHUANGVALUE%2=0)";
-                }
-            } else if (category.equals("闲")) {
-                if (org.apache.commons.lang.StringUtils.isNotBlank(query)) {
-                    String qu = StringUtils.formatSql(query);
-                    sql = sql + " AND (XIAN1 in " + qu +" OR XIAN2 in " + qu +" OR XIAN3 in " + qu +" OR XIANVALUE in " + qu +")" +
-                            " AND ((XIAN1 < 10 AND XIAN1%2=0) OR (XIAN2 < 10 AND XIAN2%2=0) OR (XIAN3 < 10 AND XIAN3%2=0) OR XIANVALUE%2=0)";
-                } else {
-                    sql = sql + " AND ((XIAN1 < 10 AND XIAN1%2=0) OR (XIAN2 < 10 AND XIAN2%2=0) OR (XIAN3 < 10 AND XIAN3%2=0) OR XIANVALUE%2=0)";
-                }
-            }
-        }*/
         return sql;
     }
 
     @Override
-    public int findReetListCount(String category,String zhuang_1,String zhuang_2,String zhuang_3,String xian_1,String xian_2,String xian_3,String zhuangdianshu,String xiandianshu, String startDate, String endDate, String query, int start, int limit) {
+    public int findReetListCount(String category,String jishu,String oushu,String ling,String startDate, String endDate, String query, int start, int limit) {
         String sql = "SELECT Count(*) AS NUMBER FROM reet_tbl";
         //判断单 双
-        sql = formatSqls(category,zhuang_1,zhuang_2,zhuang_3,xian_1,xian_2,xian_3,zhuangdianshu,xiandianshu, startDate, endDate, query, sql);
+        sql = formatSqls(category,jishu,oushu,ling,startDate, endDate, query, sql);
         return mainManageMapper.findReetListCount(sql);
     }
 
