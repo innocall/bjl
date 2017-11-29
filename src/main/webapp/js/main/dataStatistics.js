@@ -1014,11 +1014,252 @@ function hiddenTotal() {
 }
 
 function wenlu(type) {
+    var daWenLuLen=new Array();
+    daWenLuLen.concat(daLuLen);
     if (type == 1) {
         //庄问
-
+        $("#img" + (juCount + 1) +"").html("<img id='zhuwenlu' class=\"zhupanlu\" src=\"../../image/zhuang.png\" width=\"20px;\">");
+        if (up == 0) {
+            $("#dalu_" + cloun + "" + row +"").html("<div id='daluwen' class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
+        } else if (up == 1) {
+            $("#dalu_" + cloun  + "" +(row + 1) +"").html("<div id='daluwen' class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
+        } else if (up == 2) {
+            daWenLuLen[daWenLuLen.length] = row;
+            $("#dalu_" + (cloun + 1)  + "" + row +"").html("<div id='daluwen' class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
+        }
     } else if (type == 2) {
         //闲问
-
+        $("#img" + (juCount + 1) +"").html("<img id='zhuwenlu' class=\"zhupanlu\" src=\"../../image/xian.png\" width=\"20px;\">");
+        if (up == 0) {
+            $("#dalu_" + cloun  + "" + row +"").html("<div id='daluwen' class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
+        } else if (up == 1) {
+            daWenLuLen[daWenLuLen.length] = row;
+            $("#dalu_" + (cloun + 1)  + "" + row +"").html("<div id='daluwen' class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
+        } else if (up == 2) {
+            $("#dalu_" + cloun  + "" + (row + 1) +"").html("<div id='daluwen' class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
+        }
     }
+    var obj=document.getElementById("zhuwenlu");
+    var obj2=document.getElementById("daluwen");
+    var timer=null;
+    var timer2=null;
+    var i=0;
+    var j=0;
+    clearInterval(timer);
+    timer=setInterval(function(){
+        if (obj != null) {
+            obj.style.display=i++%2?"none":"block";//还是有收获的。这个写法比if..else想必简单了好多
+            if (i > 7) {
+                clearInterval(timer);
+                obj.parentNode.removeChild(obj);
+            }
+        }
+    },500);
+    timer2=setInterval(function(){
+        if (obj2 != null) {
+            obj2.style.display=j++%2?"none":"block";//还是有收获的。这个写法比if..else想必简单了好多
+            if (j > 7) {
+                clearInterval(timer2);
+                obj2.parentNode.removeChild(obj2);
+            }
+        }
+    },500);
+    setWenLuDaYan(daWenLuLen);
+    setWenLuXiaoLu(daWenLuLen);
+    setWenLuZhang(daWenLuLen);
+}
+
+function setWenLuZhang(daWenLuLen) {
+    if (row == 1) {
+        if (cloun > 4) {
+            var cloum1 = cloun - 1;
+            var row1 = daWenLuLen[cloum1-1];
+            var cloum2 = cloun - 4;
+            var row2 = daWenLuLen[cloum2-1];
+            if (row1 == row2) {
+                if(zhangUp == 0) {
+                    $("#zhanglanglu_" + zhangCloun + "" + zhangRow +"").html("<img id='wenxiaozhang' class=\"dulu\" src=\"../../image/zhuanghong.png\" width=\"18px;\">");
+                } else if (zhangUp == 1) {
+                    $("#zhanglanglu_" + (zhangRow + 1) + "" + zhangRow +"").html("<img id='wenxiaozhang' class=\"dulu\" src=\"../../image/zhuanghong.png\" width=\"18px;\">");
+                } else if (zhangUp == 2) {
+                    $("#zhanglanglu_" + (zhangRow + 1) + "1").html("<img id='wenxiaozhang' class=\"dulu\" src=\"../../image/zhuanghong.png\" width=\"18px;\">");
+                }
+            } else {
+                if(zhangUp == 0) {
+                    $("#zhanglanglu_" + zhangCloun + "" + zhangRow +"").html("<img id='wenxiaozhang' class=\"dulu\" src=\"../../image/xianlan.png\" width=\"18px;\">");
+                } else if (zhangUp == 1) {
+                    $("#zhanglanglu_" + (zhangRow + 1) + "1").html("<img id='wenxiaozhang' class=\"dulu\" src=\"../../image/xianlan.png\" width=\"18px;\">");
+                } else if (zhangUp == 2) {
+                    $("#zhanglanglu_" + zhangCloun + "" + (zhangRow + 1) +"").html("<img id='wenxiaozhang' class=\"dulu\" src=\"../../image/xianlan.png\" width=\"18px;\">");
+                }
+            }
+        }
+    } else {
+        //2、大路每列的第2粒開始跟前一列比较：有成对是红笔、第一个无对是藍笔、第2个开始无对又是红笔。红笔分为3种情况，上面的第1点，称顶头红笔，上面的第2点，分为有对红笔和下空红笔
+        if (cloun > 3) {
+            var cloum1 = cloun - 3;
+            var row1 = daWenLuLen[cloum1 - 1];  //上一列的行数
+            if (row - row1 == 1) {
+                if(zhangUp == 0) {
+                    $("#zhanglanglu_" + zhangCloun + "" + zhangRow +"").html("<img id='wenxiaozhang' class=\"dulu\" src=\"../../image/xianlan.png\" width=\"18px;\">");
+                } else if (zhangUp == 1) {
+                    $("#zhanglanglu_" + (zhangCloun + 1) + "1").html("<img id='wenxiaozhang' class=\"dulu\" src=\"../../image/xianlan.png\" width=\"18px;\">");
+                } else if (zhangUp == 2) {
+                    $("#zhanglanglu_" + zhangCloun + "" + (zhangRow + 1) +"").html("<img id='wenxiaozhang' class=\"dulu\" src=\"../../image/xianlan.png\" width=\"18px;\">");
+                }
+            } else {
+                //成对，红
+                if(zhangUp == 0) {
+                    $("#zhanglanglu_" + zhangCloun + "" + zhangRow +"").html("<img id='wenxiaozhang' class=\"dulu\" src=\"../../image/zhuanghong.png\" width=\"18px;\">");
+                } else if (zhangUp == 1) {
+                    $("#zhanglanglu_" + zhangCloun + "" + (zhangRow + 1) +"").html("<img id='wenxiaozhang' class=\"dulu\" src=\"../../image/zhuanghong.png\" width=\"18px;\">");
+                } else if (zhangUp == 2) {
+                    $("#zhanglanglu_" + (zhangCloun + 1) + "1").html("<img id='wenxiaozhang' class=\"dulu\" src=\"../../image/zhuanghong.png\" width=\"18px;\">");
+                }
+            }
+        }
+    }
+    var obj=document.getElementById("wenxiaozhang");
+    var timer=null;
+    var i=0;
+    clearInterval(timer);
+    timer=setInterval(function(){
+        if (obj != null) {
+            obj.style.display=i++%2?"none":"block";//还是有收获的。这个写法比if..else想必简单了好多
+            if (i > 7) {
+                clearInterval(timer);
+                obj.parentNode.removeChild(obj);
+            }
+        }
+    },500);
+}
+
+function setWenLuXiaoLu(daWenLuLen) {
+    if (row == 1) {
+        if (cloun > 3) {
+            var cloum1 = cloun - 1;
+            var row1 = daWenLuLen[cloum1-1];
+            var cloum2 = cloun - 3;
+            var row2 = daWenLuLen[cloum2-1];
+            if (row1 == row2) {
+                if(xiaoUp == 0) {
+                    $("#xiaolu_" + xiaoCloun + "" + xiaoRow +"").html("<div id='wenxiaolu' class=\"dulu\" style=\"width: 14px;height: 14px;background-color:#ff4545;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
+                } else if (xiaoUp == 1) {
+                    $("#xiaolu_" + xiaoCloun + "" + (xiaoRow + 1) +"").html("<div id='wenxiaolu' class=\"dulu\" style=\"width: 14px;height: 14px;background-color:#ff4545;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
+                } else if (xiaoUp == 2) {
+                    $("#xiaolu_" + (xiaoCloun + 1) + "1").html("<div id='wenxiaolu' class=\"dulu\" style=\"width: 14px;height: 14px;background-color:#ff4545;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
+                }
+            } else {
+                if(xiaoUp == 0) {
+                    $("#xiaolu_" + xiaoCloun + "" + xiaoRow +"").html("<div id='wenxiaolu' class=\"dulu\" style=\"width: 14px;height: 14px;pxbackground-color:#0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
+                } else if (xiaoUp == 1) {
+                    $("#xiaolu_" + (xiaoCloun + 1) + "1").html("<div id='wenxiaolu' class=\"dulu\" style=\"width: 14px;height: 14px;background-color:#0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
+                } else if (xiaoUp == 2) {
+                    $("#xiaolu_" + xiaoCloun + "" + (xiaoRow + 1) +"").html("<div id='wenxiaolu' class=\"dulu\" style=\"width: 14px;height: 14px;background-color:#0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
+                }
+            }
+        }
+    } else {
+        //2、大路每列的第2粒開始跟前一列比较：有成对是红笔、第一个无对是藍笔、第2个开始无对又是红笔。红笔分为3种情况，上面的第1点，称顶头红笔，上面的第2点，分为有对红笔和下空红笔
+        if (cloun > 2) {
+            var cloum1 = cloun - 2;
+            var row1 = daWenLuLen[cloum1 - 1];  //上一列的行数
+            if (row - row1 == 1) {
+                if(xiaoUp == 0) {
+                    $("#xiaolu_" + xiaoCloun + "" + xiaoRow +"").html("<div id='wenxiaolu' class=\"dulu\" style=\"width: 14px;height: 14px;background-color:#0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
+                } else if (xiaoUp == 1) {
+                    $("#xiaolu_" + (xiaoCloun + 1) + "1").html("<div id='wenxiaolu' class=\"dulu\" style=\"width: 14px;height: 14px;background-color:#0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
+                } else if (xiaoUp == 2) {
+                    $("#xiaolu_" + xiaoCloun + "" + (xiaoRow + 1) +"").html("<div id='wenxiaolu' class=\"dulu\" style=\"width: 14px;height: 14px;background-color:#0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
+                }
+            } else {
+                //成对，红
+                if(xiaoUp == 0) {
+                    $("#xiaolu_" + xiaoCloun + "" + xiaoRow +"").html("<div id='wenxiaolu' class=\"dulu\" style=\"width: 14px;height: 14px;background-color:#ff4545;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
+                } else if (xiaoUp == 1) {
+                    $("#xiaolu_" + xiaoCloun + "" + (xiaoRow + 1) +"").html("<div id='wenxiaolu' class=\"dulu\" style=\"width: 14px;height: 14px;background-color:#ff4545;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
+                } else if (xiaoUp == 2) {
+                    $("#xiaolu_" + ( xiaoCloun + 1) + "1").html("<div id='wenxiaolu' class=\"dulu\" style=\"width: 14px;height: 14px;background-color:#ff4545;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
+                }
+            }
+        }
+    }
+    var obj=document.getElementById("wenxiaolu");
+    var timer=null;
+    var i=0;
+    clearInterval(timer);
+    timer=setInterval(function(){
+        if (obj != null) {
+            obj.style.display=i++%2?"none":"block";//还是有收获的。这个写法比if..else想必简单了好多
+            if (i > 7) {
+                clearInterval(timer);
+                obj.parentNode.removeChild(obj);
+            }
+        }
+    },500);
+}
+
+function setWenLuDaYan(daWenLuLen) {
+    if (row == 1) {
+        if (cloun > 2) {
+            var cloum1 = cloun - 1;
+            var row1 = daWenLuLen[cloum1-1];
+            var cloum2 = cloun - 2;
+            var row2 = daWenLuLen[cloum2-1];
+            if (row1 == row2) {
+                if(daUp == 0) {
+                    $("#dayanzai_" + daCloun + "" + daRow +"").html("<div id='wendayan' class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
+                } else if (daUp == 1) {
+                    $("#dayanzai_" + daCloun + "" + (daRow + 1) +"").html("<div id='wendayan' class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
+                } else if (daUp == 2) {
+                    $("#dayanzai_" + (daCloun + 1) + "1" ).html("<div id='wendayan' class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
+                }
+            } else {
+                if(daUp == 0) {
+                    $("#dayanzai_" + daCloun + "" + daRow +"").html("<div id='wendayan' class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
+                } else if (daUp == 1) {
+                    $("#dayanzai_" + (daCloun + 1) + "1").html("<div id='wendayan' class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
+                } else if (daUp == 2) {
+                    $("#dayanzai_" + daCloun + "" + (daRow + 1) +"").html("<div id='wendayan' class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
+                }
+            }
+        }
+    } else {
+        //2、大路每列的第2粒開始跟前一列比较：有成对是红笔、第一个无对是藍笔、第2个开始无对又是红笔。红笔分为3种情况，上面的第1点，称顶头红笔，上面的第2点，分为有对红笔和下空红笔
+        if (cloun > 1) {
+            var cloum1 = cloun - 1;
+            var row1 = daWenLuLen[cloum1 - 1];  //上一列的行数
+            if (row - row1 == 1) {
+                if(daUp == 0) {
+                    $("#dayanzai_" + daCloun + "" + daRow +"").html("<div id='wendayan' class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
+                } else if (daUp == 1) {
+                    $("#dayanzai_" + (daCloun + 1) + "1").html("<div id='wendayan' class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
+                } else if (daUp == 2) {
+                    $("#dayanzai_" + daCloun + "" + (daRow + 1) +"").html("<div id='wendayan' class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
+                }
+            } else {
+                //成对，红
+                if(daUp == 0) {
+                    $("#dayanzai_" + daCloun + "" + daRow +"").html("<div id='wendayan' class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
+                } else if (daUp == 1) {
+                    $("#dayanzai_" + daCloun + "" + ( daRow + 1) +"").html("<div id='wendayan' class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
+                } else if (daUp == 2) {
+                    $("#dayanzai_" + ( daCloun + 1) + "1").html("<div id='wendayan' class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
+                }
+            }
+        }
+    }
+    var obj=document.getElementById("wendayan");
+    var timer=null;
+    var i=0;
+    clearInterval(timer);
+    timer=setInterval(function(){
+        if (obj != null) {
+            obj.style.display=i++%2?"none":"block";//还是有收获的。这个写法比if..else想必简单了好多
+            if (i > 7) {
+                clearInterval(timer);
+                obj.parentNode.removeChild(obj);
+            }
+        }
+    },500);
 }
