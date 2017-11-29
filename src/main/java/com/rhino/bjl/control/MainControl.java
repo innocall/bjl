@@ -6,6 +6,8 @@ import com.rhino.bjl.server.IMainMessage;
 import com.rhino.bjl.utils.DateUtils;
 import com.rhino.bjl.utils.JsonUtil;
 import com.rhino.bjl.utils.ParamUtils;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -320,6 +322,8 @@ public class MainControl extends BaseControl {
         if (StringUtils.isBlank(id)) {
             param.put("msg", "添加失败！");
         } else {
+            HashMap<String,Object> map =  mainMessage.findRoomById(roomId);
+            mainMessage.updateRoomData(map.get("MONEY") + "",juCount + "",user.getID(),map.get("ZHUANGCOUNT") + "",map.get("XIANCOUNT") + "",map.get("HECOUNT") + "",map.get("ZHUANGDUICOUNT") + "",map.get("XIANDUICOUNT") + "",roomId);
             param.put("msg", "添加成功！");
             param.put("success", true);
             param.put("id",id);
@@ -361,6 +365,45 @@ public class MainControl extends BaseControl {
         }
         String json = JsonUtil.toJsonString(param);
         return json;
+    }
+
+    /**
+     * 实时批量提交单局数据
+     * @return
+     */
+    @RequestMapping(value = "/submitRootDate",method = RequestMethod.POST)
+    public void submitRootDate(HttpServletRequest request,HttpServletResponse response) {
+        String status = "200";
+        String msg = "提交成功";
+        String data = ParamUtils.getParameter(request, "data", "");
+        String zhuangCount = ParamUtils.getParameter(request, "zhuangCount", "");
+        String xianCount = ParamUtils.getParameter(request, "xianCount", "");
+        String heCount = ParamUtils.getParameter(request, "heCount", "");
+        String zhuangDuiCount1 = ParamUtils.getParameter(request, "zhuangDuiCount1", "");
+        String xianDuiCount = ParamUtils.getParameter(request, "xianDuiCount", "");
+        JSONArray jsonArray = new JSONArray();
+        jsonArray.add(data);
+        ManageUser user = (ManageUser) request.getSession().getAttribute(AppConstans.MANAGE_USER_SESSION);
+        String juCount = jsonArray.getJSONArray(0).size() + "";
+        //判断大局是否存在
+        String roomId = mainMessage.saveRoomData("",juCount,user.getID(),zhuangCount,xianCount,heCount,zhuangDuiCount1,xianDuiCount);
+        logger.info("创建房间：" + roomId);
+        //更新数据
+        if (StringUtils.isNotBlank(roomId)) {
+            JSONArray jsonArray1 = jsonArray.getJSONArray(0);
+            for (int i=0;i<jsonArray1.size();i++) {
+                JSONObject jsonObject = jsonArray1.getJSONObject(i);
+                mainMessage.saveReetData(com.rhino.bjl.utils.StringUtils.getJsonString(jsonObject,"XIAN1"),com.rhino.bjl.utils.StringUtils.getJsonString(jsonObject,"XIAN2")
+                        ,com.rhino.bjl.utils.StringUtils.getJsonString(jsonObject,"XIAN3"),com.rhino.bjl.utils.StringUtils.getJsonString(jsonObject,"ZHUANG1"),
+                        com.rhino.bjl.utils.StringUtils.getJsonString(jsonObject,"ZHUANG2"),com.rhino.bjl.utils.StringUtils.getJsonString(jsonObject,"ZHUANG3"),"",user.getID(),roomId,"-1",
+                        com.rhino.bjl.utils.StringUtils.getJsonString(jsonObject,"ZHUANGVALUE"),com.rhino.bjl.utils.StringUtils.getJsonString(jsonObject,"XIANVALUE"),com.rhino.bjl.utils.StringUtils.getJsonString(jsonObject,"POINT"));
+            }
+        }else {
+            status = "400";
+            msg = "保存失败";
+        }
+        PrintWriter out = null;
+        printMsgToPage(response, status, msg, out);
     }
 
     private int getDianShu(String ZHUANG1, String ZHUANG2, String ZHUANG3) {

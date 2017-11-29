@@ -22,6 +22,23 @@ Ext.onReady(function() {
         fields : [ 'ID', 'ROOMID', 'ZHUANG1', 'ZHUANG2', 'ZHUANG3','XIAN1', 'XIAN2', 'XIAN3','TIME','TOUZHU','ZHUANGVALUE','XIANVALUE','POINT' ]
     });
 
+    //实时添加数据
+    var jsonEpisData2 = new Ext.data.JsonStore({
+        fields : [
+            {name:'ROOMID',type:'string'},
+            {name:'ZHUANG1',type:'string'},
+            {name:'ZHUANG2',type:'string'},
+            {name:'ZHUANG3',type:'string'},
+            {name:'XIAN1',type:'string'},
+            {name:'XIAN2',type:'string'},
+            {name:'XIAN3',type:'string'},
+            {name:'XIANVALUE',type:'string'},
+            {name:'ZHUANGVALUE',type:'string'},
+            {name:'TIME',mapping: 'availability', type: 'date', dateFormat: 'Y-m-d H:m:s'},
+            {name:'POINT',type:'int'}
+        ]
+    });
+
     /* 数据列表 */
     var yhglGrid = new Ext.grid.GridPanel({
         id : 'yhglGrid',
@@ -115,7 +132,13 @@ Ext.onReady(function() {
         }),
         buttons : [
             {
-                text:'<font style="font-size: 18px;">添加</font>',
+                text:'<font style="font-size: 18px;">实时记牌</font>',
+                handler:function(){
+                    sepisodesWin3.show();
+                }
+            },
+            {
+                text:'<font style="font-size: 18px;">添加已有局数</font>',
                 handler:function(){
                     addForm.getForm().findField("TOTALCOUNT").setValue("");
                     addForm.getForm().findField("ZHUANGCOUNT").setValue("");
@@ -558,10 +581,11 @@ Ext.onReady(function() {
         } ]
     });
 
-    var episGrid = new Ext.grid.GridPanel({
+    var episGrid = new Ext.grid.EditorGridPanel({
         id : 'episGrid',
         store : jsonEpisData,
         region : 'center',
+        clicksToEdit:1,
         sm : new Ext.grid.RowSelectionModel({
             singleSelect : true
         }),
@@ -591,6 +615,19 @@ Ext.onReady(function() {
                 return v;
             }
         }, {
+            id : 'XIAN1',
+            header : '闲牌1',
+            dataIndex : 'XIAN1',
+            sortable : true,
+            align : 'center',
+            css:'font-size:18px;',
+            width : 70,
+            menuDisabled : true,
+            renderer : function(v) {
+                var substr = showData2(v);
+                return substr;
+            }
+        },{
             id : 'ZHUANG1',
             header : '庄牌1',
             dataIndex : 'ZHUANG1',
@@ -604,52 +641,22 @@ Ext.onReady(function() {
                 return substr;
             }
         }, {
-            id : 'ZHUANG2',
-            header : '庄牌2',
-            dataIndex : 'ZHUANG2',
-            sortable : true,
-            css:'font-size:18px;',
-            align : 'center',
-            width : 70,
-            menuDisabled : true,
-            renderer : function(v) {
-                var substr = showData2(v);
-                return substr;
-            }
-        }, {
-            id : 'ZHUANG3',
-            header : '庄牌3',
-            dataIndex : 'ZHUANG3',
-            sortable : true,
-            align : 'center',
-            css:'font-size:18px;',
-            width : 70,
-            menuDisabled : true,
-            renderer : function(v) {
-                if (v == '0') {
-                    return "";
-                } else {
-                    var substr = showData2(v);
-                    return substr;
-                }
-            }
-        }, {
-            id : 'XIAN1',
-            header : '闲牌1',
-            dataIndex : 'XIAN1',
-            sortable : true,
-            align : 'center',
-            css:'font-size:18px;',
-            width : 70,
-            menuDisabled : true,
-            renderer : function(v) {
-                var substr = showData2(v);
-                return substr;
-            }
-        }, {
             id : 'XIAN2',
             header : '闲牌2',
             dataIndex : 'XIAN2',
+            sortable : true,
+            css:'font-size:18px;',
+            align : 'center',
+            width : 70,
+            menuDisabled : true,
+            renderer : function(v) {
+                var substr = showData2(v);
+                return substr;
+            }
+        }, {
+            id : 'ZHUANG2',
+            header : '庄牌2',
+            dataIndex : 'ZHUANG2',
             sortable : true,
             css:'font-size:18px;',
             align : 'center',
@@ -676,15 +683,23 @@ Ext.onReady(function() {
                     return substr;
                 }
             }
-        }, {
-            id : 'ZHUANGVALUE',
-            header : '庄点数',
-            dataIndex : 'ZHUANGVALUE',
+        },{
+            id : 'ZHUANG3',
+            header : '庄牌3',
+            dataIndex : 'ZHUANG3',
             sortable : true,
-            width : 70,
             align : 'center',
             css:'font-size:18px;',
-            menuDisabled : true
+            width : 70,
+            menuDisabled : true,
+            renderer : function(v) {
+                if (v == '0') {
+                    return "";
+                } else {
+                    var substr = showData2(v);
+                    return substr;
+                }
+            }
         }, {
             id : 'XIANVALUE',
             header : '闲点数',
@@ -695,6 +710,15 @@ Ext.onReady(function() {
             align : 'center',
             menuDisabled : true
         },{
+            id : 'ZHUANGVALUE',
+            header : '庄点数',
+            dataIndex : 'ZHUANGVALUE',
+            sortable : true,
+            width : 70,
+            align : 'center',
+            css:'font-size:18px;',
+            menuDisabled : true
+        }, {
             id : 'TIME',
             header : '投注时间',
             dataIndex : 'TIME',
@@ -773,6 +797,297 @@ Ext.onReady(function() {
         modal : true,
         items : [detailForm,episGrid],
         closable : true,
+        closeAction : 'hide',
+        resizable : false,
+        y : 0,
+        listeners : {
+            beforeshow : function() {
+            }
+        }
+    });
+
+    var episGrid2 = new Ext.grid.EditorGridPanel({
+        id : 'episGrid2',
+        store : jsonEpisData2,
+        region : 'center',
+        clicksToEdit:1,
+        sm : new Ext.grid.RowSelectionModel({
+            singleSelect : true
+        }),
+        height : 480,
+        autoExpandColumn : 'TIME',
+        columns : [{
+            id : 'POINT',
+            header : '<font style="font-size: 16px;">第几局</font>',
+            dataIndex : 'POINT',
+            sortable : true,
+            align : 'center',
+            width : 70,
+            editor:new Ext.form.NumberField({
+                allowBlank: false
+            }),
+            css:'font-size:18px;',
+            menuDisabled : true
+        }, {
+            id : 'XIAN1',
+            header : '<font style="font-size: 16px;">闲牌1</font>',
+            dataIndex : 'XIAN1',
+            sortable : true,
+            align : 'center',
+            css:'font-size:18px;',
+            editor:new Ext.form.TextField({
+                    allowBlank: false
+            }),
+            width : 70,
+            menuDisabled : true
+        },{
+            id : 'ZHUANG1',
+            header : '<font style="font-size: 16px;">庄牌1</font>',
+            dataIndex : 'ZHUANG1',
+            sortable : true,
+            align : 'center',
+            css:'font-size:18px;',
+            editor:new Ext.form.TextField({
+                allowBlank: false
+            }),
+            width : 70,
+            menuDisabled : true
+        }, {
+            id : 'XIAN2',
+            header : '<font style="font-size: 16px;">闲牌2</font>',
+            dataIndex : 'XIAN2',
+            sortable : true,
+            css:'font-size:18px;',
+            editor:new Ext.form.TextField({
+                allowBlank: false
+            }),
+            align : 'center',
+            width : 70,
+            menuDisabled : true
+        }, {
+            id : 'ZHUANG2',
+            header : '<font style="font-size: 16px;">庄牌2</font>',
+            dataIndex : 'ZHUANG2',
+            sortable : true,
+            css:'font-size:18px;',
+            align : 'center',
+            editor:new Ext.form.TextField({
+                allowBlank: false
+            }),
+            width : 70,
+            menuDisabled : true
+        }, {
+            id : 'XIAN3',
+            header : '<font style="font-size: 16px;">闲牌3</font>',
+            dataIndex : 'XIAN3',
+            sortable : true,
+            editor:new Ext.form.TextField(),
+            align : 'center',
+            css:'font-size:18px;',
+            width : 70,
+            menuDisabled : true
+        },{
+            id : 'ZHUANG3',
+            header : '<font style="font-size: 16px;">庄牌3</font>',
+            dataIndex : 'ZHUANG3',
+            sortable : true,
+            align : 'center',
+            css:'font-size:18px;',
+            editor:new Ext.form.TextField(),
+            width : 70,
+            menuDisabled : true
+        }, {
+            id : 'XIANVALUE',
+            header : '<font style="font-size: 16px;">闲点数</font>',
+            dataIndex : 'XIANVALUE',
+            sortable : true,
+            width : 70,
+            editor:new Ext.form.NumberField({
+                allowBlank: false
+            }),
+            css:'font-size:18px;',
+            align : 'center',
+            menuDisabled : true
+        },{
+            id : 'ZHUANGVALUE',
+            header : '<font style="font-size: 16px;">庄点数</font>',
+            dataIndex : 'ZHUANGVALUE',
+            sortable : true,
+            width : 70,
+            editor:new Ext.form.NumberField({
+                allowBlank: false
+            }),
+            align : 'center',
+            css:'font-size:18px;',
+            menuDisabled : true
+        },{
+            id : 'TIME',
+            header : '<font style="font-size: 16px;">投注时间</font>',
+            dataIndex : 'TIME',
+            sortable : true,
+            css:'font-size:15px;',
+            renderer:function(value){
+                return value ? value.dateFormat('Y-m-d H:m:s') : '';
+            },
+            editor: new Ext.form.DateField({
+                format: 'Y-m-d H:m:s'
+            }),
+            width : 200,
+            align : 'center',
+            menuDisabled : true
+        }],
+        enableColumnMove : true,
+        bbar : new Ext.PagingToolbar({
+            pageSize : 80,
+            store : jsonEpisData,
+            displayInfo : true,
+            displayMsg : '显示{0}/{1}of{2}',
+            emptyMsg : '没有数据',
+            plugins : new Ext.ux.ProgressBarPager()
+        }),
+        listeners: {
+           /* "afterEdit": {
+                fn: afterEdit,
+                scope: this
+            }*/
+        },
+        tbar : [{
+                text:'<font style="font-size: 16px;">添加</font>',
+                handler: function() {
+                    var Plant = jsonEpisData2.recordType;
+                    var p = new Plant({
+                        TIME: new Date()
+                    });
+                    episGrid2.stopEditing();
+                    jsonEpisData2.insert(0, p);
+                    episGrid2.startEditing(0, 0);
+                }
+            },
+            "-"
+            ,{
+                text:'<font style="font-size: 16px;">删除</font>',
+                handler:function(){
+                    var selModel = episGrid2.getSelectionModel();
+                    if (selModel.hasSelection()) {
+                        Ext.Msg.confirm("警告", "确定要删除吗？", function(button) {
+                            if (button == "yes") {
+                                var selections = selModel.getSelections();
+                                Ext.each(selections, function(item) {
+                                    jsonEpisData2.remove(item);
+                                    jsonEpisData2.removed.push(item);
+                                });
+                            }
+                        });
+                    } else {
+                        Ext.Msg.alert("错误", "没有任何行被选中，无法进行删除操作！");
+                    }
+                 }
+            },
+            "-"
+            ,{
+                text:'<font style="font-size: 16px;">关闭</font>',
+                handler:function() {
+                    Ext.Msg.confirm("警告", "确定要关闭添加吗？", function (button) {
+                        if (button == "yes") {
+                            sepisodesWin3.hide();
+                        }
+                    })
+                }
+            },
+            '-',
+            {
+                text: '<font style="font-size: 16px;">保存</font>',
+                handler: function() {
+                    var mod = jsonEpisData2.modified;
+                    updateData(mod);
+                }
+            }]
+    });
+
+    //发送数据到服务器端进行更新
+    function updateData(mod) {
+        var json = [];
+        Ext.each(mod, function(item) {
+            json.push(item.data);
+        });
+        if (json.length > 0) {
+            var zhuangCount = 0;
+            var xianCount = 0;
+            var heCount = 0;
+            var zhuangDuiCount1 = 0;
+            var xianDuiCount = 0;
+            for(var i=0;i<json.length;i++) {
+                if (json[i].ZHUANGVALUE >json[i].XIANVALUE) {
+                    zhuangCount = zhuangCount + 1;
+                } else if (json[i].ZHUANGVALUE ==json[i].XIANVALUE) {
+                    heCount = heCount + 1;
+                } else if (json[i].ZHUANGVALUE <json[i].XIANVALUE) {
+                    xianCount = xianCount + 1;
+                }
+                if (json[i].ZHUANG1 ==json[i].ZHUANG2 ||json[i].ZHUANG1 ==json[i].ZHUANG3 ||json[i].ZHUANG1==json[i].ZHUANG3) {
+                    zhuangDuiCount1 = zhuangDuiCount1 + 1;
+                }
+                if (json[i].XIAN1 ==json[i].XIAN2 ||json[i].XIAN1 ==json[i].XIAN3 ||json[i].XIAN2==json[i].XIAN3) {
+                    xianDuiCount = xianDuiCount + 1;
+                }
+            }
+            Ext.Ajax.request({
+                url: path + 'private/main/submitRootDate',
+                params: {
+                    data: Ext.util.JSON.encode(json),
+                    zhuangCount:zhuangCount,
+                    xianCount:xianCount,
+                    heCount:heCount,
+                    zhuangDuiCount1:zhuangDuiCount1,
+                    xianDuiCount:xianDuiCount
+                },
+                method: "POST",
+                waitMsg:'正在提交,请稍后...',
+                waitTitle:'提交中...',
+                success: function(response) {
+                    if(response.status==200) {
+                        Ext.Msg.alert("信息", "数据更新成功！", function() {
+                            jsonEpisData2.reload();
+                            jsonUser.reload;
+                            sepisodesWin3.hide();
+                        });
+                    } else {
+                        Ext.Msg.alert("警告", "数据更新失败，请稍后再试！");
+                    }
+                },
+                failure: function(response) {
+                    Ext.Msg.alert("警告", "数据更新失败，请稍后再试！");
+                }
+            });
+        } else {
+            Ext.Msg.alert("警告", "没有任何需要更新的数据！");
+        }
+    }
+
+    //编辑后触发的事件，可在此进行数据有效性的验证
+   /* function afterEdit(e) {
+        if (e.field == 'common') {
+            if (e.value == '123') {
+                Ext.Msg.alert("错误", "大笨是人物不是植物", function() {
+                    episGrid2.startEditing(e.row, e.column)
+                });
+            }
+        }
+    }*/
+
+    /**
+     *实时记牌列表
+     */
+    var sepisodesWin3 = new Ext.Window({
+        id : 'sepisodesWin3',
+        title : '小局列表',
+        width : 880,
+        height : 480,
+        autoHeight : true,
+        collapsible : true,
+        modal : true,
+        closable: false,
+        items : [episGrid2],
         closeAction : 'hide',
         resizable : false,
         y : 0,

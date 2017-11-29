@@ -84,4 +84,8 @@ public class MainManageMapper {
     public boolean deleteReetById(HashMap<String, Object> map) {
         return lemonDB.deleteDynamic("reet_tbl",map);
     }
+
+    public HashMap<String, Object> findRoomById(HashMap<String, Object> map) {
+        return lemonDB.get("findRoomById", map);
+    }
 }

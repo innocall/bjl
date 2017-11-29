@@ -1,5 +1,7 @@
 package com.rhino.bjl.utils;
 
+import net.sf.json.JSONObject;
+
 public class StringUtils {
 
     /**
@@ -51,9 +53,9 @@ public class StringUtils {
      */
     public static int getCountType(String str) {
         if (org.apache.commons.lang.StringUtils.isNotBlank(str)) {
-            if (str.equals("10") || str.equals("11") || str.equals("12") || str.equals("13")) {
+            if (str.equals("10") || str.equals("11") || str.equals("12") || str.equals("13")|| str.equals("0")) {
                 return 0;
-            } else if (Integer.parseInt(str)%2 == 0) {
+            } else if (Integer.parseInt(str)%2 == 0 && !str.equals("0")) {
                 return 2;
             } else {
                 return 1;
@@ -77,6 +79,16 @@ public class StringUtils {
         } else {
             return data;
         }
+    }
+
+    public static String getJsonString(JSONObject jsonObject,String str) {
+        Object obj = jsonObject.get(str);
+        if (obj == null) {
+            return "";
+        }else {
+            return obj.toString();
+        }
+
     }
 
 }

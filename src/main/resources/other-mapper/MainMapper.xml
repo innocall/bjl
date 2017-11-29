@@ -40,4 +40,8 @@
 		]]>
     </delete>
 
+    <select id="findRoomById" resultType="java.util.HashMap">
+        select * from room_tbl where ID = #{ROOMID}
+    </select>
+
 </mapper>

@@ -21,6 +21,7 @@ var firstQiePai = "";
 var startDown1 = 0; //首切牌张数
 function init() {
     isStart = 0;
+    isOne = true;
     mytime=null;
     isFaPai = false;
     juCount = 0;
@@ -96,6 +97,8 @@ Array.prototype.remove=function(dx)
     this.length-=1
 }
 
+var isOne = true;
+
 function startGame() {
     if (isStart == 0) {
         time = $("#times").val();
@@ -110,8 +113,11 @@ function startGame() {
         $("#msg").css("display","initial");
         $("#touzhuId").removeAttr("disabled");
         isStart = 1;
+        if (isOne) {
+            showTotal();
+            isOne = false;
+        }
         settime();
-        showTotal();
     } else if (isStart == 1){
         if (!isFaPai) {
             $("#startBut").html("继续游戏");

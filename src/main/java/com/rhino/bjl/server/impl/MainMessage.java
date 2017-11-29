@@ -68,6 +68,12 @@ public class MainMessage implements IMainMessage {
         int oushu = 0;
         int ling = 0;
         HashMap<String,Object> params = new HashMap<String,Object>();
+        zhuang1 = StringUtils.getCountFormat(zhuang1);
+        zhuang2 = StringUtils.getCountFormat(zhuang2);
+        zhuang3 = StringUtils.getCountFormat(zhuang3);
+        xian1 = StringUtils.getCountFormat(xian1);
+        xian2 = StringUtils.getCountFormat(xian2);
+        xian3 = StringUtils.getCountFormat(xian3);
         String id = UUID.randomUUID().toString();
         params.put("ID", id);
         params.put("USERID", userId);
@@ -83,19 +89,67 @@ public class MainMessage implements IMainMessage {
         params.put("ZHUANGVALUE", zhuangdian);
         params.put("XIANVALUE", xiandian);
         params.put("POINT", juCount);
-        params.put("JISHUCOUNT", "0");
-        params.put("OUSHUCOUNT", "0");
-        params.put("LINGCOUNT", "0");
         params.put("TIME", DateUtils.getDate5());
         //统计 一组牌 基数 偶数个数
         if (StringUtils.getCountType(zhuang1) == 0) {
-
+            ling = ling + 1;
         } else if (StringUtils.getCountType(zhuang1) == 1) {
-
+            jishu = jishu + 1;
         } else if (StringUtils.getCountType(zhuang1) == 2) {
-
+            oushu = oushu + 1;
         }
-
+        if (StringUtils.getCountType(zhuang2) == 0) {
+            ling = ling + 1;
+        } else if (StringUtils.getCountType(zhuang2) == 1) {
+            jishu = jishu + 1;
+        } else if (StringUtils.getCountType(zhuang2) == 2) {
+            oushu = oushu + 1;
+        }
+        if (StringUtils.getCountType(zhuang3) == 0) {
+            ling = ling + 1;
+        } else if (StringUtils.getCountType(zhuang3) == 1) {
+            jishu = jishu + 1;
+        } else if (StringUtils.getCountType(zhuang3) == 2) {
+            oushu = oushu + 1;
+        }
+        if (StringUtils.getCountType(xian1) == 0) {
+            ling = ling + 1;
+        } else if (StringUtils.getCountType(xian1) == 1) {
+            jishu = jishu + 1;
+        } else if (StringUtils.getCountType(xian1) == 2) {
+            oushu = oushu + 1;
+        }
+        if (StringUtils.getCountType(xian2) == 0) {
+            ling = ling + 1;
+        } else if (StringUtils.getCountType(xian2) == 1) {
+            jishu = jishu + 1;
+        } else if (StringUtils.getCountType(xian2) == 2) {
+            oushu = oushu + 1;
+        }
+        if (StringUtils.getCountType(xian3) == 0) {
+            ling = ling + 1;
+        } else if (StringUtils.getCountType(xian3) == 1) {
+            jishu = jishu + 1;
+        } else if (StringUtils.getCountType(xian3) == 2) {
+            oushu = oushu + 1;
+        }
+        if (StringUtils.getCountType(zhuangdian) == 0) {
+            ling = ling + 1;
+        } else if (StringUtils.getCountType(zhuangdian) == 1) {
+            jishu = jishu + 1;
+        } else if (StringUtils.getCountType(zhuangdian) == 2) {
+            oushu = oushu + 1;
+        }
+        if (StringUtils.getCountType(xiandian) == 0) {
+            ling = ling + 1;
+        } else if (StringUtils.getCountType(xiandian) == 1) {
+            jishu = jishu + 1;
+        } else if (StringUtils.getCountType(xiandian) == 2) {
+            oushu = oushu + 1;
+        }
+        params.put("JISHUCOUNT", jishu);
+        params.put("OUSHUCOUNT", oushu);
+        params.put("LINGCOUNT", ling);
         if (mainManageMapper.saveReetData(params)) {
             return id;
         }
@@ -342,6 +396,13 @@ public class MainMessage implements IMainMessage {
         HashMap<String,Object> map = new HashMap<String, Object>();
         map.put("ID",id);
         return mainManageMapper.deleteReetById(map);
+    }
+
+    @Override
+    public HashMap<String, Object> findRoomById(String roomId) {
+        HashMap<String,Object> map = new HashMap<String, Object>();
+        map.put("ROOMID",roomId);
+        return mainManageMapper.findRoomById(map);
     }
 
     public boolean deleteReetByRoomId(String roomId) {

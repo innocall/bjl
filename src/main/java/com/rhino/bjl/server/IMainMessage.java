@@ -31,4 +31,6 @@ public interface IMainMessage {
     int findCountReetByRoomId(String roomId);
 
     boolean deleteReetById(String id);
+
+    HashMap<String,Object> findRoomById(String roomId);
 }
