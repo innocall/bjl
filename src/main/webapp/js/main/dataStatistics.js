@@ -329,6 +329,9 @@ function goGame(xian1,zhuang1,xian2,zhuang2,xian3,zhuang3) {
     //提交数据到后台
     if (juCount < allJuCount) {
         juCount = juCount + 1;
+        if (juCount == allJuCount) {
+            $("#jieshu").css("visibility","visible");
+        }
         $("#juCount").html(juCount);
         var zhuangdian = getCount(showData(zhuang1) + showData(zhuang2) + showData(zhuang3)); //庄点数
         var xiandian = getCount(showData(xian1) + showData(xian2) + showData(xian3));  //闲点数
@@ -782,42 +785,43 @@ function submitDate(xian1,zhuang1,xian2,zhuang2,xian3,zhuang3,userMoney,touzhuMo
     }
     if (juCount == 1) {
         $("#uls").html("<li>\n" +
-            "                <span>"+ juCount +"</span>\n" +
-            "                <span style=\"margin-left: 7px;\">"+ jieguo1 +"</span>\n" +
-            "                <span style=\"margin-left: 7px\";>"+ zhuangdui1 +"</span>\n" +
-            "                <span style=\"margin-left: 7px;\">"+ xiandui1 +"</span>\n" +
-            "                <span style=\"margin-left: 7px;\">|</span>\n" +
-            "                <span>闲:</span>\n" +
-            "                <span>"+ xiandian +"</span>\n" +
-            "                <span style=\"margin-left: 7px;\">" + showData2(xian3) +"</span>\n" +
-            "                <span style=\"margin-left: 7px;\">"+ showData2(xian1) +"</span>\n" +
-            "                <span style=\"margin-left: 7px;\">"+ showData2(xian2) +"</span>\n" +
-            "                <span style=\"margin-left: 7px;\">|</span>\n" +
-            "                <span>庄:</span>\n" +
-            "                <span>"+ zhuangdian +"</span>\n" +
-            "                <span style=\"margin-left: 7px;\">"+ showData2(zhuang3) +"</span>\n" +
-            "                <span style=\"margin-left: 7px;\">"+ showData2(zhuang1) +"</span>\n" +
-            "                <span style=\"margin-left: 7px;\">"+ showData2(zhuang2) +"</span>\n" +
+            "                <div style=\"float: left;width: 20px;text-align: center\">"+ juCount +"</div>\n" +
+            "                <div style=\"margin-left: 7px;float: left;width: 15px;text-align: center\">"+ jieguo1 +"</div>\n" +
+            "                <div style=\"margin-left: 7px; float: left;width: 40px;text-align: center\">"+ zhuangdui1 +"</div>\n" +
+            "                <div style=\"margin-left: 7px; float: left;width: 40px;text-align: center\">"+ xiandui1 +"</div>\n" +
+            "                <div style=\"margin-left: 7px;float: left;width: 7px;\">|</div>\n" +
+            "                <div style=\"float: left;width: 20px;text-align: center;height: 21px;\">闲:</div>\n" +
+            "                <div style=\"float: left;width: 15px;text-align: center;height: 21px;\">"+ xiandian +"</div>\n" +
+            "                <div style=\"margin-left: 7px;float: left;width: 15px;text-align: center;height: 21px;\">" + showData2(xian3) +"</div>\n" +
+            "                <div style=\"margin-left: 7px;float: left;width: 15px;text-align: center;height: 21px;\">"+ showData2(xian1) +"</div>\n" +
+            "                <div style=\"margin-left: 7px;float: left;width: 15px;text-align: center;height: 21px;\">"+ showData2(xian2) +"</div>\n" +
+            "                <div style=\"margin-left: 13px;float: left;width: 7px;text-align: center;height: 21px;\">|</div>\n" +
+            "                <div style=\"float: left;width: 20px;text-align: center;height: 21px;\">庄:</div>\n" +
+            "                <div style=\"float: left;width: 15px;text-align: center;height: 21px;\">"+ zhuangdian +"</div>\n" +
+            "                <div style=\"margin-left: 7px;float: left;width: 15px;text-align: center;height: 21px;\">"+ showData2(zhuang3) +"</div>\n" +
+            "                <div style=\"margin-left: 7px;float: left;width: 15px;text-align: center;height: 21px;\">"+ showData2(zhuang1) +"</div>\n" +
+            "                <div style=\"margin-left: 7px;float: left;width: 15px;text-align: center;height: 21px;\">"+ showData2(zhuang2) +"</div>\n" +
             "            </li>");
     } else {
-        $("ul:last").after("<ul><li>\n" +
-            "                <span>"+ juCount +"</span>\n" +
-            "                <span style=\"margin-left: 7px;\">"+ jieguo1 +"</span>\n" +
-            "                <span style=\"margin-left: 7px\";>"+ zhuangdui1 +"</span>\n" +
-            "                <span style=\"margin-left: 7px;\">"+ xiandui1 +"</span>\n" +
-            "                <span style=\"margin-left: 7px;\">|</span>\n" +
-            "                <span>闲:</span>\n" +
-            "                <span>"+ xiandian +"</span>\n" +
-            "                <span style=\"margin-left: 7px;\">" + showData2(xian3) +"</span>\n" +
-            "                <span style=\"margin-left: 7px;\">"+ showData2(xian1) +"</span>\n" +
-            "                <span style=\"margin-left: 7px;\">"+ showData2(xian2) +"</span>\n" +
-            "                <span style=\"margin-left: 7px;\">|</span>\n" +
-            "                <span>庄:</span>\n" +
-            "                <span>"+ zhuangdian +"</span>\n" +
-            "                <span style=\"margin-left: 7px;\">"+ showData2(zhuang3) +"</span>\n" +
-            "                <span style=\"margin-left: 7px;\">"+ showData2(zhuang1) +"</span>\n" +
-            "                <span style=\"margin-left: 7px;\">"+ showData2(zhuang2) +"</span>\n" +
+        $("ul:last").after("<ul style=\"clear: both\"><li>\n" +
+            "                <div style=\"float: left;width: 20px;text-align: center\">"+ juCount +"</div>\n" +
+            "                <div style=\"margin-left: 7px;float: left;width: 15px;text-align: center\">"+ jieguo1 +"</div>\n" +
+            "                <div style=\"margin-left: 7px; float: left;width: 40px;text-align: center\">"+ zhuangdui1 +"</div>\n" +
+            "                <div style=\"margin-left: 7px; float: left;width: 40px;text-align: center\">"+ xiandui1 +"</div>\n" +
+            "                <div style=\"margin-left: 7px;float: left;width: 7px;text-align: center\">|</div>\n" +
+            "                <div style=\"float: left;width: 20px;text-align: center;height: 21px;\">闲:</div>\n" +
+            "                <div style=\"float: left;width: 15px;text-align: center;height: 21px;\">"+ xiandian +"</div>\n" +
+            "                <div style=\"margin-left: 7px;float: left;width: 15px;text-align: center;height: 21px;\">" + showData2(xian3) +"</div>\n" +
+            "                <div style=\"margin-left: 7px;float: left;width: 15px;text-align: center;height: 21px;\">"+ showData2(xian1) +"</div>\n" +
+            "                <div style=\"margin-left: 7px;float: left;width: 15px;text-align: center;height: 21px;\">"+ showData2(xian2) +"</div>\n" +
+            "                <div style=\"margin-left: 13px;float: left;width: 7px;text-align: center;height: 21px;\">|</div>\n" +
+            "                <div style=\"float: left;width: 20px;text-align: center;height: 21px;\">庄:</div>\n" +
+            "                <div style=\"float: left;width: 15px;text-align: center;height: 21px;\">"+ zhuangdian +"</div>\n" +
+            "                <div style=\"margin-left: 7px;float: left;width: 15px;text-align: center;height: 21px;\">"+ showData2(zhuang3) +"</div>\n" +
+            "                <div style=\"margin-left: 7px;float: left;width: 15px;text-align: center;height: 21px;\">"+ showData2(zhuang1) +"</div>\n" +
+            "                <div style=\"margin-left: 7px;float: left;width: 15px;text-align: center;height: 21px;\">"+ showData2(zhuang2) +"</div>\n" +
             "            </li></ul>");
+        document.getElementById("lists").scrollTop =  document.getElementById("lists").scrollHeight;
     }
     $.post("submitDate",{
             xian1:xian1,
@@ -1007,4 +1011,14 @@ function hiddenTotal() {
     $("#qie8").css("visibility","hidden");
     $("#qie9").css("visibility","hidden");
     $("#qie10").css("visibility","hidden");
+}
+
+function wenlu(type) {
+    if (type == 1) {
+        //庄问
+
+    } else if (type == 2) {
+        //闲问
+
+    }
 }

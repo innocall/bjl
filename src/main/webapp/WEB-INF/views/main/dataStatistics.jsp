@@ -58,6 +58,7 @@
             <img id="zhuang2" src="" width="50px;" style="position: relative;top: 50px;left: 20px;visibility:hidden;">
             <img id="zhuang3" src="" width="50px;" style="position: relative;top: 35px;left: 45px;transform: rotate(90deg);visibility:hidden;">
             <span id="zhuang" style="background: #333;font-size: 30px;padding: 2px;width:27px;font-weight: 600;left: 270px;top: 155px;position: absolute;color: #fff;visibility:hidden;text-align: center">9</span>
+            <div id="jieshu" style="width: 30px;height: 40px;background: red;position: absolute;top: 159px;left: 153px;visibility:hidden;"></div>
         </div>
     </div>
     <div style="width: 500px;position: absolute;left: 327px;">
@@ -110,26 +111,41 @@
         </div>
     </div>
 
-    <div style="position: absolute;left:650px;top:45px;width: 430px;height: 200px;overflow-y: auto; border: 2px solid #3366cc;font-size: 16px;color: #3366cc;">
+    <div style="position: absolute;left:330px;top:220px;width: 430px;">
+        <button style="font-size: 16px;padding: 3px;margin-left: 13px;margin-top: -30px;" onclick="wenlu(1);">
+            <div class="dulu" style="width: 12px;height: 12px;border: 2px solid #ff4545;border-radius: 12px;float: left;margin-top: 3px;"></div>
+            <div class="dulu" style="width: 16px;height: 16px;background-color:#ff4545;border-radius: 20px;float: left;margin-left: 6px;margin-top: 3px;"></div>
+            <img class="dulu" src="../../image/zhuanghong.png" width="14px;" style="float: left;margin-left: 6px;margin-top: 3px;">
+            <span style="margin-left: 6px;">庄问路</span>
+        </button>
+        <button style="font-size: 16px;padding: 3px;margin-left: 13px;margin-top: -30px;" onclick="wenlu(2);">
+            <div class="dulu" style="width: 12px;height: 12px;border: 2px solid #0c41ff;border-radius: 12px;float: left;margin-top: 3px;"></div>
+            <div class="dulu" style="width: 16px;height: 16px;background-color:#0c41ff;border-radius: 20px;float: left;margin-left: 6px;margin-top: 3px;"></div>
+            <img class="dulu" src="../../image/xianlan.png" width="14px;" style="float: left;margin-left: 6px;margin-top: 3px;">
+            <span style="margin-left: 6px;"> 闲问路</span>
+        </button>
+    </div>
+
+    <div id="lists" style="position: absolute;left:650px;top:45px;width: 430px;height: 200px;overflow-y: auto; border: 2px solid #3366cc;font-size: 16px;color: #3366cc;">
         <ul id="uls">
-          <%--  <li>
-                <span>01</span>
-                <span style="margin-left: 7px;">庄</span>
-                <span style="margin-left: 7px";>庄对</span>
-                <span style="margin-left: 7px;">闲对</span>
-                <span style="margin-left: 7px;">|</span>
-                <span>闲:</span>
-                <span>3</span>
-                <span style="margin-left: 7px;">K</span>
-                <span style="margin-left: 7px;">3</span>
-                <span style="margin-left: 7px;">10</span>
-                <span style="margin-left: 7px;">|</span>
-                <span>庄:</span>
-                <span>3</span>
-                <span style="margin-left: 7px;">K</span>
-                <span style="margin-left: 7px;">3</span>
-                <span style="margin-left: 7px;">10</span>
-            </li>--%>
+            <li>
+               <%-- <div style="float: left;width: 20px;">01</div>
+                <div style="margin-left: 7px;float: left;width: 15px;">庄</div>
+                <div style="margin-left: 7px; float: left;width: 40px;">庄对</div>
+                <div style="margin-left: 7px;float: left;width: 40px;">闲对</div>
+                <div style="margin-left: 7px;float: left;width: 7px;">|</div>
+                <div style="float: left;width: 20px;">闲:</div>
+                <div style="float: left;width: 15px;">3</div>
+                <div style="margin-left: 7px;float: left;width: 15px;">K</div>
+                <div style="margin-left: 7px;float: left;width: 15px;">3</div>
+                <div style="margin-left: 7px;float: left;width: 15px;">10</div>
+                <div style="margin-left: 13px;float: left;width: 7px;">|</div>
+                <div style="float: left;width: 20px;">庄:</div>
+                <div style="float: left;width: 15px;">3</div>
+                <div style="margin-left: 7px;float: left;width: 15px;">K</div>
+                <div style="margin-left: 7px;float: left;width: 15px;">3</div>
+                <div style="margin-left: 7px;float: left;width: 15px;">10</div>--%>
+            </li>
         </ul>
     </div>
 
