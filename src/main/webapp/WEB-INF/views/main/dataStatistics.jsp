@@ -112,13 +112,13 @@
     </div>
 
     <div style="position: absolute;left:330px;top:220px;width: 430px;">
-        <button style="font-size: 16px;padding: 3px;margin-left: 13px;margin-top: -30px;" onclick="wenlu(1);">
+        <button style="font-size: 16px;padding: 3px;margin-left: 13px;margin-top: -30px;" onclick="wenluZhuang();">
             <div class="dulu" style="width: 12px;height: 12px;border: 2px solid #ff4545;border-radius: 12px;float: left;margin-top: 3px;"></div>
             <div class="dulu" style="width: 16px;height: 16px;background-color:#ff4545;border-radius: 20px;float: left;margin-left: 6px;margin-top: 3px;"></div>
             <img class="dulu" src="../../image/zhuanghong.png" width="14px;" style="float: left;margin-left: 6px;margin-top: 3px;">
             <span style="margin-left: 6px;">庄问路</span>
         </button>
-        <button style="font-size: 16px;padding: 3px;margin-left: 13px;margin-top: -30px;" onclick="wenlu(2);">
+        <button style="font-size: 16px;padding: 3px;margin-left: 13px;margin-top: -30px;" onclick="wenluXian();">
             <div class="dulu" style="width: 12px;height: 12px;border: 2px solid #0c41ff;border-radius: 12px;float: left;margin-top: 3px;"></div>
             <div class="dulu" style="width: 16px;height: 16px;background-color:#0c41ff;border-radius: 20px;float: left;margin-left: 6px;margin-top: 3px;"></div>
             <img class="dulu" src="../../image/xianlan.png" width="14px;" style="float: left;margin-left: 6px;margin-top: 3px;">

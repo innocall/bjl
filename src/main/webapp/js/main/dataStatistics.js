@@ -1013,31 +1013,31 @@ function hiddenTotal() {
     $("#qie10").css("visibility","hidden");
 }
 
-function wenlu(type) {
+function setArray(array) {
     var daWenLuLen=new Array();
-    daWenLuLen.concat(daLuLen);
-    if (type == 1) {
-        //庄问
-        $("#img" + (juCount + 1) +"").html("<img id='zhuwenlu' class=\"zhupanlu\" src=\"../../image/zhuang.png\" width=\"20px;\">");
-        if (up == 0) {
-            $("#dalu_" + cloun + "" + row +"").html("<div id='daluwen' class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
-        } else if (up == 1) {
-            $("#dalu_" + cloun  + "" +(row + 1) +"").html("<div id='daluwen' class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
-        } else if (up == 2) {
-            daWenLuLen[daWenLuLen.length] = row;
-            $("#dalu_" + (cloun + 1)  + "" + row +"").html("<div id='daluwen' class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
-        }
-    } else if (type == 2) {
-        //闲问
-        $("#img" + (juCount + 1) +"").html("<img id='zhuwenlu' class=\"zhupanlu\" src=\"../../image/xian.png\" width=\"20px;\">");
-        if (up == 0) {
-            $("#dalu_" + cloun  + "" + row +"").html("<div id='daluwen' class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
-        } else if (up == 1) {
-            daWenLuLen[daWenLuLen.length] = row;
-            $("#dalu_" + (cloun + 1)  + "" + row +"").html("<div id='daluwen' class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
-        } else if (up == 2) {
-            $("#dalu_" + cloun  + "" + (row + 1) +"").html("<div id='daluwen' class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
-        }
+    for (var i=0;i<array.length;i++) {
+        daWenLuLen[i] = array[i];
+    }
+    return daWenLuLen;
+}
+
+//庄问
+function wenluZhuang() {
+    hideXian();
+    var daWenLuLen = setArray(daLuLen);
+    var  wenRow = row;
+    var  wenCloun = cloun;
+    $("#img" + (juCount + 1) +"").html("<img id='zhuwenlu' class=\"zhupanlu\" src=\"../../image/zhuang.png\" width=\"20px;\">");
+    if (up == 0) {
+        $("#dalu_" + wenCloun + "" + wenRow +"").html("<div id='daluwen' class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
+    } else if (up == 1) {
+        wenRow = wenRow + 1;
+        $("#dalu_" + wenCloun  + "" +wenRow +"").html("<div id='daluwen' class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
+    } else if (up == 2) {
+        wenCloun = wenCloun + 1;
+        wenRow = 1;
+        daWenLuLen[daWenLuLen.length] = wenRow;
+        $("#dalu_" + wenCloun  + "" + wenRow +"").html("<div id='daluwen' class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
     }
     var obj=document.getElementById("zhuwenlu");
     var obj2=document.getElementById("daluwen");
@@ -1048,13 +1048,87 @@ function wenlu(type) {
     clearInterval(timer);
     timer=setInterval(function(){
         if (obj != null) {
-            obj.style.display=i++%2?"none":"block";//还是有收获的。这个写法比if..else想必简单了好多
+            obj.style.display=i++%2?"none":"block";
             if (i > 7) {
                 clearInterval(timer);
+                isClickZhuang = 0;
                 obj.parentNode.removeChild(obj);
             }
         }
     },500);
+    clearInterval(timer2);
+    timer2=setInterval(function(){
+        if (obj2 != null) {
+            obj2.style.display=j++%2?"none":"block";
+            if (j > 7) {
+                clearInterval(timer2);
+                obj2.parentNode.removeChild(obj2);
+            }
+        }
+    },500);
+    setWenLuDaYan(daWenLuLen,wenRow,wenCloun);
+    setWenLuXiaoLu(daWenLuLen,wenRow,wenCloun);
+    setWenLuZhang(daWenLuLen,wenRow,wenCloun);
+}
+
+function hideXian() {
+    var obj=document.getElementById("zhuwenluXian");
+    var obj2=document.getElementById("daluwenXian");
+    if (obj != null) {
+        obj.parentNode.removeChild(obj);
+    }
+    if (obj2 != null) {
+        obj2.parentNode.removeChild(obj2);
+    }
+}
+
+function hideZhang() {
+    var obj=document.getElementById("zhuwenlu");
+    var obj2=document.getElementById("daluwen");
+    if (obj != null) {
+        obj.parentNode.removeChild(obj);
+    }
+    if (obj2 != null) {
+        obj2.parentNode.removeChild(obj2);
+    }
+}
+
+function wenluXian() {
+    hideZhang();
+    var daWenLuLen = setArray(daLuLen);
+    var  wenRow = row;
+    var  wenCloun = cloun;
+    //闲问
+    $("#img" + (juCount + 1) +"").html("<img id='zhuwenluXian' class=\"zhupanlu\" src=\"../../image/xian.png\" width=\"20px;\">");
+    if (up == 0) {
+        $("#dalu_" + wenCloun  + "" + wenRow +"").html("<div id='daluwenXian' class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
+    } else if (up == 1) {
+        wenRow = 1;
+        wenCloun = wenCloun + 1
+        daWenLuLen[daWenLuLen.length] = wenRow;
+        $("#dalu_" + wenCloun  + "" + wenRow +"").html("<div id='daluwenXian' class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
+    } else if (up == 2) {
+        wenRow = wenRow + 1
+        $("#dalu_" + wenCloun  + "" + wenRow +"").html("<div id='daluwenXian' class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
+    }
+    var obj=document.getElementById("zhuwenluXian");
+    var obj2=document.getElementById("daluwenXian");
+    var timer=null;
+    var timer2=null;
+    var i=0;
+    var j=0;
+    clearInterval(timer);
+    timer=setInterval(function(){
+        if (obj != null) {
+            obj.style.display=i++%2?"none":"block";//还是有收获的。这个写法比if..else想必简单了好多
+            if (i > 7) {
+                clearInterval(timer);
+                isClickZhuang = 0;
+                obj.parentNode.removeChild(obj);
+            }
+        }
+    },500);
+    clearInterval(timer2);
     timer2=setInterval(function(){
         if (obj2 != null) {
             obj2.style.display=j++%2?"none":"block";//还是有收获的。这个写法比if..else想必简单了好多
@@ -1064,31 +1138,31 @@ function wenlu(type) {
             }
         }
     },500);
-    setWenLuDaYan(daWenLuLen);
-    setWenLuXiaoLu(daWenLuLen);
-    setWenLuZhang(daWenLuLen);
+    setWenLuDaYan(daWenLuLen,wenRow,wenCloun);
+    setWenLuXiaoLu(daWenLuLen,wenRow,wenCloun);
+    setWenLuZhang(daWenLuLen,wenRow,wenCloun);
 }
 
-function setWenLuZhang(daWenLuLen) {
-    if (row == 1) {
-        if (cloun > 4) {
-            var cloum1 = cloun - 1;
+function setWenLuZhang(daWenLuLen,wenRow,wenCloun) {
+    if (wenRow == 1) {
+        if (wenCloun > 4) {
+            var cloum1 = wenCloun - 1;
             var row1 = daWenLuLen[cloum1-1];
-            var cloum2 = cloun - 4;
+            var cloum2 = wenCloun - 4;
             var row2 = daWenLuLen[cloum2-1];
             if (row1 == row2) {
                 if(zhangUp == 0) {
                     $("#zhanglanglu_" + zhangCloun + "" + zhangRow +"").html("<img id='wenxiaozhang' class=\"dulu\" src=\"../../image/zhuanghong.png\" width=\"18px;\">");
                 } else if (zhangUp == 1) {
-                    $("#zhanglanglu_" + (zhangRow + 1) + "" + zhangRow +"").html("<img id='wenxiaozhang' class=\"dulu\" src=\"../../image/zhuanghong.png\" width=\"18px;\">");
+                    $("#zhanglanglu_" + zhangCloun + "" + (zhangRow + 1) +"").html("<img id='wenxiaozhang' class=\"dulu\" src=\"../../image/zhuanghong.png\" width=\"18px;\">");
                 } else if (zhangUp == 2) {
-                    $("#zhanglanglu_" + (zhangRow + 1) + "1").html("<img id='wenxiaozhang' class=\"dulu\" src=\"../../image/zhuanghong.png\" width=\"18px;\">");
+                    $("#zhanglanglu_" + (zhangCloun + 1) + "1").html("<img id='wenxiaozhang' class=\"dulu\" src=\"../../image/zhuanghong.png\" width=\"18px;\">");
                 }
             } else {
                 if(zhangUp == 0) {
                     $("#zhanglanglu_" + zhangCloun + "" + zhangRow +"").html("<img id='wenxiaozhang' class=\"dulu\" src=\"../../image/xianlan.png\" width=\"18px;\">");
                 } else if (zhangUp == 1) {
-                    $("#zhanglanglu_" + (zhangRow + 1) + "1").html("<img id='wenxiaozhang' class=\"dulu\" src=\"../../image/xianlan.png\" width=\"18px;\">");
+                    $("#zhanglanglu_" + (zhangCloun + 1) + "1").html("<img id='wenxiaozhang' class=\"dulu\" src=\"../../image/xianlan.png\" width=\"18px;\">");
                 } else if (zhangUp == 2) {
                     $("#zhanglanglu_" + zhangCloun + "" + (zhangRow + 1) +"").html("<img id='wenxiaozhang' class=\"dulu\" src=\"../../image/xianlan.png\" width=\"18px;\">");
                 }
@@ -1096,10 +1170,10 @@ function setWenLuZhang(daWenLuLen) {
         }
     } else {
         //2、大路每列的第2粒開始跟前一列比较：有成对是红笔、第一个无对是藍笔、第2个开始无对又是红笔。红笔分为3种情况，上面的第1点，称顶头红笔，上面的第2点，分为有对红笔和下空红笔
-        if (cloun > 3) {
-            var cloum1 = cloun - 3;
+        if (wenCloun > 3) {
+            var cloum1 = wenCloun - 3;
             var row1 = daWenLuLen[cloum1 - 1];  //上一列的行数
-            if (row - row1 == 1) {
+            if (wenRow - row1 == 1) {
                 if(zhangUp == 0) {
                     $("#zhanglanglu_" + zhangCloun + "" + zhangRow +"").html("<img id='wenxiaozhang' class=\"dulu\" src=\"../../image/xianlan.png\" width=\"18px;\">");
                 } else if (zhangUp == 1) {
@@ -1134,12 +1208,12 @@ function setWenLuZhang(daWenLuLen) {
     },500);
 }
 
-function setWenLuXiaoLu(daWenLuLen) {
-    if (row == 1) {
-        if (cloun > 3) {
-            var cloum1 = cloun - 1;
+function setWenLuXiaoLu(daWenLuLen,wenRow,wenCloun) {
+    if (wenRow == 1) {
+        if (wenCloun > 3) {
+            var cloum1 = wenCloun - 1;
             var row1 = daWenLuLen[cloum1-1];
-            var cloum2 = cloun - 3;
+            var cloum2 = wenCloun - 3;
             var row2 = daWenLuLen[cloum2-1];
             if (row1 == row2) {
                 if(xiaoUp == 0) {
@@ -1161,10 +1235,10 @@ function setWenLuXiaoLu(daWenLuLen) {
         }
     } else {
         //2、大路每列的第2粒開始跟前一列比较：有成对是红笔、第一个无对是藍笔、第2个开始无对又是红笔。红笔分为3种情况，上面的第1点，称顶头红笔，上面的第2点，分为有对红笔和下空红笔
-        if (cloun > 2) {
-            var cloum1 = cloun - 2;
+        if (wenCloun > 2) {
+            var cloum1 = wenCloun - 2;
             var row1 = daWenLuLen[cloum1 - 1];  //上一列的行数
-            if (row - row1 == 1) {
+            if (wenRow - row1 == 1) {
                 if(xiaoUp == 0) {
                     $("#xiaolu_" + xiaoCloun + "" + xiaoRow +"").html("<div id='wenxiaolu' class=\"dulu\" style=\"width: 14px;height: 14px;background-color:#0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
                 } else if (xiaoUp == 1) {
@@ -1199,12 +1273,12 @@ function setWenLuXiaoLu(daWenLuLen) {
     },500);
 }
 
-function setWenLuDaYan(daWenLuLen) {
-    if (row == 1) {
-        if (cloun > 2) {
-            var cloum1 = cloun - 1;
+function setWenLuDaYan(daWenLuLen,wenRow,wenCloun) {
+    if (wenRow == 1) {
+        if (wenCloun > 2) {
+            var cloum1 = wenCloun - 1;
             var row1 = daWenLuLen[cloum1-1];
-            var cloum2 = cloun - 2;
+            var cloum2 = wenCloun - 2;
             var row2 = daWenLuLen[cloum2-1];
             if (row1 == row2) {
                 if(daUp == 0) {
@@ -1226,10 +1300,10 @@ function setWenLuDaYan(daWenLuLen) {
         }
     } else {
         //2、大路每列的第2粒開始跟前一列比较：有成对是红笔、第一个无对是藍笔、第2个开始无对又是红笔。红笔分为3种情况，上面的第1点，称顶头红笔，上面的第2点，分为有对红笔和下空红笔
-        if (cloun > 1) {
-            var cloum1 = cloun - 1;
+        if (wenCloun > 1) {
+            var cloum1 = wenCloun - 1;
             var row1 = daWenLuLen[cloum1 - 1];  //上一列的行数
-            if (row - row1 == 1) {
+            if (wenRow - row1 == 1) {
                 if(daUp == 0) {
                     $("#dayanzai_" + daCloun + "" + daRow +"").html("<div id='wendayan' class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
                 } else if (daUp == 1) {
