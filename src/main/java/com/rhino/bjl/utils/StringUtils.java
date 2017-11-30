@@ -88,7 +88,21 @@ public class StringUtils {
         }else {
             return obj.toString();
         }
+    }
 
+    /**
+     * 返回小数点后2位
+     * @param i
+     * @return
+     */
+    public static float fromtFloat(float i) {
+        float num=(float)(Math.round(i*100)/100);//如果要求精确4位就*10000然后/10000
+        return num;
+    }
+
+    public static String fromtString(String i) {
+        float num=(float)(Math.round(Float.parseFloat(i)*100)/100);//如果要求精确4位就*10000然后/10000
+        return num + "";
     }
 
 }

@@ -1047,7 +1047,7 @@ Ext.onReady(function() {
                 success: function(response) {
                     if(response.status==200) {
                         Ext.Msg.alert("信息", "数据更新成功！", function() {
-                            jsonEpisData2.reload();
+                            jsonEpisData2.reload;
                             jsonUser.reload;
                             sepisodesWin3.hide();
                         });

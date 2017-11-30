@@ -630,7 +630,7 @@ function  setXiaoLu(zhuangdian,xiandian) {
                     xiaoUp = 1;
                 } else {
                     if(xiaoUp == 0) {
-                        $("#xiaolu_" + xiaoCloun + "" + xiaoRow +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;pxbackground-color:#0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
+                        $("#xiaolu_" + xiaoCloun + "" + xiaoRow +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;background-color:#0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
                     } else if (xiaoUp == 1) {
                         xiaoRow = 1;
                         xiaoCloun = xiaoCloun + 1;
@@ -1034,9 +1034,9 @@ function wenluZhuang() {
         wenRow = wenRow + 1;
         $("#dalu_" + wenCloun  + "" +wenRow +"").html("<div id='daluwen' class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
     } else if (up == 2) {
+        daWenLuLen[daWenLuLen.length] = wenRow;
         wenCloun = wenCloun + 1;
         wenRow = 1;
-        daWenLuLen[daWenLuLen.length] = wenRow;
         $("#dalu_" + wenCloun  + "" + wenRow +"").html("<div id='daluwen' class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
     }
     var obj=document.getElementById("zhuwenlu");
@@ -1096,16 +1096,16 @@ function hideZhang() {
 function wenluXian() {
     hideZhang();
     var daWenLuLen = setArray(daLuLen);
-    var  wenRow = row;
-    var  wenCloun = cloun;
+    var wenRow = row;
+    var wenCloun = cloun;
     //闲问
     $("#img" + (juCount + 1) +"").html("<img id='zhuwenluXian' class=\"zhupanlu\" src=\"../../image/xian.png\" width=\"20px;\">");
     if (up == 0) {
         $("#dalu_" + wenCloun  + "" + wenRow +"").html("<div id='daluwenXian' class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
     } else if (up == 1) {
+        daWenLuLen[daWenLuLen.length] = wenRow;
         wenRow = 1;
         wenCloun = wenCloun + 1
-        daWenLuLen[daWenLuLen.length] = wenRow;
         $("#dalu_" + wenCloun  + "" + wenRow +"").html("<div id='daluwenXian' class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
     } else if (up == 2) {
         wenRow = wenRow + 1
@@ -1225,7 +1225,7 @@ function setWenLuXiaoLu(daWenLuLen,wenRow,wenCloun) {
                 }
             } else {
                 if(xiaoUp == 0) {
-                    $("#xiaolu_" + xiaoCloun + "" + xiaoRow +"").html("<div id='wenxiaolu' class=\"dulu\" style=\"width: 14px;height: 14px;pxbackground-color:#0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
+                    $("#xiaolu_" + xiaoCloun + "" + xiaoRow +"").html("<div id='wenxiaolu' class=\"dulu\" style=\"width: 14px;height: 14px;background-color:#0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
                 } else if (xiaoUp == 1) {
                     $("#xiaolu_" + (xiaoCloun + 1) + "1").html("<div id='wenxiaolu' class=\"dulu\" style=\"width: 14px;height: 14px;background-color:#0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
                 } else if (xiaoUp == 2) {

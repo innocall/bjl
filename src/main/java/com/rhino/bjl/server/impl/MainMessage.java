@@ -26,7 +26,7 @@ public class MainMessage implements IMainMessage {
     }
 
     @Override
-    public boolean updateUserMoneyByUserId(String userId, int money) {
+    public boolean updateUserMoneyByUserId(String userId, float money) {
         HashMap<String,Object> params = new HashMap<String,Object>();
         params.put("USER_ID", userId);
         params.put("USER_MONEY", money);

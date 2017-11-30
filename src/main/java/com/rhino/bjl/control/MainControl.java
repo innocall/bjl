@@ -145,6 +145,8 @@ public class MainControl extends BaseControl {
         String zhuangdian = ParamUtils.getParameter(request, "zhuangdian", "0");
         String xiandian = ParamUtils.getParameter(request, "xiandian", "0");
         ManageUser user = (ManageUser) request.getSession().getAttribute(AppConstans.MANAGE_USER_SESSION);
+        userMoney = com.rhino.bjl.utils.StringUtils.fromtString(userMoney);
+        touzhuMoney = com.rhino.bjl.utils.StringUtils.fromtString(touzhuMoney);
         boolean isParam = true;
         //判断大局是否存在
         if (StringUtils.isBlank(roomId)) {
@@ -170,7 +172,7 @@ public class MainControl extends BaseControl {
                 msg = "保存失败";
             }
             //更新钱；
-            boolean isSucces = mainMessage.updateUserMoneyByUserId(user.getID(),Integer.parseInt(userMoney));
+            boolean isSucces = mainMessage.updateUserMoneyByUserId(user.getID(),Float.parseFloat(userMoney));
         }
         PrintWriter out = null;
         printMsgToPage(response, status, msg, out);
