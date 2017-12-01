@@ -112,7 +112,7 @@ Ext.onReady(function() {
                         editable: false,
                         style: 'font-size:15px;',
                         labelSeparator: '：',
-                        store: ['0', '1', '2', '3', '4', '5', '6',''],
+                        store: ['0', '1', '2', '3', '4', '5', '6', '7', '8',''],
                         displayField: 'category',
                         triggerAction: 'all'
                     }]
@@ -129,7 +129,7 @@ Ext.onReady(function() {
                         editable: false,
                         style: 'font-size:15px;',
                         labelSeparator: '：',
-                        store: ['0', '1', '2', '3', '4', '5', '6',''],
+                        store: ['0', '1', '2', '3', '4', '5', '6', '7', '8',''],
                         displayField: 'category',
                         triggerAction: 'all'
                     }]
@@ -146,7 +146,7 @@ Ext.onReady(function() {
                         editable: false,
                         style: 'font-size:15px;',
                         labelSeparator: '：',
-                        store: ['0', '1', '2', '3', '4', '5', '6',''],
+                        store: ['0', '1', '2', '3', '4', '5', '6', '7', '8',''],
                         displayField: 'category',
                         triggerAction: 'all'
                     }]
