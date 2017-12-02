@@ -320,7 +320,26 @@ public class MainControl extends BaseControl {
             param.put("msg", "添加失败！");
         } else {
             HashMap<String,Object> map =  mainMessage.findRoomById(roomId);
-            mainMessage.updateRoomData(map.get("MONEY") + "",juCount + "",user.getID(),map.get("ZHUANGCOUNT") + "",map.get("XIANCOUNT") + "",map.get("HECOUNT") + "",map.get("ZHUANGDUICOUNT") + "",map.get("XIANDUICOUNT") + "",roomId);
+            int zhuangCount = Integer.parseInt(map.get("ZHUANGCOUNT").toString());
+            int xianCount = Integer.parseInt(map.get("XIANCOUNT").toString());
+            int heCount = Integer.parseInt(map.get("HECOUNT").toString());
+            int zhuangDuiCount1 = Integer.parseInt(map.get("ZHUANGDUICOUNT").toString());
+            int xianDuiCount = Integer.parseInt(map.get("XIANDUICOUNT").toString());
+            if (zhuangdian > xiandian) {
+                zhuangCount = zhuangCount + 1;
+            } else if (zhuangdian == xiandian) {
+                heCount = heCount + 1;
+            } else if (zhuangdian < xiandian) {
+                xianCount = xianCount + 1;
+            }
+            if (ZHUANG1.equals(ZHUANG2) || ZHUANG2.equals(ZHUANG3) || ZHUANG1.equals(ZHUANG3)) {
+                zhuangDuiCount1 = zhuangDuiCount1 + 1;
+            }
+            if (XIAN1.equals(XIAN2) || XIAN2.equals(XIAN3) || XIAN1.equals(XIAN3)) {
+                xianDuiCount = xianDuiCount + 1;
+            }
+            mainMessage.updateRoomData(map.get("MONEY") + "",juCount + "",user.getID(),zhuangCount + "",
+                    xianCount + "",heCount + "",zhuangDuiCount1 + "",xianDuiCount + "",roomId);
             param.put("msg", "添加成功！");
             param.put("success", true);
             param.put("id",id);

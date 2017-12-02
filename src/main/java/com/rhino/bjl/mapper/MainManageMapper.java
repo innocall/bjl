@@ -88,4 +88,8 @@ public class MainManageMapper {
     public HashMap<String, Object> findRoomById(HashMap<String, Object> map) {
         return lemonDB.get("findRoomById", map);
     }
+
+    public boolean updateRoomCountData(HashMap<String, Object> map) {
+        return  lemonDB.updateDynamic("room_tbl", "ID", map);
+    }
 }

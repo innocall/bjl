@@ -283,7 +283,15 @@ Ext.onReady(function() {
         labelAlign:'right',
         labelWidth:120,
         fileUpload:true,
-        items:[{
+        items:[
+            {
+                xtype:'textfield',
+                name:'XIAN1',
+                width:200,
+                fieldLabel:'<font style="font-size: 16px;">闲牌1</font>',
+                labelSeparator:'：',
+                allowBlank:false
+            },{
                 xtype:'textfield',
                 name:'ZHUANG1',
                 width:200,
@@ -297,8 +305,15 @@ Ext.onReady(function() {
                     var redStar = document.createTextNode('   输入规则A-K');
                     font.appendChild(redStar);
                     obj.el.dom.parentNode.appendChild(font);
-                }
-            }
+                 }
+             }
+            },{
+                xtype:'textfield',
+                name:'XIAN2',
+                width:200,
+                fieldLabel:'<font style="font-size: 16px;">闲牌2</font>',
+                labelSeparator:'：',
+                allowBlank:false
             },{
                 xtype:'textfield',
                 name:'ZHUANG2',
@@ -322,20 +337,6 @@ Ext.onReady(function() {
                     }
                 }
              },{
-                xtype:'textfield',
-                name:'XIAN1',
-                width:200,
-                fieldLabel:'<font style="font-size: 16px;">闲牌1</font>',
-                labelSeparator:'：',
-                allowBlank:false
-            },{
-                xtype:'textfield',
-                name:'XIAN2',
-                width:200,
-                fieldLabel:'<font style="font-size: 16px;">闲牌2</font>',
-                labelSeparator:'：',
-                allowBlank:false
-            },{
                 xtype:'textfield',
                 name:'XIAN3',
                 width:200,

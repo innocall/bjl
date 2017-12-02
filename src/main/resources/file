@@ -20,3 +20,13 @@ AND (XIAN1%2=0 OR XIAN2%2=0 OR XIAN3%2=0 OR XIANVALUE%2=0)
 
 
 SELECT * FROM reet_tbl WHERE MATCH (XIAN1,XIAN2,XIAN3) AGAINST (3,2,10);
+
+此段查询语句返回 reet_tbl 表中 ROOMID 的重复次数（count）排名前 100 的数值。通过添加 DISTINCT 返回唯一记录。
+# 可用于查询连庄、连闲次数
+SELECT DISTINCT ROOMID, count( * ) AS count
+FROM reet_tbl WHERE ZHUANGVALUE > XIANVALUE
+GROUP BY ROOMID
+ORDER BY count DESC
+LIMIT 100
+
+

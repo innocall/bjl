@@ -55,6 +55,9 @@ public class MainMessage implements IMainMessage {
         params.put("ZHUANGDUICOUNT", zhuangDuiCount1); //庄对数量
         params.put("XIANDUICOUNT", xianDuiCount); //闲对数量
         params.put("STRARTTIME", DateUtils.getDate5()); //开始时间
+        params.put("JISHUCOUNT", "0");
+        params.put("OUSHUCOUNT", "0");
+        params.put("HESHUCOUNT", "0");
        // params.put("ENDTIME", 0); //结束时间
         if (mainManageMapper.saveRoomData(params)) {
             return id;
@@ -151,6 +154,15 @@ public class MainMessage implements IMainMessage {
         params.put("OUSHUCOUNT", oushu);
         params.put("LINGCOUNT", ling);
         if (mainManageMapper.saveReetData(params)) {
+            //更新房间的奇偶数，庄数，闲数，对数
+            HashMap<String,Object> hashMap = findRoomById(roomId);
+            jishu = Integer.parseInt(hashMap.get("JISHUCOUNT").toString()) + jishu;
+            oushu = Integer.parseInt(hashMap.get("OUSHUCOUNT").toString()) + oushu;
+            HashMap<String,Object> map = new HashMap<String, Object>();
+            map.put("JISHUCOUNT", jishu);
+            map.put("OUSHUCOUNT", oushu);
+            map.put("ID", roomId);
+            boolean isParam = mainManageMapper.updateRoomCountData(map);
             return id;
         }
         return "";
@@ -169,6 +181,9 @@ public class MainMessage implements IMainMessage {
         params.put("ZHUANGDUICOUNT", zhuangDuiCount1); //庄对数量
         params.put("XIANDUICOUNT", xianDuiCount); //闲对数量
         params.put("ENDTIME", DateUtils.getDate5()); //结束时间
+//        params.put("JISHUCOUNT", "0");
+//        params.put("OUSHUCOUNT", "0");
+//        params.put("HESHUCOUNT", "0");
         return mainManageMapper.updateRoomData(params);
     }
 
