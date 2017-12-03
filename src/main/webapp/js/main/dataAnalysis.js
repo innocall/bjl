@@ -492,64 +492,26 @@ Ext.onReady(function() {
                 return v;
             }
         }, {
-            id : 'ZHUANG1',
-            header : '庄牌1',
-            dataIndex : 'ZHUANG1',
-            sortable : true,
-            align : 'center',
-            css:'font-size:18px;',
-            width : 80,
-            menuDisabled : true,
-            renderer : function(v) {
-                var value = dateSearchForm.getForm().findField("query").getValue();
-                var substr = showData2(v);
-                if (value.indexOf(substr) >= 0){
-                    return "<font style='color: #ff4545'>" + substr +"</font>"
-                }
-                return substr;
-            }
-        }, {
-            id : 'ZHUANG2',
-            header : '庄牌2',
-            dataIndex : 'ZHUANG2',
-            sortable : true,
-            css:'font-size:18px;',
-            align : 'center',
-            width : 80,
-            menuDisabled : true,
-            renderer : function(v) {
-                var value = dateSearchForm.getForm().findField("query").getValue();
-                var substr = showData2(v);
-                if (value.indexOf(substr) >= 0){
-                    return "<font style='color: #ff4545'>" + substr +"</font>"
-                }
-                return substr;
-            }
-        }, {
-            id : 'ZHUANG3',
-            header : '庄牌3',
-            dataIndex : 'ZHUANG3',
-            sortable : true,
-            align : 'center',
-            css:'font-size:18px;',
-            width : 80,
-            menuDisabled : true,
-            renderer : function(v) {
-                if (v == '0') {
-                    return "";
-                } else {
-                    var value = dateSearchForm.getForm().findField("query").getValue();
-                    var substr = showData2(v);
-                    if (value.indexOf(substr) >= 0){
-                        return "<font style='color: #ff4545'>" + substr +"</font>"
-                    }
-                    return substr;
-                }
-            }
-        }, {
             id : 'XIAN1',
             header : '闲牌1',
             dataIndex : 'XIAN1',
+            sortable : true,
+            align : 'center',
+            css:'font-size:18px;',
+            width : 80,
+            menuDisabled : true,
+            renderer : function(v) {
+                var value = dateSearchForm.getForm().findField("query").getValue();
+                var substr = showData2(v);
+                if (value.indexOf(substr) >= 0){
+                    return "<font style='color: #ff4545'>" + substr +"</font>"
+                }
+                return substr;
+            }
+        },{
+            id : 'ZHUANG1',
+            header : '庄牌1',
+            dataIndex : 'ZHUANG1',
             sortable : true,
             align : 'center',
             css:'font-size:18px;',
@@ -580,10 +542,48 @@ Ext.onReady(function() {
                 }
                 return substr;
             }
-        }, {
+        },  {
+            id : 'ZHUANG2',
+            header : '庄牌2',
+            dataIndex : 'ZHUANG2',
+            sortable : true,
+            css:'font-size:18px;',
+            align : 'center',
+            width : 80,
+            menuDisabled : true,
+            renderer : function(v) {
+                var value = dateSearchForm.getForm().findField("query").getValue();
+                var substr = showData2(v);
+                if (value.indexOf(substr) >= 0){
+                    return "<font style='color: #ff4545'>" + substr +"</font>"
+                }
+                return substr;
+            }
+        },{
             id : 'XIAN3',
             header : '闲牌3',
             dataIndex : 'XIAN3',
+            sortable : true,
+            align : 'center',
+            css:'font-size:18px;',
+            width : 80,
+            menuDisabled : true,
+            renderer : function(v) {
+                if (v == '0') {
+                    return "";
+                } else {
+                    var value = dateSearchForm.getForm().findField("query").getValue();
+                    var substr = showData2(v);
+                    if (value.indexOf(substr) >= 0){
+                        return "<font style='color: #ff4545'>" + substr +"</font>"
+                    }
+                    return substr;
+                }
+            }
+        }, {
+            id : 'ZHUANG3',
+            header : '庄牌3',
+            dataIndex : 'ZHUANG3',
             sortable : true,
             align : 'center',
             css:'font-size:18px;',

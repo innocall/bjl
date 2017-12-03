@@ -325,6 +325,18 @@ function faPaiZhuang(xian1,zhuang1,xian2,zhuang2,xian3) {
     goGame(xian1,zhuang1,xian2,zhuang2,xian3,zhuang3);
 }
 
+/*function zhuang() {
+    goGame('12','2','12','4','','');
+}
+
+function xian() {
+    goGame('2','12','2','12','','');
+}
+
+function heco() {
+    goGame('2','2','2','2','2','2');
+}*/
+
 function goGame(xian1,zhuang1,xian2,zhuang2,xian3,zhuang3) {
     //提交数据到后台
     if (juCount < allJuCount) {
@@ -472,7 +484,7 @@ var daLuLen=new Array(); //记录大路每一列长度
  *  2、大路每列的第2粒開始跟前一列比较：有成对是红笔、第一个无对是藍笔、第2个开始无对又是红笔。
  *     红笔分为3种情况，上面的第1点，称顶头红笔，上面的第2点，分为有对红笔和下空红笔，注：此名称是我自己命名的
  */
-function  setDaLu(zhuangdian,xiandian) {
+function setDaLu(zhuangdian,xiandian) {
     if (zhuangdian > xiandian) {
         //庄赢
         if (he > 0 && row == 1) {
@@ -874,8 +886,8 @@ function goOnGame() {
 }
 
 function chongzhi(userId,money) {
-    var value = prompt('输入充值金额：', '10000');
-    if(value == ''){
+    var value = prompt('输入充值金额：', '');
+    if(value == ''||value == null){
         alert('输入为空');
         return;
     } else{
