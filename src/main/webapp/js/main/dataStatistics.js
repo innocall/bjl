@@ -53,6 +53,7 @@ function init() {
     for (var i=0;i<416;i++) {
         myArray[i] = i + 1;
     }
+    console.info(myArray.length);
     myArray = shuffleArray(myArray); //洗牌
    // alert(myArray[0]);
     //去掉首切牌10张
@@ -65,16 +66,19 @@ function init() {
         if (j == 0) {
             var index = Math.floor((Math.random() * myArray.length));
             firstQiePai = "veryhuo.com_pkp_" + myArray[index] + ".jpg"; //记录切的第一张牌
-            myArray.remove(index);
+            myArray = removArrayByIndex(myArray,index);
+           // myArray.remove(index);
         } else {
             random();
         }
     }
+    console.info(myArray.length);
     //尾切牌
     var lanrenzhijia = Math.floor(Math.random()*(120-60)+ 60);
     for (var j =0; j<lanrenzhijia;j++) {
         random();
     }
+    console.info(myArray.length);
     $("#endDown").text(lanrenzhijia);
     var index2 = Math.floor((Math.random() * allJuCountArray.length));
     allJuCount = allJuCountArray[index2];
@@ -83,26 +87,9 @@ function init() {
 
 function random() {
     var index = Math.floor((Math.random() * myArray.length));
-    myArray.remove(index);
+    myArray = removArrayByIndex(myArray,index);
+   // myArray.remove(index);
     return index;
-}
-
-/*
-* 方法:Array.remove(dx) 通过遍历,重构数组
-* 功能:删除数组元素.
-* 参数:dx删除元素的下标.
-*/
-Array.prototype.remove=function(dx)
-{
-    if(isNaN(dx)||dx>this.length){return false;}
-    for(var i=0,n=0;i<this.length;i++)
-    {
-        if(this[i]!=this[dx])
-        {
-            this[n++]=this[i]
-        }
-    }
-    this.length-=1
 }
 
 var isOne = true;
@@ -184,7 +171,8 @@ function getCount(allCount) {
 function faPai1() {
     var index = Math.floor((Math.random() * myArray.length));
     var imageName = "veryhuo.com_pkp_" + myArray[index] + ".jpg";
-    myArray.remove(index);
+    myArray = removArrayByIndex(myArray,index);
+    //myArray.remove(index);
     $("#xian1").attr("src","/bjl/image/" + imageName);
     $("#xian1").css("visibility","visible");
     var xian1 = initData(imageName); //第一张牌点数
@@ -197,7 +185,8 @@ function faPai2(xian1) {
     //庄第一张
     var index = Math.floor((Math.random() * myArray.length));
     var imageName = "veryhuo.com_pkp_" + myArray[index] + ".jpg";
-    myArray.remove(index);
+    myArray = removArrayByIndex(myArray,index);
+    //myArray.remove(index);
     $("#zhuang1").attr("src","/bjl/image/" + imageName);
     $("#zhuang1").css("visibility","visible");
     var zhuang1 = initData(imageName); //第一张牌点数
@@ -210,7 +199,8 @@ function faPai3(xian1,zhuang1) {
     //闲第二张
     var index = Math.floor((Math.random() * myArray.length));
     var imageName = "veryhuo.com_pkp_" + myArray[index] + ".jpg";
-    myArray.remove(index);
+    myArray = removArrayByIndex(myArray,index);
+    //myArray.remove(index);
     $("#xian2").attr("src","/bjl/image/" + imageName);
     $("#xian2").css("visibility","visible");
     var xian2 = initData(imageName); //第一张牌点数
@@ -223,7 +213,8 @@ function faPai4(xian1,zhuang1,xian2) {
     //庄第二张
     var index = Math.floor((Math.random() * myArray.length));
     var imageName = "veryhuo.com_pkp_" + myArray[index] + ".jpg";
-    myArray.remove(index);
+    myArray = removArrayByIndex(myArray,index);
+    //myArray.remove(index);
     $("#zhuang2").attr("src","/bjl/image/" + imageName);
     $("#zhuang2").css("visibility","visible");
     var zhuang2 = initData(imageName); //第一张牌点数
@@ -258,7 +249,8 @@ function faPai4(xian1,zhuang1,xian2) {
 function faPaiXian(xian1,zhuang1,xian2,zhuang2) {
     var index = Math.floor((Math.random() * myArray.length));
     var imageName = "veryhuo.com_pkp_" + myArray[index] + ".jpg";
-    myArray.remove(index);
+    myArray = removArrayByIndex(myArray,index);
+   // myArray.remove(index);
     $("#xian3").attr("src","/bjl/image/" + imageName);
     $("#xian3").css("visibility","visible");
     var xian3 = initData(imageName); //第一张牌点数
@@ -320,7 +312,8 @@ function faPaiXian(xian1,zhuang1,xian2,zhuang2) {
 function faPaiZhuang(xian1,zhuang1,xian2,zhuang2,xian3) {
     var index = Math.floor((Math.random() * myArray.length));
     var imageName = "veryhuo.com_pkp_" + myArray[index] + ".jpg";
-    myArray.remove(index);
+    myArray = removArrayByIndex(myArray,index);
+    //myArray.remove(index);
     $("#zhuang3").attr("src","/bjl/image/" + imageName);
     $("#zhuang3").css("visibility","visible");
     var zhuang3 = initData(imageName);
@@ -509,6 +502,18 @@ function setDaLu(zhuangdian,xiandian) {
             $("#dalu_" + cloun + "" + row +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
         } else if (up == 1) {
             row = row + 1
+            //判断下一行是否有写路
+           /* if ($("#dalu_" + cloun  + "" +row +":has(div)" ).length==0){
+                //不存在
+                if (row > 6) {
+                    $("#dalu_" + (cloun + (row - 6))  + "6").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
+                } else {
+                    $("#dalu_" + cloun  + "" +row +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
+                }
+            } else{
+                //已经写路
+                $("#dalu_" + (cloun + (6 - (row-1)))  + (row - 1) + "").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
+            }*/
             $("#dalu_" + cloun  + "" +row +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
         } else if (up == 2) {
             daLuLen[daLuLen.length] = row;
@@ -539,6 +544,18 @@ function setDaLu(zhuangdian,xiandian) {
             $("#dalu_" + cloun  + "" + row +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
         } else if (up == 2) {
             row = row + 1
+            //判断下一行是否有写路
+           /* if ($("#dalu_" + cloun  + "" +row +":has(div)" ).length==0){
+                //不存在
+                if (row > 6) {
+                    $("#dalu_" + (cloun + (row - 6))  + "6").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
+                } else {
+                    $("#dalu_" + cloun  + "" +row +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
+                }
+            } else{
+                //已经写路
+                $("#dalu_" + (cloun + (6 - (row-1)))  + (row - 1) + "").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
+            }*/
             $("#dalu_" + cloun  + "" + row +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
         }
       /*  else if (up == 3) {
@@ -832,6 +849,16 @@ function submitDate(xian1,zhuang1,xian2,zhuang2,xian3,zhuang3,userMoney,touzhuMo
             }
         }
     }
+    //记录日志
+    var str = "数组长度：" + myArray.length;
+    for(var i=0;i<myArray.length;i++) {
+        if (i == 0) {
+            str += "数组元素：";
+        } else {
+            str +=  myArray[i] + ", ";
+        }
+    }
+    console.error(str);
     if (juCount == 1) {
         $("#uls").html("<li>\n" +
             "                <div style=\"float: left;width: 20px;text-align: center;font-size: 13px;line-height: 23px;\">"+ juCount +"</div>\n" +
