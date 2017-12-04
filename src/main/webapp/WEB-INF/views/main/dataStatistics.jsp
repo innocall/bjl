@@ -19,6 +19,7 @@
     <script src="${pageContext.request.contextPath }/js/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath }/js/xmlhttp.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath }/js/main/data.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath }/js/main/gridFrom.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath }/js/main/dataStatistics.js"></script>
     <script>
         $(function () {
@@ -27,8 +28,9 @@
     </script>
 </head>
 <body style="margin: 3px;">
-    <div style="color: #3366cc;">扑克：8副&nbsp;&nbsp;共:416张&nbsp;&nbsp;
-        首切牌:<span id="startDown">10</span>张
+    <div style="color: #3366cc;">共:416张&nbsp;&nbsp;
+        首切牌:<span id="startDown">0</span>张&nbsp;&nbsp;
+        尾切牌:<span id="endDown">0</span>张
         <span style="margin-left: 12px;font-size: 18px;">
             局数:<span id="juCount" style="color: #ff4545">0</span>
             &nbsp;&nbsp;庄:<span id="zhuangCount" style="color: #ff4545">0</span>
@@ -74,7 +76,7 @@
                 <tr>
                     <th>投注金额</th>
                     <th id="touzhuMoney">0.0</th>
-                    <th></th>
+                    <th id="shuying" style="color: red;"></th>
                 </tr>
                 <tr>
                     <th>庄家抽水</th>
@@ -88,15 +90,25 @@
                 <tr style="height: 35px;">
                     <th >投注金额：</th>
                     <th>
-                        <input id="money" type="number" style="width: 120px;height: 32px;font-size: 20px;" value="0">
+                        <select id="money" style="width: 120px;height: 32px;font-size: 20px;">
+                            <option value ="50">50</option>
+                            <option value ="100">100</option>
+                            <option value="200">200</option>
+                            <option value="500">500</option>
+                            <option value="1000">1000</option>
+                            <option value="2000">2000</option>
+                            <option value="5000">5000</option>
+                            <option value="10000">10000</option>
+                        </select>
+                      <%--  <input id="money" type="number" style="width: 120px;height: 32px;font-size: 20px;" value="0">--%>
                     </th>
                 </tr>
                 <tr style="height: 35px;">
                     <th>投注选择：</th>
                     <th>
-                        <input type="radio" name="radio" value="0" onclick="getValue(this.value)">庄
-                        <input type="radio" name="radio" value="1" onclick="getValue(this.value)">闲
-                        <input type="radio" name="radio" value="2" onclick="getValue(this.value)">和
+                        <input class="radio" type="radio" name="radio" value="0">庄
+                        <input class="radio" type="radio" name="radio" value="1">闲
+                        <input class="radio" type="radio" name="radio" value="2">和
                     </th>
                     <th colspan="2">
                         <button id="touzhuId" style="font-size: 16px;padding: 3px;margin-left: 13px;margin-top: -35px;" onclick="touzhu();">确认投注</button>
@@ -144,7 +156,7 @@
         </button>-->
     </div>
 
-    <div id="lists" style="position: absolute;left:650px;top:45px;width: 430px;height: 200px;overflow-y: auto; border: 2px solid #3366cc;font-size: 16px;color: #3366cc;">
+    <div id="lists" style="position: absolute;left:650px;top:45px;width: 440px;height: 200px;overflow-y: auto; border: 2px solid #3366cc;font-size: 16px;color: #3366cc;">
         <ul id="uls">
             <li>
                <%-- <div style="float: left;width: 20px;">01</div>
@@ -293,7 +305,7 @@
     <!--大眼仔-->
     <div style="position: absolute;left:10px;top:420px;width: 370px;overflow: auto;height: 150px;">
         <div style="width: 1480px;">
-            <table class="table3">
+            <table class="table4">
                 <%
                     for (int i=1; i<75;i++) {
                 %>
@@ -316,7 +328,7 @@
     <!--小路-->
     <div style="position: absolute;left:380px;top:420px;width: 370px;overflow: auto;height: 150px;">
         <div style="width: 1480px;">
-            <table class="table3">
+            <table class="table4">
                 <%
                     for (int i=1; i<75;i++) {
                 %>
@@ -339,7 +351,7 @@
     <!--蟑螂路-->
     <div style="position: absolute;left:750px;top:420px;width: 370px;overflow: auto;height: 150px;">
         <div style="width: 1480px;">
-            <table class="table3">
+            <table class="table4">
                 <%
                     for (int i=1; i<75;i++) {
                 %>
