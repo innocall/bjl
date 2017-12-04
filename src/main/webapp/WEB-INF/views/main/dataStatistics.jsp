@@ -47,18 +47,18 @@
     <div style="width: 300px;height: 200px;border: 2px solid #3366cc;margin-top: 5px;position: absolute;">
         <div style="width: 149px;height: 100%;float: left;">
             <span style="background: #0e49e8;font-size: 30px;padding: 2px;font-weight: 600;left: 0px;top: 0px;position: absolute;color: #FFF;">闲</span>
-            <img id="xian1" src="" width="60px;" style="position: relative;top: 50px;left: 20px;visibility:hidden;">
-            <img id="xian2" src="" width="60px;" style="position: relative;top: 50px;left: 15px;visibility:hidden;">
-            <img id="xian3" src="" width="60px;" style="position: relative;top: 35px;left: 45px;transform: rotate(90deg);visibility:hidden;">
+            <img id="xian1" src="" width="60px;" style="position: relative;top: 50px;left: 25px;visibility:hidden;">
+            <img id="xian2" src="" width="60px;" style="position: relative;top: 50px;left: 20px;visibility:hidden;">
+            <img id="xian3" src="" width="60px;" style="position: relative;top: 32px;left: 45px;transform: rotate(90deg);visibility:hidden;">
             <span id="xian" style="background: #333;font-size: 30px;padding: 2px;width:27px;font-weight: 600;left: 0px;top: 155px;position: absolute;color: #fff;visibility:hidden;text-align: center">9</span>
         </div>
         <div style="width: 2px;height: 100%;background: #3366cc;float: left"></div>
         <div style="width: 149px;height: 100%;float: right;">
             <span id="endTime" style="background: #333;font-size: 30px;padding: 5px;font-weight: 600;left: 123px;top: 0px;position: absolute;color: #FFFFFF;display: none;width: 40px;text-align: center">30</span>
             <span style="background: #e81131;font-size: 30px;padding: 2px;font-weight: 600;left: 266px;top: 0px;position: absolute;color: #FFF;">庄</span>
-            <img id="zhuang1" src="" width="60px;" style="position: relative;top: 50px;left: 20px;visibility:hidden;">
-            <img id="zhuang2" src="" width="60px;" style="position: relative;top: 50px;left: 15px;visibility:hidden;">
-            <img id="zhuang3" src="" width="60px;" style="position: relative;top: 35px;left: 45px;transform: rotate(90deg);visibility:hidden;">
+            <img id="zhuang1" src="" width="60px;" style="position: relative;top: 50px;left: 25px;visibility:hidden;">
+            <img id="zhuang2" src="" width="60px;" style="position: relative;top: 50px;left: 20px;visibility:hidden;">
+            <img id="zhuang3" src="" width="60px;" style="position: relative;top: 32px;left: 45px;transform: rotate(90deg);visibility:hidden;">
             <span id="zhuang" style="background: #333;font-size: 30px;padding: 2px;width:27px;font-weight: 600;left: 270px;top: 155px;position: absolute;color: #fff;visibility:hidden;text-align: center">9</span>
             <div id="jieshu" style="width: 30px;height: 40px;background: red;position: absolute;top: 159px;left: 153px;visibility:hidden;"></div>
         </div>

@@ -15,7 +15,7 @@ function shuffleArray(array) {
 */
 function removArrayByIndex(array,dx) {
     if(isNaN(dx)||dx>array.length){return false;}
-    var myArray=new Array()
+    var myArray=new Array();
     for(var i=0,n=0;i<array.length;i++){
         if(i!=dx){
             myArray[n++]=array[i]
@@ -54,4 +54,32 @@ function getValue(){
         }
     }
     return str;
+}
+
+//设置结束红牌
+function downSet(myArray,index) {
+    index = myArray.length - index;
+    var array=new Array()
+    for (var j =0,i=0; j<myArray.length + 1;j++) {
+        if(index > j) {
+            array[i++] = myArray[j];
+        } else if (j == index) {
+            array[i++] = -1;
+        } else {
+            array[i++] = myArray[j - 1];
+        }
+    }
+    return array;
+}
+
+function showLog(myArray) {
+    var str = "数组长度：" + myArray.length;
+    for(var i=0;i<myArray.length;i++) {
+        if (i == 0) {
+            str += "数组元素：" + myArray[i] + ", ";
+        } else {
+            str +=  myArray[i] + ", ";
+        }
+    }
+    console.info(str);
 }

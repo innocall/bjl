@@ -15,10 +15,11 @@ var zhuangdui = 1; //庄没有对子1 ，0有对子
 //首切牌随机 8-9-10
 
 var startDown=new Array(8,9,10);
-var allJuCountArray=new Array(70,71,72,73,74,75);
-var allJuCount=66;
+// var allJuCountArray=new Array(70,71,72,73,74,75);
+ var allJuCount=75; //最多不超过75局
 var firstQiePai = "";
 var startDown1 = 0; //首切牌张数
+var isJieShu = false; //是否结束发到了红牌，true 发到了红牌，结束
 function init() {
     isStart = 0;
     isOne = true;
@@ -33,6 +34,7 @@ function init() {
     xiandui = 1;
     zhuangdui = 1;
     roomId = "";
+    isJieShu = false;
     $("#juCount").html(juCount);
     $("#zhuangCount").html(zhuangCount);
     $("#xianCount").html(xianCount);
@@ -53,8 +55,9 @@ function init() {
     for (var i=0;i<416;i++) {
         myArray[i] = i + 1;
     }
-    console.info(myArray.length);
+    showLog(myArray);
     myArray = shuffleArray(myArray); //洗牌
+    showLog(myArray);
    // alert(myArray[0]);
     //去掉首切牌10张
     //首切牌随机 8-9-10 张
@@ -62,26 +65,25 @@ function init() {
     var index = Math.floor((Math.random() * startDown.length));
     startDown1 = startDown[index];
     $("#startDown").html(startDown1);
+    //首切牌，切掉上面的几张牌
     for (var j =0; j<startDown1;j++) {
         if (j == 0) {
-            var index = Math.floor((Math.random() * myArray.length));
-            firstQiePai = "veryhuo.com_pkp_" + myArray[index] + ".jpg"; //记录切的第一张牌
-            myArray = removArrayByIndex(myArray,index);
+            //var index = Math.floor((Math.random() * myArray.length));
+            firstQiePai = "veryhuo.com_pkp_" + myArray[j] + ".jpg"; //记录切的第一张牌
            // myArray.remove(index);
-        } else {
-            random();
         }
+        myArray = removArrayByIndex(myArray,0);
+        //showLog(myArray);
     }
-    console.info(myArray.length);
+    showLog(myArray);
     //尾切牌
     var lanrenzhijia = Math.floor(Math.random()*(120-60)+ 60);
-    for (var j =0; j<lanrenzhijia;j++) {
-        random();
-    }
-    console.info(myArray.length);
+    //插入红牌
+    myArray = downSet(myArray,lanrenzhijia);
+    showLog(myArray);
     $("#endDown").text(lanrenzhijia);
-    var index2 = Math.floor((Math.random() * allJuCountArray.length));
-    allJuCount = allJuCountArray[index2];
+    //var index2 = Math.floor((Math.random() * allJuCountArray.length));
+   // allJuCount = allJuCountArray[index2];
    // $("#juCount").html(allJuCount);
 }
 
@@ -169,7 +171,13 @@ function getCount(allCount) {
  * 第一及第三张牌发给“闲家”，第二及第四张牌则发给“庄家”
  */
 function faPai1() {
-    var index = Math.floor((Math.random() * myArray.length));
+    //var index = Math.floor((Math.random() * myArray.length));
+    var index = 0;
+    if (myArray[index] == -1) {
+        isJieShu = true; //红牌
+        $("#jieshu").css("visibility","visible");
+        myArray = removArrayByIndex(myArray,index);
+    }
     var imageName = "veryhuo.com_pkp_" + myArray[index] + ".jpg";
     myArray = removArrayByIndex(myArray,index);
     //myArray.remove(index);
@@ -183,7 +191,13 @@ function faPai1() {
 
 function faPai2(xian1) {
     //庄第一张
-    var index = Math.floor((Math.random() * myArray.length));
+    //var index = Math.floor((Math.random() * myArray.length));
+    var index = 0;
+    if (myArray[index] == -1) {
+        isJieShu = true; //红牌
+        $("#jieshu").css("visibility","visible");
+        myArray = removArrayByIndex(myArray,index);
+    }
     var imageName = "veryhuo.com_pkp_" + myArray[index] + ".jpg";
     myArray = removArrayByIndex(myArray,index);
     //myArray.remove(index);
@@ -197,7 +211,13 @@ function faPai2(xian1) {
 
 function faPai3(xian1,zhuang1) {
     //闲第二张
-    var index = Math.floor((Math.random() * myArray.length));
+    //var index = Math.floor((Math.random() * myArray.length));
+    var index = 0;
+    if (myArray[index] == -1) {
+        isJieShu = true; //红牌
+        $("#jieshu").css("visibility","visible");
+        myArray = removArrayByIndex(myArray,index);
+    }
     var imageName = "veryhuo.com_pkp_" + myArray[index] + ".jpg";
     myArray = removArrayByIndex(myArray,index);
     //myArray.remove(index);
@@ -211,7 +231,13 @@ function faPai3(xian1,zhuang1) {
 
 function faPai4(xian1,zhuang1,xian2) {
     //庄第二张
-    var index = Math.floor((Math.random() * myArray.length));
+    //var index = Math.floor((Math.random() * myArray.length));
+    var index = 0;
+    if (myArray[index] == -1) {
+        isJieShu = true; //红牌
+        $("#jieshu").css("visibility","visible");
+        myArray = removArrayByIndex(myArray,index);
+    }
     var imageName = "veryhuo.com_pkp_" + myArray[index] + ".jpg";
     myArray = removArrayByIndex(myArray,index);
     //myArray.remove(index);
@@ -247,7 +273,13 @@ function faPai4(xian1,zhuang1,xian2) {
 }
 
 function faPaiXian(xian1,zhuang1,xian2,zhuang2) {
-    var index = Math.floor((Math.random() * myArray.length));
+    //var index = Math.floor((Math.random() * myArray.length));
+    var index = 0;
+    if (myArray[index] == -1) {
+        isJieShu = true; //红牌
+        $("#jieshu").css("visibility","visible");
+        myArray = removArrayByIndex(myArray,index);
+    }
     var imageName = "veryhuo.com_pkp_" + myArray[index] + ".jpg";
     myArray = removArrayByIndex(myArray,index);
    // myArray.remove(index);
@@ -310,7 +342,13 @@ function faPaiXian(xian1,zhuang1,xian2,zhuang2) {
 }
 
 function faPaiZhuang(xian1,zhuang1,xian2,zhuang2,xian3) {
-    var index = Math.floor((Math.random() * myArray.length));
+    //var index = Math.floor((Math.random() * myArray.length));
+    var index = 0;
+    if (myArray[index] == -1) {
+        isJieShu = true; //红牌
+        $("#jieshu").css("visibility","visible");
+        myArray = removArrayByIndex(myArray,index);
+    }
     var imageName = "veryhuo.com_pkp_" + myArray[index] + ".jpg";
     myArray = removArrayByIndex(myArray,index);
     //myArray.remove(index);
@@ -341,97 +379,75 @@ function heco() {
 var shuyingqian = 0; //记录输赢钱数
 function goGame(xian1,zhuang1,xian2,zhuang2,xian3,zhuang3) {
     //提交数据到后台
-    if (juCount < allJuCount) {
-        juCount = juCount + 1;
-        if (juCount == allJuCount) {
-            $("#jieshu").css("visibility","visible");
-        }
-        $("#juCount").html(juCount);
-        var zhuangdian = getCount(showData(zhuang1) + showData(zhuang2) + showData(zhuang3)); //庄点数
-        var xiandian = getCount(showData(xian1) + showData(xian2) + showData(xian3));  //闲点数
-        //设置珠盘路
-        setZhuPanLu(zhuangdian,xiandian);
-        //设置大路
-        setDaLu(zhuangdian,xiandian);
-        //设置大眼路
-        setDaYanLu(zhuangdian,xiandian);
-        //设置小路
-        setXiaoLu(zhuangdian,xiandian);
-        //设置蟑螂路
-        setZhangLangLu(zhuangdian,xiandian);
-        var userMoney =parseFloat($("#userMoney").text());
-        var touzhuMoney =parseFloat($("#touzhuMoney").text());
-        var clearMoney = parseFloat($("#clearMoney").text());
-        $("#touzhuMoney").text("0.0")
-        if (zhuangdian > xiandian) {
-            //庄赢
-            var choushui = (touzhuMoney * 0.05);
-            $("#clearMoney").html((clearMoney + choushui).toFixed(2))
-            zhuangCount = zhuangCount + 1;
-            $("#zhuangCount").html(zhuangCount);
-            $("#msg").html("庄赢，结算中");
-            if (radio == 0) {
-                shuyingqian = toDecimal(shuyingqian + (touzhuMoney - choushui));
-                $("#userMoney").text((userMoney + touzhuMoney + (touzhuMoney - choushui)).toFixed(2))
-            } else {
-                shuyingqian = toDecimal(shuyingqian - touzhuMoney);
-                $("#userMoney").text(userMoney.toFixed(2) );
-            }
-        } else if (zhuangdian < xiandian) {
-            //闲赢
-            xianCount = xianCount + 1;
-            $("#xianCount").html(xianCount);
-            $("#msg").html("闲赢，结算中");
-            if (radio == 1) {
-                shuyingqian = toDecimal(shuyingqian + touzhuMoney);
-                $("#userMoney").text((userMoney + touzhuMoney + touzhuMoney ).toFixed(2))
-            } else {
-                shuyingqian = toDecimal(shuyingqian - touzhuMoney);
-                $("#userMoney").text(userMoney.toFixed(2) );
-            }
+    juCount = juCount + 1;
+    $("#juCount").html(juCount);
+    var zhuangdian = getCount(showData(zhuang1) + showData(zhuang2) + showData(zhuang3)); //庄点数
+    var xiandian = getCount(showData(xian1) + showData(xian2) + showData(xian3));  //闲点数
+    //设置珠盘路
+    setZhuPanLu(zhuangdian,xiandian);
+    //设置大路
+    setDaLu(zhuangdian,xiandian);
+    //设置大眼路
+    setDaYanLu(zhuangdian,xiandian);
+    //设置小路
+    setXiaoLu(zhuangdian,xiandian);
+    //设置蟑螂路
+    setZhangLangLu(zhuangdian,xiandian);
+    var userMoney =parseFloat($("#userMoney").text());
+    var touzhuMoney =parseFloat($("#touzhuMoney").text());
+    var clearMoney = parseFloat($("#clearMoney").text());
+    $("#touzhuMoney").text("0.0")
+    if (zhuangdian > xiandian) {
+        //庄赢
+        var choushui = (touzhuMoney * 0.05);
+        $("#clearMoney").html((clearMoney + choushui).toFixed(2))
+        zhuangCount = zhuangCount + 1;
+        $("#zhuangCount").html(zhuangCount);
+        $("#msg").html("庄赢，结算中");
+        if (radio == 0) {
+            shuyingqian = toDecimal(shuyingqian + (touzhuMoney - choushui));
+            $("#userMoney").text((userMoney + touzhuMoney + (touzhuMoney - choushui)).toFixed(2))
         } else {
-            //和
-            heCount = heCount + 1;
-            $("#heCount").html(heCount);
-            $("#msg").html("和，结算中");
-            if (radio == 2) {
-                shuyingqian = toDecimal(shuyingqian + touzhuMoney);
-                $("#userMoney").text((userMoney + touzhuMoney + touzhuMoney ).toFixed(2))
-            } else {
-                shuyingqian = toDecimal(shuyingqian - touzhuMoney);
-                $("#userMoney").text(userMoney .toFixed(2) );
-            }
+            shuyingqian = toDecimal(shuyingqian - touzhuMoney);
+            $("#userMoney").text(userMoney.toFixed(2) );
         }
-        if (zhuangdui == 0) {
-            zhuangDuiCount1 = zhuangDuiCount1 + 1;
-            $("#zhuangDuiCount").html(zhuangDuiCount1);
-            zhuangdui = 1;
+    } else if (zhuangdian < xiandian) {
+        //闲赢
+        xianCount = xianCount + 1;
+        $("#xianCount").html(xianCount);
+        $("#msg").html("闲赢，结算中");
+        if (radio == 1) {
+            shuyingqian = toDecimal(shuyingqian + touzhuMoney);
+            $("#userMoney").text((userMoney + touzhuMoney + touzhuMoney ).toFixed(2))
+        } else {
+            shuyingqian = toDecimal(shuyingqian - touzhuMoney);
+            $("#userMoney").text(userMoney.toFixed(2) );
         }
-        if (xiandui == 0) {
-            xianDuiCount1 = xianDuiCount1 + 1;
-            $("#xianDuiCount").html(xianDuiCount1);
-            xiandui = 1;
-        }
-        $("#shuying").html(shuyingqian);
-        submitDate(xian1,zhuang1,xian2,zhuang2,xian3,zhuang3,userMoney,touzhuMoney,zhuangdian,xiandian);
     } else {
-        //新的一大局
-        $("#msg").html("游戏结束");
-        $("#msg").css("display","initial");
-        /*cloun = 1;//记录大路到第几列
-        row = 1; //记录大路到第几行
-        up = 0;  //记录上一局是 1 庄 2 闲 3 和
-        he = 0; //记录和的条数
-        $(".dulu").remove();
-        myArray.splice(0,myArray.length);//清空数组
-        init();
-        $("#startBut").html("开始游戏");
-        $("#endTime").html(time);
-        $("#endTime").css("display","block");
-        $("#msg").html("游戏结束");
-        $("#msg").css("display","initial");
-        $("#touzhuId").removeAttr("disabled");*/
+        //和
+        heCount = heCount + 1;
+        $("#heCount").html(heCount);
+        $("#msg").html("和，结算中");
+        if (radio == 2) {
+            shuyingqian = toDecimal(shuyingqian + touzhuMoney);
+            $("#userMoney").text((userMoney + touzhuMoney + touzhuMoney ).toFixed(2))
+        } else {
+            shuyingqian = toDecimal(shuyingqian - touzhuMoney);
+            $("#userMoney").text(userMoney .toFixed(2) );
+        }
     }
+    if (zhuangdui == 0) {
+        zhuangDuiCount1 = zhuangDuiCount1 + 1;
+        $("#zhuangDuiCount").html(zhuangDuiCount1);
+        zhuangdui = 1;
+    }
+    if (xiandui == 0) {
+        xianDuiCount1 = xianDuiCount1 + 1;
+        $("#xianDuiCount").html(xianDuiCount1);
+        xiandui = 1;
+    }
+    $("#shuying").html(shuyingqian);
+    submitDate(xian1,zhuang1,xian2,zhuang2,xian3,zhuang3,userMoney,touzhuMoney,zhuangdian,xiandian);
 }
 
 function setZhuPanLu(zhuangdian,xiandian) {
@@ -850,15 +866,7 @@ function submitDate(xian1,zhuang1,xian2,zhuang2,xian3,zhuang3,userMoney,touzhuMo
         }
     }
     //记录日志
-    var str = "数组长度：" + myArray.length;
-    for(var i=0;i<myArray.length;i++) {
-        if (i == 0) {
-            str += "数组元素：";
-        } else {
-            str +=  myArray[i] + ", ";
-        }
-    }
-    console.error(str);
+    showLog(myArray);
     if (juCount == 1) {
         $("#uls").html("<li>\n" +
             "                <div style=\"float: left;width: 20px;text-align: center;font-size: 13px;line-height: 23px;\">"+ juCount +"</div>\n" +
@@ -927,7 +935,12 @@ function submitDate(xian1,zhuang1,xian2,zhuang2,xian3,zhuang3,userMoney,touzhuMo
             if(status == 200) {
                 roomId = obj.msg;
                // alert(obj.msg);
-                setTimeout(function() {goOnGame() },5000);
+                if (juCount < allJuCount && !isJieShu) {
+                    setTimeout(function() {goOnGame() },5000);
+                } else {
+                    $("#msg").html("游戏结束");
+                    $("#msg").css("display","initial");
+                }
             } else {
                 alert("游戏保存失败，请刷新页面重试");
             }
