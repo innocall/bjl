@@ -123,7 +123,7 @@
     </div>
 
     <div style="position: absolute;left:380px;top:270px;width: 430px;">
-        <button style="font-size: 16px;padding: 3px;margin-left: 13px;margin-top: -30px;" onclick="wenluZhuang();">
+        <!--<button style="font-size: 16px;padding: 3px;margin-left: 13px;margin-top: -30px;" onclick="wenluZhuang();">
             <div class="dulu1" style="width: 12px;height: 12px;border: 2px solid #ff4545;border-radius: 12px;float: left;margin-top: 3px;"></div>
             <div class="dulu2" style="width: 16px;height: 16px;background-color:#ff4545;border-radius: 20px;float: left;margin-left: 6px;margin-top: 3px;"></div>
             <img class="dulu3" src="../../image/zhuanghong.png" width="14px;" style="float: left;margin-left: 6px;margin-top: 3px;">
@@ -134,8 +134,8 @@
             <div class="dulu5" style="width: 16px;height: 16px;background-color:#0c41ff;border-radius: 20px;float: left;margin-left: 6px;margin-top: 3px;"></div>
             <img class="dulu6" src="../../image/xianlan.png" width="14px;" style="float: left;margin-left: 6px;margin-top: 3px;">
             <span style="margin-left: 6px;"> 闲问路</span>
-        </button>
-       <!-- <button style="font-size: 16px;padding: 3px;margin-left: 13px;margin-top: -30px;" onclick="zhuang();">
+        </button>-->
+        <button style="font-size: 16px;padding: 3px;margin-left: 13px;margin-top: -30px;" onclick="zhuang();">
             <div class="dulu" style="width: 12px;height: 12px;border: 2px solid #ff4545;border-radius: 12px;float: left;margin-top: 3px;"></div>
             <div class="dulu" style="width: 16px;height: 16px;background-color:#ff4545;border-radius: 20px;float: left;margin-left: 6px;margin-top: 3px;"></div>
             <img class="dulu" src="../../image/zhuanghong.png" width="14px;" style="float: left;margin-left: 6px;margin-top: 3px;">
@@ -152,7 +152,7 @@
             <div class="dulu" style="width: 16px;height: 16px;background-color:#0c41ff;border-radius: 20px;float: left;margin-left: 6px;margin-top: 3px;"></div>
             <img class="dulu" src="../../image/xianlan.png" width="14px;" style="float: left;margin-left: 6px;margin-top: 3px;">
             <span style="margin-left: 6px;"> 和</span>
-        </button>-->
+        </button>
     </div>
 
     <div id="lists" style="position: absolute;left:680px;top:45px;width: 440px;height: 200px;overflow-y: auto; border: 2px solid #3366cc;font-size: 16px;color: #3366cc;">
@@ -184,7 +184,7 @@
 
     <!--大路-->
     <div style="position: absolute;left:10px;top:300px;width: 730px;overflow: auto;height: 182px;">
-        <div style="width: 1480px;">
+        <div id="daluId" style="width: 1480px;">
             <table class="table3">
                 <%
                      for (int i=1; i<75;i++) {

@@ -42,6 +42,8 @@ function init() {
     isJieShu = false;
     cloun = 1;//记录大路到第几列
     row = 1; //记录大路到第几行
+    cloun1 = 1;
+    row1 = 1;
     up = 0;  //记录上一局是 1 庄 2 闲 3 和
     he = 0; //记录和的条数
     daCloun = 1;//记录大眼路到第几列
@@ -59,6 +61,7 @@ function init() {
     myArray = [];
     $("#uls").empty();
     $("#juCount").children("li").remove();
+    $(".delUL").remove();
     $("#zhuangCount").html(zhuangCount);
     $("#xianCount").html(xianCount);
     $("#heCount").html(heCount);
@@ -387,7 +390,7 @@ function faPaiZhuang(xian1,zhuang1,xian2,zhuang2,xian3) {
     goGame(xian1,zhuang1,xian2,zhuang2,xian3,zhuang3);
 }
 
-/*function zhuang() {
+function zhuang() {
     goGame('12','2','12','4','','');
 }
 
@@ -397,7 +400,7 @@ function xian() {
 
 function heco() {
     goGame('2','2','2','2','2','2');
-}*/
+}
 
 function goGame(xian1,zhuang1,xian2,zhuang2,xian3,zhuang3) {
     //提交数据到后台
@@ -421,12 +424,12 @@ function goGame(xian1,zhuang1,xian2,zhuang2,xian3,zhuang3) {
     $("#touzhuMoney").text("0.0")
     if (zhuangdian > xiandian) {
         //庄赢
-        var choushui = (touzhuMoney * 0.05);
-        $("#clearMoney").html((clearMoney + choushui).toFixed(2))
         zhuangCount = zhuangCount + 1;
         $("#zhuangCount").html(zhuangCount);
         $("#msg").html("庄赢，结算中");
         if (radio == 0) {
+            var choushui = (touzhuMoney * 0.05);
+            $("#clearMoney").html((clearMoney + choushui).toFixed(2))
             shuyingqian = toDecimal(shuyingqian + (touzhuMoney - choushui));
             $("#userMoney").text((userMoney + touzhuMoney + (touzhuMoney - choushui)).toFixed(2))
         } else {
@@ -469,7 +472,7 @@ function goGame(xian1,zhuang1,xian2,zhuang2,xian3,zhuang3) {
         xiandui = 1;
     }
     $("#shuying").html(shuyingqian);
-    submitDate(xian1,zhuang1,xian2,zhuang2,xian3,zhuang3,userMoney,touzhuMoney,zhuangdian,xiandian);
+    //submitDate(xian1,zhuang1,xian2,zhuang2,xian3,zhuang3,userMoney,touzhuMoney,zhuangdian,xiandian);
 }
 
 function setZhuPanLu(zhuangdian,xiandian) {
@@ -534,6 +537,7 @@ var row1 = 1;
  *  2、大路每列的第2粒開始跟前一列比较：有成对是红笔、第一个无对是藍笔、第2个开始无对又是红笔。
  *     红笔分为3种情况，上面的第1点，称顶头红笔，上面的第2点，分为有对红笔和下空红笔，注：此名称是我自己命名的
  */
+var rows = 1;
 function setDaLu(zhuangdian,xiandian) {
     if (zhuangdian > xiandian) {
         //庄赢
@@ -541,38 +545,40 @@ function setDaLu(zhuangdian,xiandian) {
             $("#dalu_" + cloun1 + "" + row1 +"").children("div").html(he);
         }
         if (up == 0) {
+            rows = 1;
             $("#dalu_" + cloun1 + "" + row1 +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
         } else if (up == 1) {
             row = row + 1
             row1 = row1 + 1
             //判断下一行是否有写路
-           /* if ($("#dalu_" + cloun  + "" +row +":has(div)" ).length==0){
-                //不存在
-                if (row > 6) {
-                    $("#dalu_" + (cloun + (row - 6))  + "6").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
-                } else {
-                    $("#dalu_" + cloun  + "" +row +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
-                }
-            } else{
+            if (!($("#dalu_" + cloun1  + "" +row1 +":has(div)" ).length==0) && rows == 1){
                 //已经写路
-                $("#dalu_" + (cloun + (6 - (row-1)))  + (row - 1) + "").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
-            }*/
-            $("#dalu_" + cloun1  + "" +row1 +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
+                rows = row1 - 1;
+            }
+            if (rows != 1) {
+                cloun1 = cloun + (row - rows);
+                $("#dalu_" + cloun1  + rows + "").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
+            } else {
+                //不存在
+                if (row1 > 6) {
+                    cloun1 = cloun + (row - 6)
+                    $("#dalu_" + cloun1  + "6").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
+                } else {
+                    $("#dalu_" + cloun1  + "" +row1 +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
+                }
+            }
+            //$("#dalu_" + cloun1  + "" +row1 +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
         } else if (up == 2) {
+            rows = 1;
             daLuLen[daLuLen.length] = row;
             he = 0;
             row = 1;
             row1 = 1;
+            cloun1 = cloun
             cloun = cloun + 1
             cloun1 = cloun1 + 1
-            $("#dalu_" + cloun1  + "" + row1 +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
-        }
-       /* else if (up == 3) {
-            daLuLen[daLuLen.length] = row;
-            row = 1;
-            cloun = cloun + 1
             $("#dalu_" + cloun  + "" + row +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
-        }*/
+        }
         up = 1;
     } else if (zhuangdian < xiandian) {
         //闲赢
@@ -580,44 +586,51 @@ function setDaLu(zhuangdian,xiandian) {
             $("#dalu_" + cloun1 + "" + row1 +"").children("div").html(he);
         }
         if (up == 0) {
-            $("#dalu_" + cloun1  + "" + row1 +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
+            rows = 1;
+            $("#dalu_" + cloun  + "" + row +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
         } else if (up == 1) {
+            rows = 1;
             daLuLen[daLuLen.length] = row;
             he = 0;
             row = 1;
             row1 = 1;
+            cloun1 = cloun;
             cloun = cloun + 1
             cloun1 = cloun1 + 1
-            $("#dalu_" + cloun1  + "" + row1 +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
+            $("#dalu_" + cloun  + "" + row +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
         } else if (up == 2) {
             row = row + 1
             row1 = row1 + 1
             //判断下一行是否有写路
-           /* if ($("#dalu_" + cloun  + "" +row +":has(div)" ).length==0){
-                //不存在
-                if (row > 6) {
-                    $("#dalu_" + (cloun + (row - 6))  + "6").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
-                } else {
-                    $("#dalu_" + cloun  + "" +row +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
-                }
-            } else{
+            if (!($("#dalu_" + cloun1  + "" +row1 +":has(div)" ).length==0) && rows == 1){
                 //已经写路
-                $("#dalu_" + (cloun + (6 - (row-1)))  + (row - 1) + "").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
-            }*/
-            $("#dalu_" + cloun1  + "" + row1 +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
+                rows = row1 - 1;
+            }
+            if (rows != 1) {
+                cloun1 = cloun + (row - rows);
+                $("#dalu_" + cloun1  + rows + "").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
+            } else {
+                //不存在
+                if (row1 > 6) {
+                    cloun1 = cloun + (row - 6)
+                    $("#dalu_" + cloun1  + "6").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
+                } else {
+                    $("#dalu_" + cloun1  + "" +row1 +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
+                }
+            }
+            //$("#dalu_" + cloun1  + "" + row1 +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
         }
-      /*  else if (up == 3) {
-            daLuLen[daLuLen.length] = row;
-            row = 1;
-            cloun = cloun + 1
-            $("#dalu_" + cloun  + "" + row +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
-        }*/
         up = 2;
     } else {
         //和
         he = he + 1;
         if (up != 0) {
-            $("#dalu_" + cloun1 + "" + row1 +"").children("div").html(he);
+            if (rows == 1) {
+                $("#dalu_" + cloun1 + "" + row1 +"").children("div").html(he);
+            } else {
+                $("#dalu_" + cloun1 + "" + rows +"").children("div").html(he);
+            }
+
         }
        // up = 3;
     }
@@ -919,7 +932,7 @@ function submitDate(xian1,zhuang1,xian2,zhuang2,xian3,zhuang3,userMoney,touzhuMo
             "                <div style=\"margin-left: 9px;float: left;width: 15px;text-align: center;height: 21px;\">"+ ying +"</div>\n" +
             "            </li>");
     } else {
-        $("ul:last").after("<ul style=\"clear: both\"><li>\n" +
+        $("ul:last").after("<ul class='delUl' style=\"clear: both\"><li>\n" +
             "                <div style=\"float: left;width: 20px;text-align: center;font-size: 13px;line-height: 23px;\">"+ juCount +"</div>\n" +
             "                <div style=\"margin-left: 7px;float: left;width: 15px;text-align: center\">"+ jieguo1 +"</div>\n" +
             "                <div style=\"margin-left: 7px; float: left;width: 40px;text-align: center\">"+ zhuangdui1 +"</div>\n" +
