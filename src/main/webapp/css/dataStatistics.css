@@ -44,8 +44,9 @@ th, td {
     font: 16px/20px "微软雅黑";
     color: #3366cc;
     text-align: center;
-    width: 22px;
-    height: 22px;
+    width: 26px;
+    height: 26px;
+    min-width: 26px;
     border: 2px solid #3366cc;
 }
 

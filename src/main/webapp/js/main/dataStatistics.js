@@ -20,6 +20,11 @@ var startDown=new Array(8,9,10);
 var firstQiePai = "";
 var startDown1 = 0; //首切牌张数
 var isJieShu = false; //是否结束发到了红牌，true 发到了红牌，结束
+var isOne = true;
+var shuyingqian = 0; //记录输赢钱数
+var radio = -1;
+var roomId='';
+var daLuLen=new Array(); //记录大路每一列长度
 function init() {
     isStart = 0;
     isOne = true;
@@ -35,13 +40,32 @@ function init() {
     zhuangdui = 1;
     roomId = "";
     isJieShu = false;
-    $("#juCount").html(juCount);
+    cloun = 1;//记录大路到第几列
+    row = 1; //记录大路到第几行
+    up = 0;  //记录上一局是 1 庄 2 闲 3 和
+    he = 0; //记录和的条数
+    daCloun = 1;//记录大眼路到第几列
+    daRow = 1; //记录大眼路到第几行
+    daUp = 0; //记录大眼路上一个颜色 0 第一次写，1 红色 2蓝色
+    xiaoCloun = 1;//记录小路到第几列
+    xiaoRow = 1; //记录小路到第几行
+    xiaoUp = 0; //记录小路上一个颜色 0 第一次写，1 红色 2蓝色
+    zhangCloun = 1;//记录小路到第几列
+    zhangRow = 1; //记录小路到第几行
+    zhangUp = 0; //记录小路上一个颜色 0 第一次写，1 红色 2蓝色
+    radio = -1;
+    roomId = '';
+    daLuLen = [];
+    myArray = [];
+    $("#uls").empty();
+    $("#juCount").children("li").remove();
     $("#zhuangCount").html(zhuangCount);
     $("#xianCount").html(xianCount);
     $("#heCount").html(heCount);
     $("#zhuangDuiCount").html(zhuangDuiCount1);
     $("#xianDuiCount").html(xianDuiCount1);
     $(".zhupanlu").remove();
+    $(".dulu").remove();
     $("#xian").css("visibility","hidden");
     $("#xian1").css("visibility","hidden");
     $("#xian2").css("visibility","hidden");
@@ -50,6 +74,7 @@ function init() {
     $("#zhuang1").css("visibility","hidden");
     $("#zhuang2").css("visibility","hidden");
     $("#zhuang3").css("visibility","hidden");
+    $("#jieshu").css("visibility","hidden");
 
     //初始化扑克数组
     for (var i=0;i<416;i++) {
@@ -93,8 +118,6 @@ function random() {
    // myArray.remove(index);
     return index;
 }
-
-var isOne = true;
 
 function startGame() {
     if (isStart == 0) {
@@ -376,7 +399,6 @@ function heco() {
     goGame('2','2','2','2','2','2');
 }*/
 
-var shuyingqian = 0; //记录输赢钱数
 function goGame(xian1,zhuang1,xian2,zhuang2,xian3,zhuang3) {
     //提交数据到后台
     juCount = juCount + 1;
@@ -501,7 +523,11 @@ var cloun = 1;//记录大路到第几列
 var row = 1; //记录大路到第几行
 var up = 0;  //记录上一局是 1 庄 2 闲 3 和
 var he = 0; //记录和的条数
-var daLuLen=new Array(); //记录大路每一列长度
+
+//大路走向，控制转弯
+var cloun1 = 1;
+var row1 = 1;
+
 /**
  * 大眼路规则
  *  1、大路每列的第1粒：比较前面两列的个数，前面两列齐脚是红笔，前面两列不齐脚是蓝笔。
@@ -512,12 +538,13 @@ function setDaLu(zhuangdian,xiandian) {
     if (zhuangdian > xiandian) {
         //庄赢
         if (he > 0 && row == 1) {
-            $("#dalu_" + cloun + "" + row +"").children("div").html(he);
+            $("#dalu_" + cloun1 + "" + row1 +"").children("div").html(he);
         }
         if (up == 0) {
-            $("#dalu_" + cloun + "" + row +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
+            $("#dalu_" + cloun1 + "" + row1 +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
         } else if (up == 1) {
             row = row + 1
+            row1 = row1 + 1
             //判断下一行是否有写路
            /* if ($("#dalu_" + cloun  + "" +row +":has(div)" ).length==0){
                 //不存在
@@ -530,13 +557,15 @@ function setDaLu(zhuangdian,xiandian) {
                 //已经写路
                 $("#dalu_" + (cloun + (6 - (row-1)))  + (row - 1) + "").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
             }*/
-            $("#dalu_" + cloun  + "" +row +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
+            $("#dalu_" + cloun1  + "" +row1 +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
         } else if (up == 2) {
             daLuLen[daLuLen.length] = row;
             he = 0;
             row = 1;
+            row1 = 1;
             cloun = cloun + 1
-            $("#dalu_" + cloun  + "" + row +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
+            cloun1 = cloun1 + 1
+            $("#dalu_" + cloun1  + "" + row1 +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #ff4545;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
         }
        /* else if (up == 3) {
             daLuLen[daLuLen.length] = row;
@@ -548,18 +577,21 @@ function setDaLu(zhuangdian,xiandian) {
     } else if (zhuangdian < xiandian) {
         //闲赢
         if (he > 0 && row == 1) {
-            $("#dalu_" + cloun + "" + row +"").children("div").html(he);
+            $("#dalu_" + cloun1 + "" + row1 +"").children("div").html(he);
         }
         if (up == 0) {
-            $("#dalu_" + cloun  + "" + row +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
+            $("#dalu_" + cloun1  + "" + row1 +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
         } else if (up == 1) {
             daLuLen[daLuLen.length] = row;
             he = 0;
             row = 1;
+            row1 = 1;
             cloun = cloun + 1
-            $("#dalu_" + cloun  + "" + row +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
+            cloun1 = cloun1 + 1
+            $("#dalu_" + cloun1  + "" + row1 +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
         } else if (up == 2) {
             row = row + 1
+            row1 = row1 + 1
             //判断下一行是否有写路
            /* if ($("#dalu_" + cloun  + "" +row +":has(div)" ).length==0){
                 //不存在
@@ -572,7 +604,7 @@ function setDaLu(zhuangdian,xiandian) {
                 //已经写路
                 $("#dalu_" + (cloun + (6 - (row-1)))  + (row - 1) + "").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
             }*/
-            $("#dalu_" + cloun  + "" + row +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
+            $("#dalu_" + cloun1  + "" + row1 +"").html("<div class=\"dulu\" style=\"width: 14px;height: 14px;border: 2px solid #0c41ff;border-radius: 20px;margin: 0 auto;line-height: 11px;\"></div>");
         }
       /*  else if (up == 3) {
             daLuLen[daLuLen.length] = row;
@@ -585,7 +617,7 @@ function setDaLu(zhuangdian,xiandian) {
         //和
         he = he + 1;
         if (up != 0) {
-            $("#dalu_" + cloun + "" + row +"").children("div").html(he);
+            $("#dalu_" + cloun1 + "" + row1 +"").children("div").html(he);
         }
        // up = 3;
     }
@@ -824,7 +856,6 @@ function  setZhangLangLu(zhuangdian,xiandian) {
  * @param userMoney
  * @param touzhuMoney
  */
-var roomId;
 function submitDate(xian1,zhuang1,xian2,zhuang2,xian3,zhuang3,userMoney,touzhuMoney,zhuangdian,xiandian) {
     //显示数据
     var zhuangdui1 = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
@@ -940,6 +971,10 @@ function submitDate(xian1,zhuang1,xian2,zhuang2,xian3,zhuang3,userMoney,touzhuMo
                 } else {
                     $("#msg").html("游戏结束");
                     $("#msg").css("display","initial");
+                    if ($("#islixu").is(':checked')) {
+                        init();
+                        startGame();//继续下一届游戏
+                    }
                 }
             } else {
                 alert("游戏保存失败，请刷新页面重试");
@@ -1006,7 +1041,6 @@ function clearMoney(userId) {
     );
 }
 
-var radio = -1;
 /**
  * 投注
  */

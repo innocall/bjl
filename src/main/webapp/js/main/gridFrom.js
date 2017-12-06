@@ -74,12 +74,12 @@ function downSet(myArray,index) {
 
 function showLog(myArray) {
     var str = "数组长度：" + myArray.length;
-    for(var i=0;i<myArray.length;i++) {
+   /* for(var i=0;i<myArray.length;i++) {
         if (i == 0) {
             str += "数组元素：" + myArray[i] + ", ";
         } else {
             str +=  myArray[i] + ", ";
         }
-    }
+    }*/
     console.info(str);
 }
