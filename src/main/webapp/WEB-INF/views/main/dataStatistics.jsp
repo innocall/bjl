@@ -306,11 +306,11 @@
     </div>
 
     <!--大眼仔-->
-    <div style="position: absolute;left:10px;top:480px;width: 370px;overflow: auto;height: 130px;overflow-y:hidden;">
+    <div style="position: absolute;left:10px;top:480px;width: 370px;overflow: auto;height: 120px;overflow-y:hidden;">
         <div style="width: 1200px;">
             <table class="table4">
                 <%
-                    for (int i=1; i<75;i++) {
+                    for (int i=1; i<7;i++) {
                 %>
                 <tr>
                     <%
@@ -329,11 +329,11 @@
     </div>
 
     <!--小路-->
-    <div style="position: absolute;left:380px;top:480px;width: 370px;overflow: auto;height: 130px;overflow-y:hidden;">
+    <div style="position: absolute;left:380px;top:480px;width: 370px;overflow: auto;height: 120px;overflow-y:hidden;">
         <div style="width: 1200px;">
             <table class="table4">
                 <%
-                    for (int i=1; i<75;i++) {
+                    for (int i=1; i<7;i++) {
                 %>
                 <tr>
                     <%
@@ -352,11 +352,11 @@
     </div>
 
     <!--蟑螂路-->
-    <div style="position: absolute;left:750px;top:480px;width: 370px;overflow: auto;height: 130px;overflow-y:hidden;">
+    <div style="position: absolute;left:750px;top:480px;width: 370px;overflow: auto;height: 120px;overflow-y:hidden;">
         <div style="width: 1200px;">
             <table class="table4">
                 <%
-                    for (int i=1; i<75;i++) {
+                    for (int i=1; i<7;i++) {
                 %>
                 <tr>
                     <%
