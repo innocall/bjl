@@ -390,7 +390,7 @@ function faPaiZhuang(xian1,zhuang1,xian2,zhuang2,xian3) {
     goGame(xian1,zhuang1,xian2,zhuang2,xian3,zhuang3);
 }
 
-function zhuang() {
+/*function zhuang() {
     goGame('12','2','12','4','','');
 }
 
@@ -400,7 +400,7 @@ function xian() {
 
 function heco() {
     goGame('2','2','2','2','2','2');
-}
+}*/
 
 function goGame(xian1,zhuang1,xian2,zhuang2,xian3,zhuang3) {
     //提交数据到后台
@@ -472,7 +472,7 @@ function goGame(xian1,zhuang1,xian2,zhuang2,xian3,zhuang3) {
         xiandui = 1;
     }
     $("#shuying").html(shuyingqian);
-    //submitDate(xian1,zhuang1,xian2,zhuang2,xian3,zhuang3,userMoney,touzhuMoney,zhuangdian,xiandian);
+    submitDate(xian1,zhuang1,xian2,zhuang2,xian3,zhuang3,userMoney,touzhuMoney,zhuangdian,xiandian);
 }
 
 function setZhuPanLu(zhuangdian,xiandian) {
@@ -638,6 +638,7 @@ function setDaLu(zhuangdian,xiandian) {
 
 var daCloun = 1;//记录大眼路到第几列
 var daRow = 1; //记录大眼路到第几行
+var daRows = 1;
 var daUp = 0; //记录大眼路上一个颜色 0 第一次写，1 红色 2蓝色
 function  setDaYanLu(zhuangdian,xiandian) {
     if (zhuangdian != xiandian) {
@@ -649,11 +650,27 @@ function  setDaYanLu(zhuangdian,xiandian) {
                 var row2 = daLuLen[cloum2-1];
                 if (row1 == row2) {
                     if(daUp == 0) {
+                        daRows = 1;
                         $("#dayanzai_" + daCloun + "" + daRow +"").html("<div class=\"dulu\" style=\"width: 10px;height: 10px;border-radius: 10px;border: 2px solid #ff4545;margin: 0 auto;line-height: 11px;\"></div>");
                     } else if (daUp == 1) {
                         daRow = daRow + 1;
-                        $("#dayanzai_" + daCloun + "" + daRow +"").html("<div class=\"dulu\" style=\"width: 10px;height: 10px;border-radius: 10px;border: 2px solid #ff4545;margin: 0 auto;line-height: 11px;\"></div>");
+                        if (!($("#dayanzai_" + daCloun  + "" +daRow +":has(div)" ).length==0) && daRows == 1){
+                            //已经写路
+                            daRows = daRow - 1;
+                        }
+                        if (daRows != 1) {
+                            $("#dayanzai_" + (daCloun + (daRow - daRows)) + "" + daRows +"").html("<div class=\"dulu\" style=\"width: 10px;height: 10px;border-radius: 10px;border: 2px solid #ff4545;margin: 0 auto;line-height: 11px;\"></div>");
+                        } else {
+                            //不存在
+                            if (daRow > 6) {
+                                $("#dayanzai_" + (daCloun + (daRow - 6)) + "6").html("<div class=\"dulu\" style=\"width: 10px;height: 10px;border-radius: 10px;border: 2px solid #ff4545;margin: 0 auto;line-height: 11px;\"></div>");
+                            } else {
+                                $("#dayanzai_" + daCloun + "" + daRow +"").html("<div class=\"dulu\" style=\"width: 10px;height: 10px;border-radius: 10px;border: 2px solid #ff4545;margin: 0 auto;line-height: 11px;\"></div>");
+                            }
+                        }
+                       // $("#dayanzai_" + daCloun + "" + daRow +"").html("<div class=\"dulu\" style=\"width: 10px;height: 10px;border-radius: 10px;border: 2px solid #ff4545;margin: 0 auto;line-height: 11px;\"></div>");
                     } else if (daUp == 2) {
+                        daRows = 1;
                         daRow = 1;
                         daCloun = daCloun + 1;
                         $("#dayanzai_" + daCloun + "" + daRow +"").html("<div class=\"dulu\" style=\"width: 10px;height: 10px;border-radius: 10px;border: 2px solid #ff4545;margin: 0 auto;line-height: 11px;\"></div>");
@@ -661,14 +678,30 @@ function  setDaYanLu(zhuangdian,xiandian) {
                     daUp = 1;
                 } else {
                     if(daUp == 0) {
+                        daRows = 1;
                         $("#dayanzai_" + daCloun + "" + daRow +"").html("<div class=\"dulu\" style=\"width: 10px;height: 10px;border-radius: 10px;border: 2px solid #0c41ff;margin: 0 auto;line-height: 11px;\"></div>");
                     } else if (daUp == 1) {
+                        daRows = 1;
                         daRow = 1;
                         daCloun = daCloun + 1;
                         $("#dayanzai_" + daCloun + "" + daRow +"").html("<div class=\"dulu\" style=\"width: 10px;height: 10px;border-radius: 10px;border: 2px solid #0c41ff;margin: 0 auto;line-height: 11px;\"></div>");
                     } else if (daUp == 2) {
                         daRow = daRow + 1;
-                        $("#dayanzai_" + daCloun + "" + daRow +"").html("<div class=\"dulu\" style=\"width: 10px;height: 10px;border-radius: 10px;border: 2px solid #0c41ff;margin: 0 auto;line-height: 11px;\"></div>");
+                        if (!($("#dayanzai_" + daCloun  + "" +daRow +":has(div)" ).length==0) && daRows == 1){
+                            //已经写路
+                            daRows = daRow - 1;
+                        }
+                        if (daRows != 1) {
+                            $("#dayanzai_" + (daCloun + (daRow - daRows)) + "" + daRows +"").html("<div class=\"dulu\" style=\"width: 10px;height: 10px;border-radius: 10px;border: 2px solid #0c41ff;margin: 0 auto;line-height: 11px;\"></div>");
+                        } else {
+                            //不存在
+                            if (daRow > 6) {
+                                $("#dayanzai_" + (daCloun + (daRow - 6)) + "6").html("<div class=\"dulu\" style=\"width: 10px;height: 10px;border-radius: 10px;border: 2px solid #0c41ff;margin: 0 auto;line-height: 11px;\"></div>");
+                            } else {
+                                $("#dayanzai_" + daCloun + "" + daRow +"").html("<div class=\"dulu\" style=\"width: 10px;height: 10px;border-radius: 10px;border: 2px solid #0c41ff;margin: 0 auto;line-height: 11px;\"></div>");
+                            }
+                        }
+                       // $("#dayanzai_" + daCloun + "" + daRow +"").html("<div class=\"dulu\" style=\"width: 10px;height: 10px;border-radius: 10px;border: 2px solid #0c41ff;margin: 0 auto;line-height: 11px;\"></div>");
                     }
                     daUp = 2;
                 }
@@ -681,24 +714,56 @@ function  setDaYanLu(zhuangdian,xiandian) {
                 //alert(row1 + ":" + row + ":" + Math.abs(row1 - row));
                 if (row - row1 == 1) {
                     if(daUp == 0) {
+                        daRows = 1;
                         $("#dayanzai_" + daCloun + "" + daRow +"").html("<div class=\"dulu\" style=\"width: 10px;height: 10px;border-radius: 10px;border: 2px solid #0c41ff;margin: 0 auto;line-height: 11px;\"></div>");
                     } else if (daUp == 1) {
+                        daRows = 1;
                         daRow = 1;
                         daCloun = daCloun + 1;
                         $("#dayanzai_" + daCloun + "" + daRow +"").html("<div class=\"dulu\" style=\"width: 10px;height: 10px;border-radius: 10px;border: 2px solid #0c41ff;margin: 0 auto;line-height: 11px;\"></div>");
                     } else if (daUp == 2) {
                         daRow = daRow + 1;
-                        $("#dayanzai_" + daCloun + "" + daRow +"").html("<div class=\"dulu\" style=\"width: 10px;height: 10px;border-radius: 10px;border: 2px solid #0c41ff;margin: 0 auto;line-height: 11px;\"></div>");
+                        if (!($("#dayanzai_" + daCloun  + "" +daRow +":has(div)" ).length==0) && daRows == 1){
+                            //已经写路
+                            daRows = daRow - 1;
+                        }
+                        if (daRows != 1) {
+                            $("#dayanzai_" + (daCloun + (daRow - daRows)) + "" + daRows +"").html("<div class=\"dulu\" style=\"width: 10px;height: 10px;border-radius: 10px;border: 2px solid #0c41ff;margin: 0 auto;line-height: 11px;\"></div>");
+                        } else {
+                            //不存在
+                            if (daRow > 6) {
+                                $("#dayanzai_" + (daCloun + (daRow - 6)) + "6").html("<div class=\"dulu\" style=\"width: 10px;height: 10px;border-radius: 10px;border: 2px solid #0c41ff;margin: 0 auto;line-height: 11px;\"></div>");
+                            } else {
+                                $("#dayanzai_" + daCloun + "" + daRow +"").html("<div class=\"dulu\" style=\"width: 10px;height: 10px;border-radius: 10px;border: 2px solid #0c41ff;margin: 0 auto;line-height: 11px;\"></div>");
+                            }
+                        }
+                        //$("#dayanzai_" + daCloun + "" + daRow +"").html("<div class=\"dulu\" style=\"width: 10px;height: 10px;border-radius: 10px;border: 2px solid #0c41ff;margin: 0 auto;line-height: 11px;\"></div>");
                     }
                     daUp = 2;
                 } else {
                     //成对，红
                     if(daUp == 0) {
+                        daRows = 1;
                         $("#dayanzai_" + daCloun + "" + daRow +"").html("<div class=\"dulu\" style=\"width: 10px;height: 10px;border-radius: 10px;border: 2px solid #ff4545;margin: 0 auto;line-height: 11px;\"></div>");
                     } else if (daUp == 1) {
                         daRow = daRow + 1;
-                        $("#dayanzai_" + daCloun + "" + daRow +"").html("<div class=\"dulu\" style=\"width: 10px;height: 10px;border-radius: 10px;border: 2px solid #ff4545;margin: 0 auto;line-height: 11px;\"></div>");
+                        if (!($("#dayanzai_" + daCloun  + "" +daRow +":has(div)" ).length==0) && daRows == 1){
+                            //已经写路
+                            daRows = daRow - 1;
+                        }
+                        if (daRows != 1) {
+                            $("#dayanzai_" + (daCloun + (daRow - daRows)) + "" + daRows +"").html("<div class=\"dulu\" style=\"width: 10px;height: 10px;border-radius: 10px;border: 2px solid #ff4545;margin: 0 auto;line-height: 11px;\"></div>");
+                        } else {
+                            //不存在
+                            if (daRow > 6) {
+                                $("#dayanzai_" + (daCloun + (daRow - 6)) + "6").html("<div class=\"dulu\" style=\"width: 10px;height: 10px;border-radius: 10px;border: 2px solid #ff4545;margin: 0 auto;line-height: 11px;\"></div>");
+                            } else {
+                                $("#dayanzai_" + daCloun + "" + daRow +"").html("<div class=\"dulu\" style=\"width: 10px;height: 10px;border-radius: 10px;border: 2px solid #ff4545;margin: 0 auto;line-height: 11px;\"></div>");
+                            }
+                        }
+                       // $("#dayanzai_" + daCloun + "" + daRow +"").html("<div class=\"dulu\" style=\"width: 10px;height: 10px;border-radius: 10px;border: 2px solid #ff4545;margin: 0 auto;line-height: 11px;\"></div>");
                     } else if (daUp == 2) {
+                        daRows = 1;
                         daRow = 1;
                         daCloun = daCloun + 1;
                         $("#dayanzai_" + daCloun + "" + daRow +"").html("<div class=\"dulu\" style=\"width: 10px;height: 10px;border-radius: 10px;border: 2px solid #ff4545;margin: 0 auto;line-height: 11px;\"></div>");
@@ -712,6 +777,7 @@ function  setDaYanLu(zhuangdian,xiandian) {
 
 var xiaoCloun = 1;//记录小路到第几列
 var xiaoRow = 1; //记录小路到第几行
+var xiaoRows = 1;
 var xiaoUp = 0; //记录小路上一个颜色 0 第一次写，1 红色 2蓝色
 function  setXiaoLu(zhuangdian,xiandian) {
     if (zhuangdian != xiandian) {
@@ -723,11 +789,27 @@ function  setXiaoLu(zhuangdian,xiandian) {
                 var row2 = daLuLen[cloum2-1];
                 if (row1 == row2) {
                     if(xiaoUp == 0) {
+                        xiaoRows = 1;
                         $("#xiaolu_" + xiaoCloun + "" + xiaoRow +"").html("<div class=\"dulu\" style=\"width: 10px;height: 10px;border-radius: 10px;background-color:#ff4545;margin: 0 auto;line-height: 11px;\"></div>");
                     } else if (xiaoUp == 1) {
                         xiaoRow = xiaoRow + 1;
-                        $("#xiaolu_" + xiaoCloun + "" + xiaoRow +"").html("<div class=\"dulu\" style=\"width: 10px;height: 10px;border-radius: 10px;background-color:#ff4545;margin: 0 auto;line-height: 11px;\"></div>");
+                        if (!($("#xiaolu_" + xiaoCloun  + "" +xiaoRow +":has(div)" ).length==0) && xiaoRows == 1){
+                            //已经写路
+                            xiaoRows = xiaoRow - 1;
+                        }
+                        if (xiaoRows != 1) {
+                            $("#xiaolu_" + (xiaoCloun + (xiaoRow - xiaoRows)) + "" + xiaoRows +"").html("<div class=\"dulu\" style=\"width: 10px;height: 10px;border-radius: 10px;background-color:#ff4545;margin: 0 auto;line-height: 11px;\"></div>");
+                        } else {
+                            //不存在
+                            if (xiaoRow > 6) {
+                                $("#xiaolu_" + (xiaoCloun + (xiaoRow - 6)) + "6").html("<div class=\"dulu\" style=\"width: 10px;height: 10px;border-radius: 10px;background-color:#ff4545;margin: 0 auto;line-height: 11px;\"></div>");
+                            } else {
+                                $("#xiaolu_" + xiaoCloun + "" + xiaoRow +"").html("<div class=\"dulu\" style=\"width: 10px;height: 10px;border-radius: 10px;background-color:#ff4545;margin: 0 auto;line-height: 11px;\"></div>");
+                            }
+                        }
+                       // $("#xiaolu_" + xiaoCloun + "" + xiaoRow +"").html("<div class=\"dulu\" style=\"width: 10px;height: 10px;border-radius: 10px;background-color:#ff4545;margin: 0 auto;line-height: 11px;\"></div>");
                     } else if (xiaoUp == 2) {
+                        xiaoRows = 1;
                         xiaoRow = 1;
                         xiaoCloun = xiaoCloun + 1;
                         $("#xiaolu_" + xiaoCloun + "" + xiaoRow +"").html("<div class=\"dulu\" style=\"width: 10px;height: 10px;border-radius: 10px;background-color:#ff4545;margin: 0 auto;line-height: 11px;\"></div>");
@@ -735,14 +817,30 @@ function  setXiaoLu(zhuangdian,xiandian) {
                     xiaoUp = 1;
                 } else {
                     if(xiaoUp == 0) {
+                        xiaoRows = 1;
                         $("#xiaolu_" + xiaoCloun + "" + xiaoRow +"").html("<div class=\"dulu\" style=\"width: 10px;height: 10px;border-radius: 10px;background-color:#0c41ff;margin: 0 auto;line-height: 11px;\"></div>");
                     } else if (xiaoUp == 1) {
+                        xiaoRows = 1;
                         xiaoRow = 1;
                         xiaoCloun = xiaoCloun + 1;
                         $("#xiaolu_" + xiaoCloun + "" + xiaoRow +"").html("<div class=\"dulu\" style=\"width: 10px;height: 10px;border-radius: 10px;background-color:#0c41ff;margin: 0 auto;line-height: 11px;\"></div>");
                     } else if (xiaoUp == 2) {
                         xiaoRow = xiaoRow + 1;
-                        $("#xiaolu_" + xiaoCloun + "" + xiaoRow +"").html("<div class=\"dulu\" style=\"width: 10px;height: 10px;border-radius: 10px;background-color:#0c41ff;margin: 0 auto;line-height: 11px;\"></div>");
+                        if (!($("#xiaolu_" + xiaoCloun  + "" +xiaoRow +":has(div)" ).length==0) && xiaoRows == 1){
+                            //已经写路
+                            xiaoRows = xiaoRow - 1;
+                        }
+                        if (xiaoRows != 1) {
+                            $("#xiaolu_" + (xiaoCloun + (xiaoRow - xiaoRows)) + "" + xiaoRows +"").html("<div class=\"dulu\" style=\"width: 10px;height: 10px;border-radius: 10px;background-color: #0c41ff;margin: 0 auto;line-height: 11px;\"></div>");
+                        } else {
+                            //不存在
+                            if (xiaoRow > 6) {
+                                $("#xiaolu_" + (xiaoCloun + (xiaoRow - 6)) + "6").html("<div class=\"dulu\" style=\"width: 10px;height: 10px;border-radius: 10px;background-color:#0c41ff;margin: 0 auto;line-height: 11px;\"></div>");
+                            } else {
+                                $("#xiaolu_" + xiaoCloun + "" + xiaoRow +"").html("<div class=\"dulu\" style=\"width: 10px;height: 10px;border-radius: 10px;background-color:#0c41ff;margin: 0 auto;line-height: 11px;\"></div>");
+                            }
+                        }
+                       // $("#xiaolu_" + xiaoCloun + "" + xiaoRow +"").html("<div class=\"dulu\" style=\"width: 10px;height: 10px;border-radius: 10px;background-color:#0c41ff;margin: 0 auto;line-height: 11px;\"></div>");
                     }
                     xiaoUp = 2;
                 }
@@ -755,24 +853,56 @@ function  setXiaoLu(zhuangdian,xiandian) {
                 //alert(row1 + ":" + row + ":" + Math.abs(row1 - row));
                 if (row - row1 == 1) {
                     if(xiaoUp == 0) {
+                        xiaoRows = 1;
                         $("#xiaolu_" + xiaoCloun + "" + xiaoRow +"").html("<div class=\"dulu\" style=\"width: 10px;height: 10px;border-radius: 10px;background-color:#0c41ff;margin: 0 auto;line-height: 11px;\"></div>");
                     } else if (xiaoUp == 1) {
+                        xiaoRows = 1;
                         xiaoRow = 1;
                         xiaoCloun = xiaoCloun + 1;
                         $("#xiaolu_" + xiaoCloun + "" + xiaoRow +"").html("<div class=\"dulu\" style=\"width: 10px;height: 10px;border-radius: 10px;background-color:#0c41ff;margin: 0 auto;line-height: 11px;\"></div>");
                     } else if (xiaoUp == 2) {
                         xiaoRow = xiaoRow + 1;
-                        $("#xiaolu_" + xiaoCloun + "" + xiaoRow +"").html("<div class=\"dulu\" style=\"width: 10px;height: 10px;border-radius: 10px;background-color:#0c41ff;margin: 0 auto;line-height: 11px;\"></div>");
+                        if (!($("#xiaolu_" + xiaoCloun  + "" +xiaoRow +":has(div)" ).length==0) && xiaoRows == 1){
+                            //已经写路
+                            xiaoRows = xiaoRow - 1;
+                        }
+                        if (xiaoRows != 1) {
+                            $("#xiaolu_" + (xiaoCloun + (xiaoRow - xiaoRows)) + "" + xiaoRows +"").html("<div class=\"dulu\" style=\"width: 10px;height: 10px;border-radius: 10px;background-color: #0c41ff;margin: 0 auto;line-height: 11px;\"></div>");
+                        } else {
+                            //不存在
+                            if (xiaoRow > 6) {
+                                $("#xiaolu_" + (xiaoCloun + (xiaoRow - 6)) + "6").html("<div class=\"dulu\" style=\"width: 10px;height: 10px;border-radius: 10px;background-color:#0c41ff;margin: 0 auto;line-height: 11px;\"></div>");
+                            } else {
+                                $("#xiaolu_" + xiaoCloun + "" + xiaoRow +"").html("<div class=\"dulu\" style=\"width: 10px;height: 10px;border-radius: 10px;background-color:#0c41ff;margin: 0 auto;line-height: 11px;\"></div>");
+                            }
+                        }
+                      //  $("#xiaolu_" + xiaoCloun + "" + xiaoRow +"").html("<div class=\"dulu\" style=\"width: 10px;height: 10px;border-radius: 10px;background-color:#0c41ff;margin: 0 auto;line-height: 11px;\"></div>");
                     }
                     xiaoUp = 2;
                 } else {
                     //成对，红
                     if(xiaoUp == 0) {
+                        xiaoRows = 1;
                         $("#xiaolu_" + xiaoCloun + "" + xiaoRow +"").html("<div class=\"dulu\" style=\"width: 10px;height: 10px;border-radius: 10px;background-color:#ff4545;margin: 0 auto;line-height: 11px;\"></div>");
                     } else if (xiaoUp == 1) {
                         xiaoRow = xiaoRow + 1;
-                        $("#xiaolu_" + xiaoCloun + "" + xiaoRow +"").html("<div class=\"dulu\" style=\"width: 10px;height: 10px;border-radius: 10px;background-color:#ff4545;margin: 0 auto;line-height: 11px;\"></div>");
+                        if (!($("#xiaolu_" + xiaoCloun  + "" +xiaoRow +":has(div)" ).length==0) && xiaoRows == 1){
+                            //已经写路
+                            xiaoRows = xiaoRow - 1;
+                        }
+                        if (xiaoRows != 1) {
+                            $("#xiaolu_" + (xiaoCloun + (xiaoRow - xiaoRows)) + "" + xiaoRows +"").html("<div class=\"dulu\" style=\"width: 10px;height: 10px;border-radius: 10px;background-color:#ff4545;margin: 0 auto;line-height: 11px;\"></div>");
+                        } else {
+                            //不存在
+                            if (xiaoRow > 6) {
+                                $("#xiaolu_" + (xiaoCloun + (xiaoRow - 6)) + "6").html("<div class=\"dulu\" style=\"width: 10px;height: 10px;border-radius: 10px;background-color:#ff4545;margin: 0 auto;line-height: 11px;\"></div>");
+                            } else {
+                                $("#xiaolu_" + xiaoCloun + "" + xiaoRow +"").html("<div class=\"dulu\" style=\"width: 10px;height: 10px;border-radius: 10px;background-color:#ff4545;margin: 0 auto;line-height: 11px;\"></div>");
+                            }
+                        }
+                       // $("#xiaolu_" + xiaoCloun + "" + xiaoRow +"").html("<div class=\"dulu\" style=\"width: 10px;height: 10px;border-radius: 10px;background-color:#ff4545;margin: 0 auto;line-height: 11px;\"></div>");
                     } else if (xiaoUp == 2) {
+                        xiaoRows = 1;
                         xiaoRow = 1;
                         xiaoCloun = xiaoCloun + 1;
                         $("#xiaolu_" + xiaoCloun + "" + xiaoRow +"").html("<div class=\"dulu\" style=\"width: 10px;height: 10px;border-radius: 10px;background-color:#ff4545;margin: 0 auto;line-height: 11px;\"></div>");
@@ -786,6 +916,7 @@ function  setXiaoLu(zhuangdian,xiandian) {
 
 var zhangCloun = 1;//记录小路到第几列
 var zhangRow = 1; //记录小路到第几行
+var zhangRows = 1;
 var zhangUp = 0; //记录小路上一个颜色 0 第一次写，1 红色 2蓝色
 function  setZhangLangLu(zhuangdian,xiandian) {
     if (zhuangdian != xiandian) {
@@ -797,11 +928,27 @@ function  setZhangLangLu(zhuangdian,xiandian) {
                 var row2 = daLuLen[cloum2-1];
                 if (row1 == row2) {
                     if(zhangUp == 0) {
+                        zhangRows = 1;
                         $("#zhanglanglu_" + zhangCloun + "" + zhangRow +"").html("<img class=\"dulu\" src=\"../../image/zhuanghong.png\" width=\"12px;\">");
                     } else if (zhangUp == 1) {
                         zhangRow = zhangRow + 1;
-                        $("#zhanglanglu_" + zhangCloun + "" + zhangRow +"").html("<img class=\"dulu\" src=\"../../image/zhuanghong.png\" width=\"12px;\">");
+                        if (!($("#zhanglanglu_" + zhangCloun  + "" +zhangRow +":has(img)" ).length==0) && zhangRows == 1){
+                            //已经写路
+                            zhangRows = zhangRow - 1;
+                        }
+                        if (zhangRows != 1) {
+                            $("#zhanglanglu_" + (zhangCloun + (zhangRow - zhangRows)) + "" + zhangRows +"").html("<img class=\"dulu\" src=\"../../image/zhuanghong.png\" width=\"12px;\">");
+                        } else {
+                            //不存在
+                            if (zhangRow > 6) {
+                                $("#zhanglanglu_" + (zhangCloun + (zhangRow - 6)) + "6").html("<img class=\"dulu\" src=\"../../image/zhuanghong.png\" width=\"12px;\">");
+                            } else {
+                                $("#zhanglanglu_" + zhangCloun + "" + zhangRow +"").html("<img class=\"dulu\" src=\"../../image/zhuanghong.png\" width=\"12px;\">");
+                            }
+                        }
+                       // $("#zhanglanglu_" + zhangCloun + "" + zhangRow +"").html("<img class=\"dulu\" src=\"../../image/zhuanghong.png\" width=\"12px;\">");
                     } else if (zhangUp == 2) {
+                        zhangRows = 1;
                         zhangRow = 1;
                         zhangCloun = zhangCloun + 1;
                         $("#zhanglanglu_" + zhangCloun + "" + zhangRow +"").html("<img class=\"dulu\" src=\"../../image/zhuanghong.png\" width=\"12px;\">");
@@ -809,14 +956,30 @@ function  setZhangLangLu(zhuangdian,xiandian) {
                     zhangUp = 1;
                 } else {
                     if(zhangUp == 0) {
+                        zhangRows = 1;
                         $("#zhanglanglu_" + zhangCloun + "" + zhangRow +"").html("<img class=\"dulu\" src=\"../../image/xianlan.png\" width=\"12px;\">");
                     } else if (zhangUp == 1) {
+                        zhangRows = 1;
                         zhangRow = 1;
                         zhangCloun = zhangCloun + 1;
                         $("#zhanglanglu_" + zhangCloun + "" + zhangRow +"").html("<img class=\"dulu\" src=\"../../image/xianlan.png\" width=\"12px;\">");
                     } else if (zhangUp == 2) {
                         zhangRow = zhangRow + 1;
-                        $("#zhanglanglu_" + zhangCloun + "" + zhangRow +"").html("<img class=\"dulu\" src=\"../../image/xianlan.png\" width=\"12px;\">");
+                        if (!($("#zhanglanglu_" + zhangCloun  + "" +zhangRow +":has(img)" ).length==0) && zhangRows == 1){
+                            //已经写路
+                            zhangRows = zhangRow - 1;
+                        }
+                        if (zhangRows != 1) {
+                            $("#zhanglanglu_" + (zhangCloun + (zhangRow - zhangRows)) + "" + zhangRows +"").html("<img class=\"dulu\" src=\"../../image/xianlan.png\" width=\"12px;\">");
+                        } else {
+                            //不存在
+                            if (zhangRow > 6) {
+                                $("#zhanglanglu_" + (zhangCloun + (zhangRow - 6)) + "6").html("<img class=\"dulu\" src=\"../../image/xianlan.png\" width=\"12px;\">");
+                            } else {
+                                $("#zhanglanglu_" + zhangCloun + "" + zhangRow +"").html("<img class=\"dulu\" src=\"../../image/xianlan.png\" width=\"12px;\">");
+                            }
+                        }
+                       // $("#zhanglanglu_" + zhangCloun + "" + zhangRow +"").html("<img class=\"dulu\" src=\"../../image/xianlan.png\" width=\"12px;\">");
                     }
                     zhangUp = 2;
                 }
@@ -829,24 +992,56 @@ function  setZhangLangLu(zhuangdian,xiandian) {
                 //alert(row1 + ":" + row + ":" + Math.abs(row1 - row));
                 if (row - row1 == 1) {
                     if(zhangUp == 0) {
+                        zhangRows = 1;
                         $("#zhanglanglu_" + zhangCloun + "" + zhangRow +"").html("<img class=\"dulu\" src=\"../../image/xianlan.png\" width=\"12px;\">");
                     } else if (zhangUp == 1) {
+                        zhangRows = 1;
                         zhangRow = 1;
                         zhangCloun = zhangCloun + 1;
                         $("#zhanglanglu_" + zhangCloun + "" + zhangRow +"").html("<img class=\"dulu\" src=\"../../image/xianlan.png\" width=\"12px;\">");
                     } else if (zhangUp == 2) {
                         zhangRow = zhangRow + 1;
-                        $("#zhanglanglu_" + zhangCloun + "" + zhangRow +"").html("<img class=\"dulu\" src=\"../../image/xianlan.png\" width=\"12px;\">");
+                        if (!($("#zhanglanglu_" + zhangCloun  + "" +zhangRow +":has(img)" ).length==0) && zhangRows == 1){
+                            //已经写路
+                            zhangRows = zhangRow - 1;
+                        }
+                        if (zhangRows != 1) {
+                            $("#zhanglanglu_" + (zhangCloun + (zhangRow - zhangRows)) + "" + zhangRows +"").html("<img class=\"dulu\" src=\"../../image/xianlan.png\" width=\"12px;\">");
+                        } else {
+                            //不存在
+                            if (zhangRow > 6) {
+                                $("#zhanglanglu_" + (zhangCloun + (zhangRow - 6)) + "6").html("<img class=\"dulu\" src=\"../../image/xianlan.png\" width=\"12px;\">");
+                            } else {
+                                $("#zhanglanglu_" + zhangCloun + "" + zhangRow +"").html("<img class=\"dulu\" src=\"../../image/xianlan.png\" width=\"12px;\">");
+                            }
+                        }
+                      //  $("#zhanglanglu_" + zhangCloun + "" + zhangRow +"").html("<img class=\"dulu\" src=\"../../image/xianlan.png\" width=\"12px;\">");
                     }
                     zhangUp = 2;
                 } else {
                     //成对，红
                     if(zhangUp == 0) {
+                        zhangRows = 1;
                         $("#zhanglanglu_" + zhangCloun + "" + zhangRow +"").html("<img class=\"dulu\" src=\"../../image/zhuanghong.png\" width=\"12px;\">");
                     } else if (zhangUp == 1) {
                         zhangRow = zhangRow + 1;
-                        $("#zhanglanglu_" + zhangCloun + "" + zhangRow +"").html("<img class=\"dulu\" src=\"../../image/zhuanghong.png\" width=\"12px;\">");
+                        if (!($("#zhanglanglu_" + zhangCloun  + "" +zhangRow +":has(img)" ).length==0) && zhangRows == 1){
+                            //已经写路
+                            zhangRows = zhangRow - 1;
+                        }
+                        if (zhangRows != 1) {
+                            $("#zhanglanglu_" + (zhangCloun + (zhangRow - zhangRows)) + "" + zhangRows +"").html("<img class=\"dulu\" src=\"../../image/zhuanghong.png\" width=\"12px;\">");
+                        } else {
+                            //不存在
+                            if (zhangRow > 6) {
+                                $("#zhanglanglu_" + (zhangCloun + (zhangRow - 6)) + "6").html("<img class=\"dulu\" src=\"../../image/zhuanghong.png\" width=\"12px;\">");
+                            } else {
+                                $("#zhanglanglu_" + zhangCloun + "" + zhangRow +"").html("<img class=\"dulu\" src=\"../../image/zhuanghong.png\" width=\"12px;\">");
+                            }
+                        }
+                       // $("#zhanglanglu_" + zhangCloun + "" + zhangRow +"").html("<img class=\"dulu\" src=\"../../image/zhuanghong.png\" width=\"12px;\">");
                     } else if (zhangUp == 2) {
+                        zhangRows = 1;
                         zhangRow = 1;
                         zhangCloun = zhangCloun + 1;
                         $("#zhanglanglu_" + zhangCloun + "" + zhangRow +"").html("<img class=\"dulu\" src=\"../../image/zhuanghong.png\" width=\"12px;\">");
