@@ -39,6 +39,164 @@ Ext.onReady(function() {
         ]
     });
 
+    var dateSearchForm = new Ext.FormPanel({
+        region : 'north',
+        frame : true,
+        height : 140,
+        labelWidth:80,
+        labelAlign:'right',
+        items: [{
+            layout:'column',   //定义该元素为布局为列布局方式
+            border:false,
+            labelSeparator:'：',
+            items:[{
+                columnWidth:.5,  //该列占用的宽度，标识为50％
+                layout: 'form',
+                border:false,
+                items: [{
+                    xtype: "combo",
+                    id: "category_user",
+                    name: "category_user",
+                    fieldLabel: '<font style="font-size: 15px">查询对象</font>',
+                    width: 300,
+                    editable: false,
+                    style: 'font-size:15px;',
+                    labelSeparator: '：',
+                    store: ['全部', '庄', '闲'],
+                    displayField: 'category',
+                    emptyText: "请选择查询类型",
+                    triggerAction: 'all',
+                }, {
+                    xtype: 'textfield',
+                    id: 'query',
+                    name: 'query',
+                    style: 'font-size:15px;',
+                    width: 150,
+                    fieldLabel: '<font style="font-size: 15px">查询组合</font>',
+                    labelSeparator: '：',
+                    listeners: {
+                        render: function(obj) {
+                            var font=document.createElement("font");
+                            font.setAttribute("color","red");
+                            font.setAttribute("style","font-size:15px;")
+                            var redStar=document.createTextNode('   多个数子用-号分割，如：A-6-K');
+                            font.appendChild(redStar);
+                            obj.el.dom.parentNode.appendChild(font);
+                        }
+                    }
+                }]
+            },{
+                columnWidth:.5,
+                layout: 'form',
+                border:false,
+                items: [{
+                    xtype: 'datefield',
+                    fieldLabel: '<font style="font-size: 15px">开始时间</font>',
+                    id: 'startDate',
+                    name: 'startDate',
+                    style: 'font-size:15px;',
+                    labelSeparator: '：',//分隔符
+                    format: 'Y-m-d H:i:s',//显示日期的格式
+                    maxValue: new Date(),//允许选择的最大日期
+                    width: 300,
+                    value: '2015-11-01 12:00:00'
+                }, {
+                    xtype: 'datefield',
+                    fieldLabel: '<font style="font-size: 15px">结束时间</font>',
+                    id: 'endDate',
+                    name: 'endDate',
+                    style: 'font-size:15px;',
+                    labelSeparator: '：',//分隔符
+                    format: 'Y-m-d H:i:s',//显示日期的格式
+                    maxValue: new Date(),//允许选择的最大日期
+                    width: 300,
+                    value: new Date()
+                }]
+            }, {
+                layout: 'column',   //定义该元素为布局为列布局方式
+                border: false,
+                labelWidth: 80,
+                items: [{
+                    columnWidth: .5,  //该列占用的宽度，标识为50％
+                    layout: 'form',
+                    border: false,
+                    items: [{
+                        xtype: "combo",
+                        id: "jishu",
+                        name: "jishu",
+                        fieldLabel: '<font style="font-size: 15px">奇数个数</font>',
+                        width: 60,
+                        editable: false,
+                        style: 'font-size:15px;',
+                        labelSeparator: '：',
+                        store: ['0', '1', '2', '3', '4', '5', '6', '7', '8',''],
+                        displayField: 'category',
+                        triggerAction: 'all'
+                    }]
+                }, {
+                    columnWidth: .5,  //该列占用的宽度，标识为50％
+                    layout: 'form',
+                    border: false,
+                    items: [{
+                        xtype: "combo",
+                        id: "oushu",
+                        name: "oushu",
+                        fieldLabel: '<font style="font-size: 15px">偶数个数</font>',
+                        width: 60,
+                        editable: false,
+                        style: 'font-size:15px;',
+                        labelSeparator: '：',
+                        store: ['0', '1', '2', '3', '4', '5', '6', '7', '8',''],
+                        displayField: 'category',
+                        triggerAction: 'all'
+                    }]
+                }, {
+                    columnWidth: .5,  //该列占用的宽度，标识为50％
+                    layout: 'form',
+                    border: false,
+                    items: [{
+                        xtype: "combo",
+                        id: "ling",
+                        name: "ling",
+                        fieldLabel: '<font style="font-size: 15px">0的个数</font>',
+                        width: 60,
+                        editable: false,
+                        style: 'font-size:15px;',
+                        labelSeparator: '：',
+                        store: ['0', '1', '2', '3', '4', '5', '6', '7', '8',''],
+                        displayField: 'category',
+                        triggerAction: 'all'
+                    }]
+                }]
+            }]
+        }],
+        buttons : [ {
+            text : '<font style="font-size: 18px">查询</font>',
+            handler : function() {
+                jsonUser.load({
+                    params : {
+                        start : 0,
+                        limit : 80,
+                        category : dateSearchForm.getForm().findField(
+                            "category_user").getValue(),
+                        query : dateSearchForm.getForm().findField("query")
+                            .getValue(),
+                        startDate : dateSearchForm.getForm().findField(
+                            "startDate").getValue(),
+                        endDate : dateSearchForm.getForm().findField(
+                            "endDate").getValue(),
+                        jishu : dateSearchForm.getForm().findField(
+                            "jishu").getValue(),
+                        oushu : dateSearchForm.getForm().findField(
+                            "oushu").getValue(),
+                        ling : dateSearchForm.getForm().findField(
+                            "ling").getValue(),
+                    }
+                });
+            }
+        } ]
+    });
+
     /* 数据列表 */
     var yhglGrid = new Ext.grid.GridPanel({
         id : 'yhglGrid',
@@ -208,7 +366,7 @@ Ext.onReady(function() {
 
     new Ext.Viewport({
         layout : 'border',
-        items : [yhglGrid ],
+        items : [dateSearchForm,yhglGrid ],
         buttons : [ {
             text : 'One'
         } ]

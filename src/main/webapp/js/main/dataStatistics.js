@@ -454,11 +454,12 @@ function goGame(xian1,zhuang1,xian2,zhuang2,xian3,zhuang3) {
         $("#heCount").html(heCount);
         $("#msg").html("和，结算中");
         if (radio == 2) {
-            shuyingqian = toDecimal(shuyingqian + touzhuMoney);
-            $("#userMoney").text((userMoney + touzhuMoney + touzhuMoney ).toFixed(2))
+            //投注和赢了 8倍
+            shuyingqian = toDecimal(shuyingqian + (touzhuMoney)*8);
+            $("#userMoney").text((userMoney + (touzhuMoney)*8 ).toFixed(2))
         } else {
-            shuyingqian = toDecimal(shuyingqian - touzhuMoney);
-            $("#userMoney").text(userMoney .toFixed(2) );
+           // shuyingqian = toDecimal(shuyingqian - touzhuMoney);
+            $("#userMoney").text((userMoney + touzhuMoney).toFixed(2));
         }
     }
     if (zhuangdui == 0) {
