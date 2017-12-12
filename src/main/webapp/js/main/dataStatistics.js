@@ -1079,13 +1079,14 @@ function submitDate(xian1,zhuang1,xian2,zhuang2,xian3,zhuang3,userMoney,touzhuMo
     }
     if (zhuangdian == xiandian) {
         jieguo1 = "和";
-        if (radio != -1){
+        ying = "和";
+       /* if (radio != -1){
             if (radio == 2) {
                 ying = "赢"
             } else{
                 ying = "输"
             }
-        }
+        }*/
     } else if (zhuangdian > xiandian) {
         jieguo1 = "庄";
         if (radio != -1){
