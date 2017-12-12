@@ -11,9 +11,9 @@
 <head>
     <title>百家乐数据分析平台</title>
     <meta content="telephone=no" name="format-detection">
-    <meta http-equiv="pragma" content="no-cache">
+   <%-- <meta http-equiv="pragma" content="no-cache">
     <meta http-equiv="cache-control" content="no-cache">
-    <meta http-equiv="expires" content="0">
+    <meta http-equiv="expires" content="0">--%>
     <meta name="apple-mobile-web-app-capable" content="yes">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/css/dataStatistics.css">
     <script src="${pageContext.request.contextPath }/js/jquery.min.js"></script>

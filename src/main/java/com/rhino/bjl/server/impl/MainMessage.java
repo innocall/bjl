@@ -293,7 +293,13 @@ public class MainMessage implements IMainMessage {
 
     @Override
     public List<HashMap<String, Object>> findRoomList(int start, int limit,String userId,String qxqiang,String dsqiang,String lz,String lx) {
-        String sql = "select * from room_tbl where USERID='" + userId;
+        String sql = "select * from room_tbl where USERID='" + userId+ "'";
+        sql = getStringSql(qxqiang, dsqiang, lz, lx, sql);
+        sql = sql + " ORDER BY STRARTTIME DESC limit "+ start +"," + limit;
+        return mainManageMapper.findRoomList(sql);
+    }
+
+    private String getStringSql(String qxqiang, String dsqiang, String lz, String lx, String sql) {
         if (org.apache.commons.lang.StringUtils.isNotBlank(qxqiang)) {
             //庄闲强
             if (qxqiang.equals("庄强")) {
@@ -304,9 +310,9 @@ public class MainMessage implements IMainMessage {
         }
         if (org.apache.commons.lang.StringUtils.isNotBlank(dsqiang)) {
             //单双强
-            if (qxqiang.equals("单数强")) {
+            if (dsqiang.equals("单数强")) {
                 sql = sql + " AND JISHUCOUNT > OUSHUCOUNT";
-            } else  if (qxqiang.equals("双数强")) {
+            } else  if (dsqiang.equals("双数强")) {
                 sql = sql + " AND JISHUCOUNT < OUSHUCOUNT";
             }
         }
@@ -318,13 +324,13 @@ public class MainMessage implements IMainMessage {
             //连闲数
 
         }
-        sql = sql + "' ORDER BY STRARTTIME DESC limit "+ start +"," + limit;
-        return mainManageMapper.findRoomList(sql);
+        return sql;
     }
 
     @Override
     public int findRoomListCount(int start, int limit,String userId,String qxqiang,String dsqiang,String lz,String lx) {
         String sql = "select Count(*) AS NUMBER from room_tbl where USERID='" + userId + "'";
+        sql = getStringSql(qxqiang, dsqiang, lz, lx, sql);
         return mainManageMapper.findRoomListCount(sql);
     }
 
