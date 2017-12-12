@@ -229,9 +229,14 @@ public class MainControl extends BaseControl {
         Map<String, Object> param = new HashMap<String, Object>();
         int start = ParamUtils.getIntParameter(request, "start", 0);
         int limit = ParamUtils.getIntParameter(request, "limit", 80);
+
+        String qxqiang = ParamUtils.getParameter(request, "qxqiang","");
+        String dsqiang = ParamUtils.getParameter(request, "dsqiang", "");
+        String lz = ParamUtils.getParameter(request, "lz", "");
+        String lx = ParamUtils.getParameter(request, "lx", "");
         ManageUser user = (ManageUser) request.getSession().getAttribute(AppConstans.MANAGE_USER_SESSION);
-        List<HashMap<String, Object>> yhgl = mainMessage.findRoomList(start, limit,user.getID());
-        int count = mainMessage.findRoomListCount(start, limit,user.getID());
+        List<HashMap<String, Object>> yhgl = mainMessage.findRoomList(start, limit,user.getID(),qxqiang,dsqiang,lz,lx);
+        int count = mainMessage.findRoomListCount(start, limit,user.getID(),qxqiang,dsqiang,lz,lx);
         param.put("yhgl", yhgl);
         param.put("count", count);
         String json = JsonUtil.toJsonString(param);

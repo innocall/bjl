@@ -22,9 +22,9 @@ public interface IMainMessage {
 
     List<HashMap<String,Object>> findReetByRoomId(String roomId);
 
-    List<HashMap<String,Object>> findRoomList(int start, int limit,String userId);
+    List<HashMap<String,Object>> findRoomList(int start, int limit,String userId,String qxqiang,String dsqiang,String lz,String lx);
 
-    int findRoomListCount(int start, int limit,String userId);
+    int findRoomListCount(int start, int limit,String userId,String qxqiang,String dsqiang,String lz,String lx);
 
     boolean deleteRootById(String roomId);
 

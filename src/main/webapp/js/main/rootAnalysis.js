@@ -5,7 +5,7 @@ Ext.onReady(function() {
         url : path + 'private/main/roomAllData',
         root : 'yhgl',
         totalProperty : 'count',
-        fields : [ 'ID', 'TOTALCOUNT', 'ZHUANGCOUNT', 'XIANCOUNT', 'HECOUNT','ZHUANGDUICOUNT', 'XIANDUICOUNT', 'STRARTTIME','ENDTIME','USERID' ]
+        fields : [ 'ID', 'TOTALCOUNT', 'ZHUANGCOUNT', 'XIANCOUNT', 'HECOUNT','ZHUANGDUICOUNT', 'XIANDUICOUNT', 'STRARTTIME','ENDTIME','USERID','JISHUCOUNT','OUSHUCOUNT' ]
     });
     jsonUser.load({
         params : {
@@ -83,7 +83,7 @@ Ext.onReady(function() {
                         editable: false,
                         style: 'font-size:15px;',
                         labelSeparator: '：',
-                        store: ['单双强','双数强',''],
+                        store: ['单数强','双数强',''],
                         displayField: 'category',
                         triggerAction: 'all'
                     }]

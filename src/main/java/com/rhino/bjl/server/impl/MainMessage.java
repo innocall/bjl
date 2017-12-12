@@ -292,14 +292,38 @@ public class MainMessage implements IMainMessage {
     }
 
     @Override
-    public List<HashMap<String, Object>> findRoomList(int start, int limit,String userId) {
+    public List<HashMap<String, Object>> findRoomList(int start, int limit,String userId,String qxqiang,String dsqiang,String lz,String lx) {
         String sql = "select * from room_tbl where USERID='" + userId;
+        if (org.apache.commons.lang.StringUtils.isNotBlank(qxqiang)) {
+            //庄闲强
+            if (qxqiang.equals("庄强")) {
+                sql = sql + " AND ZHUANGCOUNT > XIANCOUNT";
+            } else  if (qxqiang.equals("闲强")) {
+                sql = sql + " AND ZHUANGCOUNT < XIANCOUNT";
+            }
+        }
+        if (org.apache.commons.lang.StringUtils.isNotBlank(dsqiang)) {
+            //单双强
+            if (qxqiang.equals("单数强")) {
+                sql = sql + " AND JISHUCOUNT > OUSHUCOUNT";
+            } else  if (qxqiang.equals("双数强")) {
+                sql = sql + " AND JISHUCOUNT < OUSHUCOUNT";
+            }
+        }
+        if (org.apache.commons.lang.StringUtils.isNotBlank(lz)) {
+            //连庄数
+
+        }
+        if (org.apache.commons.lang.StringUtils.isNotBlank(lx)) {
+            //连闲数
+
+        }
         sql = sql + "' ORDER BY STRARTTIME DESC limit "+ start +"," + limit;
         return mainManageMapper.findRoomList(sql);
     }
 
     @Override
-    public int findRoomListCount(int start, int limit,String userId) {
+    public int findRoomListCount(int start, int limit,String userId,String qxqiang,String dsqiang,String lz,String lx) {
         String sql = "select Count(*) AS NUMBER from room_tbl where USERID='" + userId + "'";
         return mainManageMapper.findRoomListCount(sql);
     }
