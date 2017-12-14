@@ -136,7 +136,8 @@ public class MainMessage implements IMainMessage {
         } else if (StringUtils.getCountType(xian3) == 2) {
             oushu = oushu + 1;
         }
-        if (StringUtils.getCountType(zhuangdian) == 0) {
+      /*  单双数 不统计庄闲值
+       if (StringUtils.getCountType(zhuangdian) == 0) {
             ling = ling + 1;
         } else if (StringUtils.getCountType(zhuangdian) == 1) {
             jishu = jishu + 1;
@@ -149,7 +150,7 @@ public class MainMessage implements IMainMessage {
             jishu = jishu + 1;
         } else if (StringUtils.getCountType(xiandian) == 2) {
             oushu = oushu + 1;
-        }
+        }*/
         params.put("JISHUCOUNT", jishu);
         params.put("OUSHUCOUNT", oushu);
         params.put("LINGCOUNT", ling);
