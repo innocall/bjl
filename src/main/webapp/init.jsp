@@ -13,14 +13,18 @@
     <title>数据分析平台</title>
     <script>
         function initReet_tbl() {
-            $.post("demo_ajax_gethint.asp",function(result){
-
+            $.post("login/reetTbl",function(result){
+                alert(result);
+            });
+        }
+        function initRoom_tbl() {
+            $.post("login/roomTbl",function(result){
+                alert(result);
             });
         }
     </script>
 </head>
 <body style="padding: 10px;margin: 0px;">
-    <button onclick="initReet_tbl();">数据库reet_tbl输赢初始化</button>
+    <button onclick="initReet_tbl();">数据库reet_tbl输赢,奇数偶数初始化初始化</button>
+    <button onclick="initRoom_tbl();">数据库room_tbl奇数偶数初始化初始化</button>
     <button>数据库每个房间连庄数，连闲数</button>
-</body>
-</html>

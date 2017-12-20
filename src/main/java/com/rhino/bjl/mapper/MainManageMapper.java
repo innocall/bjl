@@ -92,4 +92,8 @@ public class MainManageMapper {
     public boolean updateRoomCountData(HashMap<String, Object> map) {
         return  lemonDB.updateDynamic("room_tbl", "ID", map);
     }
+
+    public boolean updateReetData(HashMap<String, Object> params) {
+        return  lemonDB.updateDynamic("reet_tbl", "ID", params);
+    }
 }

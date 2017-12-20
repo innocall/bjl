@@ -52,10 +52,10 @@ public class StringUtils {
      * @return
      */
     public static int getCountType(String str) {
-        if (org.apache.commons.lang.StringUtils.isNotBlank(str)) {
-            if (str.equals("10") || str.equals("11") || str.equals("12") || str.equals("13")|| str.equals("0")) {
+        if (org.apache.commons.lang.StringUtils.isNotBlank(str) && !str.equals("0")) {
+            if (str.equals("10") || str.equals("11") || str.equals("12") || str.equals("13")) {
                 return 0;
-            } else if (Integer.parseInt(str)%2 == 0 && !str.equals("0")) {
+            } else if (Integer.parseInt(str)%2 == 0) {
                 return 2;
             } else {
                 return 1;

@@ -7,4 +7,7 @@ public interface ILoginMessage {
 
     Object[] login(String username, String password);
 
+    boolean reetTbl();
+
+    boolean roomTbl();
 }
