@@ -7,10 +7,11 @@ Ext.onReady(function() {
         totalProperty : 'count',
         fields : [ 'ID', 'ROOMID', 'ZHUANG1', 'ZHUANG2', 'ZHUANG3','XIAN1', 'XIAN2', 'XIAN3','TOUZHUMONEY','TOUZHU','ZHUANGVALUE','XIANVALUE','TIME','POINT','VALUE','JISHUCOUNT','OUSHUCOUNT' ]
     });
+
     jsonUser.load({
         params : {
             start : 0,
-            limit : 80
+            limit : 80,
         }
     });
 
@@ -180,7 +181,26 @@ Ext.onReady(function() {
         } ]
     });
 
-    /* 数据列表 */
+    jsonUser.on('beforeload', function(s) {
+        jsonUser.baseParams = {
+            category : dateSearchForm.getForm().findField(
+                "category_user").getValue(),
+            query : dateSearchForm.getForm().findField("query")
+                .getValue(),
+            startDate : dateSearchForm.getForm().findField(
+                "startDate").getValue(),
+            endDate : dateSearchForm.getForm().findField(
+                "endDate").getValue(),
+            jishu : dateSearchForm.getForm().findField(
+                "jishu").getValue(),
+            oushu : dateSearchForm.getForm().findField(
+                "oushu").getValue(),
+            ling : dateSearchForm.getForm().findField(
+                "ling").getValue(),
+        };
+    });
+
+        /* 数据列表 */
     var yhglGrid = new Ext.grid.GridPanel({
         id : 'yhglGrid',
         store : jsonUser,

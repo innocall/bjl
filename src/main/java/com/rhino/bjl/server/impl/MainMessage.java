@@ -151,6 +151,13 @@ public class MainMessage implements IMainMessage {
         } else if (StringUtils.getCountType(xiandian) == 2) {
             oushu = oushu + 1;
         }*/
+      if(Integer.parseInt(zhuangdian) > Integer.parseInt(xiandian)) {
+          params.put("VALUE", "庄");
+      } else if (Integer.parseInt(zhuangdian) < Integer.parseInt(xiandian)) {
+          params.put("VALUE", "闲");
+      } else {
+          params.put("VALUE", "和");
+      }
         params.put("JISHUCOUNT", jishu);
         params.put("OUSHUCOUNT", oushu);
         params.put("LINGCOUNT", ling);

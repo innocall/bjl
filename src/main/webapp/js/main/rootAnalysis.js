@@ -145,6 +145,19 @@ Ext.onReady(function() {
         } ]
     });
 
+    jsonUser.on('beforeload', function(s) {
+        jsonUser.baseParams = {
+            qxqiang : dateSearchForm.getForm().findField(
+                "qxqiang").getValue(),
+            dsqiang : dateSearchForm.getForm().findField(
+                "dsqiang").getValue(),
+            lz : dateSearchForm.getForm().findField(
+                "lz").getValue(),
+            lx : dateSearchForm.getForm().findField(
+                "lx").getValue(),
+        };
+    });
+
     /* 数据列表 */
     var yhglGrid = new Ext.grid.GridPanel({
         id : 'yhglGrid',
