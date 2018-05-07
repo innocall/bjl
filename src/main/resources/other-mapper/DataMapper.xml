@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="DataManageMapper">
+
+
+    <select id="findReetType" resultType="java.util.HashMap">
+        select * from reet_tbl where ROOMID = #{ROOMID} AND JISHUCOUNT = #{JISHUCOUNT} AND OUSHUCOUNT = #{OUSHUCOUNT} AND VALUE = #{VALUE} AND POINT = #{POINT}
+    </select>
+
+    <select id="findReetByPoint" resultType="java.util.HashMap">
+        select * from reet_tbl where ROOMID = #{ROOMID} AND POINT = #{POINT}
+    </select>
+
+    <select id="findReetByCount" resultType="java.util.HashMap">
+        select * from reet_tbl where JISHUCOUNT = #{JISHUCOUNT} AND OUSHUCOUNT = #{OUSHUCOUNT}
+    </select>
+
+    <select id="findReetByCounts" resultType="java.util.HashMap">
+        <![CDATA[
+          select * from reet_tbl where JISHUCOUNT = #{JISHUCOUNT} AND OUSHUCOUNT = #{OUSHUCOUNT} AND VALUE = #{VALUE}
+        ]]>
+    </select>
+
+    <select id="findReetByValue" resultType="java.util.HashMap">
+        select * from reet_tbl where ROOMID = #{ROOMID} AND VALUE = #{VALUE} AND POINT = #{POINT}
+    </select>
+
+
+
+</mapper>

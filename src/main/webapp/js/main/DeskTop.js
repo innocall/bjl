@@ -85,7 +85,8 @@ Ext.onReady(function(){
             children : [
                 {id:'1', text : '<font style="font-size: 15px">单机游戏</font>' , leaf : true },
                 {id:'3', text : '<font style="font-size: 15px">大局分析</font>' , leaf : true },
-                {id:'2', text : '<font style="font-size: 15px">小局分析</font>' , leaf : true }
+                {id:'2', text : '<font style="font-size: 15px">小局分析</font>' , leaf : true },
+                {id:'4', text : '<font style="font-size: 15px">数据分析</font>' , leaf : true }
             ]
         },
 	    listeners:{
@@ -100,6 +101,8 @@ Ext.onReady(function(){
                             url = path + "private/main/dataAnalysis";
 						} else if (node.id == 3) {
                             url = path + "private/main/rootAnalysis";
+						} else if (node.id == 4) {
+                            url = path + "data/analysis/index";
 						}
 	    				tab = new Ext.Panel({
 	    					id:'Tab_' + node.id,

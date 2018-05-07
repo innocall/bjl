@@ -194,6 +194,9 @@ public class MainControl extends BaseControl {
         String jishu = ParamUtils.getParameter(request, "jishu", "");
         String oushu = ParamUtils.getParameter(request, "oushu", "");
         String ling = ParamUtils.getParameter(request, "ling", "");
+        jishu = isNull(jishu);
+        oushu = isNull(oushu);
+        ling = isNull(ling);
         List<HashMap<String, Object>> yhgl = mainMessage.findReetList(category,jishu,oushu,ling,startDate,endDate,query ,start, limit);
         int count = mainMessage.findReetListCount(category,jishu,oushu,ling,startDate,endDate,query ,start, limit);
         param.put("yhgl", yhgl);
@@ -202,6 +205,13 @@ public class MainControl extends BaseControl {
         ResponseEntity<String> responseEntity = new ResponseEntity<String>(
                 json, headers, HttpStatus.OK);
         return responseEntity;
+    }
+
+    public String isNull(String param) {
+        if ("N".equals(param)) {
+            param = "";
+        }
+        return param;
     }
 
 
