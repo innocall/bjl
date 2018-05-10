@@ -4,7 +4,14 @@
 
 
     <select id="findReetType" resultType="java.util.HashMap">
-        select * from reet_tbl where ROOMID = #{ROOMID} AND JISHUCOUNT = #{JISHUCOUNT} AND OUSHUCOUNT = #{OUSHUCOUNT} AND VALUE = #{VALUE} AND POINT = #{POINT}
+        select * from reet_tbl
+        <where>
+            <if test="VALUE != null">VALUE = #{VALUE}</if>
+            <if test='JISHUCOUNT != "n" and JISHUCOUNT != "N"'>and JISHUCOUNT = #{JISHUCOUNT}</if>
+            <if test='OUSHUCOUNT != "n" and OUSHUCOUNT != "N"'>and OUSHUCOUNT = #{OUSHUCOUNT}</if>
+            <if test="ROOMID != null">AND ROOMID = #{ROOMID}</if>
+            <if test="POINT != null">AND POINT = #{POINT}</if>
+        </where>
     </select>
 
     <select id="findReetByPoint" resultType="java.util.HashMap">
@@ -12,13 +19,20 @@
     </select>
 
     <select id="findReetByCount" resultType="java.util.HashMap">
-        select * from reet_tbl where JISHUCOUNT = #{JISHUCOUNT} AND OUSHUCOUNT = #{OUSHUCOUNT}
+        select * from reet_tbl
+        <where>
+            <if test='JISHUCOUNT != "n" and JISHUCOUNT != "N"'>JISHUCOUNT = #{JISHUCOUNT}</if>
+            <if test='OUSHUCOUNT != "n" and OUSHUCOUNT != "N"'>and OUSHUCOUNT = #{OUSHUCOUNT}</if>
+        </where>
     </select>
 
     <select id="findReetByCounts" resultType="java.util.HashMap">
-        <![CDATA[
-          select * from reet_tbl where JISHUCOUNT = #{JISHUCOUNT} AND OUSHUCOUNT = #{OUSHUCOUNT} AND VALUE = #{VALUE}
-        ]]>
+        select * from reet_tbl
+        <where>
+            <if test="VALUE != null">VALUE = #{VALUE}</if>
+            <if test='JISHUCOUNT != "n" and JISHUCOUNT != "N"'>and JISHUCOUNT = #{JISHUCOUNT}</if>
+            <if test='OUSHUCOUNT != "n" and OUSHUCOUNT != "N"'>and OUSHUCOUNT = #{OUSHUCOUNT}</if>
+        </where>
     </select>
 
     <select id="findReetByValue" resultType="java.util.HashMap">

@@ -21,6 +21,9 @@ Ext.onReady(function() {
         fields : [ 'ID', 'ROOMID', 'ZHUANG1', 'ZHUANG2', 'ZHUANG3','XIAN1', 'XIAN2', 'XIAN3','TIME','TOUZHU','ZHUANGVALUE','XIANVALUE','POINT','VALUE','JISHUCOUNT','OUSHUCOUNT'  ]
     });
 
+    var zhuang = 0;
+    var xian = 0;
+    var he = 0;
     var dateSearchForm = new Ext.FormPanel({
         region : 'north',
         frame : true,
@@ -108,6 +111,9 @@ Ext.onReady(function() {
                     Ext.Msg.alert('提示','请输入正确格式的单双数');
                     return;
                 }
+                zhuang = 0;
+                xian = 0;
+                he = 0;
                 jsonSearchData.load({
                     params : {
                     /*    start : 0,
@@ -133,9 +139,6 @@ Ext.onReady(function() {
         };
     });
 
-    var zhuang = 0;
-    var xian = 0;
-    var he = 0;
     var dataGrid = new Ext.grid.GridPanel({
         id : 'dataGrid',
         store : jsonSearchData,

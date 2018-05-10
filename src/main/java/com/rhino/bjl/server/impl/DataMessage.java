@@ -21,7 +21,6 @@ public class DataMessage implements IDataMessage{
         List<HashMap<String ,Object>> dataList = new ArrayList<HashMap<String, Object>>();
         String arrayOne[] = one.split("-"); //第一局单双数
         String arrayTwo[] = two.split("-"); //第二局单双数
-        String sql1 = "select * from reet_tbl where JISHUCOUNT = " + arrayOne[0] +" AND OUSHUCOUNT = " + arrayOne[1];
         HashMap<String,Object> map3 = new HashMap<String, Object>();
         map3.put("JISHUCOUNT",arrayOne[0]);
         map3.put("OUSHUCOUNT",arrayOne[1]);
