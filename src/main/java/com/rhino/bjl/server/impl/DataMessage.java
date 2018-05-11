@@ -18,6 +18,21 @@ public class DataMessage implements IDataMessage{
 
     @Override
     public List<HashMap<String, Object>> findReetList(String category, String one, String two) {
+        List<HashMap<String, Object>> dataList = new ArrayList<HashMap<String, Object>>();
+        String arrayOne[] = one.split("-"); //第一局单双数
+        String arrayTwo[] = two.split("-"); //第二局单双数
+        HashMap<String,Object> map = new HashMap<String, Object>();
+        map.put("JISHUCOUNT1",arrayOne[0]);
+        map.put("OUSHUCOUNT1",arrayOne[1]);
+        map.put("JISHUCOUNT2",arrayTwo[0]);
+        map.put("OUSHUCOUNT2",arrayTwo[1]);
+        map.put("VALUE",category);
+        dataList = dataManageMapper.findMoreData(map);
+        return dataList;
+    }
+
+
+    public List<HashMap<String, Object>> findReetList2(String category, String one, String two) {
         List<HashMap<String ,Object>> dataList = new ArrayList<HashMap<String, Object>>();
         String arrayOne[] = one.split("-"); //第一局单双数
         String arrayTwo[] = two.split("-"); //第二局单双数

@@ -39,6 +39,37 @@
         select * from reet_tbl where ROOMID = #{ROOMID} AND VALUE = #{VALUE} AND POINT = #{POINT}
     </select>
 
+    <select id="findMoreData" resultType="java.util.HashMap">
+        SELECT
+        *
+        FROM
+        reet_tbl a
+        INNER JOIN (
+        SELECT
+        *
+        FROM
+        reet_tbl b
+        INNER JOIN (
+        SELECT
+        ROOMID as dROOMID,POINT as dPOINT ,`VALUE` as dVALUE,JISHUCOUNT as dJISHUCOUNT,OUSHUCOUNT as dOUSHUCOUNT
+        FROM
+        reet_tbl c
+        <where>
+            <if test='JISHUCOUNT1 != "n" and JISHUCOUNT1 != "N"'>c.JISHUCOUNT = #{JISHUCOUNT1}</if>
+            <if test='OUSHUCOUNT1 != "n" and OUSHUCOUNT1 != "N"'>and c.OUSHUCOUNT = #{OUSHUCOUNT1}</if>
+            <if test="VALUE != '全部'">and c.VALUE = #{VALUE}</if>
+        </where>
+        ) d ON b.ROOMID = d.dROOMID
+        AND b.POINT = d.dPOINT + 1
+        AND b.`VALUE` = d.dVALUE
+        <where>
+            <if test='JISHUCOUNT2 != "n" and JISHUCOUNT2 != "N"'>b.JISHUCOUNT = #{JISHUCOUNT2}</if>
+            <if test='OUSHUCOUNT2 != "n" and OUSHUCOUNT2 != "N"'>and b.OUSHUCOUNT = #{OUSHUCOUNT2}</if>
+            <if test="VALUE != '全部'">and b.VALUE = #{VALUE}</if>
+        </where>
+        ) e ON a.POINT = e.POINT + 1
+        AND a.ROOMID = e.ROOMID ORDER BY a.TIME ASC
+    </select>
 
 
 </mapper>

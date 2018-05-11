@@ -38,4 +38,8 @@ public class DataManageMapper {
     public HashMap<String, Object> findReetByValue(HashMap<String, Object> map4) {
         return lemonDB.get("findReetByValue", map4);
     }
+
+    public List<HashMap<String, Object>> findMoreData(HashMap<String, Object> map) {
+        return lemonDB.getList("findMoreData",map);
+    }
 }

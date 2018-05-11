@@ -83,7 +83,7 @@ Ext.onReady(function() {
                         editable: false,
                         style: 'font-size:15px;',
                         labelSeparator: '：',
-                        store: ['全部', '庄', '闲'],
+                        store: ['全部', '庄', '闲','和'],
                         displayField: 'category',
                         emptyText: "请选择查询类型",
                         triggerAction: 'all',
