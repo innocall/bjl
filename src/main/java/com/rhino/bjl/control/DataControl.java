@@ -37,6 +37,9 @@ public class DataControl extends BaseControl {
      * 查询连庄或者连闲的第三局
      * @param request
      * @return
+     *
+     * select * from reet_tbl a INNER JOIN (SELECT * FROM reet_tbl c where c.JISHUCOUNT=1 and c.OUSHUCOUNT = 3) b on a.POINT = b.POINT + 1 and a.ROOMID = b.ROOMID where a.ROOMID='9fae630b-1220-4c5a-b662-820352d7c004' order by a.POINT asc
+     *
      */
     @RequestMapping(value = "searchData", method = RequestMethod.POST)
     public ResponseEntity<String> reetAllData(HttpServletRequest request) {
