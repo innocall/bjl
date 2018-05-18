@@ -47,10 +47,13 @@ public class DataControl extends BaseControl {
         MediaType mediaType = new MediaType("text", "html", Charset.forName("UTF-8"));
         headers.setContentType(mediaType);
         Map<String, Object> param = new HashMap<String, Object>();
-        String category = ParamUtils.getParameter(request, "category", "全部");
+        String oneType = ParamUtils.getParameter(request, "oneType", "全部");
+        String twoType = ParamUtils.getParameter(request, "twoType", "全部");
+        String threeType = ParamUtils.getParameter(request, "threeType", "全部");
         String one = ParamUtils.getParameter(request, "one", "");
         String two = ParamUtils.getParameter(request, "two", "");
-        List<HashMap<String, Object>> searchData = dataMessage.findReetList(category,one,two);
+        String three = ParamUtils.getParameter(request, "three", "");
+        List<HashMap<String, Object>> searchData = dataMessage.findReetList2(oneType,twoType,threeType,one,two,three);
         int count = searchData.size();
         param.put("searchData", searchData);
         param.put("count", count);

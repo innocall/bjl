@@ -12,9 +12,8 @@ var xianDuiCount1 = 0;
 var myArray=new Array()
 var xiandui = 1; //闲没有对子1 ，0有对子
 var zhuangdui = 1; //庄没有对子1 ，0有对子
-//首切牌随机 8-9-10
-
-var startDown=new Array(8,9,10);
+//首切牌随机 2-12张
+var startDown=new Array(2,3,4,5,6,7,8,9,10,11,12);
 // var allJuCountArray=new Array(70,71,72,73,74,75);
  var allJuCount=75; //最多不超过75局
 var firstQiePai = "";
@@ -1288,26 +1287,44 @@ function showTotal() {
         } else if (i == 2) {
             setTimeout(function() {
                 $("#qie2").css("visibility","visible")
+                if (2 == startDown1) {
+                    hiddenTotal();
+                }
             },time)
         } else if (i == 3) {
             setTimeout(function() {
                 $("#qie3").css("visibility","visible")
+                if (3 == startDown1) {
+                    hiddenTotal();
+                }
             },time)
         } else if (i == 4) {
             setTimeout(function() {
                 $("#qie4").css("visibility","visible")
+                if (4 == startDown1) {
+                    hiddenTotal();
+                }
             },time)
         } else if (i == 5) {
             setTimeout(function() {
                 $("#qie5").css("visibility","visible")
+                if (5 == startDown1) {
+                    hiddenTotal();
+                }
             },time)
         } else if (i == 6) {
             setTimeout(function() {
                 $("#qie6").css("visibility","visible")
+                if (6 == startDown1) {
+                    hiddenTotal();
+                }
             },time)
         } else if (i == 7) {
             setTimeout(function() {
                 $("#qie7").css("visibility","visible")
+                if (7 == startDown1) {
+                    hiddenTotal();
+                }
             },time)
         } else if (i == 8) {
             setTimeout(function() {
@@ -1330,22 +1347,40 @@ function showTotal() {
                     hiddenTotal();
                 }
             },time)
+        } else if (i == 11) {
+            setTimeout(function() {
+                $("#qie11").css("visibility","visible")
+                if (11 == startDown1) {
+                    hiddenTotal();
+                }
+            },time)
+        } else if (i == 12) {
+            setTimeout(function() {
+                $("#qie12").css("visibility","visible")
+                if (12 == startDown1) {
+                    hiddenTotal();
+                }
+            },time)
         }
     }
 }
 
 function hiddenTotal() {
-    $("#totle").css("visibility","hidden");
-    $("#qie1").css("visibility","hidden");
-    $("#qie2").css("visibility","hidden");
-    $("#qie3").css("visibility","hidden");
-    $("#qie4").css("visibility","hidden");
-    $("#qie5").css("visibility","hidden");
-    $("#qie6").css("visibility","hidden");
-    $("#qie7").css("visibility","hidden");
-    $("#qie8").css("visibility","hidden");
-    $("#qie9").css("visibility","hidden");
-    $("#qie10").css("visibility","hidden");
+    setTimeout(function() {
+        $("#totle").css("visibility","hidden");
+        $("#qie1").css("visibility","hidden");
+        $("#qie2").css("visibility","hidden");
+        $("#qie3").css("visibility","hidden");
+        $("#qie4").css("visibility","hidden");
+        $("#qie5").css("visibility","hidden");
+        $("#qie6").css("visibility","hidden");
+        $("#qie7").css("visibility","hidden");
+        $("#qie8").css("visibility","hidden");
+        $("#qie9").css("visibility","hidden");
+        $("#qie10").css("visibility","hidden");
+        $("#qie11").css("visibility","hidden");
+        $("#qie12").css("visibility","hidden");
+    },600)
 }
 
 function setArray(array) {

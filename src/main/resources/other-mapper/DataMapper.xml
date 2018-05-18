@@ -71,5 +71,108 @@
         AND a.ROOMID = e.ROOMID ORDER BY a.TIME ASC
     </select>
 
+    <select id="findMoreData2" resultType="java.util.HashMap">
+        SELECT
+        *
+        FROM
+        reet_tbl a
+        INNER JOIN (
+        SELECT
+        *
+        FROM
+        reet_tbl b
+        INNER JOIN (
+        SELECT
+        ROOMID AS dROOMID,
+        POINT AS dPOINT,
+        `VALUE` AS dVALUE,
+        JISHUCOUNT AS dJISHUCOUNT,
+        OUSHUCOUNT AS dOUSHUCOUNT
+        FROM
+        reet_tbl c
+        INNER JOIN (
+        SELECT
+        ROOMID AS dROOMID1,
+        POINT AS dPOINT1,
+        `VALUE` AS dVALUE,
+        JISHUCOUNT AS dJISHUCOUNT1,
+        OUSHUCOUNT AS dOUSHUCOUNT1
+        FROM
+        reet_tbl f
+        <where>
+            <if test='JISHUCOUNT1 != "n" and JISHUCOUNT1 != "N"'>f.JISHUCOUNT = #{JISHUCOUNT1}</if>
+            <if test='OUSHUCOUNT1 != "n" and OUSHUCOUNT1 != "N"'>and f.OUSHUCOUNT = #{OUSHUCOUNT1}</if>
+            <if test="VALUE1 != '全部'">and f.VALUE = #{VALUE1}</if>
+        </where>
+        ) g ON c.ROOMID = g.dROOMID1
+        AND c.POINT = g.dPOINT1 + 1
+        <where>
+            <if test='JISHUCOUNT2 != "n" and JISHUCOUNT2 != "N"'>c.JISHUCOUNT = #{JISHUCOUNT2}</if>
+            <if test='OUSHUCOUNT2 != "n" and OUSHUCOUNT2 != "N"'>and c.OUSHUCOUNT = #{OUSHUCOUNT2}</if>
+            <if test="VALUE2 != '全部'">and c.VALUE = #{VALUE2}</if>
+        </where>
+        ) d ON b.ROOMID = d.dROOMID
+        AND b.POINT = d.dPOINT + 1
+        <where>
+            <if test='JISHUCOUNT3 != "n" and JISHUCOUNT3 != "N"'>b.JISHUCOUNT = #{JISHUCOUNT3}</if>
+            <if test='OUSHUCOUNT3 != "n" and OUSHUCOUNT3 != "N"'>and b.OUSHUCOUNT = #{OUSHUCOUNT3}</if>
+            <if test="VALUE3 != '全部'">and b.VALUE = #{VALUE3}</if>
+        </where>
+        ) e ON a.POINT = e.POINT + 1
+        AND a.ROOMID = e.ROOMID
+        ORDER BY
+        a.TIME ASC
+    </select>
+
+    <select id="findMoreData3" resultType="java.util.HashMap">
+        SELECT
+        *
+        FROM
+        reet_tbl a
+        INNER JOIN (
+        SELECT
+        *
+        FROM
+        reet_tbl b
+        INNER JOIN (
+        SELECT
+        ROOMID as dROOMID,POINT as dPOINT ,`VALUE` as dVALUE,JISHUCOUNT as dJISHUCOUNT,OUSHUCOUNT as dOUSHUCOUNT
+        FROM
+        reet_tbl c
+        <where>
+            <if test='JISHUCOUNT1 != "n" and JISHUCOUNT1 != "N"'>c.JISHUCOUNT = #{JISHUCOUNT1}</if>
+            <if test='OUSHUCOUNT1 != "n" and OUSHUCOUNT1 != "N"'>and c.OUSHUCOUNT = #{OUSHUCOUNT1}</if>
+            <if test="VALUE1 != '全部'">and c.VALUE = #{VALUE1}</if>
+        </where>
+        ) d ON b.ROOMID = d.dROOMID
+        AND b.POINT = d.dPOINT + 1
+        <where>
+            <if test='JISHUCOUNT2 != "n" and JISHUCOUNT2 != "N"'>b.JISHUCOUNT = #{JISHUCOUNT2}</if>
+            <if test='OUSHUCOUNT2 != "n" and OUSHUCOUNT2 != "N"'>and b.OUSHUCOUNT = #{OUSHUCOUNT2}</if>
+            <if test="VALUE2 != '全部'">and b.VALUE = #{VALUE2}</if>
+        </where>
+        ) e ON a.POINT = e.POINT + 1
+        AND a.ROOMID = e.ROOMID ORDER BY a.TIME ASC
+    </select>
+
+    <select id="findMoreData4" resultType="java.util.HashMap">
+        SELECT
+        *
+        FROM
+        reet_tbl a
+        INNER JOIN (
+        SELECT
+        ROOMID as dROOMID,POINT as dPOINT ,`VALUE` as dVALUE,JISHUCOUNT as dJISHUCOUNT,OUSHUCOUNT as dOUSHUCOUNT
+        FROM
+        reet_tbl c
+        <where>
+            <if test='JISHUCOUNT1 != "n" and JISHUCOUNT1 != "N"'>c.JISHUCOUNT = #{JISHUCOUNT1}</if>
+            <if test='OUSHUCOUNT1 != "n" and OUSHUCOUNT1 != "N"'>and c.OUSHUCOUNT = #{OUSHUCOUNT1}</if>
+            <if test="VALUE1 != '全部'">and c.VALUE = #{VALUE1}</if>
+        </where>
+        ) d ON a.ROOMID = d.dROOMID
+        AND a.POINT = d.dPOINT + 1 ORDER BY a.TIME ASC
+    </select>
+
 
 </mapper>

@@ -27,7 +27,7 @@ Ext.onReady(function() {
     var dateSearchForm = new Ext.FormPanel({
         region : 'north',
         frame : true,
-        height : 140,
+        height : 170,
         labelWidth:80,
         labelAlign:'right',
         items: [{
@@ -75,18 +75,79 @@ Ext.onReady(function() {
                         }
                     }
                 },{
-                        xtype: "combo",
-                        id: "category_user",
-                        name: "category_user",
-                        fieldLabel: '<font style="font-size: 15px">查询对象</font>',
-                        width: 300,
-                        editable: false,
-                        style: 'font-size:15px;',
-                        labelSeparator: '：',
-                        store: ['全部', '庄', '闲','和'],
-                        displayField: 'category',
-                        emptyText: "请选择查询类型",
-                        triggerAction: 'all',
+                    xtype: 'textfield',
+                    id: 'three',
+                    name: 'three',
+                    style: 'font-size:15px;',
+                    width: 150,
+                    fieldLabel: '<font style="font-size: 15px">第三局</font>',
+                    labelSeparator: '：',
+                    listeners: {
+                        render: function(obj) {
+                            var font=document.createElement("font");
+                            font.setAttribute("color","red");
+                            font.setAttribute("style","font-size:15px;");
+                            var redStar=document.createTextNode('    单双数用-号分割，如：0-2，1-5');
+                            font.appendChild(redStar);
+                            obj.el.dom.parentNode.appendChild(font);
+                        }
+                    }
+                }, {
+                    layout: 'column',   //定义该元素为布局为列布局方式
+                    border: false,
+                    labelWidth: 100,
+                    items: [{
+                        columnWidth: .2,  //该列占用的宽度，标识为50％
+                        layout: 'form',
+                        border: false,
+                        items: [{
+                            xtype: "combo",
+                            id: "oneType",
+                            name: "oneType",
+                            fieldLabel: '<font style="font-size: 15px">第一局结果</font>',
+                            width: 60,
+                            editable: false,
+                            style: 'font-size:15px;',
+                            labelSeparator: '：',
+                            store: ['全部', '庄', '闲', '和'],
+                            displayField: 'category',
+                            triggerAction: 'all'
+                        }]
+                    }, {
+                        columnWidth: .2,  //该列占用的宽度，标识为50％
+                        layout: 'form',
+                        border: false,
+                        items: [{
+                            xtype: "combo",
+                            id: "twoType",
+                            name: "twoType",
+                            fieldLabel: '<font style="font-size: 15px">第二局结果</font>',
+                            width: 60,
+                            editable: false,
+                            style: 'font-size:15px;',
+                            labelSeparator: '：',
+                            store: ['全部', '庄', '闲', '和'],
+                            displayField: 'category',
+                            triggerAction: 'all'
+                        }]
+                    }, {
+                        columnWidth: .2,  //该列占用的宽度，标识为50％
+                        layout: 'form',
+                        border: false,
+                        items: [{
+                            xtype: "combo",
+                            id: "threeType",
+                            name: "threeType",
+                            fieldLabel: '<font style="font-size: 15px">第三局结果</font>',
+                            width: 60,
+                            editable: false,
+                            style: 'font-size:15px;',
+                            labelSeparator: '：',
+                            store: ['全部', '庄', '闲', '和'],
+                            displayField: 'category',
+                            triggerAction: 'all'
+                        }]
+                    }]
                 }]
             }]
         }],
@@ -95,22 +156,31 @@ Ext.onReady(function() {
             handler : function() {
                 var ones = dateSearchForm.getForm().findField("one").getValue();
                 var twos = dateSearchForm.getForm().findField("two").getValue();
+                var three = dateSearchForm.getForm().findField("three").getValue();
                 if (ones == '') {
                     Ext.Msg.alert('提示','请输入第一局的单双数');
-                    return;
-                }
-                if (twos == '') {
-                    Ext.Msg.alert('提示','请输入第二局的单双数');
                     return;
                 }
                 if (ones.split('-').length != 2) {
                     Ext.Msg.alert('提示','请输入正确格式的单双数');
                     return;
                 }
-                if (twos.split('-').length != 2) {
+               /* if (twos == '') {
+                    Ext.Msg.alert('提示','请输入第二局的单双数');
+                    return;
+                }
+                 if (twos.split('-').length != 2) {
                     Ext.Msg.alert('提示','请输入正确格式的单双数');
                     return;
                 }
+                if (three == '') {
+                    Ext.Msg.alert('提示','请输入第三局的单双数');
+                    return;
+                }
+                if (three.split('-').length != 2) {
+                    Ext.Msg.alert('提示','请输入正确格式的单双数');
+                    return;
+                }*/
                 zhuang = 0;
                 xian = 0;
                 he = 0;
@@ -118,10 +188,12 @@ Ext.onReady(function() {
                     params : {
                     /*    start : 0,
                         limit : 80,*/
-                        category : dateSearchForm.getForm().findField(
-                            "category_user").getValue(),
+                        oneType : dateSearchForm.getForm().findField("oneType").getValue(),
+                        twoType : dateSearchForm.getForm().findField("twoType").getValue(),
+                        threeType : dateSearchForm.getForm().findField("threeType").getValue(),
                         one : ones,
-                        two :twos
+                        two :twos,
+                        three :three
                     }
                 });
             }
@@ -130,12 +202,12 @@ Ext.onReady(function() {
 
     jsonSearchData.on('beforeload', function(s) {
         jsonSearchData.baseParams = {
-            category : dateSearchForm.getForm().findField(
-                "category_user").getValue(),
-            one : dateSearchForm.getForm().findField("one")
-                .getValue(),
-            two : dateSearchForm.getForm().findField(
-                "two").getValue()
+            oneType : dateSearchForm.getForm().findField("oneType").getValue(),
+            twoType : dateSearchForm.getForm().findField("twoType").getValue(),
+            threeType : dateSearchForm.getForm().findField("threeType").getValue(),
+            one : dateSearchForm.getForm().findField("one").getValue(),
+            two : dateSearchForm.getForm().findField("two").getValue(),
+            three : dateSearchForm.getForm().findField("three").getValue()
         };
     });
 

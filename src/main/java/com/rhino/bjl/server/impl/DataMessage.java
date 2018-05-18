@@ -3,6 +3,7 @@ package com.rhino.bjl.server.impl;
 import com.rhino.bjl.mapper.DataManageMapper;
 import com.rhino.bjl.mapper.LoginManageMapper;
 import com.rhino.bjl.server.IDataMessage;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +29,47 @@ public class DataMessage implements IDataMessage{
         map.put("OUSHUCOUNT2",arrayTwo[1]);
         map.put("VALUE",category);
         dataList = dataManageMapper.findMoreData(map);
+        return dataList;
+    }
+
+    @Override
+    public List<HashMap<String, Object>> findReetList2(String oneType, String twoType, String threeType, String one, String two, String three) {
+        List<HashMap<String, Object>> dataList = new ArrayList<HashMap<String, Object>>();
+        HashMap<String,Object> map = new HashMap<String, Object>();
+        String arrayOne[] = one.split("-"); //第一局单双数
+        if (StringUtils.isNotBlank(two)) {
+            if (StringUtils.isNotBlank(three)) {
+                //查询第四届结果
+                String arrayTwo[] = two.split("-"); //第二局单双数
+                String arrayThree[] = three.split("-"); //第二局单双数
+                map.put("JISHUCOUNT1",arrayOne[0]);
+                map.put("OUSHUCOUNT1",arrayOne[1]);
+                map.put("JISHUCOUNT2",arrayTwo[0]);
+                map.put("OUSHUCOUNT2",arrayTwo[1]);
+                map.put("JISHUCOUNT3",arrayThree[0]);
+                map.put("OUSHUCOUNT3",arrayThree[1]);
+                map.put("VALUE1",oneType);
+                map.put("VALUE2",twoType);
+                map.put("VALUE3",threeType);
+                dataList = dataManageMapper.findMoreData2(map);
+            } else {
+                //查询第三局结果
+                String arrayTwo[] = two.split("-"); //第二局单双数
+                map.put("JISHUCOUNT1",arrayOne[0]);
+                map.put("OUSHUCOUNT1",arrayOne[1]);
+                map.put("JISHUCOUNT2",arrayTwo[0]);
+                map.put("OUSHUCOUNT2",arrayTwo[1]);
+                map.put("VALUE1",oneType);
+                map.put("VALUE2",twoType);
+                dataList = dataManageMapper.findMoreData3(map);
+            }
+        } else {
+            //查询第一局的下一届结果
+            map.put("JISHUCOUNT1",arrayOne[0]);
+            map.put("OUSHUCOUNT1",arrayOne[1]);
+            map.put("VALUE1",oneType);
+            dataList = dataManageMapper.findMoreData4(map);
+        }
         return dataList;
     }
 

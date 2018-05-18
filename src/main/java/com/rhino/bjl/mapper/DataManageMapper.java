@@ -42,4 +42,16 @@ public class DataManageMapper {
     public List<HashMap<String, Object>> findMoreData(HashMap<String, Object> map) {
         return lemonDB.getList("findMoreData",map);
     }
+
+    public List<HashMap<String, Object>> findMoreData2(HashMap<String, Object> map) {
+        return lemonDB.getList("findMoreData2",map);
+    }
+
+    public List<HashMap<String, Object>> findMoreData3(HashMap<String, Object> map) {
+        return lemonDB.getList("findMoreData3",map);
+    }
+
+    public List<HashMap<String, Object>> findMoreData4(HashMap<String, Object> map) {
+        return lemonDB.getList("findMoreData4",map);
+    }
 }

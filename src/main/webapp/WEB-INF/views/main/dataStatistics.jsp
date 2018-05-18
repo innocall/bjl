@@ -386,6 +386,8 @@
         <img id="qie8" src="${pageContext.request.contextPath}/image/pukepaifanm.jpg" width="80;" style="visibility:hidden;">
         <img id="qie9" src="${pageContext.request.contextPath}/image/pukepaifanm.jpg" width="80;" style="visibility:hidden;">
         <img id="qie10" src="${pageContext.request.contextPath}/image/pukepaifanm.jpg" width="80;" style="visibility:hidden;">
+        <img id="qie11" src="${pageContext.request.contextPath}/image/pukepaifanm.jpg" width="80;" style="visibility:hidden;">
+        <img id="qie12" src="${pageContext.request.contextPath}/image/pukepaifanm.jpg" width="80;" style="visibility:hidden;">
     </div>
 
 </body>
