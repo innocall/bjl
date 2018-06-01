@@ -27,7 +27,7 @@ Ext.onReady(function() {
     var dateSearchForm = new Ext.FormPanel({
         region : 'north',
         frame : true,
-        height : 170,
+        height : 198,
         labelWidth:80,
         labelAlign:'right',
         items: [{
@@ -148,6 +148,14 @@ Ext.onReady(function() {
                             triggerAction: 'all'
                         }]
                     }]
+                },{
+                    xtype: 'textfield',
+                    id: 'allCount',
+                    name: 'allCount',
+                    style: 'font-size:15px;',
+                    width: 150,
+                    fieldLabel: '<font style="font-size: 15px">大局数量</font>',
+                    labelSeparator: '：'
                 }]
             }]
         }],
@@ -157,6 +165,7 @@ Ext.onReady(function() {
                 var ones = dateSearchForm.getForm().findField("one").getValue();
                 var twos = dateSearchForm.getForm().findField("two").getValue();
                 var three = dateSearchForm.getForm().findField("three").getValue();
+                var allCount = dateSearchForm.getForm().findField("allCount").getValue();
                 if (ones == '') {
                     Ext.Msg.alert('提示','请输入第一局的单双数');
                     return;
@@ -193,7 +202,8 @@ Ext.onReady(function() {
                         threeType : dateSearchForm.getForm().findField("threeType").getValue(),
                         one : ones,
                         two :twos,
-                        three :three
+                        three :three,
+                        allCount :allCount
                     }
                 });
             }
@@ -207,7 +217,8 @@ Ext.onReady(function() {
             threeType : dateSearchForm.getForm().findField("threeType").getValue(),
             one : dateSearchForm.getForm().findField("one").getValue(),
             two : dateSearchForm.getForm().findField("two").getValue(),
-            three : dateSearchForm.getForm().findField("three").getValue()
+            three : dateSearchForm.getForm().findField("three").getValue(),
+            allCount : dateSearchForm.getForm().findField("allCount").getValue()
         };
     });
 

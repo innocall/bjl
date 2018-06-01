@@ -53,7 +53,8 @@ public class DataControl extends BaseControl {
         String one = ParamUtils.getParameter(request, "one", "");
         String two = ParamUtils.getParameter(request, "two", "");
         String three = ParamUtils.getParameter(request, "three", "");
-        List<HashMap<String, Object>> searchData = dataMessage.findReetList2(oneType,twoType,threeType,one,two,three);
+        String allCount = ParamUtils.getParameter(request, "allCount", ""); //查询大局数量
+        List<HashMap<String, Object>> searchData = dataMessage.findReetList2(oneType,twoType,threeType,one,two,three,allCount);
         int count = searchData.size();
         param.put("searchData", searchData);
         param.put("count", count);

@@ -76,6 +76,9 @@
         *
         FROM
         reet_tbl a
+        <if test='allCount != "" and allCount != "0"'>
+            INNER JOIN (SELECT * from room_tbl ORDER BY room_tbl.STRARTTIME ASC LIMIT 0,#{allCount}) h ON a.ROOMID = h.ID
+        </if>
         INNER JOIN (
         SELECT
         *
@@ -129,6 +132,9 @@
         *
         FROM
         reet_tbl a
+        <if test='allCount != "" and allCount != "0"'>
+            INNER JOIN (SELECT * from room_tbl ORDER BY room_tbl.STRARTTIME ASC LIMIT 0,#{allCount}) h ON a.ROOMID = h.ID
+        </if>
         INNER JOIN (
         SELECT
         *
@@ -160,6 +166,9 @@
         *
         FROM
         reet_tbl a
+        <if test='allCount != "" and allCount != "0"'>
+            INNER JOIN (SELECT * from room_tbl ORDER BY room_tbl.STRARTTIME ASC LIMIT 0,#{allCount}) h ON a.ROOMID = h.ID
+        </if>
         INNER JOIN (
         SELECT
         ROOMID as dROOMID,POINT as dPOINT ,`VALUE` as dVALUE,JISHUCOUNT as dJISHUCOUNT,OUSHUCOUNT as dOUSHUCOUNT

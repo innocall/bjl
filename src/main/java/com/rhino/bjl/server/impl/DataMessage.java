@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.regex.Pattern;
 
 @Service
 public class DataMessage implements IDataMessage{
@@ -33,9 +34,13 @@ public class DataMessage implements IDataMessage{
     }
 
     @Override
-    public List<HashMap<String, Object>> findReetList2(String oneType, String twoType, String threeType, String one, String two, String three) {
+    public List<HashMap<String, Object>> findReetList2(String oneType, String twoType, String threeType, String one, String two, String three,String allCount) {
         List<HashMap<String, Object>> dataList = new ArrayList<HashMap<String, Object>>();
         HashMap<String,Object> map = new HashMap<String, Object>();
+        Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
+        if (StringUtils.isBlank(allCount) || !pattern.matcher(allCount).matches()) {
+            allCount = "0";
+        }
         String arrayOne[] = one.split("-"); //第一局单双数
         if (StringUtils.isNotBlank(two)) {
             if (StringUtils.isNotBlank(three)) {
@@ -51,6 +56,7 @@ public class DataMessage implements IDataMessage{
                 map.put("VALUE1",oneType);
                 map.put("VALUE2",twoType);
                 map.put("VALUE3",threeType);
+                map.put("allCount",Integer.valueOf(allCount).intValue());
                 dataList = dataManageMapper.findMoreData2(map);
             } else {
                 //查询第三局结果
@@ -61,6 +67,7 @@ public class DataMessage implements IDataMessage{
                 map.put("OUSHUCOUNT2",arrayTwo[1]);
                 map.put("VALUE1",oneType);
                 map.put("VALUE2",twoType);
+                map.put("allCount",Integer.valueOf(allCount).intValue());
                 dataList = dataManageMapper.findMoreData3(map);
             }
         } else {
@@ -68,6 +75,7 @@ public class DataMessage implements IDataMessage{
             map.put("JISHUCOUNT1",arrayOne[0]);
             map.put("OUSHUCOUNT1",arrayOne[1]);
             map.put("VALUE1",oneType);
+            map.put("allCount",Integer.valueOf(allCount).intValue());
             dataList = dataManageMapper.findMoreData4(map);
         }
         return dataList;
