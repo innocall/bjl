@@ -34,7 +34,7 @@ public class DataMessage implements IDataMessage{
     }
 
     @Override
-    public List<HashMap<String, Object>> findReetList2(String oneType, String twoType, String threeType, String one, String two, String three,String allCount) {
+    public List<HashMap<String, Object>> findReetList2(String oneType, String twoType, String threeType, String one, String two, String three,String allCount,String pages) {
         List<HashMap<String, Object>> dataList = new ArrayList<HashMap<String, Object>>();
         HashMap<String,Object> map = new HashMap<String, Object>();
         Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
@@ -57,6 +57,7 @@ public class DataMessage implements IDataMessage{
                 map.put("VALUE2",twoType);
                 map.put("VALUE3",threeType);
                 map.put("allCount",Integer.valueOf(allCount).intValue());
+                map.put("pages",Integer.valueOf(allCount).intValue() * (Integer.valueOf(pages).intValue() - 1));
                 dataList = dataManageMapper.findMoreData2(map);
             } else {
                 //查询第三局结果
@@ -68,6 +69,7 @@ public class DataMessage implements IDataMessage{
                 map.put("VALUE1",oneType);
                 map.put("VALUE2",twoType);
                 map.put("allCount",Integer.valueOf(allCount).intValue());
+                map.put("pages",Integer.valueOf(allCount).intValue() * (Integer.valueOf(pages).intValue() - 1));
                 dataList = dataManageMapper.findMoreData3(map);
             }
         } else {
@@ -76,6 +78,7 @@ public class DataMessage implements IDataMessage{
             map.put("OUSHUCOUNT1",arrayOne[1]);
             map.put("VALUE1",oneType);
             map.put("allCount",Integer.valueOf(allCount).intValue());
+            map.put("pages",Integer.valueOf(allCount).intValue() * (Integer.valueOf(pages).intValue() - 1));
             dataList = dataManageMapper.findMoreData4(map);
         }
         return dataList;

@@ -77,7 +77,7 @@
         FROM
         reet_tbl a
         <if test='allCount != "" and allCount != "0"'>
-            INNER JOIN (SELECT * from room_tbl ORDER BY room_tbl.STRARTTIME ASC LIMIT 0,#{allCount}) h ON a.ROOMID = h.ID
+            INNER JOIN (SELECT * from room_tbl ORDER BY room_tbl.STRARTTIME ASC LIMIT #{pages},#{allCount}) h ON a.ROOMID = h.ID
         </if>
         INNER JOIN (
         SELECT
@@ -133,7 +133,7 @@
         FROM
         reet_tbl a
         <if test='allCount != "" and allCount != "0"'>
-            INNER JOIN (SELECT * from room_tbl ORDER BY room_tbl.STRARTTIME ASC LIMIT 0,#{allCount}) h ON a.ROOMID = h.ID
+            INNER JOIN (SELECT * from room_tbl ORDER BY room_tbl.STRARTTIME ASC LIMIT #{pages},#{allCount}) h ON a.ROOMID = h.ID
         </if>
         INNER JOIN (
         SELECT
@@ -167,7 +167,7 @@
         FROM
         reet_tbl a
         <if test='allCount != "" and allCount != "0"'>
-            INNER JOIN (SELECT * from room_tbl ORDER BY room_tbl.STRARTTIME ASC LIMIT 0,#{allCount}) h ON a.ROOMID = h.ID
+            INNER JOIN (SELECT * from room_tbl ORDER BY room_tbl.STRARTTIME ASC LIMIT #{pages},#{allCount}) h ON a.ROOMID = h.ID
         </if>
         INNER JOIN (
         SELECT

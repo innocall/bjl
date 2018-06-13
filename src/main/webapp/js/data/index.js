@@ -27,7 +27,7 @@ Ext.onReady(function() {
     var dateSearchForm = new Ext.FormPanel({
         region : 'north',
         frame : true,
-        height : 198,
+        height : 228,
         labelWidth:80,
         labelAlign:'right',
         items: [{
@@ -156,6 +156,25 @@ Ext.onReady(function() {
                     width: 150,
                     fieldLabel: '<font style="font-size: 15px">大局数量</font>',
                     labelSeparator: '：'
+                },{
+                    xtype: 'textfield',
+                    id: 'pages',
+                    name: 'pages',
+                    style: 'font-size:15px;',
+                    width: 80,
+                    fieldLabel: '<font style="font-size: 15px">查询组数</font>',
+                    value:1,
+                    labelSeparator: '：',
+                    listeners: {
+                        render: function(obj) {
+                            var font=document.createElement("font");
+                            font.setAttribute("color","red");
+                            font.setAttribute("style","font-size:15px;");
+                            var redStar=document.createTextNode('    根据输入的大局数量查询组数，如总共大局3000.查大局数量600.则可查组数为5组，输入1查询1-600。输入2查询601-1200，以此类推');
+                            font.appendChild(redStar);
+                            obj.el.dom.parentNode.appendChild(font);
+                        }
+                    }
                 }]
             }]
         }],
@@ -166,6 +185,7 @@ Ext.onReady(function() {
                 var twos = dateSearchForm.getForm().findField("two").getValue();
                 var three = dateSearchForm.getForm().findField("three").getValue();
                 var allCount = dateSearchForm.getForm().findField("allCount").getValue();
+                var pages = dateSearchForm.getForm().findField("pages").getValue();
                 if (ones == '') {
                     Ext.Msg.alert('提示','请输入第一局的单双数');
                     return;
@@ -203,7 +223,8 @@ Ext.onReady(function() {
                         one : ones,
                         two :twos,
                         three :three,
-                        allCount :allCount
+                        allCount :allCount,
+                        pages :pages
                     }
                 });
             }
@@ -218,7 +239,8 @@ Ext.onReady(function() {
             one : dateSearchForm.getForm().findField("one").getValue(),
             two : dateSearchForm.getForm().findField("two").getValue(),
             three : dateSearchForm.getForm().findField("three").getValue(),
-            allCount : dateSearchForm.getForm().findField("allCount").getValue()
+            allCount : dateSearchForm.getForm().findField("allCount").getValue(),
+            pages : dateSearchForm.getForm().findField("pages").getValue()
         };
     });
 
