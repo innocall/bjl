@@ -29,4 +29,19 @@ GROUP BY ROOMID
 ORDER BY count DESC
 LIMIT 100
 
+update reet_tbl set VALUE='A' where VALUE = '庄'
+update reet_tbl set VALUE='B' where VALUE = '闲'
+update reet_tbl set VALUE='C' where VALUE = '和'
+SELECT
+	JISHUCOUNT AS '单',
+	OUSHUCOUNT AS '双',
+	`VALUE` AS '结果',
+	ROOMID,
+	POINT
+FROM
+	reet_tbl
+ORDER BY
+	ROOMID,POINT ASC
+
+
 

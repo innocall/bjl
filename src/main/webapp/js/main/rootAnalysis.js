@@ -78,12 +78,12 @@ Ext.onReady(function() {
                         xtype: "combo",
                         id: "dsqiang",
                         name: "dsqiang",
-                        fieldLabel: '<font style="font-size: 15px">单双强</font>',
+                        fieldLabel: '<font style="font-size: 15px">N，M强</font>',
                         width: 80,
                         editable: false,
                         style: 'font-size:15px;',
                         labelSeparator: '：',
-                        store: ['单数强','双数强',''],
+                        store: ['N强','M强',''],
                         displayField: 'category',
                         triggerAction: 'all'
                     }]
@@ -229,7 +229,7 @@ Ext.onReady(function() {
             menuDisabled : true
         }, {
             id : 'JISHUCOUNT',
-            header : '奇数个数',
+            header : 'N数个数',
             dataIndex : 'JISHUCOUNT',
             css:'font-size:18px;',
             sortable : true,
@@ -237,7 +237,7 @@ Ext.onReady(function() {
             menuDisabled : true
         }, {
             id : 'OUSHUCOUNT',
-            header : '偶数个数',
+            header : 'M数个数',
             dataIndex : 'OUSHUCOUNT',
             css:'font-size:18px;',
             sortable : true,
@@ -865,7 +865,7 @@ Ext.onReady(function() {
             menuDisabled : true
         }, {
             id : 'JISHUCOUNT',
-            header : '奇数个数',
+            header : 'N数个数',
             dataIndex : 'JISHUCOUNT',
             css:'font-size:18px;',
             sortable : true,
@@ -874,7 +874,7 @@ Ext.onReady(function() {
             menuDisabled : true
         }, {
             id : 'OUSHUCOUNT',
-            header : '偶数个数',
+            header : 'M数个数',
             dataIndex : 'OUSHUCOUNT',
             css:'font-size:18px;',
             width : 80,

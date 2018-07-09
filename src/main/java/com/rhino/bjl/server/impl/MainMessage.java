@@ -318,9 +318,9 @@ public class MainMessage implements IMainMessage {
         }
         if (org.apache.commons.lang.StringUtils.isNotBlank(dsqiang)) {
             //单双强
-            if (dsqiang.equals("单数强")) {
+            if (dsqiang.equals("N强")) {
                 sql = sql + " AND JISHUCOUNT > OUSHUCOUNT";
-            } else  if (dsqiang.equals("双数强")) {
+            } else  if (dsqiang.equals("M强")) {
                 sql = sql + " AND JISHUCOUNT < OUSHUCOUNT";
             }
         }

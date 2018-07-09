@@ -51,7 +51,7 @@ Ext.onReady(function() {
                             var font=document.createElement("font");
                             font.setAttribute("color","red");
                             font.setAttribute("style","font-size:15px;")
-                            var redStar=document.createTextNode('    单双数用-号分割，如：0-2，1-5');
+                            var redStar=document.createTextNode('    N，M数用-号分割，如：0-2，1-5');
                             font.appendChild(redStar);
                             obj.el.dom.parentNode.appendChild(font);
                         }
@@ -69,7 +69,7 @@ Ext.onReady(function() {
                             var font=document.createElement("font");
                             font.setAttribute("color","red");
                             font.setAttribute("style","font-size:15px;");
-                            var redStar=document.createTextNode('    单双数用-号分割，如：0-2，1-5');
+                            var redStar=document.createTextNode('    N,M数用-号分割，如：0-2，1-5');
                             font.appendChild(redStar);
                             obj.el.dom.parentNode.appendChild(font);
                         }
@@ -87,7 +87,7 @@ Ext.onReady(function() {
                             var font=document.createElement("font");
                             font.setAttribute("color","red");
                             font.setAttribute("style","font-size:15px;");
-                            var redStar=document.createTextNode('    单双数用-号分割，如：0-2，1-5');
+                            var redStar=document.createTextNode('    N,M数用-号分割，如：0-2，1-5');
                             font.appendChild(redStar);
                             obj.el.dom.parentNode.appendChild(font);
                         }
@@ -187,11 +187,11 @@ Ext.onReady(function() {
                 var allCount = dateSearchForm.getForm().findField("allCount").getValue();
                 var pages = dateSearchForm.getForm().findField("pages").getValue();
                 if (ones == '') {
-                    Ext.Msg.alert('提示','请输入第一局的单双数');
+                    Ext.Msg.alert('提示','请输入第一局的N,M数');
                     return;
                 }
                 if (ones.split('-').length != 2) {
-                    Ext.Msg.alert('提示','请输入正确格式的单双数');
+                    Ext.Msg.alert('提示','请输入正确格式的N,M数');
                     return;
                 }
                /* if (twos == '') {
@@ -378,7 +378,7 @@ Ext.onReady(function() {
             menuDisabled : true
         },{
             id : 'JISHUCOUNT',
-            header : '奇数个数',
+            header : 'N数个数',
             dataIndex : 'JISHUCOUNT',
             css:'font-size:18px;',
             sortable : true,
@@ -386,7 +386,7 @@ Ext.onReady(function() {
             menuDisabled : true
         }, {
             id : 'OUSHUCOUNT',
-            header : '偶数个数',
+            header : 'M数个数',
             dataIndex : 'OUSHUCOUNT',
             css:'font-size:18px;',
             sortable : true,
@@ -624,7 +624,7 @@ Ext.onReady(function() {
             menuDisabled : true
         }, {
             id : 'JISHUCOUNT',
-            header : '奇数个数',
+            header : 'N数个数',
             dataIndex : 'JISHUCOUNT',
             css:'font-size:18px;',
             sortable : true,
@@ -633,7 +633,7 @@ Ext.onReady(function() {
             menuDisabled : true
         }, {
             id : 'OUSHUCOUNT',
-            header : '偶数个数',
+            header : 'M数个数',
             dataIndex : 'OUSHUCOUNT',
             css:'font-size:18px;',
             width : 80,

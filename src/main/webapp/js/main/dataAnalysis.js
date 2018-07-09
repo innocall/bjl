@@ -108,7 +108,7 @@ Ext.onReady(function() {
                         xtype: "combo",
                         id: "jishu",
                         name: "jishu",
-                        fieldLabel: '<font style="font-size: 15px">奇数个数</font>',
+                        fieldLabel: '<font style="font-size: 15px">N数个数</font>',
                         width: 60,
                         editable: false,
                         style: 'font-size:15px;',
@@ -125,7 +125,7 @@ Ext.onReady(function() {
                         xtype: "combo",
                         id: "oushu",
                         name: "oushu",
-                        fieldLabel: '<font style="font-size: 15px">偶数个数</font>',
+                        fieldLabel: '<font style="font-size: 15px">M数个数</font>',
                         width: 60,
                         editable: false,
                         style: 'font-size:15px;',
@@ -419,7 +419,7 @@ Ext.onReady(function() {
             menuDisabled : true
         }, {
             id : 'JISHUCOUNT',
-            header : '奇数个数',
+            header : 'N数个数',
             dataIndex : 'JISHUCOUNT',
             css:'font-size:18px;',
             sortable : true,
@@ -427,7 +427,7 @@ Ext.onReady(function() {
             menuDisabled : true
         }, {
             id : 'OUSHUCOUNT',
-            header : '偶数个数',
+            header : 'M数个数',
             dataIndex : 'OUSHUCOUNT',
             css:'font-size:18px;',
             sortable : true,
@@ -690,7 +690,7 @@ Ext.onReady(function() {
             menuDisabled : true
         }, {
             id : 'JISHUCOUNT',
-            header : '奇数个数',
+            header : 'N数个数',
             dataIndex : 'JISHUCOUNT',
             css:'font-size:18px;',
             sortable : true,
@@ -699,7 +699,7 @@ Ext.onReady(function() {
             menuDisabled : true
         }, {
             id : 'OUSHUCOUNT',
-            header : '偶数个数',
+            header : 'M数个数',
             dataIndex : 'OUSHUCOUNT',
             css:'font-size:18px;',
             width : 80,
