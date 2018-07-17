@@ -248,7 +248,7 @@ public class MainControl extends BaseControl {
             HashMap<String, Object> map = yhgl.get(i);
             int zhuang = (Integer) map.get("ZHUANGCOUNT");
             int xian = (Integer) map.get("XIANCOUNT");
-            String qiang = "庄强";
+            String qiang = "";
             int s = zhuang - xian;
             if (s > 7) {
                 qiang = "庄";
