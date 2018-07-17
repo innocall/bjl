@@ -27,10 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.charset.Charset;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Controller
 @RequestMapping(value="/private/main")
@@ -246,8 +243,25 @@ public class MainControl extends BaseControl {
         String lx = ParamUtils.getParameter(request, "lx", "");
         ManageUser user = (ManageUser) request.getSession().getAttribute(AppConstans.MANAGE_USER_SESSION);
         List<HashMap<String, Object>> yhgl = mainMessage.findRoomList(start, limit,user.getID(),qxqiang,dsqiang,lz,lx);
+        List<HashMap<String, Object>> yhgl2 = new ArrayList<HashMap<String, Object>>();
+        for(int i=0;i<yhgl.size();i++) {
+            HashMap<String, Object> map = yhgl.get(i);
+            int zhuang = (Integer) map.get("ZHUANGCOUNT");
+            int xian = (Integer) map.get("XIANCOUNT");
+            String qiang = "庄强";
+            int s = zhuang - xian;
+            if (s > 7) {
+                qiang = "庄";
+            } else if (s < 7 && s > -7) {
+                qiang = "中间";
+            } else {
+                qiang = "闲";
+            }
+            map.put("QIANG",qiang);
+            yhgl2.add(map);
+        }
         int count = mainMessage.findRoomListCount(start, limit,user.getID(),qxqiang,dsqiang,lz,lx);
-        param.put("yhgl", yhgl);
+        param.put("yhgl", yhgl2);
         param.put("count", count);
         String json = JsonUtil.toJsonString(param);
         ResponseEntity<String> responseEntity = new ResponseEntity<String>(
