@@ -104,7 +104,8 @@ function init() {
     }
     showLog(myArray);
     //尾切牌
-    var lanrenzhijia = Math.floor(Math.random()*(120-60)+ 60);
+   // var lanrenzhijia = Math.floor(Math.random()*(120-60)+ 60);
+    var lanrenzhijia = Math.floor(Math.random()*(85-60)+ 60);
     //插入红牌
     myArray = downSet(myArray,lanrenzhijia);
     showLog(myArray);
