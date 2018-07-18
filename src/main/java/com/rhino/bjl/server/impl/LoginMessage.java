@@ -141,7 +141,7 @@ public class LoginMessage implements ILoginMessage {
         List<HashMap<String,Object>> list = mainManageMapper.findRoomList(sql);
         for (HashMap<String,Object> hashMap:list) {
             HashMap<String,Object> params = new HashMap<String,Object>();
-            //查询所以小局
+            //查询所有小局
             String roomId = hashMap.get("ID").toString();
             HashMap<String,Object> map = new HashMap<String, Object>();
             map.put("ROOMID",roomId);
@@ -158,6 +158,34 @@ public class LoginMessage implements ILoginMessage {
             params.put("JISHUCOUNT", jiShu);
             params.put("OUSHUCOUNT", ouShu);
             boolean isParam = mainManageMapper.updateRoomCountData(params);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean reetTbl2() {
+        String sql = "select * from room_tbl";
+        List<HashMap<String,Object>> list = mainManageMapper.findRoomList(sql);
+        for (HashMap<String,Object> hashMap:list) {
+            HashMap<String,Object> params = new HashMap<String,Object>();
+            //查询所以小局
+            String roomId = hashMap.get("ID").toString();
+            HashMap<String,Object> map = new HashMap<String, Object>();
+            map.put("ROOMID",roomId);
+            int zhuang = (Integer) hashMap.get("ZHUANGCOUNT");
+            int xian = (Integer) hashMap.get("XIANCOUNT");
+            String qiang = "0";
+            int s = zhuang - xian;
+            if (s > 7) {
+                qiang = "1";
+            } else if (s < 8 && s > -8) {
+                qiang = "0";
+            } else {
+                qiang = "2";
+            }
+            map.put("TRENT",qiang);
+            map.put("HECOUNT",hashMap.get("HECOUNT"));
+            mainManageMapper.updateReetByRoomId(map);
         }
         return true;
     }

@@ -33,4 +33,6 @@ public interface IMainMessage {
     boolean deleteReetById(String id);
 
     HashMap<String,Object> findRoomById(String roomId);
+
+    boolean updateReetByRoomId(String roomId);
 }

@@ -1192,7 +1192,23 @@ function submitDate(xian1,zhuang1,xian2,zhuang2,xian3,zhuang3,userMoney,touzhuMo
             //alert(obj.msg);
         }
     );
+}
 
+/**
+ * 游戏结束设计每一局强弱
+ */
+function setState() {
+    $.post("setState",{ roomId:roomId },
+        function(data,textStatus){
+            var obj = eval('(' + data + ')');
+            var status = obj.status;
+            if(status == 200) {
+
+            } else {
+               // alert("游戏保存失败，请刷新页面重试");
+            }
+        }
+    );
 }
 
 function goOnGame() {

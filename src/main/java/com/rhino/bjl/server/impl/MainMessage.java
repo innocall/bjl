@@ -370,6 +370,27 @@ public class MainMessage implements IMainMessage {
         return mainManageMapper.findRoomById(map);
     }
 
+    @Override
+    public boolean updateReetByRoomId(String roomId) {
+        HashMap<String,Object> map = new HashMap<String, Object>();
+        map.put("ROOMID",roomId);
+        HashMap<String ,Object> roomMap = findRoomById(roomId);
+        int zhuang = (Integer) roomMap.get("ZHUANGCOUNT");
+        int xian = (Integer) roomMap.get("XIANCOUNT");
+        String qiang = "0";
+        int s = zhuang - xian;
+        if (s > 7) {
+            qiang = "1";
+        } else if (s < 8 && s > -8) {
+            qiang = "0";
+        } else {
+            qiang = "2";
+        }
+        map.put("TRENT",qiang);
+        map.put("HECOUNT",roomMap.get("HECOUNT"));
+        return mainManageMapper.updateReetByRoomId(map);
+    }
+
     public boolean deleteReetByRoomId(String roomId) {
         HashMap<String,Object> map = new HashMap<String, Object>();
         map.put("ROOMID",roomId);

@@ -44,4 +44,9 @@
         select * from room_tbl where ID = #{ROOMID}
     </select>
 
+    <update id="updateReetByRoomId" parameterType="java.util.HashMap">
+        <![CDATA[
+        UPDATE reet_tbl SET HECOUNT=#{HECOUNT},TRENT=#{TRENT} WHERE ROOMID=#{ROOMID}
+        ]]>
+    </update>
 </mapper>

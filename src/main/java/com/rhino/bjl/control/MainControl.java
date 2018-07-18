@@ -252,8 +252,8 @@ public class MainControl extends BaseControl {
             int s = zhuang - xian;
             if (s > 7) {
                 qiang = "庄";
-            } else if (s < 7 && s > -7) {
-                qiang = "中间";
+            } else if (s < 8 && s > -8) {
+                qiang = "中";
             } else {
                 qiang = "闲";
             }
@@ -449,6 +449,26 @@ public class MainControl extends BaseControl {
         }
         PrintWriter out = null;
         printMsgToPage(response, status, msg, out);
+    }
+
+    @RequestMapping(value = "setState", method = RequestMethod.POST)
+    public
+    @ResponseBody
+    String setState(HttpServletRequest request) {
+        Map<String, Object> param = new HashMap<String, Object>();
+        String roomId = ParamUtils.getParameter(request, "roomId", "");
+        if(StringUtils.isNotBlank(roomId)) {
+            boolean isParam = mainMessage.updateReetByRoomId(roomId);
+            if(isParam) {
+                param.put("success", true);
+            } else {
+                param.put("success", false);
+            }
+        } else {
+            param.put("success", false);
+        }
+        String json = JsonUtil.toJsonString(param);
+        return json;
     }
 
     private int getDianShu(String ZHUANG1, String ZHUANG2, String ZHUANG3) {
