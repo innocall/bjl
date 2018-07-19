@@ -123,6 +123,9 @@
         </where>
         ) e ON a.POINT = e.POINT + 1
         AND a.ROOMID = e.ROOMID
+        <where>
+            <if test="TRENT != '全部'">and a.TRENT = #{TRENT}</if>
+        </where>
         ORDER BY
         a.TIME ASC
     </select>
@@ -158,7 +161,11 @@
             <if test="VALUE2 != '全部'">and b.VALUE = #{VALUE2}</if>
         </where>
         ) e ON a.POINT = e.POINT + 1
-        AND a.ROOMID = e.ROOMID ORDER BY a.TIME ASC
+        AND a.ROOMID = e.ROOMID
+        <where>
+            <if test="TRENT != '全部'">and a.TRENT = #{TRENT}</if>
+        </where>
+        ORDER BY a.TIME ASC
     </select>
 
     <select id="findMoreData4" resultType="java.util.HashMap">
@@ -180,7 +187,11 @@
             <if test="VALUE1 != '全部'">and c.VALUE = #{VALUE1}</if>
         </where>
         ) d ON a.ROOMID = d.dROOMID
-        AND a.POINT = d.dPOINT + 1 ORDER BY a.TIME ASC
+        AND a.POINT = d.dPOINT + 1
+        <where>
+            <if test="TRENT != '全部'">and a.TRENT = #{TRENT}</if>
+        </where>
+        ORDER BY a.TIME ASC
     </select>
 
 

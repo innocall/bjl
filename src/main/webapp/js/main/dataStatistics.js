@@ -105,7 +105,7 @@ function init() {
     showLog(myArray);
     //尾切牌
    // var lanrenzhijia = Math.floor(Math.random()*(120-60)+ 60);
-    var lanrenzhijia = Math.floor(Math.random()*(85-60)+ 60);
+    var lanrenzhijia = Math.floor(Math.random()*(85-50)+ 50);
     //插入红牌
     myArray = downSet(myArray,lanrenzhijia);
     showLog(myArray);
@@ -181,6 +181,8 @@ function doPause(){
 
 //继续倒计时
 function doGo(){
+    // roomId = "8c491715-d782-4916-8369-40ed941b2878";
+    // setState();
     settime();
 }
 
@@ -1179,6 +1181,8 @@ function submitDate(xian1,zhuang1,xian2,zhuang2,xian3,zhuang3,userMoney,touzhuMo
                 if (juCount < allJuCount && !isJieShu) {
                     setTimeout(function() {goOnGame() },5000);
                 } else {
+                    console.info("游戏结束");
+                    setState();//初始化小局强弱数据
                     $("#msg").html("游戏结束");
                     $("#msg").css("display","initial");
                     if ($("#islixu").is(':checked')) {
@@ -1198,15 +1202,28 @@ function submitDate(xian1,zhuang1,xian2,zhuang2,xian3,zhuang3,userMoney,touzhuMo
  * 游戏结束设计每一局强弱
  */
 function setState() {
+    console.info("游戏结束-调用方法setState");
+    // Ext.Ajax.request({
+    //     url:path+'private/main/setState',
+    //     method:'post',
+    //     params:{roomId:roomId },
+    //     success:function(res,ops){
+    //         var jsonObj = Ext.util.JSON.decode(res.responseText);
+    //         console.info("游戏结束-调用方法返回:" + jsonObj);
+    //         // if(jsonObj.success){
+    //         //     jsonEpisData.remove(roleRecord);
+    //         // }
+    //     },
+    //     failure:function(res,ops){
+    //         console.info("游戏结束-调用方法返回:" + jsonObj);
+    //        // Ext.Msg.alert('提示',"删除失败");
+    //     }
+    // });
     $.post("setState",{ roomId:roomId },
         function(data,textStatus){
             var obj = eval('(' + data + ')');
             var status = obj.status;
-            if(status == 200) {
-
-            } else {
-               // alert("游戏保存失败，请刷新页面重试");
-            }
+            console.info("游戏结束-调用方法返回:" + status + ";" + textStatus);
         }
     );
 }

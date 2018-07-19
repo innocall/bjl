@@ -27,7 +27,7 @@ Ext.onReady(function() {
     var dateSearchForm = new Ext.FormPanel({
         region : 'north',
         frame : true,
-        height : 228,
+        height : 278,
         labelWidth:80,
         labelAlign:'right',
         items: [{
@@ -149,6 +149,18 @@ Ext.onReady(function() {
                         }]
                     }]
                 },{
+                    xtype: "combo",
+                    id: "threeType4",
+                    name: "threeType4",
+                    fieldLabel: '<font style="font-size: 15px">查询对象</font>',
+                    width: 150,
+                    editable: false,
+                    style: 'font-size:15px;',
+                    labelSeparator: '：',
+                    store: ['全部', '庄强', '闲强', '中间'],
+                    displayField: 'category',
+                    triggerAction: 'all'
+                },{
                     xtype: 'textfield',
                     id: 'allCount',
                     name: 'allCount',
@@ -170,7 +182,7 @@ Ext.onReady(function() {
                             var font=document.createElement("font");
                             font.setAttribute("color","red");
                             font.setAttribute("style","font-size:15px;");
-                            var redStar=document.createTextNode('    根据输入的大局数量查询组数，如总共大局3000.查大局数量600.则可查组数为5组，输入1查询1-600。输入2查询601-1200，以此类推');
+                            var redStar=document.createTextNode('    根据输入的大局数量查询组数');
                             font.appendChild(redStar);
                             obj.el.dom.parentNode.appendChild(font);
                         }
@@ -220,6 +232,7 @@ Ext.onReady(function() {
                         oneType : dateSearchForm.getForm().findField("oneType").getValue(),
                         twoType : dateSearchForm.getForm().findField("twoType").getValue(),
                         threeType : dateSearchForm.getForm().findField("threeType").getValue(),
+                        threeType4 : dateSearchForm.getForm().findField("threeType4").getValue(),
                         one : ones,
                         two :twos,
                         three :three,
@@ -236,6 +249,7 @@ Ext.onReady(function() {
             oneType : dateSearchForm.getForm().findField("oneType").getValue(),
             twoType : dateSearchForm.getForm().findField("twoType").getValue(),
             threeType : dateSearchForm.getForm().findField("threeType").getValue(),
+            threeType4 : dateSearchForm.getForm().findField("threeType4").getValue(),
             one : dateSearchForm.getForm().findField("one").getValue(),
             two : dateSearchForm.getForm().findField("two").getValue(),
             three : dateSearchForm.getForm().findField("three").getValue(),

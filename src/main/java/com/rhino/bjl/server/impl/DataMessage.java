@@ -34,7 +34,7 @@ public class DataMessage implements IDataMessage{
     }
 
     @Override
-    public List<HashMap<String, Object>> findReetList2(String oneType, String twoType, String threeType, String one, String two, String three,String allCount,String pages) {
+    public List<HashMap<String, Object>> findReetList2(String oneType, String twoType, String threeType, String one, String two, String three,String allCount,String pages,String threeType4) {
         List<HashMap<String, Object>> dataList = new ArrayList<HashMap<String, Object>>();
         HashMap<String,Object> map = new HashMap<String, Object>();
         Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
@@ -56,6 +56,7 @@ public class DataMessage implements IDataMessage{
                 map.put("VALUE1",oneType);
                 map.put("VALUE2",twoType);
                 map.put("VALUE3",threeType);
+                map.put("TRENT",threeType4);
                 map.put("allCount",Integer.valueOf(allCount).intValue());
                 map.put("pages",Integer.valueOf(allCount).intValue() * (Integer.valueOf(pages).intValue() - 1));
                 dataList = dataManageMapper.findMoreData2(map);
@@ -68,6 +69,7 @@ public class DataMessage implements IDataMessage{
                 map.put("OUSHUCOUNT2",arrayTwo[1]);
                 map.put("VALUE1",oneType);
                 map.put("VALUE2",twoType);
+                map.put("TRENT",threeType4);
                 map.put("allCount",Integer.valueOf(allCount).intValue());
                 map.put("pages",Integer.valueOf(allCount).intValue() * (Integer.valueOf(pages).intValue() - 1));
                 dataList = dataManageMapper.findMoreData3(map);
@@ -77,6 +79,7 @@ public class DataMessage implements IDataMessage{
             map.put("JISHUCOUNT1",arrayOne[0]);
             map.put("OUSHUCOUNT1",arrayOne[1]);
             map.put("VALUE1",oneType);
+            map.put("TRENT",threeType4);
             map.put("allCount",Integer.valueOf(allCount).intValue());
             map.put("pages",Integer.valueOf(allCount).intValue() * (Integer.valueOf(pages).intValue() - 1));
             dataList = dataManageMapper.findMoreData4(map);
