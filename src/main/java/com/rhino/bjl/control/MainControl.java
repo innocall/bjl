@@ -241,8 +241,9 @@ public class MainControl extends BaseControl {
         String dsqiang = ParamUtils.getParameter(request, "dsqiang", "");
         String lz = ParamUtils.getParameter(request, "lz", "");
         String lx = ParamUtils.getParameter(request, "lx", "");
+        String trent = ParamUtils.getParameter(request, "trent", "全部");
         ManageUser user = (ManageUser) request.getSession().getAttribute(AppConstans.MANAGE_USER_SESSION);
-        List<HashMap<String, Object>> yhgl = mainMessage.findRoomList(start, limit,user.getID(),qxqiang,dsqiang,lz,lx);
+        List<HashMap<String, Object>> yhgl = mainMessage.findRoomList(start, limit,user.getID(),qxqiang,dsqiang,lz,lx,trent);
         List<HashMap<String, Object>> yhgl2 = new ArrayList<HashMap<String, Object>>();
         for(int i=0;i<yhgl.size();i++) {
             HashMap<String, Object> map = yhgl.get(i);
@@ -260,7 +261,7 @@ public class MainControl extends BaseControl {
             map.put("QIANG",qiang);
             yhgl2.add(map);
         }
-        int count = mainMessage.findRoomListCount(start, limit,user.getID(),qxqiang,dsqiang,lz,lx);
+        int count = mainMessage.findRoomListCount(start, limit,user.getID(),qxqiang,dsqiang,lz,lx,trent);
         param.put("yhgl", yhgl2);
         param.put("count", count);
         String json = JsonUtil.toJsonString(param);

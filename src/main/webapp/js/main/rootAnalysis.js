@@ -121,6 +121,23 @@ Ext.onReady(function() {
                         displayField: 'category',
                         triggerAction: 'all'
                     }]
+                },{
+                    columnWidth: .5,  //该列占用的宽度，标识为50％
+                    layout: 'form',
+                    border: false,
+                    items: [{
+                        xtype: "combo",
+                        id: "trent",
+                        name: "trent",
+                        fieldLabel: '<font style="font-size: 15px">强弱>7</font>',
+                        width: 80,
+                        editable: false,
+                        style: 'font-size:15px;',
+                        labelSeparator: '：',
+                        store: ['全部','庄', '闲', '中'],
+                        displayField: 'category',
+                        triggerAction: 'all'
+                    }]
                 }]
             }]
         }],
@@ -139,6 +156,8 @@ Ext.onReady(function() {
                             "lz").getValue(),
                         lx : dateSearchForm.getForm().findField(
                             "lx").getValue(),
+                        trent : dateSearchForm.getForm().findField(
+                            "trent").getValue()
                     }
                 });
             }
@@ -155,6 +174,8 @@ Ext.onReady(function() {
                 "lz").getValue(),
             lx : dateSearchForm.getForm().findField(
                 "lx").getValue(),
+            trent : dateSearchForm.getForm().findField(
+                "trent").getValue(),
         };
     });
 

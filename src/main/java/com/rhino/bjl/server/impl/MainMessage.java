@@ -300,14 +300,21 @@ public class MainMessage implements IMainMessage {
     }
 
     @Override
-    public List<HashMap<String, Object>> findRoomList(int start, int limit,String userId,String qxqiang,String dsqiang,String lz,String lx) {
+    public List<HashMap<String, Object>> findRoomList(int start, int limit,String userId,String qxqiang,String dsqiang,String lz,String lx,String trent) {
         String sql = "select * from room_tbl where USERID='" + userId+ "'";
-        sql = getStringSql(qxqiang, dsqiang, lz, lx, sql);
+        sql = getStringSql(qxqiang, dsqiang, lz, lx, trent,sql);
         sql = sql + " ORDER BY STRARTTIME DESC limit "+ start +"," + limit;
         return mainManageMapper.findRoomList(sql);
     }
 
-    private String getStringSql(String qxqiang, String dsqiang, String lz, String lx, String sql) {
+    private String getStringSql(String qxqiang, String dsqiang, String lz, String lx,String trent, String sql) {
+        if (trent.equals("庄")) {
+            sql = sql + " AND ZHUANGCOUNT > XIANCOUNT + 7";
+        } else if (trent.equals("闲")) {
+            sql = sql + " AND XIANCOUNT > ZHUANGCOUNT + 7";
+        } else if (trent.equals("中")) {
+            sql = sql + " AND XIANCOUNT - ZHUANGCOUNT > -7 AND XIANCOUNT - ZHUANGCOUNT < 7";
+        }
         if (org.apache.commons.lang.StringUtils.isNotBlank(qxqiang)) {
             //庄闲强
             if (qxqiang.equals("庄强")) {
@@ -336,9 +343,9 @@ public class MainMessage implements IMainMessage {
     }
 
     @Override
-    public int findRoomListCount(int start, int limit,String userId,String qxqiang,String dsqiang,String lz,String lx) {
+    public int findRoomListCount(int start, int limit,String userId,String qxqiang,String dsqiang,String lz,String lx,String trent) {
         String sql = "select Count(*) AS NUMBER from room_tbl where USERID='" + userId + "'";
-        sql = getStringSql(qxqiang, dsqiang, lz, lx, sql);
+        sql = getStringSql(qxqiang, dsqiang, lz, lx,trent, sql);
         return mainManageMapper.findRoomListCount(sql);
     }
 
