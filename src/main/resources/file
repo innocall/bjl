@@ -43,5 +43,8 @@ FROM
 ORDER BY
 	ROOMID,POINT ASC
 
+#随机取5条数据
+SELECT * FROM reet_tbl where XIAN1=7 ORDER BY RAND() LIMIT 5;
+
 
 

@@ -76,7 +76,7 @@ Ext.onReady(function(){
 	var tree = new Ext.tree.TreePanel({
 		id:'tree',
 		flex:1,
-		width:100,
+		width:130,
 		root:{
 			nodeType:'async',
 			text:'<font style="font-size: 15px">百家乐数据分析平台</font>',
@@ -86,7 +86,16 @@ Ext.onReady(function(){
                 {id:'1', text : '<font style="font-size: 15px">单机游戏</font>' , leaf : true },
                 {id:'3', text : '<font style="font-size: 15px">大局分析</font>' , leaf : true },
                 {id:'2', text : '<font style="font-size: 15px">小局分析</font>' , leaf : true },
-                {id:'4', text : '<font style="font-size: 15px">数据分析</font>' , leaf : true }
+                {id:'4', text : '<font style="font-size: 15px">数据分析</font>' , leaf : true },
+                {id:'5', text: '<font style="font-size: 15px">数据建模</font>', expanded: true, children: [
+                    {id:'6', text : '<font style="font-size: 15px">数据准备</font>' ,expanded: true,children:[
+                        {id:'8', text : '<font style="font-size: 15px">初始化数据</font>' , leaf : true },
+                        {id:'9', text : '<font style="font-size: 15px">初始化测试集数据</font>' , leaf : true },
+                        {id:'10', text : '<font style="font-size: 15px">初始化训练集数据</font>' , leaf : true },
+                        {id:'10', text : '<font style="font-size: 15px">初始化验证集数据</font>' , leaf : true }
+					] },
+                    {id:'7', text : '<font style="font-size: 15px">数据分析</font>' , leaf : true }
+                ]}
             ]
         },
 	    listeners:{
@@ -125,7 +134,7 @@ Ext.onReady(function(){
 		collapsible:true,
 		title:'功能菜单',
 		border:true,
-		width:180,
+		width:230,
 		layout:'vbox',
 		layoutConfig:{
 			align:'stretch',
