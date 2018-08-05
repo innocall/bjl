@@ -112,6 +112,8 @@ Ext.onReady(function(){
                             url = path + "private/main/rootAnalysis";
 						} else if (node.id == 4) {
                             url = path + "data/analysis/index";
+						} else if (node.id == 8) {
+                            url = path + "data/analysis/initMode"; //数据准备
 						}
 	    				tab = new Ext.Panel({
 	    					id:'Tab_' + node.id,

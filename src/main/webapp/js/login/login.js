@@ -1,6 +1,6 @@
 Ext.onReady(function(){
     var panel = new Ext.form.FormPanel({
-        title:'<font style="font-size: 18px;">百家乐数据分析平台</font>',
+        title:'<font style="font-size: 18px;">数据分析平台</font>',
         width:600,
         frame:true,
         border:false,

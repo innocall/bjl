@@ -70,4 +70,11 @@ public class DataControl extends BaseControl {
                 json, headers, HttpStatus.OK);
         return responseEntity;
     }
+
+
+    @RequestMapping(value = "/initMode",method = RequestMethod.GET)
+    public ModelAndView initMode() {
+        ModelAndView mav = new ModelAndView("data/initMode");
+        return mav;
+    }
 }
