@@ -87,12 +87,13 @@ Ext.onReady(function(){
                 {id:'3', text : '<font style="font-size: 15px">大局分析</font>' , leaf : true },
                 {id:'2', text : '<font style="font-size: 15px">小局分析</font>' , leaf : true },
                 {id:'4', text : '<font style="font-size: 15px">数据分析</font>' , leaf : true },
+                {id:'12', text : '<font style="font-size: 15px">数据统计</font>' , leaf : true },
                 {id:'5', text: '<font style="font-size: 15px">数据建模</font>', expanded: true, children: [
                     {id:'6', text : '<font style="font-size: 15px">数据准备</font>' ,expanded: true,children:[
                         {id:'8', text : '<font style="font-size: 15px">初始化数据</font>' , leaf : true },
                         {id:'9', text : '<font style="font-size: 15px">初始化测试集数据</font>' , leaf : true },
                         {id:'10', text : '<font style="font-size: 15px">初始化训练集数据</font>' , leaf : true },
-                        {id:'10', text : '<font style="font-size: 15px">初始化验证集数据</font>' , leaf : true }
+                        {id:'11', text : '<font style="font-size: 15px">初始化验证集数据</font>' , leaf : true }
 					] },
                     {id:'7', text : '<font style="font-size: 15px">数据分析</font>' , leaf : true }
                 ]}
@@ -114,7 +115,9 @@ Ext.onReady(function(){
                             url = path + "data/analysis/index";
 						} else if (node.id == 8) {
                             url = path + "data/analysis/initMode"; //数据准备
-						}
+						} else if (node.id == 12) {
+                            url = path + "data/analysis/dateCount"; //数据统计
+                        }
 	    				tab = new Ext.Panel({
 	    					id:'Tab_' + node.id,
 	    					title:node.text,

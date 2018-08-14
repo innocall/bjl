@@ -77,7 +77,8 @@
         FROM
         reet_tbl a
         <if test='allCount != "" and allCount != "0"'>
-            INNER JOIN (SELECT * from room_tbl ORDER BY room_tbl.STRARTTIME ASC LIMIT #{pages},#{allCount}) h ON a.ROOMID = h.ID
+            INNER JOIN (SELECT * from room_tbl ORDER BY room_tbl.STRARTTIME ASC LIMIT #{pages},#{allCount}) h ON
+            a.ROOMID = h.ID
         </if>
         INNER JOIN (
         SELECT
@@ -136,7 +137,8 @@
         FROM
         reet_tbl a
         <if test='allCount != "" and allCount != "0"'>
-            INNER JOIN (SELECT * from room_tbl ORDER BY room_tbl.STRARTTIME ASC LIMIT #{pages},#{allCount}) h ON a.ROOMID = h.ID
+            INNER JOIN (SELECT * from room_tbl ORDER BY room_tbl.STRARTTIME ASC LIMIT #{pages},#{allCount}) h ON
+            a.ROOMID = h.ID
         </if>
         INNER JOIN (
         SELECT
@@ -174,7 +176,8 @@
         FROM
         reet_tbl a
         <if test='allCount != "" and allCount != "0"'>
-            INNER JOIN (SELECT * from room_tbl ORDER BY room_tbl.STRARTTIME ASC LIMIT #{pages},#{allCount}) h ON a.ROOMID = h.ID
+            INNER JOIN (SELECT * from room_tbl ORDER BY room_tbl.STRARTTIME ASC LIMIT #{pages},#{allCount}) h ON
+            a.ROOMID = h.ID
         </if>
         INNER JOIN (
         SELECT
@@ -192,6 +195,49 @@
             <if test="TRENT != '全部'">and a.TRENT = #{TRENT}</if>
         </where>
         ORDER BY a.TIME ASC
+    </select>
+
+    <select id="findReetListByMN" resultType="java.util.HashMap">
+        SELECT *, count(PAI) AS PAICOUNT  FROM(
+                SELECT
+                    *,
+                    GROUP_CONCAT( ZHUANG1,":",XIAN1,":",ZHUANG2,":", XIAN2,":",ZHUANG3,":",XIAN3) AS PAI
+                FROM
+                    reet_tbl
+                WHERE
+                    JISHUCOUNT = #{JISHUCOUNT}
+                AND OUSHUCOUNT = #{OUSHUCOUNT}
+                GROUP BY
+                    ID
+            ) as TMP
+        GROUP BY
+            PAI DESC ORDER BY PAICOUNT DESC LIMIT #{start},#{limit}
+    </select>
+
+    <select id="findReetListCountByMN" resultType="java.util.HashMap">
+        SELECT
+        *, count(PAI) AS PAICOUNT
+        FROM
+        (
+        SELECT
+        *,
+        GROUP_CONCAT( ZHUANG1,":",XIAN1,":",ZHUANG2,":", XIAN2,":",ZHUANG3,":",XIAN3) AS PAI
+        FROM
+        reet_tbl
+        WHERE
+        JISHUCOUNT = #{JISHUCOUNT}
+        AND OUSHUCOUNT = #{OUSHUCOUNT}
+        GROUP BY
+        ID
+        ) as TMP
+        GROUP BY
+        PAI DESC ORDER BY PAICOUNT DESC
+    </select>
+
+    <select id="findReetByPai" resultType="java.util.HashMap">
+        SELECT
+        *
+        FROM reet_tbl WHERE XIAN1=#{XIAN1} AND XIAN2=#{XIAN2} AND XIAN3=#{XIAN3} AND ZHUANG1=#{ZHUANG1} AND ZHUANG2=#{ZHUANG2} AND ZHUANG3=#{ZHUANG3}
     </select>
 
 

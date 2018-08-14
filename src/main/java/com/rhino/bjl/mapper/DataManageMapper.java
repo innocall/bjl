@@ -54,4 +54,16 @@ public class DataManageMapper {
     public List<HashMap<String, Object>> findMoreData4(HashMap<String, Object> map) {
         return lemonDB.getList("findMoreData4",map);
     }
+
+    public List<HashMap<String, Object>> findReetListByMN(HashMap<String, Object> map3) {
+        return lemonDB.getList("findReetListByMN",map3);
+    }
+
+    public List<HashMap<String, Object>> findReetListCountByMN(HashMap<String, Object> map3) {
+        return lemonDB.getList("findReetListCountByMN",map3);
+    }
+
+    public List<HashMap<String, Object>> findReetByPai(HashMap<String, Object> map3) {
+        return lemonDB.getList("findReetByPai",map3);
+    }
 }

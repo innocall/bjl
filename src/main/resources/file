@@ -71,4 +71,35 @@ ORDER BY
 	POINT ASC
 
 
+# 查询牌的数量倒序
+SELECT
+	*, count(PAI) AS PAICOUNT
+FROM
+	(
+		SELECT
+			*,
+			GROUP_CONCAT(
+				ZHUANG1,
+				":",
+				XIAN1,
+				":",
+				ZHUANG2,
+				":",
+				XIAN2,
+				":",
+				ZHUANG3,
+				":",
+				XIAN3
+			) AS PAI
+		FROM
+			reet_tbl
+		WHERE
+			JISHUCOUNT = 3
+		AND OUSHUCOUNT = 0
+		GROUP BY
+			ID
+	) as TMP
+GROUP BY
+	PAI DESC ORDER BY PAICOUNT DESC;
+
 

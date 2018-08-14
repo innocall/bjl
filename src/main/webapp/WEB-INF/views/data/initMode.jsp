@@ -16,13 +16,14 @@
     <meta http-equiv="pragma" content="no-cache">
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="expires" content="0">
-    <meta content="width=device-width; initial-scale=1.0; maximum-scale=1.0; minimum-scale=1.0; user-scalable=false;" name="viewport">
+    <meta content="width=device-width; initial-scale=1.0; maximum-scale=1.0; minimum-scale=1.0; user-scalable=false" name="viewport">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/extjs/resources/css/ext-all.css">
     <script type="text/javascript" src="${pageContext.request.contextPath }/extjs/adapter/ext/ext-base.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath }/extjs/ext-all.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath }/extjs/ext-lang-zh_CN.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath }/extjs/ux/ProgressBarPager.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath }/js/main/data.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath }/js/data/initMode.js"></script>
     <script type="text/javascript">
         Ext.BLANK_IMAGE_URL = '${pageContext.request.contextPath }/extjs/resources/images/default/s.gif';
