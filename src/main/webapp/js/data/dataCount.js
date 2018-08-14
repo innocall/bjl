@@ -8,18 +8,18 @@ Ext.onReady(function () {
         fields: ['ID', 'ROOMID', 'ZHUANG1', 'ZHUANG2', 'ZHUANG3', 'XIAN1', 'XIAN2', 'XIAN3', 'TOUZHUMONEY', 'TOUZHU', 'ZHUANGVALUE', 'XIANVALUE', 'TIME', 'POINT', 'VALUE', 'JISHUCOUNT', 'OUSHUCOUNT', 'PAICOUNT']
     });
 
-    var jsonEpisData = new Ext.data.JsonStore({
-        id: 'reetList',
+    var jsonEpis2 = new Ext.data.JsonStore({
+        id: 'jsonEpis2',
         url : path + 'private/main/findReetById',
         root: 'reetList',
         totalProperty: 'count',
         fields: ['ID', 'ROOMID', 'ZHUANG1', 'ZHUANG2', 'ZHUANG3', 'XIAN1', 'XIAN2', 'XIAN3', 'TIME', 'TOUZHU', 'ZHUANGVALUE', 'XIANVALUE', 'POINT', 'VALUE', 'JISHUCOUNT', 'OUSHUCOUNT']
     });
 
-    var jsonEpisData2 = new Ext.data.JsonStore({
-        id: 'jsonEpisData2',
+    var jsonEpisData = new Ext.data.JsonStore({
+        id: 'jsonEpisData',
         url: path + 'data/analysis/findReetById',
-        root: 'jsonEpisData2',
+        root: 'reetList',
         totalProperty: 'count',
         fields: ['ID', 'ROOMID', 'ZHUANG1', 'ZHUANG2', 'ZHUANG3', 'XIAN1', 'XIAN2', 'XIAN3', 'TIME', 'TOUZHU', 'ZHUANGVALUE', 'XIANVALUE', 'POINT', 'VALUE', 'JISHUCOUNT', 'OUSHUCOUNT']
     });
@@ -557,10 +557,10 @@ Ext.onReady(function () {
                         Ext.Msg.alert('提示', '请选中要查看记录!');
                         return;
                     } else {
-                        var ROOMID = roleRecord.get("ROOMID");
-                        jsonEpisData2.load({
+                        var roomId = roleRecord.get("ROOMID");
+                        jsonEpis2.load({
                             params: {
-                                XIAN1: XIAN1
+                                roomId : roomId
                             }
                         });
                         sepisodesWin2.show();
@@ -572,7 +572,7 @@ Ext.onReady(function () {
 
     var episGrid2 = new Ext.grid.GridPanel({
         id: 'episGrid2',
-        store: jsonEpisData2,
+        store: jsonEpis2,
         region: 'center',
         sm: new Ext.grid.RowSelectionModel({
             singleSelect: true
