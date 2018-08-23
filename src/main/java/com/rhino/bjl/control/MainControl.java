@@ -27,10 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.charset.Charset;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Controller
 @RequestMapping(value="/private/main")
@@ -194,6 +191,9 @@ public class MainControl extends BaseControl {
         String jishu = ParamUtils.getParameter(request, "jishu", "");
         String oushu = ParamUtils.getParameter(request, "oushu", "");
         String ling = ParamUtils.getParameter(request, "ling", "");
+        jishu = isNull(jishu);
+        oushu = isNull(oushu);
+        ling = isNull(ling);
         List<HashMap<String, Object>> yhgl = mainMessage.findReetList(category,jishu,oushu,ling,startDate,endDate,query ,start, limit);
         int count = mainMessage.findReetListCount(category,jishu,oushu,ling,startDate,endDate,query ,start, limit);
         param.put("yhgl", yhgl);
@@ -202,6 +202,13 @@ public class MainControl extends BaseControl {
         ResponseEntity<String> responseEntity = new ResponseEntity<String>(
                 json, headers, HttpStatus.OK);
         return responseEntity;
+    }
+
+    public String isNull(String param) {
+        if ("N".equals(param)) {
+            param = "";
+        }
+        return param;
     }
 
 
@@ -234,10 +241,28 @@ public class MainControl extends BaseControl {
         String dsqiang = ParamUtils.getParameter(request, "dsqiang", "");
         String lz = ParamUtils.getParameter(request, "lz", "");
         String lx = ParamUtils.getParameter(request, "lx", "");
+        String trent = ParamUtils.getParameter(request, "trent", "全部");
         ManageUser user = (ManageUser) request.getSession().getAttribute(AppConstans.MANAGE_USER_SESSION);
-        List<HashMap<String, Object>> yhgl = mainMessage.findRoomList(start, limit,user.getID(),qxqiang,dsqiang,lz,lx);
-        int count = mainMessage.findRoomListCount(start, limit,user.getID(),qxqiang,dsqiang,lz,lx);
-        param.put("yhgl", yhgl);
+        List<HashMap<String, Object>> yhgl = mainMessage.findRoomList(start, limit,user.getID(),qxqiang,dsqiang,lz,lx,trent);
+        List<HashMap<String, Object>> yhgl2 = new ArrayList<HashMap<String, Object>>();
+        for(int i=0;i<yhgl.size();i++) {
+            HashMap<String, Object> map = yhgl.get(i);
+            int zhuang = (Integer) map.get("ZHUANGCOUNT");
+            int xian = (Integer) map.get("XIANCOUNT");
+            String qiang = "";
+            int s = zhuang - xian;
+            if (s > 7) {
+                qiang = "庄";
+            } else if (s < 8 && s > -8) {
+                qiang = "中";
+            } else {
+                qiang = "闲";
+            }
+            map.put("QIANG",qiang);
+            yhgl2.add(map);
+        }
+        int count = mainMessage.findRoomListCount(start, limit,user.getID(),qxqiang,dsqiang,lz,lx,trent);
+        param.put("yhgl", yhgl2);
         param.put("count", count);
         String json = JsonUtil.toJsonString(param);
         ResponseEntity<String> responseEntity = new ResponseEntity<String>(
@@ -425,6 +450,26 @@ public class MainControl extends BaseControl {
         }
         PrintWriter out = null;
         printMsgToPage(response, status, msg, out);
+    }
+
+    @RequestMapping(value = "setState", method = RequestMethod.POST)
+    public
+    @ResponseBody
+    String setState(HttpServletRequest request) {
+        Map<String, Object> param = new HashMap<String, Object>();
+        String roomId = ParamUtils.getParameter(request, "roomId", "");
+        if(StringUtils.isNotBlank(roomId)) {
+            boolean isParam = mainMessage.updateReetByRoomId(roomId);
+            if(isParam) {
+                param.put("success", true);
+            } else {
+                param.put("success", false);
+            }
+        } else {
+            param.put("success", false);
+        }
+        String json = JsonUtil.toJsonString(param);
+        return json;
     }
 
     private int getDianShu(String ZHUANG1, String ZHUANG2, String ZHUANG3) {

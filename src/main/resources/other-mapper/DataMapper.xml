@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="DataManageMapper">
+
+
+    <select id="findReetType" resultType="java.util.HashMap">
+        select * from reet_tbl
+        <where>
+            <if test="VALUE != null">VALUE = #{VALUE}</if>
+            <if test='JISHUCOUNT != "n" and JISHUCOUNT != "N"'>and JISHUCOUNT = #{JISHUCOUNT}</if>
+            <if test='OUSHUCOUNT != "n" and OUSHUCOUNT != "N"'>and OUSHUCOUNT = #{OUSHUCOUNT}</if>
+            <if test="ROOMID != null">AND ROOMID = #{ROOMID}</if>
+            <if test="POINT != null">AND POINT = #{POINT}</if>
+        </where>
+    </select>
+
+    <select id="findReetByPoint" resultType="java.util.HashMap">
+        select * from reet_tbl where ROOMID = #{ROOMID} AND POINT = #{POINT}
+    </select>
+
+    <select id="findReetByCount" resultType="java.util.HashMap">
+        select * from reet_tbl
+        <where>
+            <if test='JISHUCOUNT != "n" and JISHUCOUNT != "N"'>JISHUCOUNT = #{JISHUCOUNT}</if>
+            <if test='OUSHUCOUNT != "n" and OUSHUCOUNT != "N"'>and OUSHUCOUNT = #{OUSHUCOUNT}</if>
+        </where>
+    </select>
+
+    <select id="findReetByCounts" resultType="java.util.HashMap">
+        select * from reet_tbl
+        <where>
+            <if test="VALUE != null">VALUE = #{VALUE}</if>
+            <if test='JISHUCOUNT != "n" and JISHUCOUNT != "N"'>and JISHUCOUNT = #{JISHUCOUNT}</if>
+            <if test='OUSHUCOUNT != "n" and OUSHUCOUNT != "N"'>and OUSHUCOUNT = #{OUSHUCOUNT}</if>
+        </where>
+    </select>
+
+    <select id="findReetByValue" resultType="java.util.HashMap">
+        select * from reet_tbl where ROOMID = #{ROOMID} AND VALUE = #{VALUE} AND POINT = #{POINT}
+    </select>
+
+    <select id="findMoreData" resultType="java.util.HashMap">
+        SELECT
+        *
+        FROM
+        reet_tbl a
+        INNER JOIN (
+        SELECT
+        *
+        FROM
+        reet_tbl b
+        INNER JOIN (
+        SELECT
+        ROOMID as dROOMID,POINT as dPOINT ,`VALUE` as dVALUE,JISHUCOUNT as dJISHUCOUNT,OUSHUCOUNT as dOUSHUCOUNT
+        FROM
+        reet_tbl c
+        <where>
+            <if test='JISHUCOUNT1 != "n" and JISHUCOUNT1 != "N"'>c.JISHUCOUNT = #{JISHUCOUNT1}</if>
+            <if test='OUSHUCOUNT1 != "n" and OUSHUCOUNT1 != "N"'>and c.OUSHUCOUNT = #{OUSHUCOUNT1}</if>
+            <if test="VALUE != '全部'">and c.VALUE = #{VALUE}</if>
+        </where>
+        ) d ON b.ROOMID = d.dROOMID
+        AND b.POINT = d.dPOINT + 1
+        AND b.`VALUE` = d.dVALUE
+        <where>
+            <if test='JISHUCOUNT2 != "n" and JISHUCOUNT2 != "N"'>b.JISHUCOUNT = #{JISHUCOUNT2}</if>
+            <if test='OUSHUCOUNT2 != "n" and OUSHUCOUNT2 != "N"'>and b.OUSHUCOUNT = #{OUSHUCOUNT2}</if>
+            <if test="VALUE != '全部'">and b.VALUE = #{VALUE}</if>
+        </where>
+        ) e ON a.POINT = e.POINT + 1
+        AND a.ROOMID = e.ROOMID ORDER BY a.TIME ASC
+    </select>
+
+    <select id="findMoreData2" resultType="java.util.HashMap">
+        SELECT
+        *
+        FROM
+        reet_tbl a
+        <if test='allCount != "" and allCount != "0"'>
+            INNER JOIN (SELECT * from room_tbl ORDER BY room_tbl.STRARTTIME ASC LIMIT #{pages},#{allCount}) h ON
+            a.ROOMID = h.ID
+        </if>
+        INNER JOIN (
+        SELECT
+        *
+        FROM
+        reet_tbl b
+        INNER JOIN (
+        SELECT
+        ROOMID AS dROOMID,
+        POINT AS dPOINT,
+        `VALUE` AS dVALUE,
+        JISHUCOUNT AS dJISHUCOUNT,
+        OUSHUCOUNT AS dOUSHUCOUNT
+        FROM
+        reet_tbl c
+        INNER JOIN (
+        SELECT
+        ROOMID AS dROOMID1,
+        POINT AS dPOINT1,
+        `VALUE` AS dVALUE,
+        JISHUCOUNT AS dJISHUCOUNT1,
+        OUSHUCOUNT AS dOUSHUCOUNT1
+        FROM
+        reet_tbl f
+        <where>
+            <if test='JISHUCOUNT1 != "n" and JISHUCOUNT1 != "N"'>f.JISHUCOUNT = #{JISHUCOUNT1}</if>
+            <if test='OUSHUCOUNT1 != "n" and OUSHUCOUNT1 != "N"'>and f.OUSHUCOUNT = #{OUSHUCOUNT1}</if>
+            <if test="VALUE1 != '全部'">and f.VALUE = #{VALUE1}</if>
+        </where>
+        ) g ON c.ROOMID = g.dROOMID1
+        AND c.POINT = g.dPOINT1 + 1
+        <where>
+            <if test='JISHUCOUNT2 != "n" and JISHUCOUNT2 != "N"'>c.JISHUCOUNT = #{JISHUCOUNT2}</if>
+            <if test='OUSHUCOUNT2 != "n" and OUSHUCOUNT2 != "N"'>and c.OUSHUCOUNT = #{OUSHUCOUNT2}</if>
+            <if test="VALUE2 != '全部'">and c.VALUE = #{VALUE2}</if>
+        </where>
+        ) d ON b.ROOMID = d.dROOMID
+        AND b.POINT = d.dPOINT + 1
+        <where>
+            <if test='JISHUCOUNT3 != "n" and JISHUCOUNT3 != "N"'>b.JISHUCOUNT = #{JISHUCOUNT3}</if>
+            <if test='OUSHUCOUNT3 != "n" and OUSHUCOUNT3 != "N"'>and b.OUSHUCOUNT = #{OUSHUCOUNT3}</if>
+            <if test="VALUE3 != '全部'">and b.VALUE = #{VALUE3}</if>
+        </where>
+        ) e ON a.POINT = e.POINT + 1
+        AND a.ROOMID = e.ROOMID
+        <where>
+            <if test="TRENT != '全部'">and a.TRENT = #{TRENT}</if>
+        </where>
+        ORDER BY
+        a.TIME ASC
+    </select>
+
+    <select id="findMoreData3" resultType="java.util.HashMap">
+        SELECT
+        *
+        FROM
+        reet_tbl a
+        <if test='allCount != "" and allCount != "0"'>
+            INNER JOIN (SELECT * from room_tbl ORDER BY room_tbl.STRARTTIME ASC LIMIT #{pages},#{allCount}) h ON
+            a.ROOMID = h.ID
+        </if>
+        INNER JOIN (
+        SELECT
+        *
+        FROM
+        reet_tbl b
+        INNER JOIN (
+        SELECT
+        ROOMID as dROOMID,POINT as dPOINT ,`VALUE` as dVALUE,JISHUCOUNT as dJISHUCOUNT,OUSHUCOUNT as dOUSHUCOUNT
+        FROM
+        reet_tbl c
+        <where>
+            <if test='JISHUCOUNT1 != "n" and JISHUCOUNT1 != "N"'>c.JISHUCOUNT = #{JISHUCOUNT1}</if>
+            <if test='OUSHUCOUNT1 != "n" and OUSHUCOUNT1 != "N"'>and c.OUSHUCOUNT = #{OUSHUCOUNT1}</if>
+            <if test="VALUE1 != '全部'">and c.VALUE = #{VALUE1}</if>
+        </where>
+        ) d ON b.ROOMID = d.dROOMID
+        AND b.POINT = d.dPOINT + 1
+        <where>
+            <if test='JISHUCOUNT2 != "n" and JISHUCOUNT2 != "N"'>b.JISHUCOUNT = #{JISHUCOUNT2}</if>
+            <if test='OUSHUCOUNT2 != "n" and OUSHUCOUNT2 != "N"'>and b.OUSHUCOUNT = #{OUSHUCOUNT2}</if>
+            <if test="VALUE2 != '全部'">and b.VALUE = #{VALUE2}</if>
+        </where>
+        ) e ON a.POINT = e.POINT + 1
+        AND a.ROOMID = e.ROOMID
+        <where>
+            <if test="TRENT != '全部'">and a.TRENT = #{TRENT}</if>
+        </where>
+        ORDER BY a.TIME ASC
+    </select>
+
+    <select id="findMoreData4" resultType="java.util.HashMap">
+        SELECT
+        *
+        FROM
+        reet_tbl a
+        <if test='allCount != "" and allCount != "0"'>
+            INNER JOIN (SELECT * from room_tbl ORDER BY room_tbl.STRARTTIME ASC LIMIT #{pages},#{allCount}) h ON
+            a.ROOMID = h.ID
+        </if>
+        INNER JOIN (
+        SELECT
+        ROOMID as dROOMID,POINT as dPOINT ,`VALUE` as dVALUE,JISHUCOUNT as dJISHUCOUNT,OUSHUCOUNT as dOUSHUCOUNT
+        FROM
+        reet_tbl c
+        <where>
+            <if test='JISHUCOUNT1 != "n" and JISHUCOUNT1 != "N"'>c.JISHUCOUNT = #{JISHUCOUNT1}</if>
+            <if test='OUSHUCOUNT1 != "n" and OUSHUCOUNT1 != "N"'>and c.OUSHUCOUNT = #{OUSHUCOUNT1}</if>
+            <if test="VALUE1 != '全部'">and c.VALUE = #{VALUE1}</if>
+        </where>
+        ) d ON a.ROOMID = d.dROOMID
+        AND a.POINT = d.dPOINT + 1
+        <where>
+            <if test="TRENT != '全部'">and a.TRENT = #{TRENT}</if>
+        </where>
+        ORDER BY a.TIME ASC
+    </select>
+
+    <select id="findReetListByMN" resultType="java.util.HashMap">
+        SELECT *, count(PAI) AS PAICOUNT  FROM(
+                SELECT
+                    *,
+                    GROUP_CONCAT( ZHUANG1,":",XIAN1,":",ZHUANG2,":", XIAN2,":",ZHUANG3,":",XIAN3) AS PAI
+                FROM
+                    reet_tbl
+                WHERE
+                    JISHUCOUNT = #{JISHUCOUNT}
+                AND OUSHUCOUNT = #{OUSHUCOUNT}
+                GROUP BY
+                    ID
+            ) as TMP
+        GROUP BY
+            PAI DESC ORDER BY PAICOUNT DESC LIMIT #{start},#{limit}
+    </select>
+
+    <select id="findReetListCountByMN" resultType="java.util.HashMap">
+        SELECT
+        *, count(PAI) AS PAICOUNT
+        FROM
+        (
+        SELECT
+        *,
+        GROUP_CONCAT( ZHUANG1,":",XIAN1,":",ZHUANG2,":", XIAN2,":",ZHUANG3,":",XIAN3) AS PAI
+        FROM
+        reet_tbl
+        WHERE
+        JISHUCOUNT = #{JISHUCOUNT}
+        AND OUSHUCOUNT = #{OUSHUCOUNT}
+        GROUP BY
+        ID
+        ) as TMP
+        GROUP BY
+        PAI DESC ORDER BY PAICOUNT DESC
+    </select>
+
+    <select id="findReetByPai" resultType="java.util.HashMap">
+        SELECT
+        *
+        FROM reet_tbl WHERE XIAN1=#{XIAN1} AND XIAN2=#{XIAN2} AND XIAN3=#{XIAN3} AND ZHUANG1=#{ZHUANG1} AND ZHUANG2=#{ZHUANG2} AND ZHUANG3=#{ZHUANG3}
+    </select>
+
+
+</mapper>

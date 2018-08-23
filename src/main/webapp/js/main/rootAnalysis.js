@@ -5,7 +5,7 @@ Ext.onReady(function() {
         url : path + 'private/main/roomAllData',
         root : 'yhgl',
         totalProperty : 'count',
-        fields : [ 'ID', 'TOTALCOUNT', 'ZHUANGCOUNT', 'XIANCOUNT', 'HECOUNT','ZHUANGDUICOUNT', 'XIANDUICOUNT', 'STRARTTIME','ENDTIME','USERID','JISHUCOUNT','OUSHUCOUNT' ]
+        fields : [ 'ID', 'TOTALCOUNT', 'ZHUANGCOUNT', 'XIANCOUNT', 'HECOUNT','ZHUANGDUICOUNT', 'XIANDUICOUNT', 'STRARTTIME','ENDTIME','USERID','JISHUCOUNT','OUSHUCOUNT','QIANG' ]
     });
     jsonUser.load({
         params : {
@@ -78,12 +78,12 @@ Ext.onReady(function() {
                         xtype: "combo",
                         id: "dsqiang",
                         name: "dsqiang",
-                        fieldLabel: '<font style="font-size: 15px">单双强</font>',
+                        fieldLabel: '<font style="font-size: 15px">N，M强</font>',
                         width: 80,
                         editable: false,
                         style: 'font-size:15px;',
                         labelSeparator: '：',
-                        store: ['单数强','双数强',''],
+                        store: ['N强','M强',''],
                         displayField: 'category',
                         triggerAction: 'all'
                     }]
@@ -121,6 +121,23 @@ Ext.onReady(function() {
                         displayField: 'category',
                         triggerAction: 'all'
                     }]
+                },{
+                    columnWidth: .5,  //该列占用的宽度，标识为50％
+                    layout: 'form',
+                    border: false,
+                    items: [{
+                        xtype: "combo",
+                        id: "trent",
+                        name: "trent",
+                        fieldLabel: '<font style="font-size: 15px">强弱>7</font>',
+                        width: 80,
+                        editable: false,
+                        style: 'font-size:15px;',
+                        labelSeparator: '：',
+                        store: ['全部','庄', '闲', '中'],
+                        displayField: 'category',
+                        triggerAction: 'all'
+                    }]
                 }]
             }]
         }],
@@ -139,10 +156,27 @@ Ext.onReady(function() {
                             "lz").getValue(),
                         lx : dateSearchForm.getForm().findField(
                             "lx").getValue(),
+                        trent : dateSearchForm.getForm().findField(
+                            "trent").getValue()
                     }
                 });
             }
         } ]
+    });
+
+    jsonUser.on('beforeload', function(s) {
+        jsonUser.baseParams = {
+            qxqiang : dateSearchForm.getForm().findField(
+                "qxqiang").getValue(),
+            dsqiang : dateSearchForm.getForm().findField(
+                "dsqiang").getValue(),
+            lz : dateSearchForm.getForm().findField(
+                "lz").getValue(),
+            lx : dateSearchForm.getForm().findField(
+                "lx").getValue(),
+            trent : dateSearchForm.getForm().findField(
+                "trent").getValue(),
+        };
     });
 
     /* 数据列表 */
@@ -216,7 +250,7 @@ Ext.onReady(function() {
             menuDisabled : true
         }, {
             id : 'JISHUCOUNT',
-            header : '奇数个数',
+            header : 'N数个数',
             dataIndex : 'JISHUCOUNT',
             css:'font-size:18px;',
             sortable : true,
@@ -224,8 +258,16 @@ Ext.onReady(function() {
             menuDisabled : true
         }, {
             id : 'OUSHUCOUNT',
-            header : '偶数个数',
+            header : 'M数个数',
             dataIndex : 'OUSHUCOUNT',
+            css:'font-size:18px;',
+            sortable : true,
+            align : 'center',
+            menuDisabled : true
+        }, {
+            id : 'QIANG',
+            header : '强弱',
+            dataIndex : 'QIANG',
             css:'font-size:18px;',
             sortable : true,
             align : 'center',
@@ -852,7 +894,7 @@ Ext.onReady(function() {
             menuDisabled : true
         }, {
             id : 'JISHUCOUNT',
-            header : '奇数个数',
+            header : 'N数个数',
             dataIndex : 'JISHUCOUNT',
             css:'font-size:18px;',
             sortable : true,
@@ -861,7 +903,7 @@ Ext.onReady(function() {
             menuDisabled : true
         }, {
             id : 'OUSHUCOUNT',
-            header : '偶数个数',
+            header : 'M数个数',
             dataIndex : 'OUSHUCOUNT',
             css:'font-size:18px;',
             width : 80,

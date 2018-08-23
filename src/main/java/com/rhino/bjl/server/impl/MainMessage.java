@@ -151,6 +151,13 @@ public class MainMessage implements IMainMessage {
         } else if (StringUtils.getCountType(xiandian) == 2) {
             oushu = oushu + 1;
         }*/
+      if(Integer.parseInt(zhuangdian) > Integer.parseInt(xiandian)) {
+          params.put("VALUE", "庄");
+      } else if (Integer.parseInt(zhuangdian) < Integer.parseInt(xiandian)) {
+          params.put("VALUE", "闲");
+      } else {
+          params.put("VALUE", "和");
+      }
         params.put("JISHUCOUNT", jishu);
         params.put("OUSHUCOUNT", oushu);
         params.put("LINGCOUNT", ling);
@@ -293,14 +300,21 @@ public class MainMessage implements IMainMessage {
     }
 
     @Override
-    public List<HashMap<String, Object>> findRoomList(int start, int limit,String userId,String qxqiang,String dsqiang,String lz,String lx) {
+    public List<HashMap<String, Object>> findRoomList(int start, int limit,String userId,String qxqiang,String dsqiang,String lz,String lx,String trent) {
         String sql = "select * from room_tbl where USERID='" + userId+ "'";
-        sql = getStringSql(qxqiang, dsqiang, lz, lx, sql);
+        sql = getStringSql(qxqiang, dsqiang, lz, lx, trent,sql);
         sql = sql + " ORDER BY STRARTTIME DESC limit "+ start +"," + limit;
         return mainManageMapper.findRoomList(sql);
     }
 
-    private String getStringSql(String qxqiang, String dsqiang, String lz, String lx, String sql) {
+    private String getStringSql(String qxqiang, String dsqiang, String lz, String lx,String trent, String sql) {
+        if (trent.equals("庄")) {
+            sql = sql + " AND ZHUANGCOUNT > XIANCOUNT + 7";
+        } else if (trent.equals("闲")) {
+            sql = sql + " AND XIANCOUNT > ZHUANGCOUNT + 7";
+        } else if (trent.equals("中")) {
+            sql = sql + " AND XIANCOUNT - ZHUANGCOUNT > -7 AND XIANCOUNT - ZHUANGCOUNT < 7";
+        }
         if (org.apache.commons.lang.StringUtils.isNotBlank(qxqiang)) {
             //庄闲强
             if (qxqiang.equals("庄强")) {
@@ -311,9 +325,9 @@ public class MainMessage implements IMainMessage {
         }
         if (org.apache.commons.lang.StringUtils.isNotBlank(dsqiang)) {
             //单双强
-            if (dsqiang.equals("单数强")) {
+            if (dsqiang.equals("N强")) {
                 sql = sql + " AND JISHUCOUNT > OUSHUCOUNT";
-            } else  if (dsqiang.equals("双数强")) {
+            } else  if (dsqiang.equals("M强")) {
                 sql = sql + " AND JISHUCOUNT < OUSHUCOUNT";
             }
         }
@@ -329,9 +343,9 @@ public class MainMessage implements IMainMessage {
     }
 
     @Override
-    public int findRoomListCount(int start, int limit,String userId,String qxqiang,String dsqiang,String lz,String lx) {
+    public int findRoomListCount(int start, int limit,String userId,String qxqiang,String dsqiang,String lz,String lx,String trent) {
         String sql = "select Count(*) AS NUMBER from room_tbl where USERID='" + userId + "'";
-        sql = getStringSql(qxqiang, dsqiang, lz, lx, sql);
+        sql = getStringSql(qxqiang, dsqiang, lz, lx,trent, sql);
         return mainManageMapper.findRoomListCount(sql);
     }
 
@@ -361,6 +375,27 @@ public class MainMessage implements IMainMessage {
         HashMap<String,Object> map = new HashMap<String, Object>();
         map.put("ROOMID",roomId);
         return mainManageMapper.findRoomById(map);
+    }
+
+    @Override
+    public boolean updateReetByRoomId(String roomId) {
+        HashMap<String,Object> map = new HashMap<String, Object>();
+        map.put("ROOMID",roomId);
+        HashMap<String ,Object> roomMap = findRoomById(roomId);
+        int zhuang = (Integer) roomMap.get("ZHUANGCOUNT");
+        int xian = (Integer) roomMap.get("XIANCOUNT");
+        String qiang = "0";
+        int s = zhuang - xian;
+        if (s > 7) {
+            qiang = "1";
+        } else if (s < 8 && s > -8) {
+            qiang = "0";
+        } else {
+            qiang = "2";
+        }
+        map.put("TRENT",qiang);
+        map.put("HECOUNT",roomMap.get("HECOUNT"));
+        return mainManageMapper.updateReetByRoomId(map);
     }
 
     public boolean deleteReetByRoomId(String roomId) {

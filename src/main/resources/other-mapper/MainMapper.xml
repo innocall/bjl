@@ -26,7 +26,7 @@
 
     <insert id="saveReetData" parameterType="java.util.HashMap">
         <![CDATA[
-         insert into reet_tbl(ID,USERID,ROOMID,ZHUANG1,ZHUANG2,ZHUANG3,XIAN1,XIAN2,XIAN3,TOUZHUMONEY,TOUZHU,TIME,ZHUANGVALUE,XIANVALUE,POINT,JISHUCOUNT,OUSHUCOUNT,LINGCOUNT) values ( #{ID}, #{USERID}, #{ROOMID},#{ZHUANG1}, #{ZHUANG2}, #{ZHUANG3},#{XIAN1},#{XIAN2},#{XIAN3},#{TOUZHUMONEY},#{TOUZHU},#{TIME},#{ZHUANGVALUE},#{XIANVALUE},#{POINT},#{JISHUCOUNT},#{OUSHUCOUNT},#{LINGCOUNT})
+         insert into reet_tbl(ID,USERID,ROOMID,ZHUANG1,ZHUANG2,ZHUANG3,XIAN1,XIAN2,XIAN3,TOUZHUMONEY,TOUZHU,TIME,ZHUANGVALUE,XIANVALUE,POINT,JISHUCOUNT,OUSHUCOUNT,LINGCOUNT,VALUE) values ( #{ID}, #{USERID}, #{ROOMID},#{ZHUANG1}, #{ZHUANG2}, #{ZHUANG3},#{XIAN1},#{XIAN2},#{XIAN3},#{TOUZHUMONEY},#{TOUZHU},#{TIME},#{ZHUANGVALUE},#{XIANVALUE},#{POINT},#{JISHUCOUNT},#{OUSHUCOUNT},#{LINGCOUNT},#{VALUE})
        ]]>
     </insert>
 
@@ -44,4 +44,9 @@
         select * from room_tbl where ID = #{ROOMID}
     </select>
 
+    <update id="updateReetByRoomId" parameterType="java.util.HashMap">
+        <![CDATA[
+        UPDATE reet_tbl SET HECOUNT=#{HECOUNT},TRENT=#{TRENT} WHERE ROOMID=#{ROOMID}
+        ]]>
+    </update>
 </mapper>
