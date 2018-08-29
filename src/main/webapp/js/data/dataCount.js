@@ -44,7 +44,7 @@ Ext.onReady(function () {
                     border: false,
                     labelWidth: 80,
                     items: [{
-                        columnWidth: .5,  //该列占用的宽度，标识为50％
+                        columnWidth: .3,  //该列占用的宽度，标识为50％
                         layout: 'form',
                         border: false,
                         items: [{
@@ -61,7 +61,7 @@ Ext.onReady(function () {
                             triggerAction: 'all'
                         }]
                     }, {
-                        columnWidth: .5,  //该列占用的宽度，标识为50％
+                        columnWidth: .3,  //该列占用的宽度，标识为50％
                         layout: 'form',
                         border: false,
                         items: [{
@@ -74,6 +74,23 @@ Ext.onReady(function () {
                             style: 'font-size:15px;',
                             labelSeparator: '：',
                             store: ['0', '1', '2', '3', '4', '5', '6', 'N'],
+                            displayField: 'category',
+                            triggerAction: 'all'
+                        }]
+                    },{
+                        columnWidth: .4,  //该列占用的宽度，标识为50％
+                        layout: 'form',
+                        border: false,
+                        items: [{
+                            xtype: "combo",
+                            id: "qiang",
+                            name: "qiang",
+                            fieldLabel: '<font style="font-size: 15px">强弱>7</font>',
+                            width: 60,
+                            editable: false,
+                            style: 'font-size:15px;',
+                            labelSeparator: '：',
+                            store: ['全部', '庄', '闲', '中'],
                             displayField: 'category',
                             triggerAction: 'all'
                         }]
@@ -92,6 +109,8 @@ Ext.onReady(function () {
                             "jishu").getValue(),
                         oushu: dateSearchForm.getForm().findField(
                             "oushu").getValue(),
+                        qiang: dateSearchForm.getForm().findField(
+                            "qiang").getValue(),
                     }
                 });
             }
@@ -104,6 +123,8 @@ Ext.onReady(function () {
                 "jishu").getValue(),
             oushu: dateSearchForm.getForm().findField(
                 "oushu").getValue(),
+            qiang: dateSearchForm.getForm().findField(
+                "qiang").getValue(),
         };
     });
 
@@ -337,6 +358,7 @@ Ext.onReady(function () {
                         var ZHUANG1 = roleRecord.get("ZHUANG1");
                         var ZHUANG2 = roleRecord.get("ZHUANG2");
                         var ZHUANG3 = roleRecord.get("ZHUANG3");
+                        var qiang = dateSearchForm.getForm().findField("qiang").getValue();
                         jsonEpisData.load({
                             params: {
                                 XIAN1: XIAN1,
@@ -344,7 +366,8 @@ Ext.onReady(function () {
                                 XIAN3: XIAN3,
                                 ZHUANG1: ZHUANG1,
                                 ZHUANG2: ZHUANG2,
-                                ZHUANG3: ZHUANG3
+                                ZHUANG3: ZHUANG3,
+                                qiang: qiang
                             }
                         });
                         sepisodesWin.show();

@@ -88,27 +88,29 @@ public class DataMessage implements IDataMessage{
     }
 
     @Override
-    public List<HashMap<String, Object>> findReetListByMN(String jishu, String oushu, int start, int limit) {
+    public List<HashMap<String, Object>> findReetListByMN(String jishu, String oushu, int start, int limit,String qiang) {
         HashMap<String,Object> map3 = new HashMap<String, Object>();
         map3.put("JISHUCOUNT",jishu);
         map3.put("OUSHUCOUNT",oushu);
         map3.put("start",start);
         map3.put("limit",limit);
+        map3.put("qiang",qiang);
         List<HashMap<String, Object>> list =  dataManageMapper.findReetListByMN(map3);
         return list;
     }
 
     @Override
-    public int findReetListCountByMN(String jishu, String oushu, int start, int limit) {
+    public int findReetListCountByMN(String jishu, String oushu, int start, int limit,String qiang) {
         HashMap<String,Object> map3 = new HashMap<String, Object>();
         map3.put("JISHUCOUNT",jishu);
         map3.put("OUSHUCOUNT",oushu);
+        map3.put("qiang",qiang);
         List<HashMap<String, Object>> list =  dataManageMapper.findReetListCountByMN(map3);
         return list.size();
     }
 
     @Override
-    public List<HashMap<String, Object>> findReetByPai(String xian1, String xian2, String xian3, String zhuang1, String zhuang2, String zhuang3) {
+    public List<HashMap<String, Object>> findReetByPai(String xian1, String xian2, String xian3, String zhuang1, String zhuang2, String zhuang3,String qiang) {
         HashMap<String,Object> map3 = new HashMap<String, Object>();
         map3.put("XIAN1",xian1);
         map3.put("XIAN2",xian2);
@@ -116,6 +118,7 @@ public class DataMessage implements IDataMessage{
         map3.put("ZHUANG1",zhuang1);
         map3.put("ZHUANG2",zhuang2);
         map3.put("ZHUANG3",zhuang3);
+        map3.put("qiang",qiang);
         List<HashMap<String, Object>> list =  dataManageMapper.findReetByPai(map3);
         return list;
     }

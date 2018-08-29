@@ -95,10 +95,18 @@ public class DataControl extends BaseControl {
         int limit = ParamUtils.getIntParameter(request, "limit", 80);
         String jishu = ParamUtils.getParameter(request, "jishu", "");
         String oushu = ParamUtils.getParameter(request, "oushu", "");
+        String qiang = ParamUtils.getParameter(request, "qiang", "全部");
         jishu = isNull(jishu);
         oushu = isNull(oushu);
-        List<HashMap<String, Object>> yhgl = dataMessage.findReetListByMN(jishu,oushu,start, limit);
-        int count = dataMessage.findReetListCountByMN(jishu,oushu,start, limit);
+        if (qiang.equals("庄")) {
+            qiang = "1";
+        } else if (qiang.equals("闲")) {
+            qiang = "2";
+        } else if (qiang.equals("中")){
+            qiang = "0";
+        }
+        List<HashMap<String, Object>> yhgl = dataMessage.findReetListByMN(jishu,oushu,start, limit,qiang);
+        int count = dataMessage.findReetListCountByMN(jishu,oushu,start, limit,qiang);
         param.put("yhgl", yhgl);
         param.put("count", count);
         String json = JsonUtil.toJsonString(param);
@@ -126,7 +134,15 @@ public class DataControl extends BaseControl {
         String ZHUANG1 = ParamUtils.getParameter(request, "ZHUANG1", "0");
         String ZHUANG2 = ParamUtils.getParameter(request, "ZHUANG2", "0");
         String ZHUANG3 = ParamUtils.getParameter(request, "ZHUANG3", "0");
-        List<HashMap<String, Object>> reetList = dataMessage.findReetByPai(XIAN1,XIAN2,XIAN3,ZHUANG1,ZHUANG2,ZHUANG3);
+        String qiang = ParamUtils.getParameter(request, "qiang", "全部");
+        if (qiang.equals("庄")) {
+            qiang = "1";
+        } else if (qiang.equals("闲")) {
+            qiang = "2";
+        } else if (qiang.equals("中")){
+            qiang = "0";
+        }
+        List<HashMap<String, Object>> reetList = dataMessage.findReetByPai(XIAN1,XIAN2,XIAN3,ZHUANG1,ZHUANG2,ZHUANG3,qiang);
         param.put("reetList", reetList);
         param.put("count", reetList.size());
         String json = JsonUtil.toJsonString(param);

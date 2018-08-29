@@ -204,9 +204,11 @@
                     GROUP_CONCAT( ZHUANG1,":",XIAN1,":",ZHUANG2,":", XIAN2,":",ZHUANG3,":",XIAN3) AS PAI
                 FROM
                     reet_tbl
-                WHERE
+                <where>
                     JISHUCOUNT = #{JISHUCOUNT}
-                AND OUSHUCOUNT = #{OUSHUCOUNT}
+                    AND OUSHUCOUNT = #{OUSHUCOUNT}
+                    <if test="qiang != '全部'">and TRENT = #{qiang}</if>
+                </where>
                 GROUP BY
                     ID
             ) as TMP
@@ -224,9 +226,11 @@
         GROUP_CONCAT( ZHUANG1,":",XIAN1,":",ZHUANG2,":", XIAN2,":",ZHUANG3,":",XIAN3) AS PAI
         FROM
         reet_tbl
-        WHERE
-        JISHUCOUNT = #{JISHUCOUNT}
-        AND OUSHUCOUNT = #{OUSHUCOUNT}
+        <where>
+            JISHUCOUNT = #{JISHUCOUNT}
+            AND OUSHUCOUNT = #{OUSHUCOUNT}
+            <if test="qiang != '全部'">and TRENT = #{qiang}</if>
+        </where>
         GROUP BY
         ID
         ) as TMP
@@ -237,7 +241,13 @@
     <select id="findReetByPai" resultType="java.util.HashMap">
         SELECT
         *
-        FROM reet_tbl WHERE XIAN1=#{XIAN1} AND XIAN2=#{XIAN2} AND XIAN3=#{XIAN3} AND ZHUANG1=#{ZHUANG1} AND ZHUANG2=#{ZHUANG2} AND ZHUANG3=#{ZHUANG3}
+        FROM reet_tbl
+        <where>
+            XIAN1=#{XIAN1} AND XIAN2=#{XIAN2} AND XIAN3=#{XIAN3}
+            AND ZHUANG1=#{ZHUANG1} AND ZHUANG2=#{ZHUANG2} AND ZHUANG3=#{ZHUANG3}
+            <if test="qiang != '全部'">and TRENT = #{qiang}</if>
+        </where>
+
     </select>
 
 

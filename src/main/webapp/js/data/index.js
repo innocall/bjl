@@ -28,7 +28,7 @@ Ext.onReady(function() {
         region : 'north',
         frame : true,
         height : 278,
-        labelWidth:80,
+        labelWidth:100,
         labelAlign:'right',
         items: [{
             layout:'column',   //定义该元素为布局为列布局方式
@@ -105,7 +105,7 @@ Ext.onReady(function() {
                             id: "oneType",
                             name: "oneType",
                             fieldLabel: '<font style="font-size: 15px">第一局结果</font>',
-                            width: 60,
+                            width: 70,
                             editable: false,
                             style: 'font-size:15px;',
                             labelSeparator: '：',
@@ -122,7 +122,7 @@ Ext.onReady(function() {
                             id: "twoType",
                             name: "twoType",
                             fieldLabel: '<font style="font-size: 15px">第二局结果</font>',
-                            width: 60,
+                            width: 70,
                             editable: false,
                             style: 'font-size:15px;',
                             labelSeparator: '：',
@@ -139,7 +139,7 @@ Ext.onReady(function() {
                             id: "threeType",
                             name: "threeType",
                             fieldLabel: '<font style="font-size: 15px">第三局结果</font>',
-                            width: 60,
+                            width: 70,
                             editable: false,
                             style: 'font-size:15px;',
                             labelSeparator: '：',
@@ -191,6 +191,20 @@ Ext.onReady(function() {
             }]
         }],
         buttons : [ {
+            text : '<font style="font-size: 18px">下一查询</font>',
+            handler : function() {
+                var twos = dateSearchForm.getForm().findField("two").getValue();
+                var three = dateSearchForm.getForm().findField("three").getValue();
+                var twoType = dateSearchForm.getForm().findField("twoType").getValue();
+                var threeType = dateSearchForm.getForm().findField("threeType").getValue();
+                dateSearchForm.getForm().findField("one").setValue(twos);
+                dateSearchForm.getForm().findField("two").setValue(three);
+                dateSearchForm.getForm().findField("three").setValue("");
+                dateSearchForm.getForm().findField("oneType").setValue(twoType);
+                dateSearchForm.getForm().findField("twoType").setValue(threeType);
+                dateSearchForm.getForm().findField("threeType").setValue("全部");
+            }
+        } ,{
             text : '<font style="font-size: 18px">查询</font>',
             handler : function() {
                 var ones = dateSearchForm.getForm().findField("one").getValue();
