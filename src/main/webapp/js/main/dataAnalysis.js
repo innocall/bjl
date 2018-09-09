@@ -5,7 +5,7 @@ Ext.onReady(function() {
         url : path + 'private/main/reetAllData',
         root : 'yhgl',
         totalProperty : 'count',
-        fields : [ 'ID', 'ROOMID', 'ZHUANG1', 'ZHUANG2', 'ZHUANG3','XIAN1', 'XIAN2', 'XIAN3','TOUZHUMONEY','TOUZHU','ZHUANGVALUE','XIANVALUE','TIME','POINT','VALUE','JISHUCOUNT','OUSHUCOUNT' ]
+        fields : [ 'ID', 'ROOMID', 'ZHUANG1', 'ZHUANG2', 'ZHUANG3','XIAN1', 'XIAN2', 'XIAN3','TOUZHUMONEY','TOUZHU','ZHUANGVALUE','XIANVALUE','TIME','POINT','VALUE','JISHUCOUNT','OUSHUCOUNT' ,'MAXCOUNT','MINCOUNT']
     });
 
     jsonUser.load({
@@ -429,6 +429,22 @@ Ext.onReady(function() {
             id : 'OUSHUCOUNT',
             header : 'M数个数',
             dataIndex : 'OUSHUCOUNT',
+            css:'font-size:18px;',
+            sortable : true,
+            align : 'center',
+            menuDisabled : true
+        }, {
+            id : 'MAXCOUNT',
+            header : '大数个数',
+            dataIndex : 'MAXCOUNT',
+            css:'font-size:18px;',
+            sortable : true,
+            align : 'center',
+            menuDisabled : true
+        }, {
+            id : 'MINCOUNT',
+            header : '小数个数',
+            dataIndex : 'MINCOUNT',
             css:'font-size:18px;',
             sortable : true,
             align : 'center',

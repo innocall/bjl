@@ -1,5 +1,6 @@
 package com.rhino.bjl.server.impl;
 
+import com.rhino.bjl.bean.MaxMinBean;
 import com.rhino.bjl.mapper.MainManageMapper;
 import com.rhino.bjl.server.IMainMessage;
 import com.rhino.bjl.utils.DateUtils;
@@ -151,13 +152,20 @@ public class MainMessage implements IMainMessage {
         } else if (StringUtils.getCountType(xiandian) == 2) {
             oushu = oushu + 1;
         }*/
-      if(Integer.parseInt(zhuangdian) > Integer.parseInt(xiandian)) {
+       if(Integer.parseInt(zhuangdian) > Integer.parseInt(xiandian)) {
           params.put("VALUE", "庄");
-      } else if (Integer.parseInt(zhuangdian) < Integer.parseInt(xiandian)) {
+       } else if (Integer.parseInt(zhuangdian) < Integer.parseInt(xiandian)) {
           params.put("VALUE", "闲");
-      } else {
+       } else {
           params.put("VALUE", "和");
-      }
+       }
+        //统计大数小数
+        int maxCount = 0;
+        int minCount = 0;
+        MaxMinBean maxMinBean = StringUtils.setMaxMin(zhuang1,zhuang2,zhuang3,xian1,xian2,xian3,maxCount,minCount);
+        params.put("MAXCOUNT", maxMinBean.getMaxCount());
+        params.put("MINCOUNT", maxMinBean.getMinCount());
+
         params.put("JISHUCOUNT", jishu);
         params.put("OUSHUCOUNT", oushu);
         params.put("LINGCOUNT", ling);

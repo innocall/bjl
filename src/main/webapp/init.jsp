@@ -27,10 +27,15 @@
                 alert(result);
             });
         }
+        function initReet_tbl3() {
+            $.post("login/reetTbl3",function(result){
+                alert(result);
+            });
+        }
     </script>
 </head>
 <body style="padding: 10px;margin: 0px;">
     <button onclick="initReet_tbl();">数据库reet_tbl输赢,奇数偶数初始化初始化</button>
     <button onclick="initRoom_tbl();">数据库room_tbl奇数偶数初始化初始化</button>
     <button onclick="initReet_tbl2();">数据库reet_tbl所在大局强弱及和数量初始化</button>
-    <button>数据库每个房间连庄数，连闲数</button>
+    <button onclick="initReet_tbl3();">数据库初始化大数小数</button>

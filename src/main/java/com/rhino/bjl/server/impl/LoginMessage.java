@@ -1,6 +1,7 @@
 package com.rhino.bjl.server.impl;
 
 import com.rhino.bjl.bean.ManageUser;
+import com.rhino.bjl.bean.MaxMinBean;
 import com.rhino.bjl.mapper.LoginManageMapper;
 import com.rhino.bjl.mapper.MainManageMapper;
 import com.rhino.bjl.server.ILoginMessage;
@@ -186,6 +187,31 @@ public class LoginMessage implements ILoginMessage {
             map.put("TRENT",qiang);
             map.put("HECOUNT",hashMap.get("HECOUNT"));
             mainManageMapper.updateReetByRoomId(map);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean reetTbl3() {
+        String sql = "SELECT * FROM reet_tbl";
+        List<HashMap<String,Object>> list = mainManageMapper.findReetList(sql);
+        for (HashMap<String,Object> hashMap:list) {
+            //更新数据
+            HashMap<String,Object> params = new HashMap<String,Object>();
+            //2、判断奇数偶数
+            String zhuang1 = hashMap.get("ZHUANG1").toString();
+            String zhuang2 = hashMap.get("ZHUANG2").toString();
+            String zhuang3 = hashMap.get("ZHUANG3").toString();
+            String xian1 = hashMap.get("XIAN1").toString();
+            String xian2 = hashMap.get("XIAN2").toString();
+            String xian3 = hashMap.get("XIAN3").toString();
+            int maxCount = 0;
+            int minCount = 0;
+            MaxMinBean maxMinBean = StringUtils.setMaxMin(zhuang1,zhuang2,zhuang3,xian1,xian2,xian3,maxCount,minCount);
+            params.put("MAXCOUNT", maxMinBean.getMaxCount());
+            params.put("MINCOUNT", maxMinBean.getMinCount());
+            params.put("ID", hashMap.get("ID").toString());
+            mainManageMapper.updateReetData(params);
         }
         return true;
     }

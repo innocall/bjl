@@ -1,1 +1,1 @@
-2018-08-27 00:35:15,936 [javamelody bjl] [net.bull.javamelody] [DEBUG] - Obsolete files deleted. JavaMelody disk usage: 1300 KB
+2018-09-09 07:57:21,882 [javamelody bjl] [net.bull.javamelody] [DEBUG] - Obsolete files deleted. JavaMelody disk usage: 769 KB

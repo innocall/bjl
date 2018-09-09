@@ -12,4 +12,7 @@ public interface ILoginMessage {
     boolean roomTbl();
 
     boolean reetTbl2();
+
+    boolean reetTbl3();
+    
 }

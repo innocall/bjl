@@ -69,7 +69,6 @@ public class LoginControl extends BaseControl{
     public void roomTbl(HttpServletRequest request,HttpServletResponse response) {
         String status = "200";
         String msg = "更新成功";
-        String userId = ParamUtils.getParameter(request, "id", "");
         //更新数据
         boolean isSucces = loginMessage.roomTbl();
         if(!isSucces) {
@@ -84,7 +83,6 @@ public class LoginControl extends BaseControl{
     public void reetTbl2(HttpServletRequest request,HttpServletResponse response) {
         String status = "200";
         String msg = "更新成功";
-        String userId = ParamUtils.getParameter(request, "id", "");
         //更新数据
         boolean isSucces = loginMessage.reetTbl2();
         if(!isSucces) {
@@ -108,6 +106,20 @@ public class LoginControl extends BaseControl{
                 out.close();
             }
         }
+    }
+
+    @RequestMapping(value = "/reetTbl3",method = RequestMethod.POST)
+    public void reetTbl3(HttpServletRequest request,HttpServletResponse response) {
+        String status = "200";
+        String msg = "更新成功";
+        //更新数据
+        boolean isSucces = loginMessage.reetTbl3();
+        if(!isSucces) {
+            status = "400";
+            msg = "更新失败";
+        }
+        PrintWriter out = null;
+        printMsgToPage(response, status, msg, out);
     }
 
 }
