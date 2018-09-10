@@ -53,6 +53,9 @@ public class DataControl extends BaseControl {
         String one = ParamUtils.getParameter(request, "one", "");
         String two = ParamUtils.getParameter(request, "two", "");
         String three = ParamUtils.getParameter(request, "three", "");
+        String oneCount = ParamUtils.getParameter(request, "oneCount", "");
+        String twoCount = ParamUtils.getParameter(request, "twoCount", "");
+        String threeCount = ParamUtils.getParameter(request, "threeCount", "");
         String allCount = ParamUtils.getParameter(request, "allCount", ""); //查询大局数量
         String pages = ParamUtils.getParameter(request, "pages", "1"); //查询页数
         if (threeType4.equals("庄强")) {
@@ -62,7 +65,7 @@ public class DataControl extends BaseControl {
         } else if (threeType4.equals("中间")) {
             threeType4="0";
         }
-        List<HashMap<String, Object>> searchData = dataMessage.findReetList2(oneType,twoType,threeType,one,two,three,allCount,pages,threeType4);
+        List<HashMap<String, Object>> searchData = dataMessage.findReetList2(oneCount,twoCount,threeCount,oneType,twoType,threeType,one,two,three,allCount,pages,threeType4);
         int count = searchData.size();
         param.put("searchData", searchData);
         param.put("count", count);

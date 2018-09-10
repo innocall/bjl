@@ -6,7 +6,7 @@ import java.util.List;
 public interface IDataMessage {
     List<HashMap<String,Object>> findReetList(String category, String one, String two);
 
-    List<HashMap<String,Object>> findReetList2(String oneType, String twoType, String threeType, String one, String two, String three,String allCount,String pages,String threeType4);
+    List<HashMap<String,Object>> findReetList2(String oneCount,String twoCount,String threeCount,String oneType, String twoType, String threeType, String one, String two, String three,String allCount,String pages,String threeType4);
 
     List<HashMap<String,Object>> findReetListByMN(String jishu, String oushu, int start, int limit,String qiang);
 

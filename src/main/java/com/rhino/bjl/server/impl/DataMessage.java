@@ -17,6 +17,7 @@ public class DataMessage implements IDataMessage{
 
     @Autowired
     private DataManageMapper dataManageMapper;
+    private String[] countMap;
 
     @Override
     public List<HashMap<String, Object>> findReetList(String category, String one, String two) {
@@ -34,56 +35,107 @@ public class DataMessage implements IDataMessage{
     }
 
     @Override
-    public List<HashMap<String, Object>> findReetList2(String oneType, String twoType, String threeType, String one, String two, String three,String allCount,String pages,String threeType4) {
+    public List<HashMap<String, Object>> findReetList2(String oneCount, String twoCount, String threeCount, String oneType, String twoType, String threeType, String one, String two, String three, String allCount, String pages, String threeType4) {
         List<HashMap<String, Object>> dataList = new ArrayList<HashMap<String, Object>>();
-        HashMap<String,Object> map = new HashMap<String, Object>();
+        HashMap<String, Object> map = new HashMap<String, Object>();
         Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
         if (StringUtils.isBlank(allCount) || !pattern.matcher(allCount).matches()) {
             allCount = "0";
         }
         String arrayOne[] = one.split("-"); //第一局单双数
-        if (StringUtils.isNotBlank(two)) {
+        String arrayTwo[] = two.split("-"); //第二局单双数
+        String arrayThree[] = three.split("-"); //第二局单双数
+        String arrayOneCount[] = oneCount.split("-");
+        String arrayTwoCount[] = twoCount.split("-");
+        String arrayThreeCount[] = threeCount.split("-");
+        if ((arrayOne.length > 1 && arrayThree.length > 1) || (arrayOneCount.length > 1 && arrayThreeCount.length > 1) ||
+                (arrayOne.length > 1 && arrayThreeCount.length > 1) || (arrayOneCount.length > 1 && arrayThree.length > 1)) {
+            //1、 查3局
+            map = setCountMap(map,arrayOne,"JISHUCOUNT1","OUSHUCOUNT1");
+            map = setCountMap(map,arrayTwo,"JISHUCOUNT2","OUSHUCOUNT2");
+            map = setCountMap(map,arrayThree,"JISHUCOUNT3","OUSHUCOUNT3");
+            map = setCountMap(map,arrayOneCount,"MAXCOUNT1","MINCOUNT1");
+            map = setCountMap(map,arrayTwoCount,"MAXCOUNT2","MINCOUNT2");
+            map = setCountMap(map,arrayThreeCount,"MAXCOUNT3","MINCOUNT3");
+            map.put("VALUE1", oneType);
+            map.put("VALUE2", twoType);
+            map.put("VALUE3", threeType);
+            map.put("TRENT", threeType4);
+            map.put("allCount", Integer.valueOf(allCount).intValue());
+            map.put("pages", Integer.valueOf(allCount).intValue() * (Integer.valueOf(pages).intValue() - 1));
+            dataList = dataManageMapper.findMoreData2(map);
+        } else {
+            if ((arrayOne.length > 1 && arrayTwo.length > 1) || (arrayOneCount.length > 1 && arrayTwoCount.length > 1) ||
+                    (arrayOneCount.length > 1 && arrayTwo.length > 1) || (arrayOne.length > 1 && arrayTwoCount.length > 1)) {
+                //2、查2局
+                map = setCountMap(map,arrayOne,"JISHUCOUNT1","OUSHUCOUNT1");
+                map = setCountMap(map,arrayTwo,"JISHUCOUNT2","OUSHUCOUNT2");
+                map = setCountMap(map,arrayOneCount,"MAXCOUNT1","MINCOUNT1");
+                map = setCountMap(map,arrayTwoCount,"MAXCOUNT2","MINCOUNT2");
+                map.put("VALUE1", oneType);
+                map.put("VALUE2", twoType);
+                map.put("TRENT", threeType4);
+                map.put("allCount", Integer.valueOf(allCount).intValue());
+                map.put("pages", Integer.valueOf(allCount).intValue() * (Integer.valueOf(pages).intValue() - 1));
+                dataList = dataManageMapper.findMoreData3(map);
+            } else {
+                if (arrayOne.length > 1 || arrayOneCount.length > 1) {
+                    //查1局
+                    map = setCountMap(map,arrayOne,"JISHUCOUNT1","OUSHUCOUNT1");
+                    map = setCountMap(map,arrayOneCount,"MAXCOUNT1","MINCOUNT1");
+                    map.put("VALUE1", oneType);
+                    map.put("TRENT", threeType4);
+                    map.put("allCount", Integer.valueOf(allCount).intValue());
+                    map.put("pages", Integer.valueOf(allCount).intValue() * (Integer.valueOf(pages).intValue() - 1));
+                    dataList = dataManageMapper.findMoreData4(map);
+                }
+            }
+        }
+
+        /*if (StringUtils.isNotBlank(two)) {
             if (StringUtils.isNotBlank(three)) {
-                //查询第四届结果
-                String arrayTwo[] = two.split("-"); //第二局单双数
-                String arrayThree[] = three.split("-"); //第二局单双数
-                map.put("JISHUCOUNT1",arrayOne[0]);
-                map.put("OUSHUCOUNT1",arrayOne[1]);
-                map.put("JISHUCOUNT2",arrayTwo[0]);
-                map.put("OUSHUCOUNT2",arrayTwo[1]);
-                map.put("JISHUCOUNT3",arrayThree[0]);
-                map.put("OUSHUCOUNT3",arrayThree[1]);
-                map.put("VALUE1",oneType);
-                map.put("VALUE2",twoType);
-                map.put("VALUE3",threeType);
-                map.put("TRENT",threeType4);
-                map.put("allCount",Integer.valueOf(allCount).intValue());
-                map.put("pages",Integer.valueOf(allCount).intValue() * (Integer.valueOf(pages).intValue() - 1));
+                map.put("JISHUCOUNT1", arrayOne[0]);
+                map.put("OUSHUCOUNT1", arrayOne[1]);
+                map.put("JISHUCOUNT2", arrayTwo[0]);
+                map.put("OUSHUCOUNT2", arrayTwo[1]);
+                map.put("JISHUCOUNT3", arrayThree[0]);
+                map.put("OUSHUCOUNT3", arrayThree[1]);
+                map = setCountMap(map,arrayOneCount,"MAXCOUNT1","MINCOUNT1");
+                map = setCountMap(map,arrayTwoCount,"MAXCOUNT2","MINCOUNT2");
+                map = setCountMap(map,arrayThreeCount,"MAXCOUNT3","MINCOUNT3");
+                map.put("VALUE1", oneType);
+                map.put("VALUE2", twoType);
+                map.put("VALUE3", threeType);
+                map.put("TRENT", threeType4);
+                map.put("allCount", Integer.valueOf(allCount).intValue());
+                map.put("pages", Integer.valueOf(allCount).intValue() * (Integer.valueOf(pages).intValue() - 1));
                 dataList = dataManageMapper.findMoreData2(map);
             } else {
                 //查询第三局结果
-                String arrayTwo[] = two.split("-"); //第二局单双数
-                map.put("JISHUCOUNT1",arrayOne[0]);
-                map.put("OUSHUCOUNT1",arrayOne[1]);
-                map.put("JISHUCOUNT2",arrayTwo[0]);
-                map.put("OUSHUCOUNT2",arrayTwo[1]);
-                map.put("VALUE1",oneType);
-                map.put("VALUE2",twoType);
-                map.put("TRENT",threeType4);
-                map.put("allCount",Integer.valueOf(allCount).intValue());
-                map.put("pages",Integer.valueOf(allCount).intValue() * (Integer.valueOf(pages).intValue() - 1));
+                map.put("JISHUCOUNT1", arrayOne[0]);
+                map.put("OUSHUCOUNT1", arrayOne[1]);
+                map.put("JISHUCOUNT2", arrayTwo[0]);
+                map.put("OUSHUCOUNT2", arrayTwo[1]);
+                map = setCountMap(map,arrayOneCount,"MAXCOUNT1","MINCOUNT1");
+                map = setCountMap(map,arrayTwoCount,"MAXCOUNT2","MINCOUNT2");
+                map.put("VALUE1", oneType);
+                map.put("VALUE2", twoType);
+                map.put("TRENT", threeType4);
+                map.put("allCount", Integer.valueOf(allCount).intValue());
+                map.put("pages", Integer.valueOf(allCount).intValue() * (Integer.valueOf(pages).intValue() - 1));
                 dataList = dataManageMapper.findMoreData3(map);
             }
         } else {
             //查询第一局的下一届结果
-            map.put("JISHUCOUNT1",arrayOne[0]);
-            map.put("OUSHUCOUNT1",arrayOne[1]);
-            map.put("VALUE1",oneType);
-            map.put("TRENT",threeType4);
-            map.put("allCount",Integer.valueOf(allCount).intValue());
-            map.put("pages",Integer.valueOf(allCount).intValue() * (Integer.valueOf(pages).intValue() - 1));
+            map.put("JISHUCOUNT1", arrayOne[0]);
+            map.put("OUSHUCOUNT1", arrayOne[1]);
+            map = setCountMap(map,arrayOneCount,"MAXCOUNT1","MINCOUNT1");
+            map.put("VALUE1", oneType);
+            map.put("TRENT", threeType4);
+            map.put("allCount", Integer.valueOf(allCount).intValue());
+            map.put("pages", Integer.valueOf(allCount).intValue() * (Integer.valueOf(pages).intValue() - 1));
             dataList = dataManageMapper.findMoreData4(map);
-        }
+        }*/
         return dataList;
     }
 
@@ -184,5 +236,16 @@ public class DataMessage implements IDataMessage{
             }
         }
         return dataList2;
+    }
+
+    public HashMap<String, Object> setCountMap(HashMap<String,Object> map,String[] countMap,String key1,String key2) {
+        if (countMap.length > 1) {
+            map.put(key1, countMap[0]);
+            map.put(key2, countMap[1]);
+        } else {
+            map.put(key1, "");
+            map.put(key2, "");
+        }
+        return map;
     }
 }

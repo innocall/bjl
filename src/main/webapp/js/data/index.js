@@ -9,7 +9,7 @@ Ext.onReady(function() {
         }),
         root : 'searchData',
         totalProperty : 'count',
-        fields : [ 'ID', 'ROOMID', 'ZHUANG1', 'ZHUANG2', 'ZHUANG3','XIAN1', 'XIAN2', 'XIAN3','ZHUANGVALUE','XIANVALUE','TIME','POINT','VALUE','JISHUCOUNT','OUSHUCOUNT' ]
+        fields : [ 'ID', 'ROOMID', 'ZHUANG1', 'ZHUANG2', 'ZHUANG3','XIAN1', 'XIAN2', 'XIAN3','ZHUANGVALUE','XIANVALUE','TIME','POINT','VALUE','JISHUCOUNT','OUSHUCOUNT','MAXCOUNT','MINCOUNT' ]
     });
 
     /*查询大局中小局*/
@@ -18,7 +18,7 @@ Ext.onReady(function() {
         url : path + 'private/main/findReetById',
         root : 'reetList',
         totalProperty : 'count',
-        fields : [ 'ID', 'ROOMID', 'ZHUANG1', 'ZHUANG2', 'ZHUANG3','XIAN1', 'XIAN2', 'XIAN3','TIME','TOUZHU','ZHUANGVALUE','XIANVALUE','POINT','VALUE','JISHUCOUNT','OUSHUCOUNT'  ]
+        fields : [ 'ID', 'ROOMID', 'ZHUANG1', 'ZHUANG2', 'ZHUANG3','XIAN1', 'XIAN2', 'XIAN3','TIME','TOUZHU','ZHUANGVALUE','XIANVALUE','POINT','VALUE','JISHUCOUNT','OUSHUCOUNT' ,'MAXCOUNT','MINCOUNT' ]
     });
 
     var zhuang = 0;
@@ -35,63 +35,159 @@ Ext.onReady(function() {
             border:false,
             labelSeparator:'：',
             items:[{
-                columnWidth:.5,  //该列占用的宽度，标识为50％
+                columnWidth:1,  //该列占用的宽度，标识为50％
                 layout: 'form',
                 border:false,
                 items: [{
-                    xtype: 'textfield',
-                    id: 'one',
-                    name: 'one',
-                    style: 'font-size:15px;',
-                    width: 150,
-                    fieldLabel: '<font style="font-size: 15px">第一局</font>',
-                    labelSeparator: '：',
-                    listeners: {
-                        render: function(obj) {
-                            var font=document.createElement("font");
-                            font.setAttribute("color","red");
-                            font.setAttribute("style","font-size:15px;")
-                            var redStar=document.createTextNode('    N，M数用-号分割，如：0-2，1-5');
-                            font.appendChild(redStar);
-                            obj.el.dom.parentNode.appendChild(font);
-                        }
-                    }
+                    layout: 'column',   //定义该元素为布局为列布局方式
+                    border: false,
+                    items: [{
+                        columnWidth: .4,  //该列占用的宽度，标识为50％
+                        layout: 'form',
+                        border: false,
+                        items: [{
+                            xtype: 'textfield',
+                            id: 'one',
+                            name: 'one',
+                            style: 'font-size:15px;',
+                            width: 100,
+                            fieldLabel: '<font style="font-size: 15px">第一局</font>',
+                            labelSeparator: '：',
+                            listeners: {
+                                render: function(obj) {
+                                    var font=document.createElement("font");
+                                    font.setAttribute("color","red");
+                                    font.setAttribute("style","font-size:15px;")
+                                    var redStar=document.createTextNode(' N,M数，如：0-2，1-5');
+                                    font.appendChild(redStar);
+                                    obj.el.dom.parentNode.appendChild(font);
+                                }
+                            }
+                        }]
+                    },{
+                        columnWidth: .4,  //该列占用的宽度，标识为50％
+                        layout: 'form',
+                        border: false,
+                        items: [{
+                            xtype: 'textfield',
+                            id: 'oneCount',
+                            name: 'oneCount',
+                            style: 'font-size:15px;',
+                            width: 100,
+                            fieldLabel: '<font style="font-size: 15px">大小数</font>',
+                            labelSeparator: '：',
+                            listeners: {
+                                render: function(obj) {
+                                    var font=document.createElement("font");
+                                    font.setAttribute("color","red");
+                                    font.setAttribute("style","font-size:15px;")
+                                    var redStar=document.createTextNode(' 大小数，如：0-2，1-5');
+                                    font.appendChild(redStar);
+                                    obj.el.dom.parentNode.appendChild(font);
+                                }
+                            }
+                        }]
+                    }]
                 }, {
-                    xtype: 'textfield',
-                    id: 'two',
-                    name: 'two',
-                    style: 'font-size:15px;',
-                    width: 150,
-                    fieldLabel: '<font style="font-size: 15px">第二局</font>',
-                    labelSeparator: '：',
-                    listeners: {
-                        render: function(obj) {
-                            var font=document.createElement("font");
-                            font.setAttribute("color","red");
-                            font.setAttribute("style","font-size:15px;");
-                            var redStar=document.createTextNode('    N,M数用-号分割，如：0-2，1-5');
-                            font.appendChild(redStar);
-                            obj.el.dom.parentNode.appendChild(font);
-                        }
-                    }
+                    layout: 'column',   //定义该元素为布局为列布局方式
+                    border: false,
+                    items: [{
+                        columnWidth: .4,  //该列占用的宽度，标识为50％
+                        layout: 'form',
+                        border: false,
+                        items: [{
+                            xtype: 'textfield',
+                            id: 'two',
+                            name: 'two',
+                            style: 'font-size:15px;',
+                            width: 100,
+                            fieldLabel: '<font style="font-size: 15px">第二局</font>',
+                            labelSeparator: '：',
+                            listeners: {
+                                render: function (obj) {
+                                    var font = document.createElement("font");
+                                    font.setAttribute("color", "red");
+                                    font.setAttribute("style", "font-size:15px;");
+                                    var redStar = document.createTextNode('    N,M数，如：0-2，1-5');
+                                    font.appendChild(redStar);
+                                    obj.el.dom.parentNode.appendChild(font);
+                                }
+                            }
+                        }]
+                    },{
+                        columnWidth: .4,  //该列占用的宽度，标识为50％
+                        layout: 'form',
+                        border: false,
+                        items: [{
+                            xtype: 'textfield',
+                            id: 'twoCount',
+                            name: 'twoCount',
+                            style: 'font-size:15px;',
+                            width: 100,
+                            fieldLabel: '<font style="font-size: 15px">大小数</font>',
+                            labelSeparator: '：',
+                            listeners: {
+                                render: function(obj) {
+                                    var font=document.createElement("font");
+                                    font.setAttribute("color","red");
+                                    font.setAttribute("style","font-size:15px;")
+                                    var redStar=document.createTextNode(' 大小数，如：0-2，1-5');
+                                    font.appendChild(redStar);
+                                    obj.el.dom.parentNode.appendChild(font);
+                                }
+                            }
+                        }]
+                    }]
                 },{
-                    xtype: 'textfield',
-                    id: 'three',
-                    name: 'three',
-                    style: 'font-size:15px;',
-                    width: 150,
-                    fieldLabel: '<font style="font-size: 15px">第三局</font>',
-                    labelSeparator: '：',
-                    listeners: {
-                        render: function(obj) {
-                            var font=document.createElement("font");
-                            font.setAttribute("color","red");
-                            font.setAttribute("style","font-size:15px;");
-                            var redStar=document.createTextNode('    N,M数用-号分割，如：0-2，1-5');
-                            font.appendChild(redStar);
-                            obj.el.dom.parentNode.appendChild(font);
-                        }
-                    }
+                    layout: 'column',   //定义该元素为布局为列布局方式
+                    border: false,
+                    items: [{
+                        columnWidth: .4,  //该列占用的宽度，标识为50％
+                        layout: 'form',
+                        border: false,
+                        items: [{
+                            xtype: 'textfield',
+                            id: 'three',
+                            name: 'three',
+                            style: 'font-size:15px;',
+                            width: 100,
+                            fieldLabel: '<font style="font-size: 15px">第三局</font>',
+                            labelSeparator: '：',
+                            listeners: {
+                                render: function (obj) {
+                                    var font = document.createElement("font");
+                                    font.setAttribute("color", "red");
+                                    font.setAttribute("style", "font-size:15px;");
+                                    var redStar = document.createTextNode('    N,M数，如：0-2，1-5');
+                                    font.appendChild(redStar);
+                                    obj.el.dom.parentNode.appendChild(font);
+                                }
+                            }
+                        }]
+                    },{
+                        columnWidth: .4,  //该列占用的宽度，标识为50％
+                        layout: 'form',
+                        border: false,
+                        items: [{
+                            xtype: 'textfield',
+                            id: 'threeCount',
+                            name: 'threeCount',
+                            style: 'font-size:15px;',
+                            width: 100,
+                            fieldLabel: '<font style="font-size: 15px">大小数</font>',
+                            labelSeparator: '：',
+                            listeners: {
+                                render: function(obj) {
+                                    var font=document.createElement("font");
+                                    font.setAttribute("color","red");
+                                    font.setAttribute("style","font-size:15px;")
+                                    var redStar=document.createTextNode(' 大小数，如：0-2，1-5');
+                                    font.appendChild(redStar);
+                                    obj.el.dom.parentNode.appendChild(font);
+                                }
+                            }
+                        }]
+                    }]
                 }, {
                     layout: 'column',   //定义该元素为布局为列布局方式
                     border: false,
@@ -195,11 +291,16 @@ Ext.onReady(function() {
             handler : function() {
                 var twos = dateSearchForm.getForm().findField("two").getValue();
                 var three = dateSearchForm.getForm().findField("three").getValue();
+                var twosCount = dateSearchForm.getForm().findField("twoCount").getValue();
+                var threeCount = dateSearchForm.getForm().findField("threeCount").getValue();
                 var twoType = dateSearchForm.getForm().findField("twoType").getValue();
                 var threeType = dateSearchForm.getForm().findField("threeType").getValue();
                 dateSearchForm.getForm().findField("one").setValue(twos);
                 dateSearchForm.getForm().findField("two").setValue(three);
                 dateSearchForm.getForm().findField("three").setValue("");
+                dateSearchForm.getForm().findField("oneCount").setValue(twosCount);
+                dateSearchForm.getForm().findField("twoCount").setValue(threeCount);
+                dateSearchForm.getForm().findField("threeCount").setValue("");
                 dateSearchForm.getForm().findField("oneType").setValue(twoType);
                 dateSearchForm.getForm().findField("twoType").setValue(threeType);
                 dateSearchForm.getForm().findField("threeType").setValue("全部");
@@ -210,9 +311,12 @@ Ext.onReady(function() {
                 var ones = dateSearchForm.getForm().findField("one").getValue();
                 var twos = dateSearchForm.getForm().findField("two").getValue();
                 var three = dateSearchForm.getForm().findField("three").getValue();
+                var onesCount = dateSearchForm.getForm().findField("oneCount").getValue();
+                var twosCount = dateSearchForm.getForm().findField("twoCount").getValue();
+                var threeCount = dateSearchForm.getForm().findField("threeCount").getValue();
                 var allCount = dateSearchForm.getForm().findField("allCount").getValue();
                 var pages = dateSearchForm.getForm().findField("pages").getValue();
-                if (ones == '') {
+                /* if (ones == '') {
                     Ext.Msg.alert('提示','请输入第一局的N,M数');
                     return;
                 }
@@ -220,7 +324,7 @@ Ext.onReady(function() {
                     Ext.Msg.alert('提示','请输入正确格式的N,M数');
                     return;
                 }
-               /* if (twos == '') {
+               if (twos == '') {
                     Ext.Msg.alert('提示','请输入第二局的单双数');
                     return;
                 }
@@ -250,6 +354,9 @@ Ext.onReady(function() {
                         one : ones,
                         two :twos,
                         three :three,
+                        oneCount : onesCount,
+                        twoCount :twosCount,
+                        threeCount :threeCount,
                         allCount :allCount,
                         pages :pages
                     }
@@ -267,6 +374,9 @@ Ext.onReady(function() {
             one : dateSearchForm.getForm().findField("one").getValue(),
             two : dateSearchForm.getForm().findField("two").getValue(),
             three : dateSearchForm.getForm().findField("three").getValue(),
+            oneCount : dateSearchForm.getForm().findField("oneCount").getValue(),
+            twoCount : dateSearchForm.getForm().findField("twoCount").getValue(),
+            threeCount : dateSearchForm.getForm().findField("threeCount").getValue(),
             allCount : dateSearchForm.getForm().findField("allCount").getValue(),
             pages : dateSearchForm.getForm().findField("pages").getValue()
         };
@@ -416,6 +526,22 @@ Ext.onReady(function() {
             id : 'OUSHUCOUNT',
             header : 'M数个数',
             dataIndex : 'OUSHUCOUNT',
+            css:'font-size:18px;',
+            sortable : true,
+            align : 'center',
+            menuDisabled : true
+        },{
+            id : 'MAXCOUNT',
+            header : '大数个数',
+            dataIndex : 'MAXCOUNT',
+            css:'font-size:18px;',
+            sortable : true,
+            align : 'center',
+            menuDisabled : true
+        }, {
+            id : 'MINCOUNT',
+            header : '小数个数',
+            dataIndex : 'MINCOUNT',
             css:'font-size:18px;',
             sortable : true,
             align : 'center',
@@ -663,6 +789,24 @@ Ext.onReady(function() {
             id : 'OUSHUCOUNT',
             header : 'M数个数',
             dataIndex : 'OUSHUCOUNT',
+            css:'font-size:18px;',
+            width : 80,
+            sortable : true,
+            align : 'center',
+            menuDisabled : true
+        }, {
+            id : 'MAXCOUNT',
+            header : '大数个数',
+            dataIndex : 'MAXCOUNT',
+            css:'font-size:18px;',
+            sortable : true,
+            width : 80,
+            align : 'center',
+            menuDisabled : true
+        }, {
+            id : 'MINCOUNT',
+            header : '小数个数',
+            dataIndex : 'MINCOUNT',
             css:'font-size:18px;',
             width : 80,
             sortable : true,
