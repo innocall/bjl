@@ -58,6 +58,8 @@ public class DataControl extends BaseControl {
         String threeCount = ParamUtils.getParameter(request, "threeCount", "");
         String allCount = ParamUtils.getParameter(request, "allCount", ""); //查询大局数量
         String pages = ParamUtils.getParameter(request, "pages", "1"); //查询页数
+        String start = ParamUtils.getParameter(request, "start", "0"); //查询页数
+        String limit = ParamUtils.getParameter(request, "limit", "1"); //查询页数
         if (threeType4.equals("庄强")) {
             threeType4="1";
         } else if (threeType4.equals("闲强")) {
@@ -65,10 +67,47 @@ public class DataControl extends BaseControl {
         } else if (threeType4.equals("中间")) {
             threeType4="0";
         }
-        List<HashMap<String, Object>> searchData = dataMessage.findReetList2(oneCount,twoCount,threeCount,oneType,twoType,threeType,one,two,three,allCount,pages,threeType4);
-        int count = searchData.size();
+        HashMap<String, Object> data = dataMessage.findReetList2(start,limit,oneCount,twoCount,threeCount,oneType,twoType,threeType,one,two,three,allCount,pages,threeType4);
+        List<HashMap<String,Object>> searchData = (List<HashMap<String, Object>>) data.get("dataList");
+        int count = Integer.parseInt(data.get("allSize").toString());
         param.put("searchData", searchData);
         param.put("count", count);
+        String json = JsonUtil.toJsonString(param);
+        ResponseEntity<String> responseEntity = new ResponseEntity<String>(
+                json, headers, HttpStatus.OK);
+        return responseEntity;
+    }
+
+    @RequestMapping(value = "watchProbability", method = RequestMethod.POST)
+    public ResponseEntity<String> watchProbability(HttpServletRequest request) {
+        HttpHeaders headers = new HttpHeaders();
+        MediaType mediaType = new MediaType("text", "html", Charset.forName("UTF-8"));
+        headers.setContentType(mediaType);
+        Map<String, Object> param = new HashMap<String, Object>();
+        String oneType = ParamUtils.getParameter(request, "oneType", "全部");
+        String twoType = ParamUtils.getParameter(request, "twoType", "全部");
+        String threeType = ParamUtils.getParameter(request, "threeType", "全部");
+        String threeType4 = ParamUtils.getParameter(request, "threeType4", "全部");
+        String one = ParamUtils.getParameter(request, "one", "");
+        String two = ParamUtils.getParameter(request, "two", "");
+        String three = ParamUtils.getParameter(request, "three", "");
+        String oneCount = ParamUtils.getParameter(request, "oneCount", "");
+        String twoCount = ParamUtils.getParameter(request, "twoCount", "");
+        String threeCount = ParamUtils.getParameter(request, "threeCount", "");
+        String allCount = ParamUtils.getParameter(request, "allCount", ""); //查询大局数量
+        String pages = ParamUtils.getParameter(request, "pages", "1"); //查询页数
+        if (threeType4.equals("庄强")) {
+            threeType4="1";
+        } else if (threeType4.equals("闲强")) {
+            threeType4="2";
+        } else if (threeType4.equals("中间")) {
+            threeType4="0";
+        }
+        HashMap<String, Object> data = dataMessage.findReetProbability(oneCount,twoCount,threeCount,oneType,twoType,threeType,one,two,three,allCount,pages,threeType4);
+        param.put("allSize", Integer.parseInt(data.get("allSize").toString()));
+        param.put("zhangSize", Integer.parseInt(data.get("zhangSize").toString()));
+        param.put("xianSize", Integer.parseInt(data.get("xianSize").toString()));
+        param.put("heSize", Integer.parseInt(data.get("heSize").toString()));
         String json = JsonUtil.toJsonString(param);
         ResponseEntity<String> responseEntity = new ResponseEntity<String>(
                 json, headers, HttpStatus.OK);

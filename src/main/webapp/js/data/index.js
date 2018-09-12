@@ -21,9 +21,6 @@ Ext.onReady(function() {
         fields : [ 'ID', 'ROOMID', 'ZHUANG1', 'ZHUANG2', 'ZHUANG3','XIAN1', 'XIAN2', 'XIAN3','TIME','TOUZHU','ZHUANGVALUE','XIANVALUE','POINT','VALUE','JISHUCOUNT','OUSHUCOUNT' ,'MAXCOUNT','MINCOUNT' ]
     });
 
-    var zhuang = 0;
-    var xian = 0;
-    var he = 0;
     var dateSearchForm = new Ext.FormPanel({
         region : 'north',
         frame : true,
@@ -316,37 +313,10 @@ Ext.onReady(function() {
                 var threeCount = dateSearchForm.getForm().findField("threeCount").getValue();
                 var allCount = dateSearchForm.getForm().findField("allCount").getValue();
                 var pages = dateSearchForm.getForm().findField("pages").getValue();
-                /* if (ones == '') {
-                    Ext.Msg.alert('提示','请输入第一局的N,M数');
-                    return;
-                }
-                if (ones.split('-').length != 2) {
-                    Ext.Msg.alert('提示','请输入正确格式的N,M数');
-                    return;
-                }
-               if (twos == '') {
-                    Ext.Msg.alert('提示','请输入第二局的单双数');
-                    return;
-                }
-                 if (twos.split('-').length != 2) {
-                    Ext.Msg.alert('提示','请输入正确格式的单双数');
-                    return;
-                }
-                if (three == '') {
-                    Ext.Msg.alert('提示','请输入第三局的单双数');
-                    return;
-                }
-                if (three.split('-').length != 2) {
-                    Ext.Msg.alert('提示','请输入正确格式的单双数');
-                    return;
-                }*/
-                zhuang = 0;
-                xian = 0;
-                he = 0;
                 jsonSearchData.load({
                     params : {
-                    /*    start : 0,
-                        limit : 80,*/
+                        start : 0,
+                        limit : 80,
                         oneType : dateSearchForm.getForm().findField("oneType").getValue(),
                         twoType : dateSearchForm.getForm().findField("twoType").getValue(),
                         threeType : dateSearchForm.getForm().findField("threeType").getValue(),
@@ -553,17 +523,7 @@ Ext.onReady(function() {
             css:'font-size:18px;color:red;',
             sortable : true,
             align : 'center',
-            menuDisabled : true,
-            renderer : function(v) {
-                if (v == '庄') {
-                    zhuang++;
-                } else if (v == '闲') {
-                    xian++;
-                } else if (v == '和') {
-                    he++;
-                }
-                return v;
-            }
+            menuDisabled : true
         },{
             id : 'TIME',
             header : '投注时间',
@@ -579,7 +539,7 @@ Ext.onReady(function() {
         }],
         enableColumnMove : true, // 允许拖动列
         bbar : new Ext.PagingToolbar({
-            pageSize : 800,
+            pageSize : 80,
             store : jsonSearchData,
             displayInfo : true,
             displayMsg : '显示{0}/{1}of{2}',
@@ -590,14 +550,49 @@ Ext.onReady(function() {
             {
                 text:'<font style="font-size: 18px;">查看概率</font>',
                 handler:function(){
-                    zhuang = parseFloat(zhuang);
-                    xian = parseFloat(xian);
-                    he = parseFloat(he);
-                    var total = zhuang + xian + he;
-                    var zhuangGailv = Math.round(zhuang / total * 10000) / 100.00 + "%";
-                    var xianGailv = Math.round(xian / total * 10000) / 100.00 + "%";
-                    var heGailv = Math.round(he / total * 10000) / 100.00 + "%";
-                    Ext.Msg.alert('提示','庄：' + zhuangGailv + ", 闲：" + xianGailv + ", 和：" + heGailv);
+                    var ones = dateSearchForm.getForm().findField("one").getValue();
+                    var twos = dateSearchForm.getForm().findField("two").getValue();
+                    var three = dateSearchForm.getForm().findField("three").getValue();
+                    var onesCount = dateSearchForm.getForm().findField("oneCount").getValue();
+                    var twosCount = dateSearchForm.getForm().findField("twoCount").getValue();
+                    var threeCount = dateSearchForm.getForm().findField("threeCount").getValue();
+                    var allCount = dateSearchForm.getForm().findField("allCount").getValue();
+                    var pages = dateSearchForm.getForm().findField("pages").getValue();
+                    Ext.Ajax.request({
+                        url : path + 'data/analysis/watchProbability',
+                        params: {
+                            oneType : dateSearchForm.getForm().findField("oneType").getValue(),
+                            twoType : dateSearchForm.getForm().findField("twoType").getValue(),
+                            threeType : dateSearchForm.getForm().findField("threeType").getValue(),
+                            threeType4 : dateSearchForm.getForm().findField("threeType4").getValue(),
+                            one : ones,
+                            two :twos,
+                            three :three,
+                            oneCount : onesCount,
+                            twoCount :twosCount,
+                            threeCount :threeCount,
+                            allCount :allCount,
+                            pages :pages
+                        },
+                        method: 'POST',
+                        waitMsg:'正在查询,请稍后...',
+                        waitTitle:'查询中...',
+                        success: function (response, options) {
+                            var jsonString = response.responseText;
+                            var jsObject = JSON.parse(jsonString);    //转换为json对象
+                            var zhuang = parseFloat(jsObject.zhangSize);
+                            var xian = parseFloat(jsObject.xianSize);
+                            var he = parseFloat(jsObject.heSize);
+                            var total = parseFloat(jsObject.allSize);
+                            var zhuangGailv = Math.round(zhuang / total * 10000) / 100.00 + "%";
+                            var xianGailv = Math.round(xian / total * 10000) / 100.00 + "%";
+                            var heGailv = Math.round(he / total * 10000) / 100.00 + "%";
+                            Ext.Msg.alert('提示','庄：' + zhuangGailv + ", 闲：" + xianGailv + ", 和：" + heGailv);
+                        },
+                        failure: function (response, options) {
+                            Ext.MessageBox.alert('失败', '请求超时或网络故障，错误编号：' + response.status);
+                        }
+                    });
                 }
             },
             {

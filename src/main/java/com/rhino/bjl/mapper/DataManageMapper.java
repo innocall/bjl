@@ -66,4 +66,16 @@ public class DataManageMapper {
     public List<HashMap<String, Object>> findReetByPai(HashMap<String, Object> map3) {
         return lemonDB.getList("findReetByPai",map3);
     }
+
+    public HashMap<String, Object> findMoreDataAllCount2(HashMap<String, Object> map) {
+        return lemonDB.get("findMoreDataAllCount2",map);
+    }
+
+    public HashMap<String, Object> findMoreDataAllCount3(HashMap<String, Object> map) {
+        return lemonDB.get("findMoreDataAllCount3",map);
+    }
+
+    public HashMap<String, Object> findMoreDataAllCount4(HashMap<String, Object> map) {
+        return lemonDB.get("findMoreDataAllCount4",map);
+    }
 }

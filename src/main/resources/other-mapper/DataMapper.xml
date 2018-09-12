@@ -131,7 +131,77 @@
         ) e ON a.POINT = e.POINT + 1
         AND a.ROOMID = e.ROOMID
         <where>
-            <if test="TRENT != '全部'">and a.TRENT = #{TRENT}</if>
+            <if test="TRENT != '全部'">a.TRENT = #{TRENT}</if>
+        </where>
+        ORDER BY
+        a.TIME ASC LIMIT #{start},#{limit}
+    </select>
+
+    <!--查询条数-->
+    <select id="findMoreDataAllCount2" resultType="java.util.HashMap">
+        SELECT
+        count(*) AS COUNT
+        FROM
+        reet_tbl a
+        <if test='allCount != "" and allCount != "0"'>
+            INNER JOIN (SELECT * from room_tbl ORDER BY room_tbl.STRARTTIME ASC LIMIT #{pages},#{allCount}) h ON
+            a.ROOMID = h.ID
+        </if>
+        INNER JOIN (
+        SELECT
+        *
+        FROM
+        reet_tbl b
+        INNER JOIN (
+        SELECT
+        ROOMID AS dROOMID,
+        POINT AS dPOINT,
+        `VALUE` AS dVALUE,
+        JISHUCOUNT AS dJISHUCOUNT,
+        OUSHUCOUNT AS dOUSHUCOUNT
+        FROM
+        reet_tbl c
+        INNER JOIN (
+        SELECT
+        ROOMID AS dROOMID1,
+        POINT AS dPOINT1,
+        `VALUE` AS dVALUE,
+        JISHUCOUNT AS dJISHUCOUNT1,
+        OUSHUCOUNT AS dOUSHUCOUNT1
+        FROM
+        reet_tbl f
+        <where>
+            <if test='JISHUCOUNT1 != "n" and JISHUCOUNT1 != "N" and JISHUCOUNT1 != ""'>f.JISHUCOUNT = #{JISHUCOUNT1}</if>
+            <if test='OUSHUCOUNT1 != "n" and OUSHUCOUNT1 != "N" and OUSHUCOUNT1 != ""'>and f.OUSHUCOUNT = #{OUSHUCOUNT1}</if>
+            <if test='MAXCOUNT1 != "n" and MAXCOUNT1 != "N" and MAXCOUNT1 != ""'>and f.MAXCOUNT = #{MAXCOUNT1}</if>
+            <if test='MINCOUNT1 != "n" and MINCOUNT1 != "N" and MINCOUNT1 != ""'>and f.MINCOUNT = #{MINCOUNT1}</if>
+            <if test="VALUE1 != '全部'">and f.VALUE = #{VALUE1}</if>
+        </where>
+        ) g ON c.ROOMID = g.dROOMID1
+        AND c.POINT = g.dPOINT1 + 1
+        <where>
+            <if test='JISHUCOUNT2 != "n" and JISHUCOUNT2 != "N" and JISHUCOUNT2 != ""'>c.JISHUCOUNT = #{JISHUCOUNT2}</if>
+            <if test='OUSHUCOUNT2 != "n" and OUSHUCOUNT2 != "N" and OUSHUCOUNT2 != ""'>and c.OUSHUCOUNT = #{OUSHUCOUNT2}</if>
+            <if test='MAXCOUNT2 != "n" and MAXCOUNT2 != "N" and MAXCOUNT2 != ""'>and c.MAXCOUNT = #{MAXCOUNT2}</if>
+            <if test='MINCOUNT2 != "n" and MINCOUNT2 != "N" and MINCOUNT2 != ""'>and c.MINCOUNT = #{MINCOUNT2}</if>
+            <if test="VALUE2 != '全部'">and c.VALUE = #{VALUE2}</if>
+        </where>
+        ) d ON b.ROOMID = d.dROOMID
+        AND b.POINT = d.dPOINT + 1
+        <where>
+            <if test='JISHUCOUNT3 != "n" and JISHUCOUNT3 != "N" and JISHUCOUNT3 != ""'>b.JISHUCOUNT = #{JISHUCOUNT3}</if>
+            <if test='OUSHUCOUNT3 != "n" and OUSHUCOUNT3 != "N" and OUSHUCOUNT3 != ""'>and b.OUSHUCOUNT = #{OUSHUCOUNT3}</if>
+            <if test='MAXCOUNT3 != "n" and MAXCOUNT3 != "N" and MAXCOUNT3 != ""'>and b.MAXCOUNT = #{MAXCOUNT3}</if>
+            <if test='MINCOUNT3 != "n" and MINCOUNT3 != "N" and MINCOUNT3 != ""'>and b.MINCOUNT = #{MINCOUNT3}</if>
+            <if test="VALUE3 != '全部'">and b.VALUE = #{VALUE3}</if>
+        </where>
+        ) e ON a.POINT = e.POINT + 1
+        AND a.ROOMID = e.ROOMID
+        <where>
+            <if test= "TRENT != '全部'">a.TRENT = #{TRENT}</if>
+            <if test= "VALUE == 1">and a.VALUE = '庄'</if>
+            <if test= "VALUE == 2">and a.VALUE = '闲'</if>
+            <if test= "VALUE == 3">and a.VALUE = '和'</if>
         </where>
         ORDER BY
         a.TIME ASC
@@ -175,7 +245,53 @@
         ) e ON a.POINT = e.POINT + 1
         AND a.ROOMID = e.ROOMID
         <where>
-            <if test="TRENT != '全部'">and a.TRENT = #{TRENT}</if>
+            <if test="TRENT != '全部'">a.TRENT = #{TRENT}</if>
+        </where>
+        ORDER BY a.TIME ASC LIMIT #{start},#{limit}
+    </select>
+
+    <select id="findMoreDataAllCount3" resultType="java.util.HashMap">
+        SELECT
+        count(*) AS COUNT
+        FROM
+        reet_tbl a
+        <if test='allCount != "" and allCount != "0"'>
+            INNER JOIN (SELECT * from room_tbl ORDER BY room_tbl.STRARTTIME ASC LIMIT #{pages},#{allCount}) h ON
+            a.ROOMID = h.ID
+        </if>
+        INNER JOIN (
+        SELECT
+        *
+        FROM
+        reet_tbl b
+        INNER JOIN (
+        SELECT
+        ROOMID as dROOMID,POINT as dPOINT ,`VALUE` as dVALUE,JISHUCOUNT as dJISHUCOUNT,OUSHUCOUNT as dOUSHUCOUNT
+        FROM
+        reet_tbl c
+        <where>
+            <if test='JISHUCOUNT1 != "n" and JISHUCOUNT1 != "N" and JISHUCOUNT1 != ""'>c.JISHUCOUNT = #{JISHUCOUNT1}</if>
+            <if test='OUSHUCOUNT1 != "n" and OUSHUCOUNT1 != "N" and OUSHUCOUNT1 != ""'>and c.OUSHUCOUNT = #{OUSHUCOUNT1}</if>
+            <if test='MAXCOUNT1 != "n" and MAXCOUNT1 != "N" and MAXCOUNT1 != ""'>and c.MAXCOUNT = #{MAXCOUNT1}</if>
+            <if test='MINCOUNT1 != "n" and MINCOUNT1 != "N" and MINCOUNT1 != ""'>and c.MINCOUNT = #{MINCOUNT1}</if>
+            <if test="VALUE1 != '全部'">and c.VALUE = #{VALUE1}</if>
+        </where>
+        ) d ON b.ROOMID = d.dROOMID
+        AND b.POINT = d.dPOINT + 1
+        <where>
+            <if test='JISHUCOUNT2 != "n" and JISHUCOUNT2 != "N" and JISHUCOUNT2 != ""'>b.JISHUCOUNT = #{JISHUCOUNT2}</if>
+            <if test='OUSHUCOUNT2 != "n" and OUSHUCOUNT2 != "N" and OUSHUCOUNT2 != ""'>and b.OUSHUCOUNT = #{OUSHUCOUNT2}</if>
+            <if test='MAXCOUNT2 != "n" and MAXCOUNT2 != "N" and MAXCOUNT2 != ""'>and b.MAXCOUNT = #{MAXCOUNT2}</if>
+            <if test='MINCOUNT2 != "n" and MINCOUNT2 != "N" and MINCOUNT2 != ""'>and b.MINCOUNT = #{MINCOUNT2}</if>
+            <if test="VALUE2 != '全部'">and b.VALUE = #{VALUE2}</if>
+        </where>
+        ) e ON a.POINT = e.POINT + 1
+        AND a.ROOMID = e.ROOMID
+        <where>
+            <if test="TRENT != '全部'">a.TRENT = #{TRENT}</if>
+            <if test= "VALUE == 1">and a.VALUE = '庄'</if>
+            <if test= "VALUE == 2">and a.VALUE = '闲'</if>
+            <if test= "VALUE == 3">and a.VALUE = '和'</if>
         </where>
         ORDER BY a.TIME ASC
     </select>
@@ -205,6 +321,38 @@
         AND a.POINT = d.dPOINT + 1
         <where>
             <if test="TRENT != '全部'">and a.TRENT = #{TRENT}</if>
+        </where>
+        ORDER BY a.TIME ASC LIMIT #{start},#{limit}
+    </select>
+
+    <select id="findMoreDataAllCount4" resultType="java.util.HashMap">
+        SELECT
+        count(*) AS COUNT
+        FROM
+        reet_tbl a
+        <if test='allCount != "" and allCount != "0"'>
+            INNER JOIN (SELECT * from room_tbl ORDER BY room_tbl.STRARTTIME ASC LIMIT #{pages},#{allCount}) h ON
+            a.ROOMID = h.ID
+        </if>
+        INNER JOIN (
+        SELECT
+        ROOMID as dROOMID,POINT as dPOINT ,`VALUE` as dVALUE,JISHUCOUNT as dJISHUCOUNT,OUSHUCOUNT as dOUSHUCOUNT
+        FROM
+        reet_tbl c
+        <where>
+            <if test='JISHUCOUNT1 != "n" and JISHUCOUNT1 != "N" and JISHUCOUNT1 != ""'>c.JISHUCOUNT = #{JISHUCOUNT1}</if>
+            <if test='OUSHUCOUNT1 != "n" and OUSHUCOUNT1 != "N" and JISHUCOUNT1 != ""'>and c.OUSHUCOUNT = #{OUSHUCOUNT1}</if>
+            <if test='MAXCOUNT1 != "n" and MAXCOUNT1 != "N" and MAXCOUNT1 != ""'>and c.MAXCOUNT = #{MAXCOUNT1}</if>
+            <if test='MINCOUNT1 != "n" and MINCOUNT1 != "N" and MINCOUNT1 != ""'>and c.MINCOUNT = #{MINCOUNT1}</if>
+            <if test="VALUE1 != '全部'">and c.VALUE = #{VALUE1}</if>
+        </where>
+        ) d ON a.ROOMID = d.dROOMID
+        AND a.POINT = d.dPOINT + 1
+        <where>
+            <if test="TRENT != '全部'">and a.TRENT = #{TRENT}</if>
+            <if test= "VALUE == 1">and a.VALUE = '庄'</if>
+            <if test= "VALUE == 2">and a.VALUE = '闲'</if>
+            <if test= "VALUE == 3">and a.VALUE = '和'</if>
         </where>
         ORDER BY a.TIME ASC
     </select>
