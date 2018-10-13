@@ -14,5 +14,6 @@ public interface ILoginMessage {
     boolean reetTbl2();
 
     boolean reetTbl3();
-    
+
+    boolean getParameter(String number);
 }

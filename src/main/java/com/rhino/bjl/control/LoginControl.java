@@ -122,4 +122,19 @@ public class LoginControl extends BaseControl{
         printMsgToPage(response, status, msg, out);
     }
 
+    @RequestMapping(value = "/initPrepare1",method = RequestMethod.POST)
+    public void initPrepare1(HttpServletRequest request,HttpServletResponse response) {
+        String status = "200";
+        String msg = "更新成功";
+        String number = ParamUtils.getParameter(request, "number", "2000");
+        //更新数据
+        boolean isSucces = loginMessage.getParameter(number);
+        if(!isSucces) {
+            status = "400";
+            msg = "更新失败";
+        }
+        PrintWriter out = null;
+        printMsgToPage(response, status, msg, out);
+    }
+
 }

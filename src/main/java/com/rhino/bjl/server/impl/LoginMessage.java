@@ -2,6 +2,7 @@ package com.rhino.bjl.server.impl;
 
 import com.rhino.bjl.bean.ManageUser;
 import com.rhino.bjl.bean.MaxMinBean;
+import com.rhino.bjl.mapper.DataManageMapper;
 import com.rhino.bjl.mapper.LoginManageMapper;
 import com.rhino.bjl.mapper.MainManageMapper;
 import com.rhino.bjl.server.ILoginMessage;
@@ -23,6 +24,9 @@ public class LoginMessage implements ILoginMessage {
 
     @Autowired
     private MainManageMapper mainManageMapper;
+
+    @Autowired
+    private DataManageMapper dataManageMapper;
 
     public Object[] login(String username, String password) {
         HashMap<String, Object> param = new HashMap<String, Object>();
@@ -212,6 +216,66 @@ public class LoginMessage implements ILoginMessage {
             params.put("MINCOUNT", maxMinBean.getMinCount());
             params.put("ID", hashMap.get("ID").toString());
             mainManageMapper.updateReetData(params);
+        }
+        return true;
+    }
+
+    /**
+     * 初始化第一局概率
+     * @param number 分页单位500 1000 1500
+     * @return
+     */
+    @Override
+    public boolean getParameter(String number) {
+        Integer JISHU[] = {0,1,2,3,4,5,6};
+        Integer OUSHU[] = {0,1,2,3,4,5,6};
+        int pages = Integer.parseInt(number);
+        Integer page[] = {pages,pages *2,0};
+        String trent[] = {"全部","1","2","0"};
+        for (int i=0;i<JISHU.length;i++) {
+            for (int j = 0; j < OUSHU.length; j++) {
+                HashMap<String,Object> map1 = new HashMap<String, Object>();
+                map1.put("JIOU",JISHU[i] + "-" + OUSHU[j]);
+                HashMap<String,Object> map = new HashMap<String, Object>();
+                map.put("JISHUCOUNT1", JISHU[i]);
+                map.put("OUSHUCOUNT1", OUSHU[j]);
+                map.put("VALUE1", "全部");
+                map.put("VALUE", "0"); //查询全部
+                map.put("pages", 0);
+                for (int k=0;k<page.length;k++) {
+                    map1.put("COUNT" + k,page[k]);
+                    map.remove("allCount");
+                    map.put("allCount", page[k]);
+                    for (int z=0;z<page.length;z++) {
+                        map.put("TRENT", trent[z]);
+                        map1.put("TRENT" + z,trent[z]);
+                        //查询所有条数
+                        HashMap<String, Object> allSize = dataManageMapper.findMoreDataAllCount4(map);
+                        map.remove("VALUE");
+                        map.put("VALUE", "1"); //查询全部
+                        HashMap<String, Object> zhangSize = dataManageMapper.findMoreDataAllCount4(map);
+                        map.remove("VALUE");
+                        map.put("VALUE", "2"); //查询全部
+                        HashMap<String, Object> xianSize = dataManageMapper.findMoreDataAllCount4(map);
+                        map.remove("VALUE");
+                        map.put("VALUE", "3"); //查询全部
+                        HashMap<String, Object> heSize = dataManageMapper.findMoreDataAllCount4(map);
+                        Float total = Float.parseFloat(allSize.get("COUNT").toString());
+                        Float zhuang = Float.parseFloat(zhangSize.get("COUNT").toString());
+                        Float xian = Float.parseFloat(xianSize.get("COUNT").toString());
+                        Float he = Float.parseFloat(heSize.get("COUNT").toString());
+                        String zhuangGailv = Math.round(zhuang / total * 10000) / 100.00 + "%";
+                        String xianGailv = Math.round(xian / total * 10000) / 100.00 + "%";
+                        String heGailv = Math.round(he / total * 10000) / 100.00 + "%";
+                        map1.put("TRENT" + z,trent[z]);
+                        map1.put("TRENT" + z,trent[z]);
+                        map1.put("TRENT" + z,trent[z]);
+                    }
+
+                }
+
+
+            }
         }
         return true;
     }

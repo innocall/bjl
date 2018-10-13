@@ -15,7 +15,7 @@ var zhuangdui = 1; //庄没有对子1 ，0有对子
 //首切牌随机 2-12张
 var startDown=new Array(2,3,4,5,6,7,8,9,10,11,12);
 // var allJuCountArray=new Array(70,71,72,73,74,75);
- var allJuCount=75; //最多不超过75局
+var allJuCount=78; //最多不超过75局
 var firstQiePai = "";
 var startDown1 = 0; //首切牌张数
 var isJieShu = false; //是否结束发到了红牌，true 发到了红牌，结束
@@ -103,9 +103,9 @@ function init() {
         //showLog(myArray);
     }
     showLog(myArray);
-    //尾切牌
+    //尾切牌 范围 45——55张
    // var lanrenzhijia = Math.floor(Math.random()*(120-60)+ 60);
-    var lanrenzhijia = Math.floor(Math.random()*(65-45)+ 45);
+    var lanrenzhijia = Math.floor(Math.random()*(55-45)+ 45);
     //插入红牌
     myArray = downSet(myArray,lanrenzhijia);
     showLog(myArray);
