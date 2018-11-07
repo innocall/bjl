@@ -102,4 +102,24 @@ FROM
 GROUP BY
 	PAI DESC ORDER BY PAICOUNT DESC;
 
+CREATE TABLE `reet_analyze_tbl` (
+  `ID` varchar(64) NOT NULL,
+  `ROOMID` varchar(64) NOT NULL COMMENT '预测的大局数',
+  `POINT` int(3) NOT NULL COMMENT '第几局',
+  `MAXMINRESULTA` int(5) NOT NULL COMMENT '大小值预测庄个数',
+  `MAXMINRESULTB` int(5) NOT NULL COMMENT '大小值预测闲个数',
+  `MAXMINRESULTC` int(5) NOT NULL COMMENT '大小值预测和个数',
+  `MAXMINRESULTTYPE` varchar(1) NOT NULL COMMENT '大小值预测查询类型A表示4组，B表示三组',
+  `OLDEVENRESULTA` int(5) NOT NULL COMMENT '奇偶值预测庄个数',
+  `OLDEVENRESULTB` int(5) NOT NULL COMMENT '奇偶值预测闲个数',
+  `OLDEVENRESULTC` int(5) NOT NULL COMMENT '奇偶值预测和个数',
+  `OLDEVENRESULTTYPE` varchar(1) NOT NULL COMMENT '奇偶值预测查询类型A表示4组，B表示三组',
+  `MAXMINRESULTAVALUE` varchar(1) NOT NULL COMMENT '大小值预测结果',
+  `OLDEVENRESULTAVALUE` varchar(1) NOT NULL COMMENT '奇偶值预测结果',
+  `VALUE` varchar(1) NOT NULL COMMENT '实际结果',
+  `MAXMINRESULTVALUE` varchar(1) NOT NULL COMMENT '大小值预测是否正确A表示准确，B表示错误',
+  `OLDEVENRESULTVALUE` varchar(1) NOT NULL COMMENT '奇偶值预测是否正确A表示准确，B表示错误',
+  `TIME` datetime DEFAULT NULL COMMENT '时间',
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
