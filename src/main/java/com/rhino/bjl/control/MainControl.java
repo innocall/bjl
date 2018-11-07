@@ -167,9 +167,10 @@ public class MainControl extends BaseControl {
             if(StringUtils.isBlank(id)) {
                 status = "400";
                 msg = "保存失败";
+            } else {
+                //更新钱；
+                boolean isSucces = mainMessage.updateUserMoneyByUserId(user.getID(),Float.parseFloat(userMoney));
             }
-            //更新钱；
-            boolean isSucces = mainMessage.updateUserMoneyByUserId(user.getID(),Float.parseFloat(userMoney));
         }
         PrintWriter out = null;
         printMsgToPage(response, status, msg, out);

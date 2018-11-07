@@ -179,9 +179,29 @@ public class MainMessage implements IMainMessage {
             map.put("OUSHUCOUNT", oushu);
             map.put("ID", roomId);
             boolean isParam = mainManageMapper.updateRoomCountData(map);
+            // 同步提交数据到服务器中
+            boolean isSubmit = addReetToWeb(id,roomId,zhuangdian,xiandian,juCount,jishu,oushu,ling,maxCount,minCount);
             return id;
         }
         return "";
+    }
+
+    /**
+     * 上传数据到服务器
+     * @return
+     */
+    private boolean addReetToWeb(String id, String roomId, String zhuangdian, String xiandian, String juCount, int jishu, int oushu, int ling, int maxCount, int minCount) {
+       boolean result = true;
+       String value = "A";
+        if(Integer.parseInt(zhuangdian) > Integer.parseInt(xiandian)) {
+            value = "A";
+        } else if (Integer.parseInt(zhuangdian) < Integer.parseInt(xiandian)) {
+            value = "B";
+        } else {
+            value = "C";
+        }
+
+        return result;
     }
 
     @Override
