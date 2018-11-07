@@ -410,5 +410,13 @@
 
     </select>
 
+    <select id="findSReetList" resultType="java.util.HashMap">
+        SELECT * FROM reet_analyze_tbl ORDER BY TIME DESC LIMIT #{start},#{limit}
+    </select>
+
+    <select id="findSReetListCount" resultType="java.util.HashMap">
+        SELECT * FROM reet_analyze_tbl
+    </select>
+
 
 </mapper>

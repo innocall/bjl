@@ -78,4 +78,12 @@ public class DataManageMapper {
     public HashMap<String, Object> findMoreDataAllCount4(HashMap<String, Object> map) {
         return lemonDB.get("findMoreDataAllCount4",map);
     }
+
+    public List<HashMap<String, Object>> findSReetList(HashMap<String, Object> map) {
+        return lemonDB.getList("findSReetList",map);
+    }
+
+    public List<HashMap<String, Object>> findSReetListCount() {
+        return lemonDB.getList("findSReetListCount");
+    }
 }

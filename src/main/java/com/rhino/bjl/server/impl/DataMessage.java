@@ -253,6 +253,20 @@ public class DataMessage implements IDataMessage{
         return maps;
     }
 
+    @Override
+    public List<HashMap<String, Object>> findSReetList(int start, int limit) {
+        HashMap<String,Object> map = new HashMap<String, Object>();
+        map.put("start",start);
+        map.put("limit",limit);
+        return dataManageMapper.findSReetList(map);
+    }
+
+    @Override
+    public int findSReetListCount() {
+        List<HashMap<String, Object>> list =  dataManageMapper.findSReetListCount();
+        return list.size();
+    }
+
 
     public List<HashMap<String, Object>> findReetList2(String category, String one, String two) {
         List<HashMap<String ,Object>> dataList = new ArrayList<HashMap<String, Object>>();

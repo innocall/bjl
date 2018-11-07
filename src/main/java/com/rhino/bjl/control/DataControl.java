@@ -203,5 +203,22 @@ public class DataControl extends BaseControl {
         return mav;
     }
 
+    @RequestMapping(value = "findSReetData", method = RequestMethod.POST)
+    public ResponseEntity<String> findSReetData(HttpServletRequest request) {
+        HttpHeaders headers = new HttpHeaders();
+        MediaType mediaType = new MediaType("text", "html", Charset.forName("UTF-8"));
+        headers.setContentType(mediaType);
+        Map<String, Object> param = new HashMap<String, Object>();
+        int start = ParamUtils.getIntParameter(request, "start", 0);
+        int limit = ParamUtils.getIntParameter(request, "limit", 80);
+        List<HashMap<String, Object>> sreet = dataMessage.findSReetList(start,limit);
+        int count = dataMessage.findSReetListCount();
+        param.put("sreet", sreet);
+        param.put("count", count);
+        String json = JsonUtil.toJsonString(param);
+        ResponseEntity<String> responseEntity = new ResponseEntity<String>(
+                json, headers, HttpStatus.OK);
+        return responseEntity;
+    }
 
 }

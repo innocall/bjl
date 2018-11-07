@@ -17,4 +17,8 @@ public interface IDataMessage {
     HashMap<String,Object> findReetProbability(String oneCount, String twoCount, String threeCount, String oneType, String twoType, String threeType, String one, String two, String three, String allCount, String pages, String threeType4);
 
 
+    List<HashMap<String, Object>> findSReetList(int start, int limit);
+
+    int findSReetListCount();
+
 }
