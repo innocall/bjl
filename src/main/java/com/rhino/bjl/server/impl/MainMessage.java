@@ -1,19 +1,24 @@
 package com.rhino.bjl.server.impl;
 
 import com.rhino.bjl.bean.*;
+import com.rhino.bjl.control.BaseControl;
 import com.rhino.bjl.mapper.MainManageMapper;
 import com.rhino.bjl.server.IMainMessage;
 import com.rhino.bjl.utils.DateUtils;
 import com.rhino.bjl.utils.HttpUtils;
 import com.rhino.bjl.utils.JsonUtil;
 import com.rhino.bjl.utils.StringUtils;
+import net.sf.ezmorph.bean.MorphDynaBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.logging.Logger;
 
 @Service
 public class MainMessage implements IMainMessage {
+
+    public static final Logger logger = Logger.getLogger(MainMessage.class.getSimpleName());
 
     @Autowired
     private MainManageMapper mainManageMapper;
@@ -201,8 +206,10 @@ public class MainMessage implements IMainMessage {
                         if (map4 != null) {
                             Map<String,Object> sCheckResultOldEven = checkOldEven(map1,map2,map3,map4);
                             Map<String,Object> sCheckResultMaxMin = checkMaxMin(map1,map2,map3,map4);
-                            Map<String,Object> maxMin = (Map<String, Object>) sCheckResultMaxMin.get("object");
-                            Map<String,Object> oldEven = (Map<String, Object>) sCheckResultOldEven.get("object");
+                            MorphDynaBean maxMin = (MorphDynaBean) sCheckResultMaxMin.get("object");
+                            MorphDynaBean oldEven = (MorphDynaBean) sCheckResultOldEven.get("object");
+                            //Map<String,Object> maxMin = JsonUtil.getMap4Json(maxObject);
+                            //Map<String,Object> oldEven = JsonUtil.getMap4Json(oldEvenObject);
                             //插入数据库
                             HashMap<String, Object> params = new HashMap<String, Object>();
                             String id = UUID.randomUUID().toString();
@@ -311,8 +318,10 @@ public class MainMessage implements IMainMessage {
         sMaxMinBean4.put("valueB",map4.get("XIANVALUE"));
         sMaxMinBeansList.add(sMaxMinBean4);
         String json = JsonUtil.toJsonString(sMaxMinBeansList);
-        System.out.println("服务器查询数据：" + json);
+        //System.out.println("服务器查询数据：" + json);
+        logger.info("服务器大小数查询数据：" + json);
         String maxMinResutl = HttpUtils.post("http://47.244.48.105:8091/reet_tbl/getValueTypeByB",json);
+        logger.info("服务器大小数查询数据结果：" + maxMinResutl);
         Map<String,Object> map = JsonUtil.getMap(maxMinResutl);
         return map;
     }
@@ -344,9 +353,10 @@ public class MainMessage implements IMainMessage {
         sOldEvenBean4.put("valueB",map4.get("XIANVALUE"));
         sOldEvenBeanList.add(sOldEvenBean4);
         String json = JsonUtil.toJsonString(sOldEvenBeanList);
-        System.out.println("服务器查询数据：" + json);
-        String maxMinResutl = HttpUtils.post("http://47.244.48.105:8091/reet_tbl/getValueTypeByA",json);
-        Map<String,Object> map = JsonUtil.getMap(maxMinResutl);
+        logger.info("服务器奇偶数查询数据：" + json);
+        String oldEvenResutl = HttpUtils.post("http://47.244.48.105:8091/reet_tbl/getValueTypeByA",json);
+        logger.info("服务器奇偶数查询数据结果：" + oldEvenResutl);
+        Map<String,Object> map = JsonUtil.getMap(oldEvenResutl);
         return map;
     }
 

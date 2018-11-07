@@ -8,8 +8,11 @@ Ext.onReady(function () {
         fields: ['ID','ROOMID','POINT','MAXMINRESULTA','MAXMINRESULTB','MAXMINRESULTC','MAXMINRESULTTYPE','OLDEVENRESULTA','OLDEVENRESULTB','OLDEVENRESULTC','OLDEVENRESULTTYPE','MAXMINRESULTAVALUE','OLDEVENRESULTAVALUE','VALUE','MAXMINRESULTVALUE','OLDEVENRESULTVALUE','TIME']
     });
 
-    jsonReetAnaly.on('beforeload', function (s) {
-        jsonUser.baseParams = { };
+    jsonReetAnaly.load({
+        params : {
+            start : 0,
+            limit : 80,
+        }
     });
 
     /* 数据列表 */
@@ -39,7 +42,7 @@ Ext.onReady(function () {
             dataIndex: 'ROOMID',
             sortable: true,
             align: 'center',
-            width: 300,
+            width: 70,
             css: 'font-size:13px;color:#red;',
             menuDisabled: true,
             hidden: true
@@ -50,7 +53,7 @@ Ext.onReady(function () {
             sortable: true,
             align: 'center',
             css: 'font-size:18px;color:#0e49e8;',
-            width: 100,
+            width: 70,
             menuDisabled: true
         },{
             id: 'MAXMINRESULTB',
@@ -59,7 +62,7 @@ Ext.onReady(function () {
             sortable: true,
             align: 'center',
             css: 'font-size:18px;color:#0e49e8;',
-            width: 100,
+            width: 70,
             menuDisabled: true
         },{
             id: 'MAXMINRESULTC',
@@ -68,7 +71,7 @@ Ext.onReady(function () {
             sortable: true,
             align: 'center',
             css: 'font-size:18px;color:#0e49e8;',
-            width: 100,
+            width: 70,
             menuDisabled: true
         },{
             id: 'MAXMINRESULTTYPE',
@@ -77,7 +80,7 @@ Ext.onReady(function () {
             sortable: true,
             align: 'center',
             css: 'font-size:18px;color:#0e49e8;',
-            width: 100,
+            width: 70,
             menuDisabled: true,
             renderer: function (v) {
                if (v == 'A')  {
@@ -93,7 +96,7 @@ Ext.onReady(function () {
             sortable: true,
             align: 'center',
             css: 'font-size:18px;color:#0e49e8;',
-            width: 100,
+            width: 70,
             menuDisabled: true
         }, {
             id: 'OLDEVENRESULTB',
@@ -102,7 +105,7 @@ Ext.onReady(function () {
             sortable: true,
             align: 'center',
             css: 'font-size:18px;color:#0e49e8;',
-            width: 100,
+            width: 70,
             menuDisabled: true
         }, {
             id: 'OLDEVENRESULTC',
@@ -111,7 +114,7 @@ Ext.onReady(function () {
             sortable: true,
             align: 'center',
             css: 'font-size:18px;color:#0e49e8;',
-            width: 100,
+            width: 70,
             menuDisabled: true
         },{
             id: 'OLDEVENRESULTTYPE',
@@ -120,7 +123,7 @@ Ext.onReady(function () {
             sortable: true,
             align: 'center',
             css: 'font-size:18px;color:#0e49e8;',
-            width: 100,
+            width: 70,
             menuDisabled: true,
             renderer: function (v) {
                 if (v == 'A')  {
@@ -154,7 +157,7 @@ Ext.onReady(function () {
             sortable: true,
             align: 'center',
             css: 'font-size:18px;color:#0e49e8;',
-            width: 100,
+            width: 70,
             menuDisabled: true
         },{
             id: 'MAXMINRESULTVALUE',
@@ -184,21 +187,6 @@ Ext.onReady(function () {
                     return "<img src='../../image/accept.png' />";
                 } else {
                     return "<img src='../../image/error.png' />";
-                }
-            }
-        },{
-            id: 'OLDEVENRESULTVALUE',
-            header: 'MN预测',
-            dataIndex: 'OLDEVENRESULTVALUE',
-            sortable: true,
-            align: 'center',
-            width: 60,
-            menuDisabled: true,
-            renderer: function (v) {
-                if (v == 'A')  {
-                    return '4组';
-                } else {
-                    return '3组';
                 }
             }
         },{
