@@ -107,4 +107,8 @@ public class MainManageMapper {
         params.put("POINT",point);
         return lemonDB.get("findReetByRoomIdAndPoint", params);
     }
+
+    public boolean saveReetAnaly(HashMap<String, Object> params) {
+        return lemonDB.insert("saveReetAnaly", params);
+    }
 }

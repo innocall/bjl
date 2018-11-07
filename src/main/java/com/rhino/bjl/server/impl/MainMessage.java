@@ -201,12 +201,82 @@ public class MainMessage implements IMainMessage {
                         if (map4 != null) {
                             Map<String,Object> sCheckResultOldEven = checkOldEven(map1,map2,map3,map4);
                             Map<String,Object> sCheckResultMaxMin = checkMaxMin(map1,map2,map3,map4);
+                            Map<String,Object> maxMin = (Map<String, Object>) sCheckResultMaxMin.get("object");
+                            Map<String,Object> oldEven = (Map<String, Object>) sCheckResultOldEven.get("object");
                             //插入数据库
-
-
-
-
-
+                            HashMap<String, Object> params = new HashMap<String, Object>();
+                            String id = UUID.randomUUID().toString();
+                            params.put("ID", id);
+                            params.put("ROOMID", roomId);
+                            params.put("TIME", DateUtils.getDate5());
+                            params.put("POINT", point);
+                            Integer maxMinResultA = (Integer) maxMin.get("a");
+                            Integer maxMinResultB = (Integer) maxMin.get("b");
+                            Integer maxMinResultC = (Integer) maxMin.get("c");
+                            params.put("MAXMINRESULTA", maxMinResultA);
+                            params.put("MAXMINRESULTB", maxMinResultB);
+                            params.put("MAXMINRESULTC", maxMinResultC);
+                            params.put("MAXMINRESULTTYPE", maxMin.get("type"));
+                            Integer oldevenResultA = (Integer) oldEven.get("a");
+                            Integer oldevenResultB = (Integer) oldEven.get("b");
+                            Integer oldevenResultC = (Integer) oldEven.get("c");
+                            params.put("OLDEVENRESULTA", oldevenResultA);
+                            params.put("OLDEVENRESULTB", oldevenResultB);
+                            params.put("OLDEVENRESULTC", oldevenResultC);
+                            params.put("OLDEVENRESULTTYPE", oldEven.get("type"));
+                            //大小值预测结果
+                            String maxMinR,oldEvenR,value;
+                            if (maxMinResultA > maxMinResultB) {
+                                if(maxMinResultA > maxMinResultC) {
+                                    maxMinR =  "庄";
+                                } else {
+                                    maxMinR = "和";
+                                }
+                            } else {
+                                if(maxMinResultB > maxMinResultC) {
+                                    maxMinR = "闲";
+                                } else {
+                                    maxMinR =  "和";
+                                }
+                            }
+                            params.put("MAXMINRESULTAVALUE", maxMinR);
+                            //奇偶值预测结果
+                            if (oldevenResultA > oldevenResultB) {
+                                if(oldevenResultA > oldevenResultC) {
+                                    oldEvenR = "庄";
+                                } else {
+                                    oldEvenR = "和";
+                                }
+                            } else {
+                                if(oldevenResultB > oldevenResultC) {
+                                    oldEvenR = "闲";
+                                } else {
+                                    oldEvenR = "和";
+                                }
+                            }
+                            params.put("OLDEVENRESULTAVALUE", oldEvenR);
+                            Integer valueA = Integer.parseInt(zhuangdian);
+                            Integer valueB = Integer.parseInt(xiandian);
+                            if (valueA > valueB) {
+                                value = "庄";
+                            } else if (valueA == valueB) {
+                                value = "和";
+                            } else {
+                                value = "闲";
+                            }
+                            params.put("VALUE", value);
+                            if (maxMinR.equals(value)) {
+                                params.put("MAXMINRESULTVALUE", "A");
+                            } else {
+                                params.put("MAXMINRESULTVALUE", "B");
+                            }
+                            if (oldEvenR.equals(value)) {
+                                params.put("OLDEVENRESULTVALUE", "A");
+                            } else {
+                                params.put("OLDEVENRESULTVALUE", "B");
+                            }
+                            //数据准备结束，插入数据库
+                            boolean isResult = mainManageMapper.saveReetAnaly(params);
                         }
                     }
                 }
@@ -533,6 +603,14 @@ public class MainMessage implements IMainMessage {
         }
         map.put("TRENT",qiang);
         map.put("HECOUNT",roomMap.get("HECOUNT"));
+        //更新服务器数据
+        Map<String,Object> map2 = new HashMap<String, Object>();
+        map2.put("tRent",qiang);
+        map2.put("heCount",roomMap.get("HECOUNT"));
+        map2.put("roomId",roomId);
+        String json = JsonUtil.toJsonString(map2);
+        String rest = HttpUtils.post("http://47.244.48.105:8091/reet_tbl/updReet",json);
+        System.out.println("更新服务器reet" + rest);
         return mainManageMapper.updateReetByRoomId(map);
     }
 
