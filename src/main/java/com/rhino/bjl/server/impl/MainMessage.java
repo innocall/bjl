@@ -1,17 +1,16 @@
 package com.rhino.bjl.server.impl;
 
-import com.rhino.bjl.bean.MaxMinBean;
+import com.rhino.bjl.bean.*;
 import com.rhino.bjl.mapper.MainManageMapper;
 import com.rhino.bjl.server.IMainMessage;
 import com.rhino.bjl.utils.DateUtils;
+import com.rhino.bjl.utils.HttpUtils;
+import com.rhino.bjl.utils.JsonUtil;
 import com.rhino.bjl.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class MainMessage implements IMainMessage {
@@ -179,11 +178,106 @@ public class MainMessage implements IMainMessage {
             map.put("OUSHUCOUNT", oushu);
             map.put("ID", roomId);
             boolean isParam = mainManageMapper.updateRoomCountData(map);
+            //服务器数据预测系统分析
+            analyzeData(roomId,juCount,zhuangdian,xiandian);
             // 同步提交数据到服务器中
             boolean isSubmit = addReetToWeb(id,roomId,zhuangdian,xiandian,juCount,jishu,oushu,ling,maxCount,minCount);
             return id;
         }
         return "";
+    }
+
+    private void analyzeData(String roomId, String juCount, String zhuangdian, String xiandian) {
+        int point = Integer.parseInt(juCount);
+        if (point > 4) {
+            //查询出前3局数据
+            HashMap<String, Object> map1 = mainManageMapper.findReetByRoomIdAndPoint(roomId,point - 4);
+            if (map1 != null) {
+                HashMap<String, Object> map2 = mainManageMapper.findReetByRoomIdAndPoint(roomId,point - 3);
+                if (map2 != null) {
+                    HashMap<String, Object> map3 = mainManageMapper.findReetByRoomIdAndPoint(roomId,point - 2);
+                    if (map3 != null) {
+                        HashMap<String, Object> map4 = mainManageMapper.findReetByRoomIdAndPoint(roomId,point - 1);
+                        if (map4 != null) {
+                            Map<String,Object> sCheckResultOldEven = checkOldEven(map1,map2,map3,map4);
+                            Map<String,Object> sCheckResultMaxMin = checkMaxMin(map1,map2,map3,map4);
+                            //插入数据库
+
+
+
+
+
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private Map<String,Object> checkMaxMin(HashMap<String, Object> map1, HashMap<String, Object> map2, HashMap<String, Object> map3, HashMap<String, Object> map4) {
+        List<Map<String,Object>> sMaxMinBeansList = new ArrayList<Map<String,Object>>();
+        Map<String,Object> sMaxMinBean1 = new HashMap<String, Object>();
+        sMaxMinBean1.put("minCount",map1.get("MINCOUNT"));
+        sMaxMinBean1.put("maxCount",map1.get("MAXCOUNT"));
+        sMaxMinBean1.put("valueA",map1.get("ZHUANGVALUE"));
+        sMaxMinBean1.put("valueB",map1.get("XIANVALUE"));
+        sMaxMinBeansList.add(sMaxMinBean1);
+        Map<String,Object> sMaxMinBean2 = new HashMap<String, Object>();
+        sMaxMinBean2.put("minCount",map2.get("MINCOUNT"));
+        sMaxMinBean2.put("maxCount",map2.get("MAXCOUNT"));
+        sMaxMinBean2.put("valueA",map2.get("ZHUANGVALUE"));
+        sMaxMinBean2.put("valueB",map2.get("XIANVALUE"));
+        sMaxMinBeansList.add(sMaxMinBean2);
+        Map<String,Object> sMaxMinBean3 = new HashMap<String, Object>();
+        sMaxMinBean3.put("minCount",map3.get("MINCOUNT"));
+        sMaxMinBean3.put("maxCount",map3.get("MAXCOUNT"));
+        sMaxMinBean3.put("valueA",map3.get("ZHUANGVALUE"));
+        sMaxMinBean3.put("valueB",map3.get("XIANVALUE"));
+        sMaxMinBeansList.add(sMaxMinBean3);
+        Map<String,Object> sMaxMinBean4 = new HashMap<String, Object>();
+        sMaxMinBean4.put("minCount",map4.get("MINCOUNT"));
+        sMaxMinBean4.put("maxCount",map4.get("MAXCOUNT"));
+        sMaxMinBean4.put("valueA",map4.get("ZHUANGVALUE"));
+        sMaxMinBean4.put("valueB",map4.get("XIANVALUE"));
+        sMaxMinBeansList.add(sMaxMinBean4);
+        String json = JsonUtil.toJsonString(sMaxMinBeansList);
+        System.out.println("服务器查询数据：" + json);
+        String maxMinResutl = HttpUtils.post("http://47.244.48.105:8091/reet_tbl/getValueTypeByB",json);
+        Map<String,Object> map = JsonUtil.getMap(maxMinResutl);
+        return map;
+    }
+
+    private Map<String,Object> checkOldEven(HashMap<String, Object> map1, HashMap<String, Object> map2, HashMap<String, Object> map3, HashMap<String, Object> map4) {
+        List<Map<String,Object>> sOldEvenBeanList = new ArrayList<Map<String,Object>>();
+        Map<String,Object> sOldEvenBean1 = new HashMap<String, Object>();
+        sOldEvenBean1.put("jiShuCount",map1.get("JISHUCOUNT"));
+        sOldEvenBean1.put("ouShuCount",map1.get("OUSHUCOUNT"));
+        sOldEvenBean1.put("valueA",map1.get("ZHUANGVALUE"));
+        sOldEvenBean1.put("valueB",map1.get("XIANVALUE"));
+        sOldEvenBeanList.add(sOldEvenBean1);
+        Map<String,Object> sOldEvenBean2 = new HashMap<String, Object>();
+        sOldEvenBean2.put("jiShuCount",map2.get("JISHUCOUNT"));
+        sOldEvenBean2.put("ouShuCount",map2.get("OUSHUCOUNT"));
+        sOldEvenBean2.put("valueA",map2.get("ZHUANGVALUE"));
+        sOldEvenBean2.put("valueB",map2.get("XIANVALUE"));
+        sOldEvenBeanList.add(sOldEvenBean2);
+        Map<String,Object> sOldEvenBean3 = new HashMap<String, Object>();
+        sOldEvenBean3.put("jiShuCount",map3.get("JISHUCOUNT"));
+        sOldEvenBean3.put("ouShuCount",map3.get("OUSHUCOUNT"));
+        sOldEvenBean3.put("valueA",map3.get("ZHUANGVALUE"));
+        sOldEvenBean3.put("valueB",map3.get("XIANVALUE"));
+        sOldEvenBeanList.add(sOldEvenBean3);
+        Map<String,Object> sOldEvenBean4 = new HashMap<String, Object>();
+        sOldEvenBean4.put("jiShuCount",map4.get("JISHUCOUNT"));
+        sOldEvenBean4.put("ouShuCount",map4.get("OUSHUCOUNT"));
+        sOldEvenBean4.put("valueA",map4.get("ZHUANGVALUE"));
+        sOldEvenBean4.put("valueB",map4.get("XIANVALUE"));
+        sOldEvenBeanList.add(sOldEvenBean4);
+        String json = JsonUtil.toJsonString(sOldEvenBeanList);
+        System.out.println("服务器查询数据：" + json);
+        String maxMinResutl = HttpUtils.post("http://47.244.48.105:8091/reet_tbl/getValueTypeByA",json);
+        Map<String,Object> map = JsonUtil.getMap(maxMinResutl);
+        return map;
     }
 
     /**
@@ -193,14 +287,30 @@ public class MainMessage implements IMainMessage {
     private boolean addReetToWeb(String id, String roomId, String zhuangdian, String xiandian, String juCount, int jishu, int oushu, int ling, int maxCount, int minCount) {
        boolean result = true;
        String value = "A";
-        if(Integer.parseInt(zhuangdian) > Integer.parseInt(xiandian)) {
+       int valueA = Integer.parseInt(zhuangdian);
+       int valueB = Integer.parseInt(xiandian);
+        if(valueA > valueB) {
             value = "A";
-        } else if (Integer.parseInt(zhuangdian) < Integer.parseInt(xiandian)) {
+        } else if (valueA < valueB) {
             value = "B";
         } else {
             value = "C";
         }
-
+        SReetBean reetBean = new SReetBean();
+        reetBean.setId(id);
+        reetBean.setRoomId(roomId);
+        reetBean.setValueA(valueA);
+        reetBean.setValueB(valueB);
+        reetBean.setValue(value);
+        reetBean.setJiShuCount(jishu);
+        reetBean.setOuShuCount(oushu);
+        reetBean.setMaxCount(maxCount);
+        reetBean.setMinCount(minCount);
+        reetBean.setPoint(Integer.parseInt(juCount));
+        reetBean.setLingCount(ling);
+        String json = JsonUtil.getJsonString4JavaPOJO(reetBean);
+        String urlResult = HttpUtils.post("http://47.244.48.105:8091/reet_tbl/addReet",json);
+        System.out.println("小局数据插入服务器结果:" + urlResult);
         return result;
     }
 

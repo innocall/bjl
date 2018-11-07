@@ -100,4 +100,11 @@ public class MainManageMapper {
     public boolean updateReetByRoomId(HashMap<String, Object> params) {
         return lemonDB.update("updateReetByRoomId",params);
     }
+
+    public HashMap<String, Object> findReetByRoomIdAndPoint(String roomId, int point) {
+        HashMap<String, Object> params = new HashMap<String, Object>();
+        params.put("ROOMID",roomId);
+        params.put("POINT",point);
+        return lemonDB.get("findReetByRoomIdAndPoint", params);
+    }
 }

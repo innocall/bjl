@@ -49,4 +49,8 @@
         UPDATE reet_tbl SET HECOUNT=#{HECOUNT},TRENT=#{TRENT} WHERE ROOMID=#{ROOMID}
         ]]>
     </update>
+
+    <select id="findReetByRoomIdAndPoint" resultType="java.util.HashMap">
+        select * from reet_tbl where ROOMID = #{ROOMID} AND POINT=#{POINT}
+    </select>
 </mapper>
