@@ -88,6 +88,7 @@ Ext.onReady(function(){
                 {id:'2', text : '<font style="font-size: 15px">小局分析</font>' , leaf : true },
                 {id:'4', text : '<font style="font-size: 15px">数据分析</font>' , leaf : true },
                 {id:'12', text : '<font style="font-size: 15px">数据统计</font>' , leaf : true },
+                {id:'5', text : '<font style="font-size: 15px">预测数据</font>' , leaf : true },
                 /*{id:'5', text: '<font style="font-size: 15px">数据建模</font>', expanded: true, children: [
                     {id:'6', text : '<font style="font-size: 15px">数据准备</font>' ,expanded: true,children:[
                         {id:'8', text : '<font style="font-size: 15px">初始化数据</font>' , leaf : true },
@@ -117,7 +118,9 @@ Ext.onReady(function(){
                             url = path + "data/analysis/initMode"; //数据准备
 						} else if (node.id == 12) {
                             url = path + "data/analysis/dateCount"; //数据统计
-                        }
+                        } else if (node.id == 5)  {
+                            url = path + "data/analysis/projectionsData";
+						}
 	    				tab = new Ext.Panel({
 	    					id:'Tab_' + node.id,
 	    					title:node.text,
