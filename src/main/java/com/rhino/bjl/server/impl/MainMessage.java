@@ -167,13 +167,20 @@ public class MainMessage implements IMainMessage {
         int maxCount = 0;
         int minCount = 0;
         MaxMinBean maxMinBean = StringUtils.setMaxMin(zhuang1,zhuang2,zhuang3,xian1,xian2,xian3,maxCount,minCount);
-        params.put("MAXCOUNT", maxMinBean.getMaxCount());
-        params.put("MINCOUNT", maxMinBean.getMinCount());
+        maxCount = maxMinBean.getMaxCount();
+        minCount = maxMinBean.getMinCount();
+        params.put("MAXCOUNT", maxCount);
+        params.put("MINCOUNT", minCount);
 
         params.put("JISHUCOUNT", jishu);
         params.put("OUSHUCOUNT", oushu);
         params.put("LINGCOUNT", ling);
         if (mainManageMapper.saveReetData(params)) {
+            //服务器数据预测系统分析
+            analyzeData(roomId,juCount,zhuangdian,xiandian);
+            // 同步提交数据到服务器中
+            boolean isSubmit = addReetToWeb(id,roomId,zhuangdian,xiandian,juCount,jishu,oushu,ling,maxCount,minCount);
+            //下面为更新房间数据，统计的是房间总数。
             //更新房间的奇偶数，庄数，闲数，对数
             HashMap<String,Object> hashMap = findRoomById(roomId);
             jishu = Integer.parseInt(hashMap.get("JISHUCOUNT").toString()) + jishu;
@@ -183,10 +190,6 @@ public class MainMessage implements IMainMessage {
             map.put("OUSHUCOUNT", oushu);
             map.put("ID", roomId);
             boolean isParam = mainManageMapper.updateRoomCountData(map);
-            //服务器数据预测系统分析
-            analyzeData(roomId,juCount,zhuangdian,xiandian);
-            // 同步提交数据到服务器中
-            boolean isSubmit = addReetToWeb(id,roomId,zhuangdian,xiandian,juCount,jishu,oushu,ling,maxCount,minCount);
             return id;
         }
         return "";
