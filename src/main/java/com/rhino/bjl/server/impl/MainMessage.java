@@ -1,13 +1,9 @@
 package com.rhino.bjl.server.impl;
 
 import com.rhino.bjl.bean.*;
-import com.rhino.bjl.control.BaseControl;
 import com.rhino.bjl.mapper.MainManageMapper;
 import com.rhino.bjl.server.IMainMessage;
-import com.rhino.bjl.utils.DateUtils;
-import com.rhino.bjl.utils.HttpUtils;
-import com.rhino.bjl.utils.JsonUtil;
-import com.rhino.bjl.utils.StringUtils;
+import com.rhino.bjl.utils.*;
 import net.sf.ezmorph.bean.MorphDynaBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +18,9 @@ public class MainMessage implements IMainMessage {
 
     @Autowired
     private MainManageMapper mainManageMapper;
+
+    @Autowired
+    private RedisCacheManager redisCacheManager;
 
     @Override
     public HashMap<String, Object> findParamMsgByUserId(String userId) {
@@ -176,8 +175,14 @@ public class MainMessage implements IMainMessage {
         params.put("OUSHUCOUNT", oushu);
         params.put("LINGCOUNT", ling);
         if (mainManageMapper.saveReetData(params)) {
+            //同步保存数据到redis 1小时
+            redisCacheManager.hmset(roomId + "_" + juCount,params,3600);
             //服务器数据预测系统分析
-            analyzeData(roomId,juCount,zhuangdian,xiandian);
+            try {
+                analyzeData(roomId,juCount,zhuangdian,xiandian);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             // 同步提交数据到服务器中
             boolean isSubmit = addReetToWeb(id,roomId,zhuangdian,xiandian,juCount,jishu,oushu,ling,maxCount,minCount);
             //下面为更新房间数据，统计的是房间总数。
@@ -195,17 +200,45 @@ public class MainMessage implements IMainMessage {
         return "";
     }
 
-    private void analyzeData(String roomId, String juCount, String zhuangdian, String xiandian) {
+    private void analyzeData(String roomId, String juCount, String zhuangdian, String xiandian) throws Exception{
         int point = Integer.parseInt(juCount);
         if (point > 4) {
-            //查询出前3局数据
-            HashMap<String, Object> map1 = mainManageMapper.findReetByRoomIdAndPoint(roomId,point - 4);
+            //查询出前3局数据，有限从Redis中获取
+            int p1 = point - 4;
+            HashMap<String, Object> map1 = (HashMap<String, Object>) redisCacheManager.hmget(roomId + "_" + p1);
+            if (map1 == null) {
+                map1 =  mainManageMapper.findReetByRoomIdAndPoint(roomId,p1);
+                redisCacheManager.hmset(roomId + "_" + p1,map1,3600);
+            } else {
+                logger.info("从Redis取值map1");
+            }
             if (map1 != null) {
-                HashMap<String, Object> map2 = mainManageMapper.findReetByRoomIdAndPoint(roomId,point - 3);
+                int p2 = point - 3;
+                HashMap<String, Object> map2 = (HashMap<String, Object>) redisCacheManager.hmget(roomId + "_" + p2);
+                if (map2 == null) {
+                    map2 =  mainManageMapper.findReetByRoomIdAndPoint(roomId,p2);
+                    redisCacheManager.hmset(roomId + "_" + p2,map2,3600);
+                }else {
+                    logger.info("从Redis取值map2");
+                }
                 if (map2 != null) {
-                    HashMap<String, Object> map3 = mainManageMapper.findReetByRoomIdAndPoint(roomId,point - 2);
+                    int p3 = point - 2;
+                    HashMap<String, Object> map3 = (HashMap<String, Object>) redisCacheManager.hmget(roomId + "_" + p3);
+                    if (map3 == null) {
+                        map3 =  mainManageMapper.findReetByRoomIdAndPoint(roomId,p3);
+                        redisCacheManager.hmset(roomId + "_" + p3,map3,3600);
+                    }else {
+                        logger.info("从Redis取值map3");
+                    }
                     if (map3 != null) {
-                        HashMap<String, Object> map4 = mainManageMapper.findReetByRoomIdAndPoint(roomId,point - 1);
+                        int p4 = point - 1;
+                        HashMap<String, Object> map4 = (HashMap<String, Object>) redisCacheManager.hmget(roomId + "_" + p4);
+                        if (map4 == null) {
+                            map4 =  mainManageMapper.findReetByRoomIdAndPoint(roomId,p4);
+                            redisCacheManager.hmset(roomId + "_" + p4,map4,3600);
+                        }else {
+                            logger.info("从Redis取值map4");
+                        }
                         if (map4 != null) {
                             Map<String,Object> sCheckResultOldEven = checkOldEven(map1,map2,map3,map4);
                             Map<String,Object> sCheckResultMaxMin = checkMaxMin(map1,map2,map3,map4);
@@ -392,6 +425,7 @@ public class MainMessage implements IMainMessage {
         reetBean.setPoint(Integer.parseInt(juCount));
         reetBean.setLingCount(ling);
         String json = JsonUtil.getJsonString4JavaPOJO(reetBean);
+        logger.info("小局数据插入服务器" + json);
         String urlResult = HttpUtils.post("http://47.244.48.105:8091/reet_tbl/addReet",json);
         System.out.println("小局数据插入服务器结果:" + urlResult);
         return result;

@@ -15,7 +15,7 @@
           http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
 
     <!-- 加载配置文件 -->
-    <context:property-placeholder location="classpath:jdbc.properties"/>
+    <context:property-placeholder location="classpath:jdbc.properties"  ignore-unresolvable="true"/>
 
     <!--  配置数据源-->
    <!-- <bean id="dataSource" class="com.jolbox.bonecp.BoneCPDataSource" destroy-method="close">
@@ -91,5 +91,6 @@
     </bean>
 
     <bean id="lemonBSupport" class="com.rhino.bjl.mybatis.db.LemonDBSupport" />
+    <import resource="spring-redis.xml" />
 
 </beans>

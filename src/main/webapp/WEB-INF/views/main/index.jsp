@@ -30,7 +30,7 @@
             padding-top:7px;
         }
     </style>
-    <title>百家乐数据分析平台</title>
+    <title>数据分析平台</title>
 </head>
 <body>
 <div id="header">
