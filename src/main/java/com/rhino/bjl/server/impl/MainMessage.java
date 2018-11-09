@@ -1,6 +1,7 @@
 package com.rhino.bjl.server.impl;
 
 import com.rhino.bjl.bean.*;
+import com.rhino.bjl.constans.AppConstans;
 import com.rhino.bjl.mapper.MainManageMapper;
 import com.rhino.bjl.server.IMainMessage;
 import com.rhino.bjl.utils.*;
@@ -176,7 +177,7 @@ public class MainMessage implements IMainMessage {
         params.put("LINGCOUNT", ling);
         if (mainManageMapper.saveReetData(params)) {
             //同步保存数据到redis 1小时
-            redisCacheManager.hmset(roomId + "_" + juCount,params,3600);
+            redisCacheManager.hmset(roomId + "_" + juCount,params, AppConstans.REDIS_TIME);
             //服务器数据预测系统分析
             try {
                 analyzeData(roomId,juCount,zhuangdian,xiandian);
@@ -208,7 +209,7 @@ public class MainMessage implements IMainMessage {
             HashMap<String, Object> map1 = (HashMap<String, Object>) redisCacheManager.hmget(roomId + "_" + p1);
             if (map1 == null) {
                 map1 =  mainManageMapper.findReetByRoomIdAndPoint(roomId,p1);
-                redisCacheManager.hmset(roomId + "_" + p1,map1,3600);
+                redisCacheManager.hmset(roomId + "_" + p1,map1,AppConstans.REDIS_TIME);
             } else {
                 logger.info("从Redis取值map1");
             }
@@ -217,7 +218,7 @@ public class MainMessage implements IMainMessage {
                 HashMap<String, Object> map2 = (HashMap<String, Object>) redisCacheManager.hmget(roomId + "_" + p2);
                 if (map2 == null) {
                     map2 =  mainManageMapper.findReetByRoomIdAndPoint(roomId,p2);
-                    redisCacheManager.hmset(roomId + "_" + p2,map2,3600);
+                    redisCacheManager.hmset(roomId + "_" + p2,map2,AppConstans.REDIS_TIME);
                 }else {
                     logger.info("从Redis取值map2");
                 }
@@ -226,7 +227,7 @@ public class MainMessage implements IMainMessage {
                     HashMap<String, Object> map3 = (HashMap<String, Object>) redisCacheManager.hmget(roomId + "_" + p3);
                     if (map3 == null) {
                         map3 =  mainManageMapper.findReetByRoomIdAndPoint(roomId,p3);
-                        redisCacheManager.hmset(roomId + "_" + p3,map3,3600);
+                        redisCacheManager.hmset(roomId + "_" + p3,map3,AppConstans.REDIS_TIME);
                     }else {
                         logger.info("从Redis取值map3");
                     }
@@ -235,17 +236,17 @@ public class MainMessage implements IMainMessage {
                         HashMap<String, Object> map4 = (HashMap<String, Object>) redisCacheManager.hmget(roomId + "_" + p4);
                         if (map4 == null) {
                             map4 =  mainManageMapper.findReetByRoomIdAndPoint(roomId,p4);
-                            redisCacheManager.hmset(roomId + "_" + p4,map4,3600);
+                            redisCacheManager.hmset(roomId + "_" + p4,map4,AppConstans.REDIS_TIME);
                         }else {
                             logger.info("从Redis取值map4");
                         }
                         if (map4 != null) {
-                            Map<String,Object> sCheckResultOldEven = checkOldEven(map1,map2,map3,map4);
-                            Map<String,Object> sCheckResultMaxMin = checkMaxMin(map1,map2,map3,map4);
-                            MorphDynaBean maxMin = (MorphDynaBean) sCheckResultMaxMin.get("object");
-                            MorphDynaBean oldEven = (MorphDynaBean) sCheckResultOldEven.get("object");
-                            //Map<String,Object> maxMin = JsonUtil.getMap4Json(maxObject);
-                            //Map<String,Object> oldEven = JsonUtil.getMap4Json(oldEvenObject);
+                            Map<String,Object> sCheckResultOldEven = checkOldEven(map1,map2,map3,map4);//MNAB
+                            Map<String,Object> sCheckResultMaxMin = checkMaxMin(map1,map2,map3,map4);//LSAB
+                            //MNLS/MN/LS/AB  查四组
+
+                            MorphDynaBean maxMin = (MorphDynaBean) sCheckResultMaxMin.get("object"); //LSAB
+                            MorphDynaBean oldEven = (MorphDynaBean) sCheckResultOldEven.get("object");//MNAB
                             //插入数据库
                             HashMap<String, Object> params = new HashMap<String, Object>();
                             String id = UUID.randomUUID().toString();
