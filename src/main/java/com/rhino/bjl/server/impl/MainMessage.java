@@ -659,6 +659,11 @@ public class MainMessage implements IMainMessage {
         String json = JsonUtil.toJsonString(map2);
         String rest = HttpUtils.post("http://47.244.48.105:8091/reet_tbl/updReet",json);
         System.out.println("更新服务器reet" + rest);
+        //删除Redis
+        Integer total = (Integer) roomMap.get("TOTALCOUNT");
+        for(int i=1;i<total+1;i++) {
+            redisCacheManager.del(roomId + "_" + total);
+        }
         return mainManageMapper.updateReetByRoomId(map);
     }
 
