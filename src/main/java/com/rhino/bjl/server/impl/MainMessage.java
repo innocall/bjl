@@ -357,7 +357,7 @@ public class MainMessage implements IMainMessage {
         String json = JsonUtil.toJsonString(sMaxMinBeansList);
         //System.out.println("服务器查询数据：" + json);
         logger.info("服务器大小数查询数据：" + json);
-        String maxMinResutl = HttpUtils.post("http://47.244.48.105:8091/reet_tbl/getValueTypeByB",json);
+        String maxMinResutl = HttpUtils.post("http://47.244.48.105:8091/reet_tbl/getValueTypeCount",json);
         logger.info("服务器大小数查询数据结果：" + maxMinResutl);
         Map<String,Object> map = JsonUtil.getMap(maxMinResutl);
         return map;
@@ -391,7 +391,7 @@ public class MainMessage implements IMainMessage {
         sOldEvenBeanList.add(sOldEvenBean4);
         String json = JsonUtil.toJsonString(sOldEvenBeanList);
         logger.info("服务器奇偶数查询数据：" + json);
-        String oldEvenResutl = HttpUtils.post("http://47.244.48.105:8091/reet_tbl/getValueTypeByA",json);
+        String oldEvenResutl = HttpUtils.post("http://47.244.48.105:8091/reet_tbl/getValueTypeCount",json);
         logger.info("服务器奇偶数查询数据结果：" + oldEvenResutl);
         Map<String,Object> map = JsonUtil.getMap(oldEvenResutl);
         return map;
