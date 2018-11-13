@@ -418,5 +418,8 @@
         SELECT * FROM reet_analyze_tbl
     </select>
 
+    <select id="findCountByType" resultType="java.util.HashMap">
+        SELECT count(*) AS COUNT FROM reet_analyze_tbl where #{type} =#{param}
+    </select>
 
 </mapper>

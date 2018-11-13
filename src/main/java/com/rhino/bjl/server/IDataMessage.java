@@ -21,4 +21,5 @@ public interface IDataMessage {
 
     int findSReetListCount();
 
+    HashMap<String, Object> selectProbability(String type);
 }

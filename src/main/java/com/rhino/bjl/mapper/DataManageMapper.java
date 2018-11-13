@@ -86,4 +86,8 @@ public class DataManageMapper {
     public List<HashMap<String, Object>> findSReetListCount() {
         return lemonDB.getList("findSReetListCount");
     }
+
+    public HashMap<String, Object> findCountByType(HashMap<String, Object> map) {
+        return  lemonDB.get("findCountByType",map);
+    }
 }

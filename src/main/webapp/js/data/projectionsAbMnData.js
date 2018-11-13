@@ -153,7 +153,7 @@ Ext.onReady(function () {
                 text: '<font style="font-size: 18px;">查看准确性</font>',
                 handler: function () {
                     Ext.Ajax.request({
-                        url : path + 'data/analysis/watchProbability',
+                        url : path + 'data/analysis/selectProbability ',
                         params: {
                             type : 'OLDEVENRESULTVALUE'
                         },
@@ -163,14 +163,14 @@ Ext.onReady(function () {
                         success: function (response, options) {
                             var jsonString = response.responseText;
                             var jsObject = JSON.parse(jsonString);    //转换为json对象
-                            var zhuang = parseFloat(jsObject.zhangSize);
-                            var xian = parseFloat(jsObject.xianSize);
-                            var he = parseFloat(jsObject.heSize);
-                            var total = parseFloat(jsObject.allSize);
-                            var zhuangGailv = Math.round(zhuang / total * 10000) / 100.00 + "%";
-                            var xianGailv = Math.round(xian / total * 10000) / 100.00 + "%";
-                            var heGailv = Math.round(he / total * 10000) / 100.00 + "%";
-                            Ext.Msg.alert('提示','庄：' + zhuangGailv + ", 闲：" + xianGailv + ", 和：" + heGailv);
+                            var countA = parseFloat(jsObject.countA);
+                            var countB = parseFloat(jsObject.countB);
+                            var countC = parseFloat(jsObject.countC);
+                            var total = parseFloat(jsObject.allTotol);
+                            var zhuangGailv = Math.round(countA / total * 10000) / 100.00 + "%";
+                            var xianGailv = Math.round(countB / total * 10000) / 100.00 + "%";
+                            var heGailv = Math.round(countC / total * 10000) / 100.00 + "%";
+                            Ext.Msg.alert('提示','对：' + zhuangGailv + ", 错：" + xianGailv + ", 未知：" + heGailv);
                         },
                         failure: function (response, options) {
                             Ext.MessageBox.alert('失败', '请求超时或网络故障，错误编号：' + response.status);

@@ -221,4 +221,17 @@ public class DataControl extends BaseControl {
         return responseEntity;
     }
 
+    @RequestMapping(value = "selectProbability", method = RequestMethod.POST)
+    public ResponseEntity<String> selectProbability(HttpServletRequest request) {
+        HttpHeaders headers = new HttpHeaders();
+        MediaType mediaType = new MediaType("text", "html", Charset.forName("UTF-8"));
+        headers.setContentType(mediaType);
+        String type = ParamUtils.getParameter(request, "type", "");
+        Map<String, Object> data = dataMessage.selectProbability(type);
+        String json = JsonUtil.toJsonString(data);
+        ResponseEntity<String> responseEntity = new ResponseEntity<String>(
+                json, headers, HttpStatus.OK);
+        return responseEntity;
+    }
+
 }

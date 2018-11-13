@@ -267,6 +267,32 @@ public class DataMessage implements IDataMessage{
         return list.size();
     }
 
+    @Override
+    public HashMap<String, Object> selectProbability(String type) {
+        HashMap<String,Object> mapA = new HashMap<String, Object>();
+        mapA.put("type",type);
+        mapA.put("param","A");
+        HashMap<String,Object> mapB = new HashMap<String, Object>();
+        mapB.put("type",type);
+        mapB.put("param","B");
+        HashMap<String,Object> mapC = new HashMap<String, Object>();
+        mapC.put("type",type);
+        mapC.put("param","C");
+        //查询准确条数
+        HashMap<String,Object> countA = dataManageMapper.findCountByType(mapA);
+        HashMap<String,Object> countB = dataManageMapper.findCountByType(mapB);
+        HashMap<String,Object> countC = dataManageMapper.findCountByType(mapC);
+        Integer a = (Integer) countA.get("COUNT");
+        Integer b = (Integer) countB.get("COUNT");
+        Integer c = (Integer) countC.get("COUNT");
+        HashMap<String,Object> map = new HashMap<String, Object>();
+        map.put("countA",a);
+        map.put("countB",b);
+        map.put("countC",c);
+        map.put("allTotol",a+b+c);
+        return map;
+    }
+
 
     public List<HashMap<String, Object>> findReetList2(String category, String one, String two) {
         List<HashMap<String ,Object>> dataList = new ArrayList<HashMap<String, Object>>();
