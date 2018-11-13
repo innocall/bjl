@@ -85,8 +85,10 @@ Ext.onReady(function () {
             renderer: function (v) {
                 if (v == 'A')  {
                     return '4组';
-                } else {
+                } else if(v == 'B'){
                     return '3组';
+                } else if(v == 'C'){
+                    return '2组';
                 }
             }
         },{
@@ -118,7 +120,9 @@ Ext.onReady(function () {
             renderer: function (v) {
                 if (v == 'A')  {
                     return "<img src='../../image/accept.png' />";
-                } else {
+                } else if (v == 'B') {
+                    return "<img src='../../image/error.png' />";
+                } else if (v == 'C') {
                     return "<img src='../../image/error.png' />";
                 }
             }
@@ -148,11 +152,35 @@ Ext.onReady(function () {
             {
                 text: '<font style="font-size: 18px;">查看准确性</font>',
                 handler: function () {
-
+                    Ext.Ajax.request({
+                        url : path + 'data/analysis/watchProbability',
+                        params: {
+                            type : 'OLDEVENRESULTVALUE'
+                        },
+                        method: 'POST',
+                        waitMsg:'正在查询,请稍后...',
+                        waitTitle:'查询中...',
+                        success: function (response, options) {
+                            var jsonString = response.responseText;
+                            var jsObject = JSON.parse(jsonString);    //转换为json对象
+                            var zhuang = parseFloat(jsObject.zhangSize);
+                            var xian = parseFloat(jsObject.xianSize);
+                            var he = parseFloat(jsObject.heSize);
+                            var total = parseFloat(jsObject.allSize);
+                            var zhuangGailv = Math.round(zhuang / total * 10000) / 100.00 + "%";
+                            var xianGailv = Math.round(xian / total * 10000) / 100.00 + "%";
+                            var heGailv = Math.round(he / total * 10000) / 100.00 + "%";
+                            Ext.Msg.alert('提示','庄：' + zhuangGailv + ", 闲：" + xianGailv + ", 和：" + heGailv);
+                        },
+                        failure: function (response, options) {
+                            Ext.MessageBox.alert('失败', '请求超时或网络故障，错误编号：' + response.status);
+                        }
+                    });
                 }
             }
         ]
     });
+
     sReetGrid.setAutoScroll(true);
 
     new Ext.Viewport({
@@ -162,4 +190,5 @@ Ext.onReady(function () {
             text: 'One'
         }]
     });
+
 });

@@ -5,7 +5,7 @@ Ext.onReady(function () {
         url: path + 'data/analysis/findSReetData',
         root: 'sreet',
         totalProperty: 'count',
-        fields: ['ID','ROOMID','POINT','MAXMINRESULTA','MAXMINRESULTB','MAXMINRESULTC','MAXMINRESULTTYPE','OLDEVENRESULTA','OLDEVENRESULTB','OLDEVENRESULTC','OLDEVENRESULTTYPE','MAXMINRESULTAVALUE','OLDEVENRESULTAVALUE','VALUE','MAXMINRESULTVALUE','OLDEVENRESULTVALUE','TIME']
+        fields: ['ID','ROOMID','POINT','MAXMINRESULTA','MAXMINRESULTB','MAXMINRESULTC','MAXMINRESULTTYPE','MAXMINRESULTAVALUE','VALUE','MAXMINRESULTVALUE','TIME']
     });
 
     jsonReetAnaly.load({
@@ -83,68 +83,18 @@ Ext.onReady(function () {
             width: 70,
             menuDisabled: true,
             renderer: function (v) {
-               if (v == 'A')  {
-                   return '4组';
-               } else {
-                   return '3组';
-               }
-            }
-        }, {
-            id: 'OLDEVENRESULTA',
-            header: 'MNR庄',
-            dataIndex: 'OLDEVENRESULTA',
-            sortable: true,
-            align: 'center',
-            css: 'font-size:18px;color:#0e49e8;',
-            width: 70,
-            menuDisabled: true
-        }, {
-            id: 'OLDEVENRESULTB',
-            header: 'MNR闲',
-            dataIndex: 'OLDEVENRESULTB',
-            sortable: true,
-            align: 'center',
-            css: 'font-size:18px;color:#0e49e8;',
-            width: 70,
-            menuDisabled: true
-        }, {
-            id: 'OLDEVENRESULTC',
-            header: 'MNR和',
-            dataIndex: 'OLDEVENRESULTC',
-            sortable: true,
-            align: 'center',
-            css: 'font-size:18px;color:#0e49e8;',
-            width: 70,
-            menuDisabled: true
-        },{
-            id: 'OLDEVENRESULTTYPE',
-            header: 'MNR组',
-            dataIndex: 'OLDEVENRESULTTYPE',
-            sortable: true,
-            align: 'center',
-            css: 'font-size:18px;color:#0e49e8;',
-            width: 70,
-            menuDisabled: true,
-            renderer: function (v) {
                 if (v == 'A')  {
                     return '4组';
-                } else {
+                } else if(v == 'B'){
                     return '3组';
+                } else if(v == 'C'){
+                    return '2组';
                 }
             }
-        },{
+        }, {
             id: 'MAXMINRESULTAVALUE',
             header: 'LS预测结果',
             dataIndex: 'MAXMINRESULTAVALUE',
-            sortable: true,
-            align: 'center',
-            css: 'font-size:18px;color:#0e49e8;',
-            width: 100,
-            menuDisabled: true
-        },{
-            id: 'OLDEVENRESULTAVALUE',
-            header: 'MN预测结果',
-            dataIndex: 'OLDEVENRESULTAVALUE',
             sortable: true,
             align: 'center',
             css: 'font-size:18px;color:#0e49e8;',
@@ -170,22 +120,9 @@ Ext.onReady(function () {
             renderer: function (v) {
                 if (v == 'A')  {
                     return "<img src='../../image/accept.png' />";
-                } else {
+                } else if (v == 'B') {
                     return "<img src='../../image/error.png' />";
-                }
-            }
-        },{
-            id: 'OLDEVENRESULTVALUE',
-            header: 'MN预测',
-            dataIndex: 'OLDEVENRESULTVALUE',
-            sortable: true,
-            align: 'center',
-            width: 60,
-            menuDisabled: true,
-            renderer: function (v) {
-                if (v == 'A')  {
-                    return "<img src='../../image/accept.png' />";
-                } else {
+                } else if (v == 'C') {
                     return "<img src='../../image/error.png' />";
                 }
             }

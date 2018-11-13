@@ -299,24 +299,29 @@ public class MainMessage implements IMainMessage {
         params.put(maxminresulttype, maxMin.get("type"));
         //大小值预测结果
         String maxMinR;
-        if (maxMinResultA > maxMinResultB) {
-            if(maxMinResultA > maxMinResultC) {
-                maxMinR =  "庄";
-            } else {
-                maxMinR = "和";
-            }
+        if (maxMinResultA == 0 && maxMinResultB == 0 && maxMinResultC == 0) {
+            params.put(maxminresultavalue, "未知");
+            params.put(maxminresultvalue, "C");
         } else {
-            if(maxMinResultB > maxMinResultC) {
-                maxMinR = "闲";
+            if (maxMinResultA > maxMinResultB) {
+                if(maxMinResultA > maxMinResultC) {
+                    maxMinR =  "庄";
+                } else {
+                    maxMinR = "和";
+                }
             } else {
-                maxMinR =  "和";
+                if(maxMinResultB > maxMinResultC) {
+                    maxMinR = "闲";
+                } else {
+                    maxMinR =  "和";
+                }
             }
-        }
-        params.put(maxminresultavalue, maxMinR);
-        if (maxMinR.equals(value)) {
-            params.put(maxminresultvalue, "A");
-        } else {
-            params.put(maxminresultvalue, "B");
+            params.put(maxminresultavalue, maxMinR);
+            if (maxMinR.equals(value)) {
+                params.put(maxminresultvalue, "A");
+            } else {
+                params.put(maxminresultvalue, "B");
+            }
         }
     }
 
