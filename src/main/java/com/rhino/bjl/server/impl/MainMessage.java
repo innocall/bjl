@@ -16,6 +16,8 @@ import java.util.logging.Logger;
 public class MainMessage implements IMainMessage {
 
     public static final Logger logger = Logger.getLogger(MainMessage.class.getSimpleName());
+    //查询接口地址
+    private String url = "http://47.244.48.105:8091/reet_tbl/getValueTypeCount";
 
     @Autowired
     private MainManageMapper mainManageMapper;
@@ -241,12 +243,6 @@ public class MainMessage implements IMainMessage {
                             logger.info("从Redis取值map4");
                         }
                         if (map4 != null) {
-                            Map<String,Object> sCheckResultOldEven = checkOldEven(map1,map2,map3,map4);//MNAB
-                            Map<String,Object> sCheckResultMaxMin = checkMaxMin(map1,map2,map3,map4);//LSAB
-                            //MNLS/MN/LS/AB  查四组
-
-                            MorphDynaBean maxMin = (MorphDynaBean) sCheckResultMaxMin.get("object"); //LSAB
-                            MorphDynaBean oldEven = (MorphDynaBean) sCheckResultOldEven.get("object");//MNAB
                             //插入数据库
                             HashMap<String, Object> params = new HashMap<String, Object>();
                             String id = UUID.randomUUID().toString();
@@ -254,53 +250,9 @@ public class MainMessage implements IMainMessage {
                             params.put("ROOMID", roomId);
                             params.put("TIME", DateUtils.getDate5());
                             params.put("POINT", point);
-                            Integer maxMinResultA = (Integer) maxMin.get("a");
-                            Integer maxMinResultB = (Integer) maxMin.get("b");
-                            Integer maxMinResultC = (Integer) maxMin.get("c");
-                            params.put("MAXMINRESULTA", maxMinResultA);
-                            params.put("MAXMINRESULTB", maxMinResultB);
-                            params.put("MAXMINRESULTC", maxMinResultC);
-                            params.put("MAXMINRESULTTYPE", maxMin.get("type"));
-                            Integer oldevenResultA = (Integer) oldEven.get("a");
-                            Integer oldevenResultB = (Integer) oldEven.get("b");
-                            Integer oldevenResultC = (Integer) oldEven.get("c");
-                            params.put("OLDEVENRESULTA", oldevenResultA);
-                            params.put("OLDEVENRESULTB", oldevenResultB);
-                            params.put("OLDEVENRESULTC", oldevenResultC);
-                            params.put("OLDEVENRESULTTYPE", oldEven.get("type"));
-                            //大小值预测结果
-                            String maxMinR,oldEvenR,value;
-                            if (maxMinResultA > maxMinResultB) {
-                                if(maxMinResultA > maxMinResultC) {
-                                    maxMinR =  "庄";
-                                } else {
-                                    maxMinR = "和";
-                                }
-                            } else {
-                                if(maxMinResultB > maxMinResultC) {
-                                    maxMinR = "闲";
-                                } else {
-                                    maxMinR =  "和";
-                                }
-                            }
-                            params.put("MAXMINRESULTAVALUE", maxMinR);
-                            //奇偶值预测结果
-                            if (oldevenResultA > oldevenResultB) {
-                                if(oldevenResultA > oldevenResultC) {
-                                    oldEvenR = "庄";
-                                } else {
-                                    oldEvenR = "和";
-                                }
-                            } else {
-                                if(oldevenResultB > oldevenResultC) {
-                                    oldEvenR = "闲";
-                                } else {
-                                    oldEvenR = "和";
-                                }
-                            }
-                            params.put("OLDEVENRESULTAVALUE", oldEvenR);
                             Integer valueA = Integer.parseInt(zhuangdian);
                             Integer valueB = Integer.parseInt(xiandian);
+                            String value;
                             if (valueA > valueB) {
                                 value = "庄";
                             } else if (valueA == valueB) {
@@ -309,22 +261,57 @@ public class MainMessage implements IMainMessage {
                                 value = "闲";
                             }
                             params.put("VALUE", value);
-                            if (maxMinR.equals(value)) {
-                                params.put("MAXMINRESULTVALUE", "A");
-                            } else {
-                                params.put("MAXMINRESULTVALUE", "B");
-                            }
-                            if (oldEvenR.equals(value)) {
-                                params.put("OLDEVENRESULTVALUE", "A");
-                            } else {
-                                params.put("OLDEVENRESULTVALUE", "B");
-                            }
+                            //LSAB
+                            Map<String,Object> sCheckResultMaxMin = checkMaxMin(map1,map2,map3,map4);
+                            setCheckData(sCheckResultMaxMin,params,value,"MAXMINRESULTA","MAXMINRESULTB","MAXMINRESULTC","MAXMINRESULTTYPE","MAXMINRESULTAVALUE","MAXMINRESULTVALUE");
+                            //MNAB
+                            Map<String,Object> sCheckResultOldEven = checkOldEven(map1,map2,map3,map4);
+                            setCheckData(sCheckResultOldEven,params,value,"OLDEVENRESULTA","OLDEVENRESULTB","OLDEVENRESULTC","OLDEVENRESULTTYPE","OLDEVENRESULTAVALUE","OLDEVENRESULTVALUE");
+                            //MNLS
+
+                            //MN
+
+                            // LS
+
+                            // AB
                             //数据准备结束，插入数据库
                             boolean isResult = mainManageMapper.saveReetAnaly(params);
                         }
                     }
                 }
             }
+        }
+    }
+
+    private void setCheckData(Map<String,Object> sCheckResultMaxMin,HashMap<String, Object> params,String value, String maxminresulta, String maxminresultb, String maxminresultc, String maxminresulttype, String maxminresultavalue, String maxminresultvalue) {
+        MorphDynaBean maxMin = (MorphDynaBean) sCheckResultMaxMin.get("object");
+        Integer maxMinResultA = (Integer) maxMin.get("a");
+        Integer maxMinResultB = (Integer) maxMin.get("b");
+        Integer maxMinResultC = (Integer) maxMin.get("c");
+        params.put(maxminresulta, maxMinResultA);
+        params.put(maxminresultb, maxMinResultB);
+        params.put(maxminresultc, maxMinResultC);
+        params.put(maxminresulttype, maxMin.get("type"));
+        //大小值预测结果
+        String maxMinR;
+        if (maxMinResultA > maxMinResultB) {
+            if(maxMinResultA > maxMinResultC) {
+                maxMinR =  "庄";
+            } else {
+                maxMinR = "和";
+            }
+        } else {
+            if(maxMinResultB > maxMinResultC) {
+                maxMinR = "闲";
+            } else {
+                maxMinR =  "和";
+            }
+        }
+        params.put(maxminresultavalue, maxMinR);
+        if (maxMinR.equals(value)) {
+            params.put(maxminresultvalue, "A");
+        } else {
+            params.put(maxminresultvalue, "B");
         }
     }
 
@@ -355,9 +342,8 @@ public class MainMessage implements IMainMessage {
         sMaxMinBean4.put("valueB",map4.get("XIANVALUE"));
         sMaxMinBeansList.add(sMaxMinBean4);
         String json = JsonUtil.toJsonString(sMaxMinBeansList);
-        //System.out.println("服务器查询数据：" + json);
         logger.info("服务器大小数查询数据：" + json);
-        String maxMinResutl = HttpUtils.post("http://47.244.48.105:8091/reet_tbl/getValueTypeCount",json);
+        String maxMinResutl = HttpUtils.post(url,json);
         logger.info("服务器大小数查询数据结果：" + maxMinResutl);
         Map<String,Object> map = JsonUtil.getMap(maxMinResutl);
         return map;
@@ -391,7 +377,7 @@ public class MainMessage implements IMainMessage {
         sOldEvenBeanList.add(sOldEvenBean4);
         String json = JsonUtil.toJsonString(sOldEvenBeanList);
         logger.info("服务器奇偶数查询数据：" + json);
-        String oldEvenResutl = HttpUtils.post("http://47.244.48.105:8091/reet_tbl/getValueTypeCount",json);
+        String oldEvenResutl = HttpUtils.post(url,json);
         logger.info("服务器奇偶数查询数据结果：" + oldEvenResutl);
         Map<String,Object> map = JsonUtil.getMap(oldEvenResutl);
         return map;
