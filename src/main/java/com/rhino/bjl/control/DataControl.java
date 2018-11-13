@@ -197,9 +197,9 @@ public class DataControl extends BaseControl {
     /**
      * @return
      */
-    @RequestMapping(value = "/projectionsData",method = RequestMethod.GET)
+    @RequestMapping(value = "/projectionsAbMnData",method = RequestMethod.GET)
     public ModelAndView rootAnalysis() {
-        ModelAndView mav = new ModelAndView("data/projectionsData");
+        ModelAndView mav = new ModelAndView("data/projectionsAbMnData");
         return mav;
     }
 

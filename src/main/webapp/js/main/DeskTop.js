@@ -88,7 +88,14 @@ Ext.onReady(function(){
                 {id:'2', text : '<font style="font-size: 15px">小局分析</font>' , leaf : true },
                 {id:'4', text : '<font style="font-size: 15px">数据分析</font>' , leaf : true },
                 {id:'12', text : '<font style="font-size: 15px">数据统计</font>' , leaf : true },
-                {id:'5', text : '<font style="font-size: 15px">预测数据</font>' , leaf : true },
+                {id:'10', text: '<font style="font-size: 15px">四组预测</font>', expanded: true, children: [
+					{id:'5', text : '<font style="font-size: 15px">ABMN预测</font>' , leaf : true },
+					{id:'6', text : '<font style="font-size: 15px">ABLS预测</font>' , leaf : true },
+					{id:'7', text : '<font style="font-size: 15px">LSMN预测</font>' , leaf : true },
+					{id:'8', text : '<font style="font-size: 15px">AB预测</font>' , leaf : true },
+					{id:'9', text : '<font style="font-size: 15px">MN预测</font>' , leaf : true },
+					{id:'11', text : '<font style="font-size: 15px">LS预测</font>' , leaf : true },
+				]}
                 /*{id:'5', text: '<font style="font-size: 15px">数据建模</font>', expanded: true, children: [
                     {id:'6', text : '<font style="font-size: 15px">数据准备</font>' ,expanded: true,children:[
                         {id:'8', text : '<font style="font-size: 15px">初始化数据</font>' , leaf : true },
@@ -119,7 +126,7 @@ Ext.onReady(function(){
 						} else if (node.id == 12) {
                             url = path + "data/analysis/dateCount"; //数据统计
                         } else if (node.id == 5)  {
-                            url = path + "data/analysis/projectionsData";
+                            url = path + "data/analysis/projectionsAbMnData";
 						}
 	    				tab = new Ext.Panel({
 	    					id:'Tab_' + node.id,

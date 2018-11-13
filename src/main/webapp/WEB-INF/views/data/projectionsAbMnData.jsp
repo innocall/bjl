@@ -24,7 +24,7 @@
     <script type="text/javascript" src="${pageContext.request.contextPath }/extjs/ext-lang-zh_CN.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath }/extjs/ux/ProgressBarPager.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath }/js/main/data.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath }/js/data/projectionsData.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath }/js/data/projectionsAbMnData.js"></script>
     <script type="text/javascript">
         Ext.BLANK_IMAGE_URL = '${pageContext.request.contextPath }/extjs/resources/images/default/s.gif';
         var path = "<c:url value='/'/>";
