@@ -268,12 +268,17 @@ public class MainMessage implements IMainMessage {
                             Map<String,Object> sCheckResultOldEven = checkOldEven(map1,map2,map3,map4);
                             setCheckData(sCheckResultOldEven,params,value,"OLDEVENRESULTA","OLDEVENRESULTB","OLDEVENRESULTC","OLDEVENRESULTTYPE","OLDEVENRESULTAVALUE","OLDEVENRESULTVALUE");
                             //MNLS
-
+                            Map<String,Object> sCheckMnLs = checkMnLs(map1,map2,map3,map4);
+                            setCheckData(sCheckMnLs,params,value,"MNLSRESULTA","MNLSRESULTB","MNLSRESULTC","MNLSRESULTTYPE","MNLSRESULTAVALUE","MNLSRESULTVALUE");
                             //MN
-
+                            Map<String,Object> sCheckMn = checkMn(map1,map2,map3,map4);
+                            setCheckData(sCheckMn,params,value,"MNRESULTA","MNRESULTB","MNRESULTC","MNRESULTTYPE","MNRESULTAVALUE","MNRESULTVALUE");
                             // LS
-
+                            Map<String,Object> sCheckLs = checkLs(map1,map2,map3,map4);
+                            setCheckData(sCheckLs,params,value,"LSRESULTA","LSRESULTB","LSRESULTC","LSRESULTTYPE","LSRESULTAVALUE","LSRESULTVALUE");
                             // AB
+                            Map<String,Object> sCheckAb = checkAb(map1,map2,map3,map4);
+                            setCheckData(sCheckAb,params,value,"ABRESULTA","ABRESULTB","ABRESULTC","ABRESULTTYPE","ABRESULTAVALUE","ABRESULTVALUE");
                             //数据准备结束，插入数据库
                             boolean isResult = mainManageMapper.saveReetAnaly(params);
                         }
@@ -315,32 +320,68 @@ public class MainMessage implements IMainMessage {
         }
     }
 
+    private Map<String, Object> checkAb(HashMap<String, Object> map1, HashMap<String, Object> map2, HashMap<String, Object> map3, HashMap<String, Object> map4) {
+        List<Map<String,Object>> mnAbList = new ArrayList<Map<String,Object>>();
+        MapUtils.setAb(mnAbList,map1);
+        MapUtils.setAb(mnAbList,map2);
+        MapUtils.setAb(mnAbList,map3);
+        MapUtils.setAb(mnAbList,map4);
+        String json = JsonUtil.toJsonString(mnAbList);
+        logger.info("服务器MNLS查询数据：" + json);
+        String maxMinResutl = HttpUtils.post(url,json);
+        logger.info("服务器MNLS查询数据结果：" + maxMinResutl);
+        Map<String,Object> map = JsonUtil.getMap(maxMinResutl);
+        return map;
+    }
+
+    private Map<String, Object> checkLs(HashMap<String, Object> map1, HashMap<String, Object> map2, HashMap<String, Object> map3, HashMap<String, Object> map4) {
+        List<Map<String,Object>> mnLsList = new ArrayList<Map<String,Object>>();
+        MapUtils.setLs(mnLsList,map1);
+        MapUtils.setLs(mnLsList,map2);
+        MapUtils.setLs(mnLsList,map3);
+        MapUtils.setLs(mnLsList,map4);
+        String json = JsonUtil.toJsonString(mnLsList);
+        logger.info("服务器MNLS查询数据：" + json);
+        String maxMinResutl = HttpUtils.post(url,json);
+        logger.info("服务器MNLS查询数据结果：" + maxMinResutl);
+        Map<String,Object> map = JsonUtil.getMap(maxMinResutl);
+        return map;
+    }
+
+    private Map<String, Object> checkMn(HashMap<String, Object> map1, HashMap<String, Object> map2, HashMap<String, Object> map3, HashMap<String, Object> map4) {
+        List<Map<String,Object>> mnLsList = new ArrayList<Map<String,Object>>();
+        MapUtils.setMn(mnLsList,map1);
+        MapUtils.setMn(mnLsList,map2);
+        MapUtils.setMn(mnLsList,map3);
+        MapUtils.setMn(mnLsList,map4);
+        String json = JsonUtil.toJsonString(mnLsList);
+        logger.info("服务器MNLS查询数据：" + json);
+        String maxMinResutl = HttpUtils.post(url,json);
+        logger.info("服务器MNLS查询数据结果：" + maxMinResutl);
+        Map<String,Object> map = JsonUtil.getMap(maxMinResutl);
+        return map;
+    }
+
+    private Map<String, Object> checkMnLs(HashMap<String, Object> map1, HashMap<String, Object> map2, HashMap<String, Object> map3, HashMap<String, Object> map4) {
+        List<Map<String,Object>> mnLsList = new ArrayList<Map<String,Object>>();
+        MapUtils.setMnLs(mnLsList,map1);
+        MapUtils.setMnLs(mnLsList,map2);
+        MapUtils.setMnLs(mnLsList,map3);
+        MapUtils.setMnLs(mnLsList,map4);
+        String json = JsonUtil.toJsonString(mnLsList);
+        logger.info("服务器MNLS查询数据：" + json);
+        String maxMinResutl = HttpUtils.post(url,json);
+        logger.info("服务器MNLS查询数据结果：" + maxMinResutl);
+        Map<String,Object> map = JsonUtil.getMap(maxMinResutl);
+        return map;
+    }
+
     private Map<String,Object> checkMaxMin(HashMap<String, Object> map1, HashMap<String, Object> map2, HashMap<String, Object> map3, HashMap<String, Object> map4) {
         List<Map<String,Object>> sMaxMinBeansList = new ArrayList<Map<String,Object>>();
-        Map<String,Object> sMaxMinBean1 = new HashMap<String, Object>();
-        sMaxMinBean1.put("minCount",map1.get("MINCOUNT"));
-        sMaxMinBean1.put("maxCount",map1.get("MAXCOUNT"));
-        sMaxMinBean1.put("valueA",map1.get("ZHUANGVALUE"));
-        sMaxMinBean1.put("valueB",map1.get("XIANVALUE"));
-        sMaxMinBeansList.add(sMaxMinBean1);
-        Map<String,Object> sMaxMinBean2 = new HashMap<String, Object>();
-        sMaxMinBean2.put("minCount",map2.get("MINCOUNT"));
-        sMaxMinBean2.put("maxCount",map2.get("MAXCOUNT"));
-        sMaxMinBean2.put("valueA",map2.get("ZHUANGVALUE"));
-        sMaxMinBean2.put("valueB",map2.get("XIANVALUE"));
-        sMaxMinBeansList.add(sMaxMinBean2);
-        Map<String,Object> sMaxMinBean3 = new HashMap<String, Object>();
-        sMaxMinBean3.put("minCount",map3.get("MINCOUNT"));
-        sMaxMinBean3.put("maxCount",map3.get("MAXCOUNT"));
-        sMaxMinBean3.put("valueA",map3.get("ZHUANGVALUE"));
-        sMaxMinBean3.put("valueB",map3.get("XIANVALUE"));
-        sMaxMinBeansList.add(sMaxMinBean3);
-        Map<String,Object> sMaxMinBean4 = new HashMap<String, Object>();
-        sMaxMinBean4.put("minCount",map4.get("MINCOUNT"));
-        sMaxMinBean4.put("maxCount",map4.get("MAXCOUNT"));
-        sMaxMinBean4.put("valueA",map4.get("ZHUANGVALUE"));
-        sMaxMinBean4.put("valueB",map4.get("XIANVALUE"));
-        sMaxMinBeansList.add(sMaxMinBean4);
+        MapUtils.setLsAb(sMaxMinBeansList,map1);
+        MapUtils.setLsAb(sMaxMinBeansList,map2);
+        MapUtils.setLsAb(sMaxMinBeansList,map3);
+        MapUtils.setLsAb(sMaxMinBeansList,map4);
         String json = JsonUtil.toJsonString(sMaxMinBeansList);
         logger.info("服务器大小数查询数据：" + json);
         String maxMinResutl = HttpUtils.post(url,json);
@@ -351,30 +392,10 @@ public class MainMessage implements IMainMessage {
 
     private Map<String,Object> checkOldEven(HashMap<String, Object> map1, HashMap<String, Object> map2, HashMap<String, Object> map3, HashMap<String, Object> map4) {
         List<Map<String,Object>> sOldEvenBeanList = new ArrayList<Map<String,Object>>();
-        Map<String,Object> sOldEvenBean1 = new HashMap<String, Object>();
-        sOldEvenBean1.put("jiShuCount",map1.get("JISHUCOUNT"));
-        sOldEvenBean1.put("ouShuCount",map1.get("OUSHUCOUNT"));
-        sOldEvenBean1.put("valueA",map1.get("ZHUANGVALUE"));
-        sOldEvenBean1.put("valueB",map1.get("XIANVALUE"));
-        sOldEvenBeanList.add(sOldEvenBean1);
-        Map<String,Object> sOldEvenBean2 = new HashMap<String, Object>();
-        sOldEvenBean2.put("jiShuCount",map2.get("JISHUCOUNT"));
-        sOldEvenBean2.put("ouShuCount",map2.get("OUSHUCOUNT"));
-        sOldEvenBean2.put("valueA",map2.get("ZHUANGVALUE"));
-        sOldEvenBean2.put("valueB",map2.get("XIANVALUE"));
-        sOldEvenBeanList.add(sOldEvenBean2);
-        Map<String,Object> sOldEvenBean3 = new HashMap<String, Object>();
-        sOldEvenBean3.put("jiShuCount",map3.get("JISHUCOUNT"));
-        sOldEvenBean3.put("ouShuCount",map3.get("OUSHUCOUNT"));
-        sOldEvenBean3.put("valueA",map3.get("ZHUANGVALUE"));
-        sOldEvenBean3.put("valueB",map3.get("XIANVALUE"));
-        sOldEvenBeanList.add(sOldEvenBean3);
-        Map<String,Object> sOldEvenBean4 = new HashMap<String, Object>();
-        sOldEvenBean4.put("jiShuCount",map4.get("JISHUCOUNT"));
-        sOldEvenBean4.put("ouShuCount",map4.get("OUSHUCOUNT"));
-        sOldEvenBean4.put("valueA",map4.get("ZHUANGVALUE"));
-        sOldEvenBean4.put("valueB",map4.get("XIANVALUE"));
-        sOldEvenBeanList.add(sOldEvenBean4);
+        MapUtils.setMnAb(sOldEvenBeanList,map1);
+        MapUtils.setMnAb(sOldEvenBeanList,map2);
+        MapUtils.setMnAb(sOldEvenBeanList,map3);
+        MapUtils.setMnAb(sOldEvenBeanList,map4);
         String json = JsonUtil.toJsonString(sOldEvenBeanList);
         logger.info("服务器奇偶数查询数据：" + json);
         String oldEvenResutl = HttpUtils.post(url,json);
