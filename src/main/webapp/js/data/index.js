@@ -559,6 +559,7 @@ Ext.onReady(function() {
                     var allCount = dateSearchForm.getForm().findField("allCount").getValue();
                     var pages = dateSearchForm.getForm().findField("pages").getValue();
                     Ext.Ajax.request({
+                        timeout: myBigTimeout,
                         url : path + 'data/analysis/watchProbability',
                         params: {
                             oneType : dateSearchForm.getForm().findField("oneType").getValue(),
