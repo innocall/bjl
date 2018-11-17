@@ -48,39 +48,39 @@ Ext.onReady(function () {
             hidden: true
         }, {
             id: 'OLDEVENRESULTA',
-            header: 'MNR庄',
+            header: 'A个数',
             dataIndex: 'OLDEVENRESULTA',
             sortable: true,
             align: 'center',
             css: 'font-size:18px;color:#0e49e8;',
-            width: 70,
+            width: 80,
             menuDisabled: true
         }, {
             id: 'OLDEVENRESULTB',
-            header: 'MNR闲',
+            header: 'B个数',
             dataIndex: 'OLDEVENRESULTB',
             sortable: true,
             align: 'center',
             css: 'font-size:18px;color:#0e49e8;',
-            width: 70,
+            width: 80,
             menuDisabled: true
         }, {
             id: 'OLDEVENRESULTC',
-            header: 'MNR和',
+            header: 'C个数',
             dataIndex: 'OLDEVENRESULTC',
             sortable: true,
             align: 'center',
             css: 'font-size:18px;color:#0e49e8;',
-            width: 70,
+            width: 80,
             menuDisabled: true
         },{
             id: 'OLDEVENRESULTTYPE',
-            header: 'MNR组',
+            header: '查询组数',
             dataIndex: 'OLDEVENRESULTTYPE',
             sortable: true,
             align: 'center',
             css: 'font-size:18px;color:#0e49e8;',
-            width: 70,
+            width: 80,
             menuDisabled: true,
             renderer: function (v) {
                 if (v == 'A')  {
@@ -93,12 +93,12 @@ Ext.onReady(function () {
             }
         },{
             id: 'OLDEVENRESULTAVALUE',
-            header: 'MN预测结果',
+            header: '预测结果',
             dataIndex: 'OLDEVENRESULTAVALUE',
             sortable: true,
             align: 'center',
             css: 'font-size:18px;color:#0e49e8;',
-            width: 100,
+            width: 120,
             menuDisabled: true
         },{
             id: 'VALUE',
@@ -107,23 +107,23 @@ Ext.onReady(function () {
             sortable: true,
             align: 'center',
             css: 'font-size:18px;color:#0e49e8;',
-            width: 70,
+            width: 80,
             menuDisabled: true
         },{
             id: 'OLDEVENRESULTVALUE',
-            header: 'MN预测',
+            header: '预测是否正确',
             dataIndex: 'OLDEVENRESULTVALUE',
             sortable: true,
             align: 'center',
-            width: 60,
+            width: 80,
             menuDisabled: true,
             renderer: function (v) {
                 if (v == 'A')  {
-                    return "<img src='../../image/accept.png' />";
+                    return "<img src='../../image/check.png' width='25px' />";
                 } else if (v == 'B') {
-                    return "<img src='../../image/error.png' />";
+                    return "<img src='../../image/close.png' width='25px' />";
                 } else if (v == 'C') {
-                    return "<img src='../../image/error.png' />";
+                    return "<img src='../../image/error.png' width='25px' />";
                 }
             }
         },{

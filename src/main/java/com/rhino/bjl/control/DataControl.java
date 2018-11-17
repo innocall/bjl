@@ -198,8 +198,53 @@ public class DataControl extends BaseControl {
      * @return
      */
     @RequestMapping(value = "/projectionsAbMnData",method = RequestMethod.GET)
-    public ModelAndView rootAnalysis() {
+    public ModelAndView projectionsAbMnData() {
         ModelAndView mav = new ModelAndView("data/projectionsAbMnData");
+        return mav;
+    }
+
+    /**
+     * @return
+     */
+    @RequestMapping(value = "/projectionsAbLsData",method = RequestMethod.GET)
+    public ModelAndView projectionsAbLsData() {
+        ModelAndView mav = new ModelAndView("data/projectionsAbLsData");
+        return mav;
+    }
+
+    /**
+     * @return
+     */
+    @RequestMapping(value = "/projectionsLsMnData",method = RequestMethod.GET)
+    public ModelAndView projectionsLsMnData() {
+        ModelAndView mav = new ModelAndView("data/projectionsLsMnData");
+        return mav;
+    }
+
+    /**
+     * @return
+     */
+    @RequestMapping(value = "/projectionsAbData",method = RequestMethod.GET)
+    public ModelAndView projectionsAbData() {
+        ModelAndView mav = new ModelAndView("data/projectionsAbData");
+        return mav;
+    }
+
+    /**
+     * @return
+     */
+    @RequestMapping(value = "/projectionsMnData",method = RequestMethod.GET)
+    public ModelAndView projectionsMnData() {
+        ModelAndView mav = new ModelAndView("data/projectionsMnData");
+        return mav;
+    }
+
+    /**
+     * @return
+     */
+    @RequestMapping(value = "/projectionsLsData",method = RequestMethod.GET)
+    public ModelAndView rootAnalysis() {
+        ModelAndView mav = new ModelAndView("data/projectionsLsData");
         return mav;
     }
 

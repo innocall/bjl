@@ -121,13 +121,21 @@ Ext.onReady(function(){
                             url = path + "private/main/rootAnalysis";
 						} else if (node.id == 4) {
                             url = path + "data/analysis/index";
-						} else if (node.id == 8) {
-                            url = path + "data/analysis/initMode"; //数据准备
 						} else if (node.id == 12) {
                             url = path + "data/analysis/dateCount"; //数据统计
                         } else if (node.id == 5)  {
                             url = path + "data/analysis/projectionsAbMnData";
-						}
+						} else if (node.id == 6)  {
+                            url = path + "data/analysis/projectionsAbLsData";
+                        } else if (node.id == 7)  {
+                            url = path + "data/analysis/projectionsLsMnData";
+                        } else if (node.id == 8)  {
+                            url = path + "data/analysis/projectionsAbData";
+                        } else if (node.id == 9)  {
+                            url = path + "data/analysis/projectionsMnData";
+                        } else if (node.id == 11)  {
+                            url = path + "data/analysis/projectionsLsData";
+                        }
 	    				tab = new Ext.Panel({
 	    					id:'Tab_' + node.id,
 	    					title:node.text,

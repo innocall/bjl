@@ -302,6 +302,15 @@ public class MainMessage implements IMainMessage {
         if (maxMinResultA == 0 && maxMinResultB == 0 && maxMinResultC == 0) {
             params.put(maxminresultavalue, "未知");
             params.put(maxminresultvalue, "C");
+        } else if(maxMinResultA == maxMinResultB && maxMinResultA >  maxMinResultC) {
+            params.put(maxminresultavalue, "未知");
+            params.put(maxminresultvalue, "C");
+        } else if( maxMinResultA == maxMinResultC && maxMinResultA > maxMinResultB) {
+            params.put(maxminresultavalue, "未知");
+            params.put(maxminresultvalue, "C");
+        } else if(maxMinResultB == maxMinResultC && maxMinResultC > maxMinResultA) {
+            params.put(maxminresultavalue, "未知");
+            params.put(maxminresultvalue, "C");
         } else {
             if (maxMinResultA > maxMinResultB) {
                 if(maxMinResultA > maxMinResultC) {

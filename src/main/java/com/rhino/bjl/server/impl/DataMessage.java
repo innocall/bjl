@@ -282,9 +282,9 @@ public class DataMessage implements IDataMessage{
         HashMap<String,Object> countA = dataManageMapper.findCountByType(mapA);
         HashMap<String,Object> countB = dataManageMapper.findCountByType(mapB);
         HashMap<String,Object> countC = dataManageMapper.findCountByType(mapC);
-        Integer a = (Integer) countA.get("COUNT");
-        Integer b = (Integer) countB.get("COUNT");
-        Integer c = (Integer) countC.get("COUNT");
+        Long a = (Long) countA.get("COUNT");
+        Long b = (Long) countB.get("COUNT");
+        Long c = (Long) countC.get("COUNT");
         HashMap<String,Object> map = new HashMap<String, Object>();
         map.put("countA",a);
         map.put("countB",b);

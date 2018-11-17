@@ -5,7 +5,7 @@ Ext.onReady(function () {
         url: path + 'data/analysis/findSReetData',
         root: 'sreet',
         totalProperty: 'count',
-        fields: ['ID','ROOMID','POINT','MAXMINRESULTA','MAXMINRESULTB','MAXMINRESULTC','MAXMINRESULTTYPE','MAXMINRESULTAVALUE','VALUE','MAXMINRESULTVALUE','TIME']
+        fields: ['ID','ROOMID','POINT','MNRESULTA','MNRESULTB','MNRESULTC','MNRESULTTYPE','MNRESULTAVALUE','VALUE','MNRESULTVALUE','TIME']
     });
 
     jsonReetAnaly.load({
@@ -47,36 +47,36 @@ Ext.onReady(function () {
             menuDisabled: true,
             hidden: true
         }, {
-            id: 'MAXMINRESULTA',
+            id: 'MNRESULTA',
             header: 'A个数',
-            dataIndex: 'MAXMINRESULTA',
+            dataIndex: 'MNRESULTA',
             sortable: true,
             align: 'center',
             css: 'font-size:18px;color:#0e49e8;',
             width: 80,
             menuDisabled: true
-        },{
-            id: 'MAXMINRESULTB',
+        }, {
+            id: 'MNRESULTB',
             header: 'B个数',
-            dataIndex: 'MAXMINRESULTB',
+            dataIndex: 'MNRESULTB',
             sortable: true,
             align: 'center',
             css: 'font-size:18px;color:#0e49e8;',
             width: 80,
             menuDisabled: true
-        },{
-            id: 'MAXMINRESULTC',
+        }, {
+            id: 'MNRESULTC',
             header: 'C个数',
-            dataIndex: 'MAXMINRESULTC',
+            dataIndex: 'MNRESULTC',
             sortable: true,
             align: 'center',
             css: 'font-size:18px;color:#0e49e8;',
             width: 80,
             menuDisabled: true
         },{
-            id: 'MAXMINRESULTTYPE',
+            id: 'MNRESULTTYPE',
             header: '查询组数',
-            dataIndex: 'MAXMINRESULTTYPE',
+            dataIndex: 'MNRESULTTYPE',
             sortable: true,
             align: 'center',
             css: 'font-size:18px;color:#0e49e8;',
@@ -91,10 +91,10 @@ Ext.onReady(function () {
                     return '2组';
                 }
             }
-        }, {
-            id: 'MAXMINRESULTAVALUE',
+        },{
+            id: 'MNRESULTAVALUE',
             header: '预测结果',
-            dataIndex: 'MAXMINRESULTAVALUE',
+            dataIndex: 'MNRESULTAVALUE',
             sortable: true,
             align: 'center',
             css: 'font-size:18px;color:#0e49e8;',
@@ -110,9 +110,9 @@ Ext.onReady(function () {
             width: 80,
             menuDisabled: true
         },{
-            id: 'MAXMINRESULTVALUE',
+            id: 'MNRESULTVALUE',
             header: '预测是否正确',
-            dataIndex: 'MAXMINRESULTVALUE',
+            dataIndex: 'MNRESULTVALUE',
             sortable: true,
             align: 'center',
             width: 80,
@@ -155,7 +155,7 @@ Ext.onReady(function () {
                     Ext.Ajax.request({
                         url : path + 'data/analysis/selectProbability ',
                         params: {
-                            type : 'MAXMINRESULTVALUE'
+                            type : 'MNRESULTVALUE'
                         },
                         method: 'POST',
                         waitMsg:'正在查询,请稍后...',
@@ -180,6 +180,7 @@ Ext.onReady(function () {
             }
         ]
     });
+
     sReetGrid.setAutoScroll(true);
 
     new Ext.Viewport({
@@ -189,4 +190,5 @@ Ext.onReady(function () {
             text: 'One'
         }]
     });
+
 });
