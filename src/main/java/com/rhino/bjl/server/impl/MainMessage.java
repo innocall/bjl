@@ -9,6 +9,9 @@ import net.sf.ezmorph.bean.MorphDynaBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.*;
 import java.util.logging.Logger;
 
@@ -687,6 +690,98 @@ public class MainMessage implements IMainMessage {
         }
         return mainManageMapper.updateReetByRoomId(map);
     }
+
+    @Override
+    public void findRoomzql(HashMap<String, Object> map, String roomId) {
+        HashMap<String,Object> map2 = new HashMap<String, Object>();
+        map2.put("ROOMID",roomId);
+        List<HashMap<String,Object>> listMap = mainManageMapper.findRoomzql(map2);
+        int mna=0,mnb=0,mnc=0, lsa=0,lsb=0,lsc=0,aba=0,abb=0,abc=0,mnlsa=0,mnlsb=0,mnlsc=0,
+                mnaba=0,mnabb=0,mnabc=0,lsaba=0,lsabb=0,lsabc=0;
+        for (int i=0;i<listMap.size();i++) {
+            String mnstr = (String) listMap.get(i).get("MNRESULTVALUE");
+            String lsstr = (String) listMap.get(i).get("LSRESULTVALUE");
+            String abstr = (String) listMap.get(i).get("ABRESULTVALUE");
+            String mnlsstr = (String) listMap.get(i).get("MNLSRESULTVALUE");
+            String mnabstr = (String) listMap.get(i).get("OLDEVENRESULTVALUE");
+            String lsabstr = (String) listMap.get(i).get("MAXMINRESULTVALUE");
+            if (mnstr.equals("A")) {
+                mna = mna + 1;
+            } else if (mnstr.equals("B")) {
+                mnb = mnb + 1;
+            } else if (mnstr.equals("C")) {
+                mnc = mnc + 1;
+            }
+            if (lsstr.equals("A")) {
+                lsa = lsa + 1;
+            } else if (lsstr.equals("B")) {
+                lsb = lsb + 1;
+            } else if (lsstr.equals("C")) {
+                lsc = lsc + 1;
+            }
+            if (abstr.equals("A")) {
+                aba = aba + 1;
+            } else if (abstr.equals("B")) {
+                abb = abb + 1;
+            } else if (abstr.equals("C")) {
+                abc = abc + 1;
+            }
+            if (mnlsstr.equals("A")) {
+                mnlsa = mnlsa + 1;
+            } else if (mnlsstr.equals("B")) {
+                mnlsb = mnlsb + 1;
+            } else if (mnlsstr.equals("C")) {
+                mnlsc = mnlsc + 1;
+            }
+            if (mnabstr.equals("A")) {
+                mnaba = mnaba + 1;
+            } else if (mnabstr.equals("B")) {
+                mnabb = mnabb + 1;
+            } else if (mnabstr.equals("C")) {
+                mnabc = mnabc + 1;
+            }
+            if (lsabstr.equals("A")) {
+                lsaba = lsaba + 1;
+            } else if (lsabstr.equals("B")) {
+                lsabb = lsabb + 1;
+            } else if (lsabstr.equals("C")) {
+                lsabc = lsabc + 1;
+            }
+        }
+        int mnToal = mna + mnb + mnc;
+        String mn = "对：" + getPercent(mna,mnToal) + ";错：" + getPercent(mnb,mnToal) + ";未知：" + getPercent(mnc,mnToal);
+        map.put("mn",mn);
+        int lsToal = lsa + lsb + lsc;
+        String ls = "对：" + getPercent(lsa,lsToal) + ";错：" + getPercent(lsb,lsToal) + ";未知：" + getPercent(lsc,lsToal);
+        map.put("ls",ls);
+        int abToal = aba + abb + abc;
+        String ab = "对：" + getPercent(aba,abToal) + ";错：" + getPercent(abb,abToal) + ";未知：" + getPercent(abc,abToal);
+        map.put("ab",ab);
+        int mnlsToal = mnlsa + mnlsb + mnlsc;
+        String mnls = "对：" + getPercent(mnlsa,mnlsToal) + ";错：" + getPercent(mnlsb,mnlsToal) + ";未知：" + getPercent(mnlsc,mnlsToal);
+        map.put("mnls",mnls);
+        int mnabToal = mnaba + mnabb + mnabc;
+        String mnab = "对：" + getPercent(mnaba,mnabToal) + ";错：" + getPercent(mnabb,mnabToal) + ";未知：" + getPercent(mnabc,mnabToal);
+        map.put("mnab",mnab);
+        int lsabToal = lsaba + lsabb + lsabc;
+        String lsab = "对：" + getPercent(lsaba,lsabToal) + ";错：" + getPercent(lsabb,lsabToal) + ";未知：" + getPercent(lsabc,lsabToal);
+        map.put("lsab",lsab);
+    }
+
+    public String getPercent(double num, double total) {
+        if (total == 0) {
+            return "0.0%";
+        }
+        int scale = 1;
+        DecimalFormat df = (DecimalFormat) NumberFormat.getInstance();
+        //可以设置精确几位小数
+        df.setMaximumFractionDigits(scale);
+        //模式 例如四舍五入
+        df.setRoundingMode(RoundingMode.HALF_UP);
+        double accuracy_num = num / total * 100;
+        return df.format(accuracy_num) + "%";
+    }
+
 
     public boolean deleteReetByRoomId(String roomId) {
         HashMap<String,Object> map = new HashMap<String, Object>();

@@ -111,4 +111,8 @@ public class MainManageMapper {
     public boolean saveReetAnaly(HashMap<String, Object> params) {
         return lemonDB.insert("saveReetAnaly", params);
     }
+
+    public List<HashMap<String, Object>> findRoomzql(HashMap<String, Object> map) {
+        return lemonDB.getList("findRoomzql",map);
+    }
 }

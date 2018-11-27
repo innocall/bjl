@@ -5,7 +5,8 @@ Ext.onReady(function() {
         url : path + 'private/main/roomAllData',
         root : 'yhgl',
         totalProperty : 'count',
-        fields : [ 'ID', 'TOTALCOUNT', 'ZHUANGCOUNT', 'XIANCOUNT', 'HECOUNT','ZHUANGDUICOUNT', 'XIANDUICOUNT', 'STRARTTIME','ENDTIME','USERID','JISHUCOUNT','OUSHUCOUNT','QIANG' ]
+        fields : [ 'ID', 'TOTALCOUNT', 'ZHUANGCOUNT', 'XIANCOUNT', 'HECOUNT','ZHUANGDUICOUNT', 'XIANDUICOUNT', 'STRARTTIME','ENDTIME','USERID','JISHUCOUNT','OUSHUCOUNT',
+            'QIANG','mn','ls','ab','mnls','mnab','lsab' ]
     });
     jsonUser.load({
         params : {
@@ -272,7 +273,61 @@ Ext.onReady(function() {
             sortable : true,
             align : 'center',
             menuDisabled : true
-        }, {
+        },{
+            id : 'mn',
+            header : 'MN',
+            dataIndex : 'mn',
+            width : 300,
+            css:'font-size:18px;',
+            sortable : true,
+            align : 'center',
+            menuDisabled : true
+        },{
+            id : 'ls',
+            header : 'LS',
+            dataIndex : 'ls',
+            width : 300,
+            css:'font-size:18px;',
+            sortable : true,
+            align : 'center',
+            menuDisabled : true
+        },{
+            id : 'ab',
+            header : 'AB',
+            dataIndex : 'ab',
+            width : 300,
+            css:'font-size:18px;',
+            sortable : true,
+            align : 'center',
+            menuDisabled : true
+        },{
+            id : 'mnls',
+            header : 'MNLS',
+            dataIndex : 'mnls',
+            width : 300,
+            css:'font-size:18px;',
+            sortable : true,
+            align : 'center',
+            menuDisabled : true
+        },{
+            id : 'mnab',
+            header : 'MNAB',
+            dataIndex : 'mnab',
+            width : 300,
+            css:'font-size:18px;',
+            sortable : true,
+            align : 'center',
+            menuDisabled : true
+        },{
+            id : 'lsab',
+            header : 'LSAB',
+            dataIndex : 'lsab',
+            width : 300,
+            css:'font-size:18px;',
+            sortable : true,
+            align : 'center',
+            menuDisabled : true
+        },{
             id : 'STRARTTIME',
             header : '时间',
             dataIndex : 'STRARTTIME',

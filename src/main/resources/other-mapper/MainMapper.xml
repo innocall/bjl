@@ -54,6 +54,10 @@
         select * from reet_tbl where ROOMID = #{ROOMID} AND POINT=#{POINT}
     </select>
 
+    <select id="findRoomzql" resultType="java.util.HashMap">
+        select * from reet_analyze_tbl where ROOMID = #{ROOMID}
+    </select>
+
     <insert id="saveReetAnaly" parameterType="java.util.HashMap">
         <![CDATA[
          insert into reet_analyze_tbl

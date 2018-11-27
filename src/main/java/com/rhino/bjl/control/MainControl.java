@@ -250,6 +250,9 @@ public class MainControl extends BaseControl {
             HashMap<String, Object> map = yhgl.get(i);
             int zhuang = (Integer) map.get("ZHUANGCOUNT");
             int xian = (Integer) map.get("XIANCOUNT");
+            //查询所在大局的预测准确率
+            String roomId = (String) map.get("ID");
+            mainMessage.findRoomzql(map,roomId);
             String qiang = "";
             int s = zhuang - xian;
             if (s > 7) {

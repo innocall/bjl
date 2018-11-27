@@ -35,4 +35,6 @@ public interface IMainMessage {
     HashMap<String,Object> findRoomById(String roomId);
 
     boolean updateReetByRoomId(String roomId);
+
+    void findRoomzql(HashMap<String, Object> map, String roomId);
 }
