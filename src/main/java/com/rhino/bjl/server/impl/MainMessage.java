@@ -593,7 +593,8 @@ public class MainMessage implements IMainMessage {
         } else if (trent.equals("闲")) {
             sql = sql + " AND XIANCOUNT > ZHUANGCOUNT + 7";
         } else if (trent.equals("中")) {
-            sql = sql + " AND XIANCOUNT - ZHUANGCOUNT > -7 AND XIANCOUNT - ZHUANGCOUNT < 7";
+           // sql = sql + " AND XIANCOUNT - ZHUANGCOUNT > -7 AND XIANCOUNT - ZHUANGCOUNT < 7";
+            sql = sql + " AND XIANCOUNT - ZHUANGCOUNT between -7 AND 7"; //MySQL 保护-7和7
         }
         if (org.apache.commons.lang.StringUtils.isNotBlank(qxqiang)) {
             //庄闲强
