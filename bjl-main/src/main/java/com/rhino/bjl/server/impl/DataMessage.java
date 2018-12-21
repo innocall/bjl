@@ -1,7 +1,6 @@
 package com.rhino.bjl.server.impl;
 
 import com.rhino.bjl.mapper.DataManageMapper;
-import com.rhino.bjl.mapper.LoginManageMapper;
 import com.rhino.bjl.server.IDataMessage;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;

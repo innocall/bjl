@@ -12,7 +12,7 @@
     </typeAliases>
 
     <plugins>
-        <plugin interceptor="com.rhino.bjl.mybatis.batis.MyBatisPaginationInterceptor"/>
+        <plugin interceptor="com.rhino.com.rhino.bjl.mybatis.batis.MyBatisPaginationInterceptor"/>
     </plugins>
 
     <!--引入具体xml文件 -->

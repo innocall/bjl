@@ -14,7 +14,7 @@ import java.io.IOException;
  * @author wu
  * @version 1.0.0
  */
-public class ManageUserLoginValidateFilter implements Filter{
+public class ManageUserLoginValidateFilter implements Filter {
 
 	@Override
 	public void destroy() {
@@ -23,7 +23,7 @@ public class ManageUserLoginValidateFilter implements Filter{
 
 	@Override
 	public void doFilter(ServletRequest req, ServletResponse res,
-			FilterChain chain) throws IOException, ServletException {
+						 FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest request = (HttpServletRequest)req;
 		ManageUser manageUser = (ManageUser)request.getSession().getAttribute(AppConstans.MANAGE_USER_SESSION);
 		if(manageUser == null){

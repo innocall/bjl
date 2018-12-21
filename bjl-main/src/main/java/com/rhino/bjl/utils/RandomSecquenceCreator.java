@@ -113,7 +113,7 @@ public class RandomSecquenceCreator {
     }
 
     public static String createUUID(int len) {
-        String uuid = java.util.UUID.randomUUID().toString()
+        String uuid = UUID.randomUUID().toString()
                 .replaceAll("-", "");
         return uuid.substring(0, len);
     }

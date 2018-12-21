@@ -1,6 +1,7 @@
 package com.rhino.bjl.server.impl;
 
-import com.rhino.bjl.bean.*;
+import com.rhino.bjl.bean.MaxMinBean;
+import com.rhino.bjl.bean.SReetBean;
 import com.rhino.bjl.constans.AppConstans;
 import com.rhino.bjl.mapper.MainManageMapper;
 import com.rhino.bjl.server.IMainMessage;
