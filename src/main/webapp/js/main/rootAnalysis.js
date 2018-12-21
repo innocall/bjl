@@ -11,7 +11,7 @@ Ext.onReady(function() {
     jsonUser.load({
         params : {
             start : 0,
-            limit : 80
+            limit : 30
         }
     });
 
@@ -148,7 +148,7 @@ Ext.onReady(function() {
                 jsonUser.load({
                     params : {
                         start : 0,
-                        limit : 80,
+                        limit : 30,
                         qxqiang : dateSearchForm.getForm().findField(
                             "qxqiang").getValue(),
                         dsqiang : dateSearchForm.getForm().findField(
@@ -167,6 +167,8 @@ Ext.onReady(function() {
 
     jsonUser.on('beforeload', function(s) {
         jsonUser.baseParams = {
+            start : 0,
+            limit : 30,
             qxqiang : dateSearchForm.getForm().findField(
                 "qxqiang").getValue(),
             dsqiang : dateSearchForm.getForm().findField(
@@ -342,7 +344,7 @@ Ext.onReady(function() {
         }],
         enableColumnMove : true, // 允许拖动列
         bbar : new Ext.PagingToolbar({
-            pageSize : 80,
+            pageSize : 30,
             store : jsonUser,
             displayInfo : true,
             displayMsg : '显示{0}/{1}of{2}',

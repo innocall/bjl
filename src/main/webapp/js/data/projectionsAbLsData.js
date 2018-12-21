@@ -29,7 +29,7 @@ Ext.onReady(function () {
             header: '记号',
             dataIndex: 'POINT',
             align: 'center',
-            hidden: true
+            width: 70
         }, {
             id: 'ID',
             header: '编号',

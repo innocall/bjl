@@ -6,6 +6,7 @@ import com.rhino.bjl.mapper.MainManageMapper;
 import com.rhino.bjl.server.IMainMessage;
 import com.rhino.bjl.utils.*;
 import net.sf.ezmorph.bean.MorphDynaBean;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +14,6 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.*;
-import java.util.logging.Logger;
 
 @Service
 public class MainMessage implements IMainMessage {
@@ -216,7 +216,7 @@ public class MainMessage implements IMainMessage {
                 map1 =  mainManageMapper.findReetByRoomIdAndPoint(roomId,p1);
                 redisCacheManager.hmset(roomId + "_" + p1,map1,AppConstans.REDIS_TIME);
             } else {
-                logger.info("从Redis取值map1");
+                logger.error("从Redis取值map1");
             }
             if (map1 != null) {
                 int p2 = point - 3;
@@ -224,8 +224,6 @@ public class MainMessage implements IMainMessage {
                 if (map2 == null) {
                     map2 =  mainManageMapper.findReetByRoomIdAndPoint(roomId,p2);
                     redisCacheManager.hmset(roomId + "_" + p2,map2,AppConstans.REDIS_TIME);
-                }else {
-                    logger.info("从Redis取值map2");
                 }
                 if (map2 != null) {
                     int p3 = point - 2;
@@ -233,8 +231,6 @@ public class MainMessage implements IMainMessage {
                     if (map3 == null) {
                         map3 =  mainManageMapper.findReetByRoomIdAndPoint(roomId,p3);
                         redisCacheManager.hmset(roomId + "_" + p3,map3,AppConstans.REDIS_TIME);
-                    }else {
-                        logger.info("从Redis取值map3");
                     }
                     if (map3 != null) {
                         int p4 = point - 1;
@@ -242,8 +238,6 @@ public class MainMessage implements IMainMessage {
                         if (map4 == null) {
                             map4 =  mainManageMapper.findReetByRoomIdAndPoint(roomId,p4);
                             redisCacheManager.hmset(roomId + "_" + p4,map4,AppConstans.REDIS_TIME);
-                        }else {
-                            logger.info("从Redis取值map4");
                         }
                         if (map4 != null) {
                             //插入数据库
@@ -329,10 +323,14 @@ public class MainMessage implements IMainMessage {
                 }
             }
             params.put(maxminresultavalue, maxMinR);
-            if (maxMinR.equals(value)) {
-                params.put(maxminresultvalue, "A");
+            if("和".equals(value)) {
+                params.put(maxminresultvalue, "C"); //结果是和记录为未知
             } else {
-                params.put(maxminresultvalue, "B");
+                if (maxMinR.equals(value)) {
+                    params.put(maxminresultvalue, "A");
+                } else {
+                    params.put(maxminresultvalue, "B");
+                }
             }
         }
     }
@@ -344,9 +342,9 @@ public class MainMessage implements IMainMessage {
         MapUtils.setAb(mnAbList,map3);
         MapUtils.setAb(mnAbList,map4);
         String json = JsonUtil.toJsonString(mnAbList);
-        logger.info("服务器MNLS查询数据：" + json);
+        logger.error("服务器MNLS查询数据：" + json);
         String maxMinResutl = HttpUtils.post(url,json);
-        logger.info("服务器MNLS查询数据结果：" + maxMinResutl);
+        logger.error("服务器MNLS查询数据结果：" + maxMinResutl);
         Map<String,Object> map = JsonUtil.getMap(maxMinResutl);
         return map;
     }
@@ -358,9 +356,9 @@ public class MainMessage implements IMainMessage {
         MapUtils.setLs(mnLsList,map3);
         MapUtils.setLs(mnLsList,map4);
         String json = JsonUtil.toJsonString(mnLsList);
-        logger.info("服务器MNLS查询数据：" + json);
+        logger.error("服务器MNLS查询数据：" + json);
         String maxMinResutl = HttpUtils.post(url,json);
-        logger.info("服务器MNLS查询数据结果：" + maxMinResutl);
+        logger.error("服务器MNLS查询数据结果：" + maxMinResutl);
         Map<String,Object> map = JsonUtil.getMap(maxMinResutl);
         return map;
     }
@@ -372,9 +370,9 @@ public class MainMessage implements IMainMessage {
         MapUtils.setMn(mnLsList,map3);
         MapUtils.setMn(mnLsList,map4);
         String json = JsonUtil.toJsonString(mnLsList);
-        logger.info("服务器MNLS查询数据：" + json);
+        logger.error("服务器MNLS查询数据：" + json);
         String maxMinResutl = HttpUtils.post(url,json);
-        logger.info("服务器MNLS查询数据结果：" + maxMinResutl);
+        logger.error("服务器MNLS查询数据结果：" + maxMinResutl);
         Map<String,Object> map = JsonUtil.getMap(maxMinResutl);
         return map;
     }
@@ -386,9 +384,9 @@ public class MainMessage implements IMainMessage {
         MapUtils.setMnLs(mnLsList,map3);
         MapUtils.setMnLs(mnLsList,map4);
         String json = JsonUtil.toJsonString(mnLsList);
-        logger.info("服务器MNLS查询数据：" + json);
+        logger.error("服务器MNLS查询数据：" + json);
         String maxMinResutl = HttpUtils.post(url,json);
-        logger.info("服务器MNLS查询数据结果：" + maxMinResutl);
+        logger.error("服务器MNLS查询数据结果：" + maxMinResutl);
         Map<String,Object> map = JsonUtil.getMap(maxMinResutl);
         return map;
     }
@@ -400,9 +398,9 @@ public class MainMessage implements IMainMessage {
         MapUtils.setLsAb(sMaxMinBeansList,map3);
         MapUtils.setLsAb(sMaxMinBeansList,map4);
         String json = JsonUtil.toJsonString(sMaxMinBeansList);
-        logger.info("服务器大小数查询数据：" + json);
+        logger.error("服务器大小数查询数据：" + json);
         String maxMinResutl = HttpUtils.post(url,json);
-        logger.info("服务器大小数查询数据结果：" + maxMinResutl);
+        logger.error("服务器大小数查询数据结果：" + maxMinResutl);
         Map<String,Object> map = JsonUtil.getMap(maxMinResutl);
         return map;
     }
@@ -414,9 +412,9 @@ public class MainMessage implements IMainMessage {
         MapUtils.setMnAb(sOldEvenBeanList,map3);
         MapUtils.setMnAb(sOldEvenBeanList,map4);
         String json = JsonUtil.toJsonString(sOldEvenBeanList);
-        logger.info("服务器奇偶数查询数据：" + json);
+        logger.error("服务器奇偶数查询数据：" + json);
         String oldEvenResutl = HttpUtils.post(url,json);
-        logger.info("服务器奇偶数查询数据结果：" + oldEvenResutl);
+        logger.error("服务器奇偶数查询数据结果：" + oldEvenResutl);
         Map<String,Object> map = JsonUtil.getMap(oldEvenResutl);
         return map;
     }
@@ -450,7 +448,7 @@ public class MainMessage implements IMainMessage {
         reetBean.setPoint(Integer.parseInt(juCount));
         reetBean.setLingCount(ling);
         String json = JsonUtil.getJsonString4JavaPOJO(reetBean);
-        logger.info("小局数据插入服务器" + json);
+        logger.error("小局数据插入服务器" + json);
         String urlResult = HttpUtils.post("http://47.244.48.105:8091/reet_tbl/addReet",json);
         System.out.println("小局数据插入服务器结果:" + urlResult);
         return result;
