@@ -95,6 +95,9 @@ Ext.onReady(function(){
 					{id:'8', text : '<font style="font-size: 15px">AB预测</font>' , leaf : true },
 					{id:'9', text : '<font style="font-size: 15px">MN预测</font>' , leaf : true },
 					{id:'11', text : '<font style="font-size: 15px">LS预测</font>' , leaf : true },
+					{id:'13', text : '<font style="font-size: 15px">V预测</font>' , leaf : true },
+					{id:'14', text : '<font style="font-size: 15px">LSV预测</font>' , leaf : true },
+					{id:'15', text : '<font style="font-size: 15px">MNV预测</font>' , leaf : true }
 				]}
                 /*{id:'5', text: '<font style="font-size: 15px">数据建模</font>', expanded: true, children: [
                     {id:'6', text : '<font style="font-size: 15px">数据准备</font>' ,expanded: true,children:[
@@ -135,6 +138,12 @@ Ext.onReady(function(){
                             url = path + "data/analysis/projectionsMnData";
                         } else if (node.id == 11)  {
                             url = path + "data/analysis/projectionsLsData";
+                        } else if (node.id == 13)  {
+                            url = path + "data/analysis/projectionsVData";
+                        } else if (node.id == 14)  {
+                            url = path + "data/analysis/projectionsLsVData";
+                        } else if (node.id == 15)  {
+                            url = path + "data/analysis/projectionsMnVData";
                         }
 	    				tab = new Ext.Panel({
 	    					id:'Tab_' + node.id,

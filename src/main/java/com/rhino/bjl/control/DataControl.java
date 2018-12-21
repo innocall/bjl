@@ -248,6 +248,24 @@ public class DataControl extends BaseControl {
         return mav;
     }
 
+    @RequestMapping(value = "/projectionsVData",method = RequestMethod.GET)
+    public ModelAndView projectionsVData() {
+        ModelAndView mav = new ModelAndView("data/projectionsVData");
+        return mav;
+    }
+
+    @RequestMapping(value = "/projectionsLsVData",method = RequestMethod.GET)
+    public ModelAndView projectionsLsVData() {
+        ModelAndView mav = new ModelAndView("data/projectionsLsVData");
+        return mav;
+    }
+
+    @RequestMapping(value = "/projectionsMnVData",method = RequestMethod.GET)
+    public ModelAndView projectionsMnVData() {
+        ModelAndView mav = new ModelAndView("data/projectionsMnVData");
+        return mav;
+    }
+
     @RequestMapping(value = "findSReetData", method = RequestMethod.POST)
     public ResponseEntity<String> findSReetData(HttpServletRequest request) {
         HttpHeaders headers = new HttpHeaders();

@@ -247,8 +247,8 @@ public class MainMessage implements IMainMessage {
                             params.put("ROOMID", roomId);
                             params.put("TIME", DateUtils.getDate5());
                             params.put("POINT", point);
-                            Integer valueA = Integer.parseInt(zhuangdian);
-                            Integer valueB = Integer.parseInt(xiandian);
+                            int valueA = Integer.parseInt(zhuangdian);
+                            int valueB = Integer.parseInt(xiandian);
                             String value;
                             if (valueA > valueB) {
                                 value = "庄";
@@ -276,6 +276,15 @@ public class MainMessage implements IMainMessage {
                             // AB
                             Map<String,Object> sCheckAb = checkAb(map1,map2,map3,map4);
                             setCheckData(sCheckAb,params,value,"ABRESULTA","ABRESULTB","ABRESULTC","ABRESULTTYPE","ABRESULTAVALUE","ABRESULTVALUE");
+                            // V
+                            Map<String,Object> sCheckV = checkV(map1,map2,map3,map4);
+                            setCheckData(sCheckV,params,value,"VRESULTA","VRESULTB","VRESULTC","VRESULTTYPE","VRESULTAVALUE","VRESULTVALUE");
+                            // LSV
+                            Map<String,Object> sCheckLSV = checkLsV(map1,map2,map3,map4);
+                            setCheckData(sCheckLSV,params,value,"LSVRESULTA","LSVRESULTB","LSVRESULTC","LSVRESULTTYPE","LSVRESULTAVALUE","LSVRESULTVALUE");
+                            // LSV
+                            Map<String,Object> sCheckMnV = checkLsMnV(map1,map2,map3,map4);
+                            setCheckData(sCheckMnV,params,value,"MNVRESULTA","MNVRESULTB","MNVRESULTC","MNVRESULTTYPE","MNVRESULTAVALUE","MNVRESULTVALUE");
                             //数据准备结束，插入数据库
                             boolean isResult = mainManageMapper.saveReetAnaly(params);
                         }
@@ -285,11 +294,53 @@ public class MainMessage implements IMainMessage {
         }
     }
 
+    private Map<String, Object> checkLsMnV(HashMap<String, Object> map1, HashMap<String, Object> map2, HashMap<String, Object> map3, HashMap<String, Object> map4) {
+        List<Map<String,Object>> mnAbList = new ArrayList<Map<String,Object>>();
+        MapUtils.setMnV(mnAbList,map1);
+        MapUtils.setMnV(mnAbList,map2);
+        MapUtils.setMnV(mnAbList,map3);
+        MapUtils.setMnV(mnAbList,map4);
+        String json = JsonUtil.toJsonString(mnAbList);
+        logger.error("服务器MNV查询数据：" + json);
+        String maxMinResutl = HttpUtils.post(url,json);
+        logger.error("服务器MNV查询数据结果：" + maxMinResutl);
+        Map<String,Object> map = JsonUtil.getMap(maxMinResutl);
+        return map;
+    }
+
+    private Map<String, Object> checkLsV(HashMap<String, Object> map1, HashMap<String, Object> map2, HashMap<String, Object> map3, HashMap<String, Object> map4) {
+        List<Map<String,Object>> mnAbList = new ArrayList<Map<String,Object>>();
+        MapUtils.setLsV(mnAbList,map1);
+        MapUtils.setLsV(mnAbList,map2);
+        MapUtils.setLsV(mnAbList,map3);
+        MapUtils.setLsV(mnAbList,map4);
+        String json = JsonUtil.toJsonString(mnAbList);
+        logger.error("服务器LSV查询数据：" + json);
+        String maxMinResutl = HttpUtils.post(url,json);
+        logger.error("服务器LSV查询数据结果：" + maxMinResutl);
+        Map<String,Object> map = JsonUtil.getMap(maxMinResutl);
+        return map;
+    }
+
+    private Map<String, Object> checkV(HashMap<String, Object> map1, HashMap<String, Object> map2, HashMap<String, Object> map3, HashMap<String, Object> map4) {
+        List<Map<String,Object>> mnAbList = new ArrayList<Map<String,Object>>();
+        MapUtils.setV(mnAbList,map1);
+        MapUtils.setV(mnAbList,map2);
+        MapUtils.setV(mnAbList,map3);
+        MapUtils.setV(mnAbList,map4);
+        String json = JsonUtil.toJsonString(mnAbList);
+        logger.error("服务器V查询数据：" + json);
+        String maxMinResutl = HttpUtils.post(url,json);
+        logger.error("服务器V查询数据结果：" + maxMinResutl);
+        Map<String,Object> map = JsonUtil.getMap(maxMinResutl);
+        return map;
+    }
+
     private void setCheckData(Map<String,Object> sCheckResultMaxMin,HashMap<String, Object> params,String value, String maxminresulta, String maxminresultb, String maxminresultc, String maxminresulttype, String maxminresultavalue, String maxminresultvalue) {
         MorphDynaBean maxMin = (MorphDynaBean) sCheckResultMaxMin.get("object");
-        Integer maxMinResultA = (Integer) maxMin.get("a");
-        Integer maxMinResultB = (Integer) maxMin.get("b");
-        Integer maxMinResultC = (Integer) maxMin.get("c");
+        int maxMinResultA = (Integer) maxMin.get("a");
+        int maxMinResultB = (Integer) maxMin.get("b");
+        int maxMinResultC = (Integer) maxMin.get("c");
         params.put(maxminresulta, maxMinResultA);
         params.put(maxminresultb, maxMinResultB);
         params.put(maxminresultc, maxMinResultC);
