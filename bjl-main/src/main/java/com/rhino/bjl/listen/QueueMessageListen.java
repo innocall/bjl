@@ -28,6 +28,7 @@ public class QueueMessageListen implements MessageListener {
 
     @Override
     public void onMessage(Message message) {
+        logger.info("-----------------------------start------------------------------");
         try {
             TextMessage tm = (TextMessage)(message);
             String msg = tm.getText();
@@ -41,6 +42,7 @@ public class QueueMessageListen implements MessageListener {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        logger.info("-----------------------------end------------------------------");
     }
 
     private void analyzeData(String roomId, String juCount, String zhuangdian, String xiandian) throws Exception{
