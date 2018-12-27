@@ -49,7 +49,7 @@ Ext.onReady(function () {
         }, {
             id: 'LSVRESULTA',
             header: 'A个数',
-            dataIndex: 'LSRESULTA',
+            dataIndex: 'LSVRESULTA',
             sortable: true,
             align: 'center',
             css: 'font-size:18px;color:#0e49e8;',
@@ -58,7 +58,7 @@ Ext.onReady(function () {
         }, {
             id: 'LSVRESULTB',
             header: 'B个数',
-            dataIndex: 'LSRESULTB',
+            dataIndex: 'LSVRESULTB',
             sortable: true,
             align: 'center',
             css: 'font-size:18px;color:#0e49e8;',
@@ -67,7 +67,7 @@ Ext.onReady(function () {
         }, {
             id: 'LSVRESULTC',
             header: 'C个数',
-            dataIndex: 'LSRESULTC',
+            dataIndex: 'LSVRESULTC',
             sortable: true,
             align: 'center',
             css: 'font-size:18px;color:#0e49e8;',
@@ -76,7 +76,7 @@ Ext.onReady(function () {
         },{
             id: 'LSVRESULTTYPE',
             header: '查询组数',
-            dataIndex: 'LSRESULTTYPE',
+            dataIndex: 'LSVRESULTTYPE',
             sortable: true,
             align: 'center',
             css: 'font-size:18px;color:#0e49e8;',
@@ -94,7 +94,7 @@ Ext.onReady(function () {
         },{
             id: 'LSVRESULTAVALUE',
             header: '预测结果',
-            dataIndex: 'LSRESULTAVALUE',
+            dataIndex: 'LSVRESULTAVALUE',
             sortable: true,
             align: 'center',
             css: 'font-size:18px;color:#0e49e8;',
@@ -112,7 +112,7 @@ Ext.onReady(function () {
         },{
             id: 'LSVRESULTVALUE',
             header: '预测是否正确',
-            dataIndex: 'LSRESULTVALUE',
+            dataIndex: 'LSVRESULTVALUE',
             sortable: true,
             align: 'center',
             width: 80,

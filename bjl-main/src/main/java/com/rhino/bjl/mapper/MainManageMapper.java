@@ -16,7 +16,6 @@ public class MainManageMapper {
     @Autowired
     private LemonDB<HashMap<String,Object>> lemonDB;
 
-
     public HashMap<String, Object> findParamMsgByUserId(HashMap<String, Object> params) {
         return lemonDB.get("findParamMsgByUserId", params);
     }
