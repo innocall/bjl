@@ -49,7 +49,7 @@ Ext.onReady(function () {
         }, {
             id: 'MNVRESULTA',
             header: 'A个数',
-            dataIndex: 'LSRESULTA',
+            dataIndex: 'MNVRESULTA',
             sortable: true,
             align: 'center',
             css: 'font-size:18px;color:#0e49e8;',
@@ -58,7 +58,7 @@ Ext.onReady(function () {
         }, {
             id: 'MNVRESULTB',
             header: 'B个数',
-            dataIndex: 'LSRESULTB',
+            dataIndex: 'MNVRESULTB',
             sortable: true,
             align: 'center',
             css: 'font-size:18px;color:#0e49e8;',
@@ -67,7 +67,7 @@ Ext.onReady(function () {
         }, {
             id: 'MNVRESULTC',
             header: 'C个数',
-            dataIndex: 'LSRESULTC',
+            dataIndex: 'MNVRESULTC',
             sortable: true,
             align: 'center',
             css: 'font-size:18px;color:#0e49e8;',
@@ -76,7 +76,7 @@ Ext.onReady(function () {
         },{
             id: 'MNVRESULTTYPE',
             header: '查询组数',
-            dataIndex: 'LSRESULTTYPE',
+            dataIndex: 'MNVRESULTTYPE',
             sortable: true,
             align: 'center',
             css: 'font-size:18px;color:#0e49e8;',
@@ -94,7 +94,7 @@ Ext.onReady(function () {
         },{
             id: 'MNVRESULTAVALUE',
             header: '预测结果',
-            dataIndex: 'LSRESULTAVALUE',
+            dataIndex: 'MNVRESULTAVALUE',
             sortable: true,
             align: 'center',
             css: 'font-size:18px;color:#0e49e8;',
@@ -112,7 +112,7 @@ Ext.onReady(function () {
         },{
             id: 'MNVRESULTVALUE',
             header: '预测是否正确',
-            dataIndex: 'LSRESULTVALUE',
+            dataIndex: 'MNVRESULTVALUE',
             sortable: true,
             align: 'center',
             width: 80,

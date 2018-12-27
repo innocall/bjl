@@ -49,7 +49,7 @@ Ext.onReady(function () {
         }, {
             id: 'VRESULTA',
             header: 'A个数',
-            dataIndex: 'LSRESULTA',
+            dataIndex: 'VRESULTA',
             sortable: true,
             align: 'center',
             css: 'font-size:18px;color:#0e49e8;',
@@ -58,7 +58,7 @@ Ext.onReady(function () {
         }, {
             id: 'VRESULTB',
             header: 'B个数',
-            dataIndex: 'LSRESULTB',
+            dataIndex: 'VRESULTB',
             sortable: true,
             align: 'center',
             css: 'font-size:18px;color:#0e49e8;',
@@ -67,7 +67,7 @@ Ext.onReady(function () {
         }, {
             id: 'VRESULTC',
             header: 'C个数',
-            dataIndex: 'LSRESULTC',
+            dataIndex: 'VRESULTC',
             sortable: true,
             align: 'center',
             css: 'font-size:18px;color:#0e49e8;',
@@ -76,7 +76,7 @@ Ext.onReady(function () {
         },{
             id: 'VRESULTTYPE',
             header: '查询组数',
-            dataIndex: 'LSRESULTTYPE',
+            dataIndex: 'VRESULTTYPE',
             sortable: true,
             align: 'center',
             css: 'font-size:18px;color:#0e49e8;',
@@ -94,7 +94,7 @@ Ext.onReady(function () {
         },{
             id: 'VRESULTAVALUE',
             header: '预测结果',
-            dataIndex: 'LSRESULTAVALUE',
+            dataIndex: 'VRESULTAVALUE',
             sortable: true,
             align: 'center',
             css: 'font-size:18px;color:#0e49e8;',
@@ -112,7 +112,7 @@ Ext.onReady(function () {
         },{
             id: 'VRESULTVALUE',
             header: '预测是否正确',
-            dataIndex: 'LSRESULTVALUE',
+            dataIndex: 'VRESULTVALUE',
             sortable: true,
             align: 'center',
             width: 80,
