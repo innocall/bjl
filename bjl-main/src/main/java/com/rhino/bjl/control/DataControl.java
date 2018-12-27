@@ -1,5 +1,6 @@
 package com.rhino.bjl.control;
 
+import com.rhino.bjl.server.IActiveMqMessage;
 import com.rhino.bjl.server.IDataMessage;
 import com.rhino.bjl.utils.JsonUtil;
 import com.rhino.bjl.utils.ParamUtils;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;

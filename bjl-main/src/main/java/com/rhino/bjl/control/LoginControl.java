@@ -2,6 +2,7 @@ package com.rhino.bjl.control;
 
 import com.rhino.bjl.bean.ManageUser;
 import com.rhino.bjl.constans.AppConstans;
+import com.rhino.bjl.server.IActiveMqMessage;
 import com.rhino.bjl.server.ILoginMessage;
 import com.rhino.bjl.utils.JsonUtil;
 import com.rhino.bjl.utils.ParamUtils;
@@ -136,5 +137,4 @@ public class LoginControl extends BaseControl{
         PrintWriter out = null;
         printMsgToPage(response, status, msg, out);
     }
-
 }

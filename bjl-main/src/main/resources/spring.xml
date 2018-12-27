@@ -91,5 +91,6 @@
 
     <bean id="lemonBSupport" class="com.rhino.bjl.mybatis.db.LemonDBSupport" />
     <import resource="spring-redis.xml" />
+    <import resource="spring-amq.xml"/>
 
 </beans>

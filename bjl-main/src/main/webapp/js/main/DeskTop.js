@@ -95,7 +95,7 @@ Ext.onReady(function(){
 					{id:'8', text : '<font style="font-size: 15px">AB预测</font>' , leaf : true },
 					{id:'9', text : '<font style="font-size: 15px">MN预测</font>' , leaf : true },
 					{id:'11', text : '<font style="font-size: 15px">LS预测</font>' , leaf : true },
-					{id:'13', text : '<font style="font-size: 15px">V预测</font>' , leaf : true },
+					// {id:'13', text : '<font style="font-size: 15px">V预测</font>' , leaf : true },
 					{id:'14', text : '<font style="font-size: 15px">LSV预测</font>' , leaf : true },
 					{id:'15', text : '<font style="font-size: 15px">MNV预测</font>' , leaf : true }
 				]}

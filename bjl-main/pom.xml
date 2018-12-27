@@ -300,10 +300,9 @@
                     <artifactId>maven-jetty-plugin</artifactId>
                     <version>6.1.5</version>
                     <configuration>
-                        <webDefaultXml>src/main/webapp/WEB-INF/web.xml</webDefaultXml>
                         <webAppSourceDirectory>src/main/webapp</webAppSourceDirectory>
                         <scanIntervalSeconds>3</scanIntervalSeconds>
-                        <contextPath>/bjl-main</contextPath>
+                        <contextPath>/bjl</contextPath>
                         <connectors>
                             <connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
                                 <port>8080</port>
