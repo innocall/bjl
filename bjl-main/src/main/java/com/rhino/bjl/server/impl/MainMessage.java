@@ -500,7 +500,7 @@ public class MainMessage implements IMainMessage {
         map2.put("ROOMID",roomId);
         List<HashMap<String,Object>> listMap = mainManageMapper.findRoomzql(map2);
         int mna=0,mnb=0,mnc=0, lsa=0,lsb=0,lsc=0,aba=0,abb=0,abc=0,mnlsa=0,mnlsb=0,mnlsc=0,
-                mnaba=0,mnabb=0,mnabc=0,lsaba=0,lsabb=0,lsabc=0;
+                mnaba=0,mnabb=0,mnabc=0,lsaba=0,lsabb=0,lsabc=0,mnva=0,mnvb=0,mnvc=0,lsva=0,lsvb=0,lsvc=0;
         for (int i=0;i<listMap.size();i++) {
             String mnstr = (String) listMap.get(i).get("MNRESULTVALUE");
             String lsstr = (String) listMap.get(i).get("LSRESULTVALUE");
@@ -508,6 +508,8 @@ public class MainMessage implements IMainMessage {
             String mnlsstr = (String) listMap.get(i).get("MNLSRESULTVALUE");
             String mnabstr = (String) listMap.get(i).get("OLDEVENRESULTVALUE");
             String lsabstr = (String) listMap.get(i).get("MAXMINRESULTVALUE");
+            String mnvstr = (String) listMap.get(i).get("MNVRESULTVALUE");
+            String lsvstr = (String) listMap.get(i).get("LSVRESULTVALUE");
             if (mnstr.equals("A")) {
                 mna = mna + 1;
             } else if (mnstr.equals("B")) {
@@ -550,6 +552,20 @@ public class MainMessage implements IMainMessage {
             } else if (lsabstr.equals("C")) {
                 lsabc = lsabc + 1;
             }
+            if (lsvstr.equals("A")) {
+                lsva = lsva + 1;
+            } else if (lsvstr.equals("B")) {
+                lsvb = lsvb + 1;
+            } else if (lsvstr.equals("C")) {
+                lsvc = lsvc + 1;
+            }
+            if (mnvstr.equals("A")) {
+                mnva = mnva + 1;
+            } else if (mnvstr.equals("B")) {
+                mnvb = mnvb + 1;
+            } else if (mnvstr.equals("C")) {
+                mnvc = mnvc + 1;
+            }
         }
         int mnToal = mna + mnb + mnc;
         String mn = "对：" + getPercent(mna,mnToal) + ";错：" + getPercent(mnb,mnToal) + ";未知：" + getPercent(mnc,mnToal);
@@ -569,6 +585,12 @@ public class MainMessage implements IMainMessage {
         int lsabToal = lsaba + lsabb + lsabc;
         String lsab = "对：" + getPercent(lsaba,lsabToal) + ";错：" + getPercent(lsabb,lsabToal) + ";未知：" + getPercent(lsabc,lsabToal);
         map.put("lsab",lsab);
+        int lsvToal = lsva + lsvb + lsvc;
+        String lsv = "对：" + getPercent(lsva,lsvToal) + ";错：" + getPercent(lsvb,lsvToal) + ";未知：" + getPercent(lsvc,lsvToal);
+        map.put("lsv",lsv);
+        int mnvToal = mnva + mnvb + mnvc;
+        String mnv = "对：" + getPercent(mnva,mnvToal) + ";错：" + getPercent(mnvb,mnvToal) + ";未知：" + getPercent(mnvc,mnvToal);
+        map.put("mnv",mnv);
     }
 
     public String getPercent(double num, double total) {
