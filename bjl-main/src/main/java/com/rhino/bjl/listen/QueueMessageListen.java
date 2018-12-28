@@ -50,30 +50,30 @@ public class QueueMessageListen implements MessageListener {
         //查询出前3局数据，有限从Redis中获取
         int p1 = point - 4;
         HashMap<String, Object> map1 = (HashMap<String, Object>) redisCacheManager.hmget(roomId + "_" + p1);
-        if (map1 == null) {
+        if (map1 == null || map1.isEmpty()) {
             map1 =  mainManageMapper.findReetByRoomIdAndPoint(roomId,p1);
             redisCacheManager.hmset(roomId + "_" + p1,map1, AppConstans.REDIS_TIME);
         } else {
             logger.error("从Redis取值map1");
         }
-        if (map1 != null) {
+        if (map1 != null && !map1.isEmpty()) {
             int p2 = point - 3;
             HashMap<String, Object> map2 = (HashMap<String, Object>) redisCacheManager.hmget(roomId + "_" + p2);
-            if (map2 == null) {
+            if (map2 == null || map2.isEmpty()) {
                 map2 =  mainManageMapper.findReetByRoomIdAndPoint(roomId,p2);
                 redisCacheManager.hmset(roomId + "_" + p2,map2,AppConstans.REDIS_TIME);
             }
             if (map2 != null) {
                 int p3 = point - 2;
                 HashMap<String, Object> map3 = (HashMap<String, Object>) redisCacheManager.hmget(roomId + "_" + p3);
-                if (map3 == null) {
+                if (map3 == null || map3.isEmpty()) {
                     map3 =  mainManageMapper.findReetByRoomIdAndPoint(roomId,p3);
                     redisCacheManager.hmset(roomId + "_" + p3,map3,AppConstans.REDIS_TIME);
                 }
                 if (map3 != null) {
                     int p4 = point - 1;
                     HashMap<String, Object> map4 = (HashMap<String, Object>) redisCacheManager.hmget(roomId + "_" + p4);
-                    if (map4 == null) {
+                    if (map4 == null || map4.isEmpty()) {
                         map4 =  mainManageMapper.findReetByRoomIdAndPoint(roomId,p4);
                         redisCacheManager.hmset(roomId + "_" + p4,map4,AppConstans.REDIS_TIME);
                     }
