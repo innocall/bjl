@@ -1,5 +1,6 @@
 package com.rhino.bjl.listen;
 
+import com.rhino.bjl.bean.SReetBean;
 import com.rhino.bjl.constans.AppConstans;
 import com.rhino.bjl.mapper.MainManageMapper;
 import com.rhino.bjl.server.impl.ActiveMqMessage;
@@ -38,15 +39,25 @@ public class QueueMessageListen implements MessageListener {
             String juCount = (String) params.get("juCount");
             String zhuangdian = (String) params.get("zhuangdian");
             String xiandian = (String) params.get("xiandian");
-            analyzeData(roomId,juCount,zhuangdian,xiandian);
+            int jishu = (Integer) params.get("jishu");
+            int oushu = (Integer) params.get("oushu");
+            int ling = (Integer) params.get("ling");
+            int maxCount = (Integer) params.get("maxCount");
+            int minCount = (Integer) params.get("minCount");
+            analyzeData(roomId,juCount,zhuangdian,xiandian,jishu,oushu,ling,maxCount,minCount);
         } catch (Exception e) {
             e.printStackTrace();
         }
         logger.info("-----------------------------end------------------------------");
     }
 
-    private void analyzeData(String roomId, String juCount, String zhuangdian, String xiandian) throws Exception{
+    private void analyzeData(String roomId, String juCount, String zhuangdian, String xiandian,int jishu,int oushu,int ling,int maxCount,int minCount) throws Exception{
         int point = Integer.parseInt(juCount);
+        if (point < 5) {
+            String id = UUID.randomUUID().toString();
+            boolean isSubmit = addReetToWeb(id,roomId,zhuangdian,xiandian,juCount,jishu,oushu,ling,maxCount,minCount);
+            return;
+        }
         //查询出前3局数据，有限从Redis中获取
         int p1 = point - 4;
         HashMap<String, Object> map1 = (HashMap<String, Object>) redisCacheManager.hmget(roomId + "_" + p1);
@@ -128,6 +139,8 @@ public class QueueMessageListen implements MessageListener {
                         if (!isResult) {
                             logger.info("保存失败" );
                         }
+                        // 同步提交数据到服务器中
+                        boolean isSubmit = addReetToWeb(id,roomId,zhuangdian,xiandian,juCount,jishu,oushu,ling,maxCount,minCount);
                     }
                 }
             }
@@ -309,5 +322,40 @@ public class QueueMessageListen implements MessageListener {
         logger.info("服务器奇偶数查询数据结果：" + oldEvenResutl);
         Map<String,Object> map = JsonUtil.getMap(oldEvenResutl);
         return map;
+    }
+
+    /**
+     * 上传数据到服务器
+     * @return
+     */
+    private boolean addReetToWeb(String id, String roomId, String zhuangdian, String xiandian, String juCount, int jishu, int oushu, int ling, int maxCount, int minCount) {
+        boolean result = true;
+        String value = "A";
+        int valueA = Integer.parseInt(zhuangdian);
+        int valueB = Integer.parseInt(xiandian);
+        if(valueA > valueB) {
+            value = "A";
+        } else if (valueA < valueB) {
+            value = "B";
+        } else {
+            value = "C";
+        }
+        SReetBean reetBean = new SReetBean();
+        reetBean.setId(id);
+        reetBean.setRoomId(roomId);
+        reetBean.setValueA(valueA);
+        reetBean.setValueB(valueB);
+        reetBean.setValue(value);
+        reetBean.setJiShuCount(jishu);
+        reetBean.setOuShuCount(oushu);
+        reetBean.setMaxCount(maxCount);
+        reetBean.setMinCount(minCount);
+        reetBean.setPoint(Integer.parseInt(juCount));
+        reetBean.setLingCount(ling);
+        String json = JsonUtil.getJsonString4JavaPOJO(reetBean);
+        logger.error("小局数据插入服务器" + json);
+        String urlResult = HttpUtils.post("http://47.244.48.105:8091/reet_tbl/addReet",json);
+        System.out.println("小局数据插入服务器结果:" + urlResult);
+        return result;
     }
 }

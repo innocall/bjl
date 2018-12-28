@@ -189,12 +189,10 @@ public class MainMessage implements IMainMessage {
             redisCacheManager.hmset(roomId + "_" + juCount,params, AppConstans.REDIS_TIME);
             //服务器数据预测系统分析
             try {
-                analyzeData(roomId,juCount,zhuangdian,xiandian);
+                analyzeData(roomId,juCount,zhuangdian,xiandian,jishu,oushu,ling,maxCount,minCount);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            // 同步提交数据到服务器中
-            boolean isSubmit = addReetToWeb(id,roomId,zhuangdian,xiandian,juCount,jishu,oushu,ling,maxCount,minCount);
             //下面为更新房间数据，统计的是房间总数。
             //更新房间的奇偶数，庄数，闲数，对数
             HashMap<String,Object> hashMap = findRoomById(roomId);
@@ -210,52 +208,21 @@ public class MainMessage implements IMainMessage {
         return "";
     }
 
-    private void analyzeData(String roomId, String juCount, String zhuangdian, String xiandian) throws Exception{
+    private void analyzeData(String roomId, String juCount, String zhuangdian, String xiandian,int jishu,int oushu,int ling,int maxCount,int minCount) throws Exception{
         int point = Integer.parseInt(juCount);
-        if (point > 4) {
-            HashMap<String, Object> params = new HashMap<String, Object>();
-            params.put("roomId",roomId);
-            params.put("juCount",juCount);
-            params.put("zhuangdian",zhuangdian);
-            params.put("xiandian",xiandian);
-            //发送消息
-            activeMqMessage.sendMessage(params);
-        }
-    }
+        HashMap<String, Object> params = new HashMap<String, Object>();
+        params.put("roomId",roomId);
+        params.put("juCount",juCount);
+        params.put("zhuangdian",zhuangdian);
+        params.put("xiandian",xiandian);
+        params.put("jishu",jishu);
+        params.put("oushu",oushu);
+        params.put("ling",ling);
+        params.put("maxCount",maxCount);
+        params.put("minCount",minCount);
+        //发送消息
+        activeMqMessage.sendMessage(params);
 
-    /**
-     * 上传数据到服务器
-     * @return
-     */
-    private boolean addReetToWeb(String id, String roomId, String zhuangdian, String xiandian, String juCount, int jishu, int oushu, int ling, int maxCount, int minCount) {
-       boolean result = true;
-       String value = "A";
-       int valueA = Integer.parseInt(zhuangdian);
-       int valueB = Integer.parseInt(xiandian);
-        if(valueA > valueB) {
-            value = "A";
-        } else if (valueA < valueB) {
-            value = "B";
-        } else {
-            value = "C";
-        }
-        SReetBean reetBean = new SReetBean();
-        reetBean.setId(id);
-        reetBean.setRoomId(roomId);
-        reetBean.setValueA(valueA);
-        reetBean.setValueB(valueB);
-        reetBean.setValue(value);
-        reetBean.setJiShuCount(jishu);
-        reetBean.setOuShuCount(oushu);
-        reetBean.setMaxCount(maxCount);
-        reetBean.setMinCount(minCount);
-        reetBean.setPoint(Integer.parseInt(juCount));
-        reetBean.setLingCount(ling);
-        String json = JsonUtil.getJsonString4JavaPOJO(reetBean);
-        logger.error("小局数据插入服务器" + json);
-        String urlResult = HttpUtils.post("http://47.244.48.105:8091/reet_tbl/addReet",json);
-        System.out.println("小局数据插入服务器结果:" + urlResult);
-        return result;
     }
 
     @Override

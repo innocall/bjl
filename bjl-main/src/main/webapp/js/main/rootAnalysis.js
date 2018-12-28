@@ -6,7 +6,7 @@ Ext.onReady(function() {
         root : 'yhgl',
         totalProperty : 'count',
         fields : [ 'ID', 'TOTALCOUNT', 'ZHUANGCOUNT', 'XIANCOUNT', 'HECOUNT','ZHUANGDUICOUNT', 'XIANDUICOUNT', 'STRARTTIME','ENDTIME','USERID','JISHUCOUNT','OUSHUCOUNT',
-            'QIANG','mn','ls','ab','mnls','mnab','lsab' ,'lsv' ,'mnv' ]
+            'QIANG','mn','ls','ab','mnls','mnab','lsab','lsv','mnv' ]
     });
     jsonUser.load({
         params : {
@@ -338,7 +338,7 @@ Ext.onReady(function() {
             sortable : true,
             align : 'center',
             menuDisabled : true
-        },,{
+        },{
             id : 'mnv',
             header : 'MNV',
             dataIndex : 'mnv',
