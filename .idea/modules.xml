@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/bjl.iml" filepath="$PROJECT_DIR$/bjl.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bjl-main/bjl-main.iml" filepath="$PROJECT_DIR$/bjl-main/bjl-main.iml" />
     </modules>
   </component>
 </project>
