@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="bjl" target="1.5" />
+      <module name="bjl" target="1.8" />
       <module name="bjl-main" target="1.6" />
     </bytecodeTargetLevel>
   </component>

@@ -300,6 +300,7 @@ function faPai4(xian1,zhuang1,xian2) {
     }
 }
 
+//闲需要博牌
 function faPaiXian(xian1,zhuang1,xian2,zhuang2) {
     //var index = Math.floor((Math.random() * myArray.length));
     var index = 0;
@@ -317,9 +318,10 @@ function faPaiXian(xian1,zhuang1,xian2,zhuang2) {
     $("#xian").html(getCount(showData(xian1) + showData(xian2) + showData(xian3)));
     $("#xian").css("visibility","visible");
     var zhuang =  getCount(showData(zhuang1) + showData(zhuang2));
-    if(xian1 == xian2 || xian1 == xian3 || xian2 == xian3) {
+    // 第三张补排不算对子
+   /* if(xian1 == xian2 || xian1 == xian3 || xian2 == xian3) {
         xiandui = 0;
-    }
+    }*/
     if (zhuang ==  0 || zhuang ==  1 || zhuang ==  2) {
         setTimeout(function() {faPaiZhuang(xian1,zhuang1,xian2,zhuang2,xian3) },1000);
     } else if (zhuang == 3) {
@@ -386,9 +388,9 @@ function faPaiZhuang(xian1,zhuang1,xian2,zhuang2,xian3) {
     $("#zhuang").html(getCount(showData(zhuang1) + showData(zhuang2) + showData(zhuang3)));
     $("#zhuang").css("visibility","visible");
     //判断是否有对子
-    if(zhuang1 == zhuang2 || zhuang1 == zhuang3 || zhuang2 == zhuang3) {
+   /* if(zhuang1 == zhuang2 || zhuang1 == zhuang3 || zhuang2 == zhuang3) {
         zhuangdui = 0;
-    }
+    }*/
     goGame(xian1,zhuang1,xian2,zhuang2,xian3,zhuang3);
 }
 
@@ -1073,10 +1075,17 @@ function submitDate(xian1,zhuang1,xian2,zhuang2,xian3,zhuang3,userMoney,touzhuMo
     var xiandui1 = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
     var jieguo1 = "&nbsp;&nbsp;&nbsp;";
     var ying = ""; //记录投注输赢，空未投注
-    if(zhuang1 == zhuang2 || zhuang1 == zhuang3 || zhuang2 == zhuang3) {
+    //补排不算对子
+    /*if(zhuang1 == zhuang2 || zhuang1 == zhuang3 || zhuang2 == zhuang3) {
         zhuangdui1 = "庄对";
     }
     if(xian1 == xian2 || xian1 == xian3 || xian2 == xian3) {
+        xiandui1 = "闲对";
+    }*/
+    if(zhuang1 == zhuang2) {
+        zhuangdui1 = "庄对";
+    }
+    if(xian1 == xian2) {
         xiandui1 = "闲对";
     }
     if (zhuangdian == xiandian) {
