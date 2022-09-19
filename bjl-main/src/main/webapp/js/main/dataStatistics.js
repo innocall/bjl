@@ -339,6 +339,14 @@ function faPaiXian(xian1,zhuang1,xian2,zhuang2) {
             setTimeout(function() {faPaiZhuang(xian1,zhuang1,xian2,zhuang2,xian3) },1000);
         } else if (xian3 != 9) {
             setTimeout(function() {faPaiZhuang(xian1,zhuang1,xian2,zhuang2,xian3) },1000);
+        } else if (xian3 != 10) {
+            setTimeout(function() {faPaiZhuang(xian1,zhuang1,xian2,zhuang2,xian3) },1000);
+        } else if (xian3 != 11) {
+            setTimeout(function() {faPaiZhuang(xian1,zhuang1,xian2,zhuang2,xian3) },1000);
+        } else if (xian3 != 12) {
+            setTimeout(function() {faPaiZhuang(xian1,zhuang1,xian2,zhuang2,xian3) },1000);
+        } else if (xian3 != 13) {
+            setTimeout(function() {faPaiZhuang(xian1,zhuang1,xian2,zhuang2,xian3) },1000);
         } else {
             goGame(xian1,zhuang1,xian2,zhuang2,xian3,0);
         }
@@ -354,6 +362,14 @@ function faPaiXian(xian1,zhuang1,xian2,zhuang2) {
         } else if (xian3 != 8) {
             setTimeout(function() {faPaiZhuang(xian1,zhuang1,xian2,zhuang2,xian3) },1000);
         } else if (xian3 != 9) {
+            setTimeout(function() {faPaiZhuang(xian1,zhuang1,xian2,zhuang2,xian3) },1000);
+        } else if (xian3 != 10) {
+            setTimeout(function() {faPaiZhuang(xian1,zhuang1,xian2,zhuang2,xian3) },1000);
+        } else if (xian3 != 11) {
+            setTimeout(function() {faPaiZhuang(xian1,zhuang1,xian2,zhuang2,xian3) },1000);
+        } else if (xian3 != 12) {
+            setTimeout(function() {faPaiZhuang(xian1,zhuang1,xian2,zhuang2,xian3) },1000);
+        } else if (xian3 != 13) {
             setTimeout(function() {faPaiZhuang(xian1,zhuang1,xian2,zhuang2,xian3) },1000);
         } else {
             goGame(xian1,zhuang1,xian2,zhuang2,xian3,0);
